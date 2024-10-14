@@ -36,61 +36,62 @@ public class DbSchemaColumnsResponseRowXml extends Row implements Serializable {
     @XmlTransient
     private static final long serialVersionUID = 5692876791695703039L;
 
+    @XmlElement(name = "TABLE_CATALOG", required = false)
     /**
      * @return The name of the database.
      */
-    @XmlElement(name = "TABLE_CATALOG", required = false)
     private String tableCatalog;
 
+    @XmlElement(name = "TABLE_SCHEMA", required = false)
     /**
      * @return The name of the schema.
      */
-    @XmlElement(name = "TABLE_SCHEMA", required = false)
     private String tableSchema;
 
+    @XmlElement(name = "TABLE_NAME", required = false)
     /**
      * @return The name of the table.
      */
-    @XmlElement(name = "TABLE_NAME", required = false)
     private String tableName;
 
+    @XmlElement(name = "COLUMN_NAME", required = false)
     /**
      * The name of the attribute hierarchy or measure.
      */
-    @XmlElement(name = "COLUMN_NAME", required = false)
     private String columnName;
 
+    @XmlElement(name = "COLUMN_GUID", required = false)
     /**
      * @return The GUID of the column.
      */
-    @XmlElement(name = "COLUMN_GUID", required = false)
     private Integer columnGuid;
 
+    @XmlElement(name = "COLUMN_PROPID", required = false)
     /**
      * @return The property ID of the column.
      */
-    @XmlElement(name = "COLUMN_PROPID", required = false)
     private Integer columnPropId;
 
+    @XmlElement(name = "ORDINAL_POSITION", required = false)
     /**
      * @return The column order for each constraint.
      */
-    @XmlElement(name = "ORDINAL_POSITION", required = false)
     private Integer ordinalPosition;
 
+    @XmlElement(name = "COLUMN_HAS_DEFAULT", required = false)
     /**
      * @return Indicates whether the column has a default. If true, the column has a default. If false,
      *         the column does not have a default.
      */
-    @XmlElement(name = "COLUMN_HAS_DEFAULT", required = false)
     private Boolean columnHasDefault;
 
+    @XmlElement(name = "COLUMN_DEFAULT", required = false)
     /**
      * @return The default value of the column.
      */
-    @XmlElement(name = "COLUMN_DEFAULT", required = false)
     private String columnDefault;
 
+    @XmlElement(name = "COLUMN_FLAG", required = false)
     /**
      * @return A bitmask that indicates column properties. 0x1 - DBCOLUMNFLAGS_ISBOOKMARK – Set if the
      *         column is a bookmark. 0x2 - DBCOLUMNFLAGS_MAYDEFER – Set if the column is deferred. 0x4 -
@@ -110,121 +111,120 @@ public class DbSchemaColumnsResponseRowXml extends Row implements Serializable {
      *         DBCOLUMNFLAGS_CACHEDEFERRED – Set if when a deferred column is first read its value the
      *         column is cached by the provider.
      */
-    @XmlElement(name = "COLUMN_FLAG", required = false)
     private ColumnFlagsEnum columnFlags;
 
+    @XmlElement(name = "IS_NULLABLE", required = false)
     /**
      * @return Indicates whether the column is nullable. If true, indicates that the column is nullable.
      *         Otherwise, false.
      */
-    @XmlElement(name = "IS_NULLABLE", required = false)
     private Boolean isNullable;
 
+    @XmlElement(name = "DATA_TYPE", required = false)
     /**
      * @return The data type of the column. Returns a string for dimension columns and a variant for
      *         measures.
      */
-    @XmlElement(name = "DATA_TYPE", required = false)
     private Integer dataType; // TODO maybe need enum here
 
+    @XmlElement(name = "TYPE_GUID", required = false)
     /**
      * @return The GUID of the column's data type.
      */
-    @XmlElement(name = "TYPE_GUID", required = false)
     private Integer typeGuid;
 
+    @XmlElement(name = "CHARACTER_MAXIMUM_LENGTH", required = false)
     /**
      * @return The maximum possible length of a value in the column, expressed as the number of wide
      *         characters.
      */
-    @XmlElement(name = "CHARACTER_MAXIMUM_LENGTH", required = false)
     private Integer characterMaximum;
 
+    @XmlElement(name = "CHARACTER_OCTET_LENGTH", required = false)
     /**
      * @return The maximum length in octets (bytes) of the column, if the type of the column is
      *         character or binary. A value of zero means that the column has no maximum length. NULL
      *         for all other types of columns.
      */
-    @XmlElement(name = "CHARACTER_OCTET_LENGTH", required = false)
     private Integer characterOctetLength;
 
+    @XmlElement(name = "NUMERIC_PRECISION", required = false)
     /**
      * @return The maximum precision of the column if the column's data type is of a numeric data type
      *         other than DBTYPE_VARNUMERIC.
      */
-    @XmlElement(name = "NUMERIC_PRECISION", required = false)
     private Integer numericPrecision;
 
+    @XmlElement(name = "NUMERIC_SCALE", required = false)
     /**
      * @return The number of digits to the right of the decimal point if the column's type indicator is
      *         DBTYPE_DECIMAL, DBTYPE_NUMERIC, or DBTYPE_VARNUMERIC. Otherwise, this is NULL.
      */
-    @XmlElement(name = "NUMERIC_SCALE", required = false)
     private Integer numericScale;
 
+    @XmlElement(name = "DATETIME_PRECISION", required = false)
     /**
      * @return The date/time precision (number of digits in the fractional seconds portion) of the
      *         column if the column is a DateTime or Interval type.
      */
-    @XmlElement(name = "DATETIME_PRECISION", required = false)
     private Integer dateTimePrecision;
 
+    @XmlElement(name = "CHARACTER_SET_CATALOG", required = false)
     /**
      * @return The catalog name. NULL if the provider does not support catalogs.
      */
-    @XmlElement(name = "CHARACTER_SET_CATALOG", required = false)
     private String characterSetCatalog;
 
+    @XmlElement(name = "CHARACTER_SET_SCHEMA", required = false)
     /**
      * @return The unqualified schema name. NULL if the provider does not support schemas.
      */
-    @XmlElement(name = "CHARACTER_SET_SCHEMA", required = false)
     private String characterSetSchema;
 
+    @XmlElement(name = "CHARACTER_SET_NAME", required = false)
     /**
      * @return The character set name.
      */
-    @XmlElement(name = "CHARACTER_SET_NAME", required = false)
     private String characterSetName;
 
+    @XmlElement(name = "COLLATION_CATALOG", required = false)
     /**
      * @return The catalog name in which the collation is defined. NULL if the provider does not support
      *         catalogs or different collations.
      */
-    @XmlElement(name = "COLLATION_CATALOG", required = false)
     private String collationCatalog;
 
+    @XmlElement(name = "COLLATION_SCHEMA", required = false)
     /**
      * @return The unqualified schema name in which the collation is defined. NULL if the provider does
      *         not support schemas or different collations.
      */
-    @XmlElement(name = "COLLATION_SCHEMA", required = false)
     private String collationSchema;
 
+    @XmlElement(name = "COLLATION_NAME", required = false)
     /**
      * @return The collation name. NULL if the server does not support different collations.
      */
-    @XmlElement(name = "COLLATION_NAME", required = false)
     private String collationName;
 
+    @XmlElement(name = "DOMAIN_CATALOG", required = false)
     /**
      * @return The catalog name in which the domain is defined. NULL if the server does not support
      *         catalogs or domains.
      */
-    @XmlElement(name = "DOMAIN_CATALOG", required = false)
     private String domainCatalog;
 
+    @XmlElement(name = "DOMAIN_SCHEMA", required = false)
     /**
      * @return The unqualified schema name in which the domain is defined. NULL if the server does not
      *         support schemas or domains.
      */
-    @XmlElement(name = "DOMAIN_SCHEMA", required = false)
     private String domainSchema;
 
+    @XmlElement(name = "DOMAIN_NAME", required = false)
     /**
      * @return The domain name. NULL if the server does not support domains
      */
-    @XmlElement(name = "DOMAIN_NAME", required = false)
     private String domainName;
 
     /**
@@ -235,12 +235,12 @@ public class DbSchemaColumnsResponseRowXml extends Row implements Serializable {
     @XmlElement(name = "DESCRIPTION", required = false)
     private String description;
 
+    @XmlElement(name = "COLUMN_OLAP_TYPE", required = false)
     /**
      * @return The OLAP type of the object: MEASURE indicates that the object is a measure. ATTRIBUTE
      *         indicates that the object is a dimension attribute. SCHEMA indicates that the object is a
      *         column in a schema rowset table.
      */
-    @XmlElement(name = "COLUMN_OLAP_TYPE", required = false)
     private ColumnOlapTypeEnum columnOlapType;
 
     public static long getSerialVersionUID() {

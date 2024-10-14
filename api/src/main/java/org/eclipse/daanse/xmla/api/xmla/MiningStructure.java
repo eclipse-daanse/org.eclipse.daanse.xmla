@@ -73,7 +73,7 @@ public interface MiningStructure {
 
     /**
      * @return The LCID of the language to use by default. See [MS-LCID] for information about LCIDs. If
-     *         empty, the server will determine the language to use.<80>
+     *         empty, the server will determine the language to use.
      */
     Optional<BigInteger> language();
 

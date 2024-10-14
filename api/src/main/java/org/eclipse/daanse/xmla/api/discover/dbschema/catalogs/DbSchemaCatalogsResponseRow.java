@@ -92,7 +92,7 @@ public interface DbSchemaCatalogsResponseRow {
     Optional<Double> weightedPopularity();
 
     /**
-     * @return A hint to the client applications about when their data caches, if any, SHOULD<180> be
+     * @return A hint to the client applications about when their data caches, if any, SHOULD be
      *         refreshed after a Refresh command changes the data on the server. The possible values are
      *         as follows: 0 – Client applications are notified to refresh their caches only if a user
      *         query/interaction needs newer data. 1 (default) – Client applications are notified to

@@ -67,7 +67,7 @@ public interface MdSchemaSetsRestrictions {
     Optional<String> setCaption();
 
     /**
-     * A bitmask with one of the following valid values: 0x01 - Cube 0x02 - Dimension<233> The default
+     * A bitmask with one of the following valid values: 0x01 - Cube 0x02 - Dimension The default
      * restriction is a value of 1.
      */
     // @Restriction(name = RESTRICTIONS_CUBE_SOURCE, type = "xsd:int", order = 6)

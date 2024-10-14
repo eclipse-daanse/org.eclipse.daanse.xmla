@@ -116,7 +116,7 @@ public class DbSchemaCatalogsResponseRowXml extends Row implements Serializable 
     Double weightedPopularity;
 
     /**
-     * A hint to the client applications about when their data caches, if any, SHOULD<180> be refreshed
+     * A hint to the client applications about when their data caches, if any, SHOULD be refreshed
      * after a Refresh command changes the data on the server. The possible values are as follows: 0 –
      * Client applications are notified to refresh their caches only if a user query/interaction needs
      * newer data. 1 (default) – Client applications are notified to allow all background cache
@@ -191,7 +191,6 @@ public class DbSchemaCatalogsResponseRowXml extends Row implements Serializable 
 
     /**
      * @deprecated
-     * @return
      */
     @Deprecated(since = "deprecated in specification")
     public LocalDateTime getDateQueried() {
@@ -200,7 +199,6 @@ public class DbSchemaCatalogsResponseRowXml extends Row implements Serializable 
 
     /**
      * @deprecated
-     * @return
      */
     @Deprecated(since = "deprecated in specification")
     public void setDateQueried(LocalDateTime dateQueried) {
@@ -218,7 +216,6 @@ public class DbSchemaCatalogsResponseRowXml extends Row implements Serializable 
 
     /**
      * @deprecated
-     * @return
      */
     @Deprecated(since = "deprecated in specification")
     public void setCurrentlyUsed(Boolean currentlyUsed) {

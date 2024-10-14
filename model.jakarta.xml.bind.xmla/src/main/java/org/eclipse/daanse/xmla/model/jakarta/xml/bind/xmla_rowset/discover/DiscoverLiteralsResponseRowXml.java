@@ -52,8 +52,8 @@ public class DiscoverLiteralsResponseRowXml extends Row implements Serializable 
     private String literalInvalidStartingChars;
 
     /**
-     * @return The maximum number of characters in the literal. If there is no maximum or the maximum is
-     *         unknown, the value is -1.
+     * The maximum number of characters in the literal. If there is no maximum or the maximum is
+     * unknown, the value is -1.
      */
     @XmlElement(name = "LiteralMaxLength", required = true)
     private Integer literalMaxLength;

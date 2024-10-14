@@ -35,25 +35,25 @@ public class DbSchemaSourceTablesResponseRowXml extends Row implements Serializa
     private static final long serialVersionUID = 4980356365829213910L;
 
     /**
-     * @return Catalog name. NULL if the provider does not support catalogs.
+     * Catalog name. NULL if the provider does not support catalogs.
      */
     @XmlElement(name = "TABLE_CATALOG", required = false)
     private String catalogName;
 
     /**
-     * @return Unqualified schema name. NULL if the provider does not support schemas.
+     * Unqualified schema name. NULL if the provider does not support schemas.
      */
     @XmlElement(name = "TABLE_SCHEMA", required = false)
     private String schemaName;
 
     /**
-     * @return Table name
+     * Table name
      */
     @XmlElement(name = "TABLE_NAME", required = false)
     private String tableName;
 
     /**
-     * @return Table type. One of the following or a provider-specific value: ALIAS, TABLE, SYNONYM,
+     * Table type. One of the following or a provider-specific value: ALIAS, TABLE, SYNONYM,
      *         SYSTEM TABLE, VIEW, GLOBAL " TEMPORARY, LOCAL TEMPORARY, EXTERNAL TABLE, SYSTEM VIEW
      */
     @XmlElement(name = "TABLE_TYPE", required = false)

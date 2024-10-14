@@ -34,7 +34,7 @@ public class DbSchemaTablesInfoResponseRowXml extends Row implements Serializabl
     private static final long serialVersionUID = 3219953251608576475L;
 
     /**
-     * @return Catalog name
+     * Catalog name
      */
     @XmlElement(name = "TABLE_CATALOG", required = false)
     private String catalogName;
@@ -46,75 +46,75 @@ public class DbSchemaTablesInfoResponseRowXml extends Row implements Serializabl
     private String schemaName;
 
     /**
-     * @return Table name
+     * Table name
      */
     @XmlElement(name = "TABLE_NAME", required = true)
     private String tableName;
 
     /**
-     * @return Table type
+     * Table type
      */
     @XmlElement(name = "TABLE_TYPE", required = true)
     private String tableType;
 
     /**
-     * @return GUID that uniquely identifies the table. Providers that do not use GUIDs to identify
+     * GUID that uniquely identifies the table. Providers that do not use GUIDs to identify
      *         tables should return NULL in this column.
      */
     @XmlElement(name = "TABLE_GUID", required = false)
     private Integer tableGuid;
 
     /**
-     * @return Whether this table supports bookmarks. Allways is false.
+     * Whether this table supports bookmarks. Allways is false.
      */
     @XmlElement(name = "BOOKMARKS", required = false)
     private Boolean bookmarks;
 
     /**
-     * @return Default bookmark type supported on this table.
+     * Default bookmark type supported on this table.
      */
     @XmlElement(name = "BOOKMARK_TYPE", required = false)
     private Integer bookmarkType;
 
     /**
-     * @return The indicator of the bookmark's native data type.
+     * The indicator of the bookmark's native data type.
      */
     @XmlElement(name = "BOOKMARK_DATA_TYPE", required = false)
     private Integer bookmarkDataType;
 
     /**
-     * @return Maximum length of the bookmark in bytes.
+     * Maximum length of the bookmark in bytes.
      */
     @XmlElement(name = "BOOKMARK_MAXIMUM_LENGTH", required = false)
     private Integer bookmarkMaximumLength;
 
     /**
-     * @return A bitmask specifying additional information about bookmarks over the rowset.
+     * A bitmask specifying additional information about bookmarks over the rowset.
      */
     @XmlElement(name = "BOOKMARK_INFORMATION", required = false)
     private Integer bookmarkInformation;
 
     /**
-     * @return Version number for this table or NULL if the provider does not support returning table
+     * Version number for this table or NULL if the provider does not support returning table
      *         version information.
      */
     @XmlElement(name = "TABLE_VERSION", required = false)
     private Long tableVersion;
 
     /**
-     * @return Cardinality (number of rows) of the table.
+     * Cardinality (number of rows) of the table.
      */
     @XmlElement(name = "CARDINALITY", required = false)
     private Long cardinality;
 
     /**
-     * @return Human-readable description of the table.
+     * Human-readable description of the table.
      */
     @XmlElement(name = "DESCRIPTION", required = false)
     private String description;
 
     /**
-     * @return Property ID of the table. Return null.
+     * Property ID of the table. Return null.
      */
     @XmlElement(name = "TABLE_PROP_ID", required = false)
     private Integer tablePropId;

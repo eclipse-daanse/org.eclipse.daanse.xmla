@@ -36,13 +36,13 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private static final long serialVersionUID = 6172711439326894958L;
 
     /**
-     * @return The server-specific data type name.
+     * The server-specific data type name.
      */
     @XmlElement(name = "TYPE_NAME", required = false)
     private String typeName;
 
     /**
-     * @return This enumeration is the same as LEVEL_DBTYPE for MDSCHEMA_LEVELS. The type of the member
+     * This enumeration is the same as LEVEL_DBTYPE for MDSCHEMA_LEVELS. The type of the member
      *         key column that is used for the level attribute. It MUST be null if concatenated keys are
      *         used as the member key column. Type values are described in the following list: 0 –
      *         (DBTYPE_EMPTY) Indicates that no value was specified. 2 – (DBTYPE_I2) Indicates a
@@ -77,7 +77,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private LevelDbTypeEnum dataType;
 
     /**
-     * @return The length of a non-numeric column or parameter that refers to either the maximum or the
+     * The length of a non-numeric column or parameter that refers to either the maximum or the
      *         length defined for this type by the server. For character data, this is the maximum or
      *         defined length in characters. For DateTime data types, this is the length of the string
      *         representation (assuming the maximum allowed precision of the fractional second
@@ -88,19 +88,19 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Integer columnSize;
 
     /**
-     * @return The character or characters used to prefix a literal of this type in a text command.
+     * The character or characters used to prefix a literal of this type in a text command.
      */
     @XmlElement(name = "LITERAL_PREFIX", required = false)
     private String literalPrefix;
 
     /**
-     * @return The character or characters used to suffix a literal of this type in a text command.
+     * The character or characters used to suffix a literal of this type in a text command.
      */
     @XmlElement(name = "LITERAL_SUFFIX", required = false)
     private String literalSuffix;
 
     /**
-     * @return The creation parameters specified by the consumer when creating a column of this data
+     * The creation parameters specified by the consumer when creating a column of this data
      *         type. For example, the SQL DECIMAL data type needs a precision and a scale. In this case,
      *         the creation parameters might be the string "precision,scale". In a text command to
      *         create a DECIMAL column with a precision of 10 and a scale of 2, the value of the
@@ -119,7 +119,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private String createParams;
 
     /**
-     * @return A Boolean that indicates whether the data type is nullable. True indicates that the data
+     * A Boolean that indicates whether the data type is nullable. True indicates that the data
      *         type is nullable. False indicates that the data type is not nullable. NULL indicates that
      *         it is not known whether the data type is nullable.
      */
@@ -127,7 +127,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean isNullable;
 
     /**
-     * @return A Boolean that indicates whether the data type is a character type and case-sensitive.
+     * A Boolean that indicates whether the data type is a character type and case-sensitive.
      *         True indicates that the data type is a character type and is case-sensitive. False
      *         indicates that the data type is not case- sensitive. NULL indicates that the data type is
      *         not a character type.
@@ -136,7 +136,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean caseSensitive;
 
     /**
-     * @return An integer indicating how the data type can be used in searches if the server supports
+     * An integer indicating how the data type can be used in searches if the server supports
      *         ICommandText; otherwise, NULL. If the server supports ICommandText, then this column can
      *         have the following values: DB_UNSEARCHABLE (0x01) - indicates that the data type cannot
      *         be used in a WHERE clause. DB_LIKE_ONLY (0x02) - indicates that the data type can be used
@@ -149,7 +149,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private SearchableEnum searchable;
 
     /**
-     * @return A Boolean that indicates whether the data type is unsigned. True indicates that the data
+     * A Boolean that indicates whether the data type is unsigned. True indicates that the data
      *         type is unsigned. False indicates that the data type is signed. NULL indicates that this
      *         is not applicable to the data type.
      */
@@ -157,7 +157,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean unsignedAttribute;
 
     /**
-     * @return A Boolean that indicates whether the data type has a fixed precision and scale. True
+     * A Boolean that indicates whether the data type has a fixed precision and scale. True
      *         indicates that the data type has a fixed precision and scale. False indicates that the
      *         data type does not have a fixed precision and scale.
      */
@@ -165,7 +165,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean fixedPrecScale;
 
     /**
-     * @return A Boolean that indicates whether the data type can be autoincrementing. True indicates
+     * A Boolean that indicates whether the data type can be autoincrementing. True indicates
      *         that values of this type can be autoincrementing. False indicates that values of this
      *         type cannot be autoincrementing. If this value is true, the server's
      *         DBPROP_COL_AUTOINCREMENT column property determines whether a column of this type is
@@ -178,14 +178,14 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean autoUniqueValue;
 
     /**
-     * @return The localized version of TYPE_NAME. NULL is returned if a localized name is not supported
+     * The localized version of TYPE_NAME. NULL is returned if a localized name is not supported
      *         by the server.
      */
     @XmlElement(name = "LOCAL_TYPE_NAME", required = false)
     private String localTypeName;
 
     /**
-     * @return If the type indicator is DBTYPE_VARNUMERIC, DBTYPE_DECIMAL, or DBTYPE_NUMERIC, this
+     * If the type indicator is DBTYPE_VARNUMERIC, DBTYPE_DECIMAL, or DBTYPE_NUMERIC, this
      *         column specifies the minimum number of digits allowed to the right of the decimal point.
      *         Otherwise, it is NULL.
      */
@@ -193,7 +193,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Integer minimumScale;
 
     /**
-     * @return If the type indicator is DBTYPE_VARNUMERIC, DBTYPE_DECIMAL, or DBTYPE_NUMERIC, this
+     * If the type indicator is DBTYPE_VARNUMERIC, DBTYPE_DECIMAL, or DBTYPE_NUMERIC, this
      *         column specifies the maximum number of digits allowed to the right of the decimal point.
      *         Otherwise, it is NULL.
      */
@@ -201,21 +201,21 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Integer maximumScale;
 
     /**
-     * @return (Reserved for future use.) The GUID of the type, if the type is described in a type
+     * (Reserved for future use.) The GUID of the type, if the type is described in a type
      *         library. Otherwise, it is NULL.
      */
     @XmlElement(name = "GUID", required = false)
     private Integer guid;
 
     /**
-     * @return The type library that contains the description of the type, if the type is described in a
+     * The type library that contains the description of the type, if the type is described in a
      *         type library. Otherwise, it is NULL.
      */
     @XmlElement(name = "TYPE_LIB", required = false)
     private String typeLib;
 
     /**
-     * @return The version of the type definition. Servers might request to create different versions of
+     * The version of the type definition. Servers might request to create different versions of
      *         type definitions. Different servers might use different versioning schemes, such as a
      *         timestamp or a number (Integer or Float). NULL if not supported.
      */
@@ -223,9 +223,9 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private String version;
 
     /**
-     * @return A Boolean that indicates whether the data type is a binary large object (BLOB) and has
+     * A Boolean that indicates whether the data type is a binary large object (BLOB) and has
      *         very long data. True indicates that the data type is a BLOB that contains very long
-     *         data; the definition of very long data is server-specific.<193> False indicates that the
+     *         data; the definition of very long data is server-specific. False indicates that the
      *         data type is a BLOB that does not contain very long data or that is not a BLOB. This
      *         column value determines the setting of the DBCOLUMNFLAGS_ISLONG flag that is returned by
      *         GetColumnInfo in IColumnsInfo and the setting of the DBCOLUMNFLAGS_ISLONG flag that is
@@ -235,7 +235,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean isLong;
 
     /**
-     * @return A Boolean that indicates whether the data type is the best match. A value of true
+     * A Boolean that indicates whether the data type is the best match. A value of true
      *         indicates that the data type is the best match between all data types in the data store
      *         and the OLE DB data type that is indicated by the value in the DATA_TYPE column. For more
      *         information, see [MSDN-OLEDB]. A value of false indicates that the data type is not the
@@ -246,7 +246,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
     private Boolean bestMatch;
 
     /**
-     * @return A Boolean that indicates whether the column is fixed in length. A value of true indicates
+     * A Boolean that indicates whether the column is fixed in length. A value of true indicates
      *         that columns of this type that are created by the DDL will be of fixed length. A value of
      *         false indicates that columns of this type that are created by the DDL will be of variable
      *         length. If the field is NULL, it is not known whether the server will map this field with

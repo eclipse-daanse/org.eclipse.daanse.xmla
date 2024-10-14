@@ -20,7 +20,7 @@ import jakarta.xml.bind.annotation.XmlType;
 import java.util.stream.Stream;
 
 /**
- * A hint to the client applications about when their data caches, if any, SHOULD<180> be refreshed
+ * A hint to the client applications about when their data caches, if any, SHOULD be refreshed
  * after a Refresh command changes the data on the server.
  */
 @XmlType(name = "ClientCacheRefreshPolicy")

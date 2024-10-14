@@ -77,7 +77,7 @@ public class MdSchemaMembersResponseRowXml extends AbstractMdSchemaResponseRowXm
     private String memberUniqueName;
 
     /**
-     * The type of the member.<228 1 - Is a regular member. 2 - Is the All member. 3 - Is a measure. 4 -
+     * The type of the member.1 - Is a regular member. 2 - Is the All member. 3 - Is a measure. 4 -
      * Is a formula. 0 - Is of unknown type.
      */
     @XmlElement(name = "MEMBER_TYPE", required = false)

@@ -78,7 +78,7 @@ import org.eclipse.daanse.xmla.api.execute.ExecuteService;
  * The {@link DiscoverService} gives access to all discover methods of the {@link XmlaService}. The
  * execute methods could be found in the {@link ExecuteService}.
  *
- * @see {@link ExecuteService}
+ * see {@link ExecuteService}
  */
 public interface DiscoverService {
 

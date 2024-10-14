@@ -13,10 +13,10 @@
 package org.eclipse.daanse.xmla.api.xmla;
 
 /**
- * @return Indicates the part of the Attribute to bind to. Enumeration values are as follows: All:
- *         All Level Key: Member keys Name: Member name Value: Member value Translation: Member
- *         translations UnaryOperator: Unary operators SkippedLevels: Skipped levels CustomRollup:
- *         Custom rollup formulas CustomRollupProperties: Custom rollup properties
+ *Indicates the part of the Attribute to bind to. Enumeration values are as follows: All:
+ *All Level Key: Member keys Name: Member name Value: Member value Translation: Member
+ *translations UnaryOperator: Unary operators SkippedLevels: Skipped levels CustomRollup:
+ *Custom rollup formulas CustomRollupProperties: Custom rollup properties
  */
 public enum AttributeBindingTypeEnum {
 
