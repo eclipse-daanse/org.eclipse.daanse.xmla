@@ -12,5 +12,7 @@
 *   Stefan Bischof (bipolis.org) - initial
 */
 @org.osgi.annotation.bundle.Export
-@jakarta.xml.bind.annotation.XmlSchema(namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset", elementFormDefault = XmlNsForm.QUALIFIED)
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_mddataset;
+
+import jakarta.xml.bind.annotation.XmlNsForm;

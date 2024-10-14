@@ -13,13 +13,18 @@
 */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_mddataset;
 
+import java.time.LocalDateTime;
+
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.eclipse.daanse.xmla.model.jakarta.xml.bind.adapters.LocalDateTimeAdapter;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OlapInfoCube", propOrder = { "cubeName", "lastDataUpdate", "lastSchemaUpdate" })
@@ -27,12 +32,12 @@ public class OlapInfoCube {
 
     @XmlElement(name = "CubeName", required = true)
     protected String cubeName;
-    @XmlElement(name = "LastDataUpdate", namespace = "http://schemas.microsoft.com/analysisservices/2003/engine")
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar lastDataUpdate;
-    @XmlElement(name = "LastSchemaUpdate", namespace = "http://schemas.microsoft.com/analysisservices/2003/engine")
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar lastSchemaUpdate;
+    @XmlElement(name = "LastDataUpdate", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    protected LocalDateTime lastDataUpdate;
+    @XmlElement(name = "LastSchemaUpdate", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    protected LocalDateTime lastSchemaUpdate;
 
     public String getCubeName() {
         return cubeName;
@@ -42,19 +47,19 @@ public class OlapInfoCube {
         this.cubeName = value;
     }
 
-    public XMLGregorianCalendar getLastDataUpdate() {
+    public LocalDateTime getLastDataUpdate() {
         return lastDataUpdate;
     }
 
-    public void setLastDataUpdate(XMLGregorianCalendar value) {
+    public void setLastDataUpdate(LocalDateTime value) {
         this.lastDataUpdate = value;
     }
 
-    public XMLGregorianCalendar getLastSchemaUpdate() {
+    public LocalDateTime getLastSchemaUpdate() {
         return lastSchemaUpdate;
     }
 
-    public void setLastSchemaUpdate(XMLGregorianCalendar value) {
+    public void setLastSchemaUpdate(LocalDateTime value) {
         this.lastSchemaUpdate = value;
     }
 

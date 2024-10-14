@@ -209,9 +209,7 @@ class DiscoverResponseTest {
 
     private static final String CATALOG_NAME = "CATALOG_NAME";
 
-    private static final String DATE = "2023-02-16T10:10";
-
-    private static final String DATE1 = "2023-02-16T10:10:00";
+    private static final String DATE = "2023-02-16T10:10:00";
 
     private static final String SOAP_ENVELOPE_SOAP_BODY_MSXMLA_DISCOVER_RESPONSE_RETURN_ROWSET_ROOT_ROWSET_ROW_ROWSET = "/SOAP:Envelope/SOAP:Body/msxmla:DiscoverResponse/msxmla:return/rowset:root/rowset:row/rowset";
 
@@ -489,7 +487,7 @@ class DiscoverResponseTest {
             Map.entry(CATALOG_NAME, CATALOG_NAME_LOW),
             Map.entry(DESCRIPTION, DESCRIPTION_LOW),
             Map.entry("ROLES", "roles"),
-            Map.entry("DATE_MODIFIED", DATE1),
+            Map.entry("DATE_MODIFIED", DATE),
             Map.entry("VERSION", "2"),
             Map.entry("DATABASE_ID", "databaseId"),
             Map.entry("DATE_QUERIED", DATE),
@@ -893,9 +891,9 @@ class DiscoverResponseTest {
             Map.entry("CUBE_TYPE", "CUBE"),
             Map.entry("CUBE_GUID", "1"),
             Map.entry("CREATED_ON", DATE),
-            Map.entry("LAST_SCHEMA_UPDATE", DATE1),
+            Map.entry("LAST_SCHEMA_UPDATE", DATE),
             Map.entry("SCHEMA_UPDATED_BY", "schemaUpdatedBy"),
-            Map.entry("LAST_DATA_UPDATE", DATE1),
+            Map.entry("LAST_DATA_UPDATE", DATE),
             Map.entry("DATA_UPDATED_BY", "dataUpdateDBy"),
             Map.entry(DESCRIPTION, DESCRIPTION_LOW),
             Map.entry("IS_DRILLTHROUGH_ENABLED", "true"),
