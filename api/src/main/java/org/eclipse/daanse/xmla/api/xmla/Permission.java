@@ -74,7 +74,7 @@ public interface Permission {
     /**
      * @return A string that specifies whether the role has permission to read metadata or data from the
      *         object or any of its contained objects. "None" implies no read access to object metadata
-     *         or data.<99> "Allowed" implies full read access to object metadata or data.
+     *         or data. "Allowed" implies full read access to object metadata or data.
      */
     Optional<ReadWritePermissionEnum> read();
 

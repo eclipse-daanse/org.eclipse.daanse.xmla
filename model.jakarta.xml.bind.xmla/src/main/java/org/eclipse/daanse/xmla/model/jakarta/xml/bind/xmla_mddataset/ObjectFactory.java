@@ -198,7 +198,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SetListType.Union }
+     * Create an instance of {@link Union }
      *
      */
     public Union createSetListTypeUnion() {

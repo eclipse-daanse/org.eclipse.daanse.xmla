@@ -195,7 +195,7 @@ public interface DbSchemaProviderTypesResponseRow {
     /**
      * @return A Boolean that indicates whether the data type is a binary large object (BLOB) and has
      *         very long data. True indicates that the data type is a BLOB that contains very long
-     *         data; the definition of very long data is server-specific.<193> False indicates that the
+     *         data; the definition of very long data is server-specific. False indicates that the
      *         data type is a BLOB that does not contain very long data or that is not a BLOB. This
      *         column value determines the setting of the DBCOLUMNFLAGS_ISLONG flag that is returned by
      *         GetColumnInfo in IColumnsInfo and the setting of the DBCOLUMNFLAGS_ISLONG flag that is

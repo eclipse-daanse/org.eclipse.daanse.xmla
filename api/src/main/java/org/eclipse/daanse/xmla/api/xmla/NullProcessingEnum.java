@@ -15,7 +15,7 @@ package org.eclipse.daanse.xmla.api.xmla;
 public enum NullProcessingEnum {
 
     /**
-     * The server determines how null processing is handled.<97> "Automatic" uses the default processing
+     * The server determines how null processing is handled. "Automatic" uses the default processing
      * that is appropriate for the element
      */
     AUTOMATIC("Automatic"),

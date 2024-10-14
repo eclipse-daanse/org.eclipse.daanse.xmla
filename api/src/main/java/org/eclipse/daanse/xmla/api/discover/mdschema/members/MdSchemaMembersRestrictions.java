@@ -94,7 +94,7 @@ public interface MdSchemaMembersRestrictions {
     Optional<String> memberUniqueName();
 
     /**
-     * @return The type of the member.<228> 1 - Is a regular member. 2 - Is the All member. 3 - Is a
+     * @return The type of the member. 1 - Is a regular member. 2 - Is the All member. 3 - Is a
      *         measure. 4 - Is a formula. 0 - Is of unknown type.
      */
     @Restriction(name = RESTRICTIONS_MEMBER_TYPE, type = XSD_STRING, order = 10)

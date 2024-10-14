@@ -78,7 +78,7 @@ public interface MdSchemaHierarchiesRestrictions {
     Optional<Integer> hierarchyOrigin();
 
     /**
-     * @return A bitmask with one of these valid values: 0x01 - Cube 0x02 - Dimension<214> The default
+     * @return A bitmask with one of these valid values: 0x01 - Cube 0x02 - Dimension The default
      *         restriction is a value of 1.
      */
     @Restriction(name = RESTRICTIONS_CUBE_SOURCE, type = XSD_INTEGER, order = 7)

@@ -16,7 +16,7 @@ package org.eclipse.daanse.xmla.api.engine200_200;
 import org.eclipse.daanse.xmla.api.xmla.Binding;
 
 /**
- * This complex type represents a binding to the row number of the source table.<98> The
+ * This complex type represents a binding to the row number of the source table. The
  * RowNumberBinding complex type is not defined in the default namespace. It is defined in the
  * eng200_200: namespace.
  */

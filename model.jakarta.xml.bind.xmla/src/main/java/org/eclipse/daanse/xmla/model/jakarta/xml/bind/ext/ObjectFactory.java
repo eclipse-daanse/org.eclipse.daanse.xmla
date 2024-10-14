@@ -20,7 +20,7 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for
-     * package: org.eclipse.daanse.xmla.ws.ext
+     * package: org.eclipse.daanse.xmla.model.jakarta.xml.bind.ext
      *
      */
     public ObjectFactory() {
@@ -44,7 +44,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AuthenticateResponse.ReturnValue }
+     * Create an instance of {@link ReturnValue }
      *
      */
     public ReturnValue createAuthenticateResponseReturn() {
