@@ -32,7 +32,7 @@ public interface PerspectiveAttribute {
     Optional<Boolean> attributeHierarchyVisible();
 
     /**
-     * @return An MDX expression specifying the default member for this attribute.<79>
+     * @return An MDX expression specifying the default member for this attribute.
      */
     Optional<String> defaultMember();
 

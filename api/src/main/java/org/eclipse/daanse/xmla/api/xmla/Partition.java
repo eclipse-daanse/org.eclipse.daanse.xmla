@@ -157,7 +157,7 @@ public interface Partition {
     /**
      * @return An enumeration value that specifies the string store compatibility level that will be
      *         instituted the next time the object is processed. The valid values are the following:
-     *         1050 – Standard string handling. (default) 1100 – Enhanced string handling.<78>
+     *         1050 – Standard string handling. (default) 1100 – Enhanced string handling.
      */
     Integer stringStoresCompatibilityLevel();
 

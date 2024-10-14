@@ -83,7 +83,7 @@ public interface MdSchemaLevelsRestrictions {
     Optional<LevelOriginEnum> levelOrigin();
 
     /**
-     * @return A bitmask with one of these valid values: 0x01 - Cube 0x02 - Dimension<218> The default
+     * @return A bitmask with one of these valid values: 0x01 - Cube 0x02 - Dimension The default
      *         restriction is a value of 1.
      */
     @Restriction(name = RESTRICTIONS_CUBE_SOURCE, type = XSD_INTEGER, order = 8)

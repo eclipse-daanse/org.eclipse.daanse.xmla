@@ -29,7 +29,7 @@ public interface DimensionPermission extends Permission {
     /**
      * @return This string is to contain a DAX Boolean expression that evaluates to TRUE for the rows in
      *         the table that are allowed. This is equivalent to saying that the table expression that
-     *         returns the allowed rows is FILTER (ALL (Table), AllowedRowsExpression).<100> Element
+     *         returns the allowed rows is FILTER (ALL (Table), AllowedRowsExpression). Element
      *         Read- Only If the DAX Boolean expression is empty, it is treated as TRUE. If the DAX
      *         Boolean expression evaluates to an error, it is treated as FALSE for those rows and
      *         permission is not allowed.

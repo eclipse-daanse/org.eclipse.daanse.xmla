@@ -34,7 +34,7 @@ public class DbSchemaSchemataResponseRowXml extends Row implements Serializable 
     private static final long serialVersionUID = 5088358216257720851L;
 
     /**
-     * @return Catalog name
+     * Catalog name
      */
     @XmlElement(name = "CATALOG_NAME", required = true)
     private String catalogName;
@@ -46,7 +46,7 @@ public class DbSchemaSchemataResponseRowXml extends Row implements Serializable 
     private String schemaName;
 
     /**
-     * @return Schema owner
+     * Schema owner
      */
     @XmlElement(name = "SCHEMA_OWNER", required = true)
     private String schemaOwner;

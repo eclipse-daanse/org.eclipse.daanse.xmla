@@ -45,7 +45,7 @@ public interface DataItem {
 
     /**
      * @return Sets the processing of NULL values: "Automatic" – The server determines how null
-     *         processing is handled.<97> "Automatic" uses the default processing that is appropriate
+     *         processing is handled. "Automatic" uses the default processing that is appropriate
      *         for the element: "UnknownMember" – Generates an unknown member. This value MUST NOT be
      *         used if the column is associated with a measure. "ZeroOrBlank" – Converts the null value
      *         to zero (for numeric data items) or a blank string (for string data items). "Preserve" –

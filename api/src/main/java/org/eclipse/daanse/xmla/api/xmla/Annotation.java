@@ -16,12 +16,12 @@ package org.eclipse.daanse.xmla.api.xmla;
 import java.util.Optional;
 
 /**
- *
+ * Annotation
  */
 public interface Annotation {
 
     /**
-     * @return This element SHOULD<92> be in a style that references the vendor's XML namespace, to
+     * @return This element SHOULD be in a style that references the vendor's XML namespace, to
      *         prevent collisions in sharing of information contained in other Annotation objects. The
      *         Name element MUST be unique within the collection of Annotations that is contained within
      *         an individual object.
