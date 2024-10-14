@@ -662,7 +662,7 @@ public class SoapUtil {
 
     private static void addRowSetRowItem(SOAPElement e, RowSetRowItem it) {
         if (it != null) {
-            SOAPElement el = addChildElement(e, it.tagName(), Constants.ROWSET.PREFIX);
+            SOAPElement el = addChildElement(e, it.tagName(), null);
             el.setTextContent(it.value());
             it.type().ifPresent(v -> setAttribute(el, "type", v.getValue()));
         }
@@ -723,8 +723,8 @@ public class SoapUtil {
         r.tableGuid().ifPresent(v -> addChildElement(row, QN_TABLE_GUID, v));
         r.description().ifPresent(v -> addChildElement(row, QN_DESCRIPTION, v));
         r.tablePropId().ifPresent(v -> addChildElement(row, QN_TABLE_PROP_ID, String.valueOf(v)));
-        r.dateCreated().ifPresent(v -> addChildElement(row, QN_DATE_CREATED, String.valueOf(v)));
-        r.dateModified().ifPresent(v -> addChildElement(row,  QN_DATE_MODIFIED, String.valueOf(v)));
+        r.dateCreated().ifPresent(v -> addChildElement(row, QN_DATE_CREATED, v.format(formatter)));
+        r.dateModified().ifPresent(v -> addChildElement(row,  QN_DATE_MODIFIED, v.format(formatter)));
     }
 
     private static void addDiscoverLiteralsResponseRow(SOAPElement root, DiscoverLiteralsResponseRow r)
@@ -792,7 +792,7 @@ public class SoapUtil {
         r.type().ifPresent(v -> addChildElement(row, QN_TYPE, String.valueOf(v.getValue())));
         r.version().ifPresent(v -> addChildElement(row, QN_VERSION, String.valueOf(v)));
         r.databaseId().ifPresent(v -> addChildElement(row, QN_DATABASE_ID, v));
-        r.dateQueried().ifPresent(v -> addChildElement(row, QN_DATE_QUERIED, String.valueOf(v)));
+        r.dateQueried().ifPresent(v -> addChildElement(row, QN_DATE_QUERIED, v.format(formatter)));
         r.currentlyUsed().ifPresent(v -> addChildElement(row, QN_CURRENTLY_USED, String.valueOf(v)));
         r.popularity().ifPresent(v -> addChildElement(row, QN_POPULARITY, String.valueOf(v)));
         r.weightedPopularity().ifPresent(v -> addChildElement(row, QN_WEIGHTEDPOPULARITY, String.valueOf(v)));
@@ -1192,7 +1192,7 @@ public class SoapUtil {
 
         r.cubeType().ifPresent(v -> addChildElement(row, QN_CUBE_TYPE, v.name()));
         r.cubeGuid().ifPresent(v -> addChildElement(row, QN_CUBE_GUID, String.valueOf(v)));
-        r.createdOn().ifPresent(v -> addChildElement(row, QN_CREATED_ON, String.valueOf(v)));
+        r.createdOn().ifPresent(v -> addChildElement(row, QN_CREATED_ON, v.format(formatter)));
         r.lastSchemaUpdate().ifPresent(v -> addChildElement(row, QN_LAST_SCHEMA_UPDATE,  v.format(formatter)));
         r.schemaUpdatedBy().ifPresent(v -> addChildElement(row, QN_SCHEMA_UPDATED_BY, v));
         r.lastDataUpdate().ifPresent(v -> addChildElement(row, Constants.ROWSET.ROW_PROPERTY.QN_LAST_DATA_UPDATE, v.format(formatter)));
@@ -1639,8 +1639,7 @@ public class SoapUtil {
 
     private static void addCellInfoItemName(SOAPElement e, CellInfoItem it) {
         if (it != null) {
-            String prefix = Constants.MDDATASET.PREFIX;
-            SOAPElement el = addChildElement(e, it.tagName(), prefix);
+            SOAPElement el = addChildElement(e, it.tagName(), null);
             setAttribute(el, "name", it.name());
             it.type().ifPresent(v -> setAttribute(el, "type", v));
         }
@@ -1649,7 +1648,7 @@ public class SoapUtil {
     private static void addCellInfoItem(SOAPElement e, CellInfoItem it) {
         if (it != null) {
             String prefix = Constants.MDDATASET.PREFIX;
-            SOAPElement el = addChildElement(e, it.tagName(), prefix);
+            SOAPElement el = addChildElement(e, it.tagName(), null);
             el.setTextContent(it.name());
             it.type().ifPresent(v -> setAttribute(el, "type", v));
         }

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.eclipse.daanse.xmla.api.common.enums.ActionTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ColumnOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.CoordinateTypeEnum;
@@ -690,14 +689,14 @@ public class Convert {
         String schemaName = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_SCHEMA_NAME);
         String cubeName = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_CUBE_NAME);
         String actionName = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_ACTION_NAME);
-        String actionType = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_ACTION_TYPE);
+        //String actionType = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_ACTION_TYPE); //excel doesn't work with RESTRICTIONS_ACTION_TYPE
         String coordinate = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_COORDINATE);
         String coordinateType = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_COORDINATE_TYPE);
         String invocation = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_INVOCATION);
         String cubeSource = map.get(MdSchemaActionsRestrictions.RESTRICTIONS_CUBE_SOURCE);
 
         return new MdSchemaActionsRestrictionsR(Optional.ofNullable(catalogName), Optional.ofNullable(schemaName),
-            cubeName, Optional.ofNullable(actionName), Optional.ofNullable(ActionTypeEnum.fromValue(actionType)),
+            cubeName, Optional.ofNullable(actionName), Optional.empty(), //excel doesn't work with RESTRICTIONS_ACTION_TYPE
             Optional.ofNullable(coordinate), CoordinateTypeEnum.fromValue(coordinateType),
             InvocationEnum.fromValue(invocation), Optional.ofNullable(CubeSourceEnum.fromValue(cubeSource)));
     }

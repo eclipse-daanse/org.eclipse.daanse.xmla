@@ -17,6 +17,7 @@ import static org.eclipse.daanse.xmla.server.jakarta.jws.ConvertorUtil.convertEx
 import static org.eclipse.daanse.xmla.server.jakarta.jws.ConvertorUtil.convertMessages;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -105,7 +106,7 @@ public class MdDataSetConvertor {
     private static CellType convertCellType(org.eclipse.daanse.xmla.api.mddataset.CellType cellType) {
         if (cellType != null) {
             CellType res = new CellType();
-            res.setAny(convertElementList(cellType.any()));
+            res.setAny(convertElementList1(cellType.any()));
             res.setValue(convertValue(cellType.value()));
             res.setCellOrdinal(cellType.cellOrdinal());
             return res;
@@ -148,6 +149,13 @@ public class MdDataSetConvertor {
         return List.of();
     }
 
+    private static List<Element> convertElementList1(List<CellInfoItem> anyList) {
+        if (anyList != null) {
+            return anyList.stream().map(MdDataSetConvertor::convertElement1).toList();
+        }
+        return List.of();
+    }
+
     private static Element convertElement(CellInfoItem cellInfoItem) {
         if (cellInfoItem != null) {
             try {
@@ -156,6 +164,26 @@ public class MdDataSetConvertor {
                     .newDocument();
                 Element element = document.createElement(cellInfoItem.tagName());
                 element.setAttribute(NAME, cellInfoItem.name());
+
+                cellInfoItem.type().ifPresent(type -> element.setAttribute(TYPE, type));
+
+                return element;
+            } catch (ParserConfigurationException e) {
+                throw new ConvertorException(e);
+            }
+        }
+
+        return null;
+    }
+
+    private static Element convertElement1(CellInfoItem cellInfoItem) {
+        if (cellInfoItem != null) {
+            try {
+                Document document = DocumentBuilderFactory.newInstance()
+                    .newDocumentBuilder()
+                    .newDocument();
+                Element element = document.createElement(cellInfoItem.tagName());
+                element.setTextContent(cellInfoItem.name());
 
                 cellInfoItem.type().ifPresent(type -> element.setAttribute(TYPE, type));
 
@@ -199,8 +227,8 @@ public class MdDataSetConvertor {
         if (olapInfoCube != null) {
             OlapInfoCube res = new OlapInfoCube();
             res.setCubeName(olapInfoCube.cubeName());
-            res.setLastDataUpdate(convertToXMLGregorianCalendar(olapInfoCube.lastDataUpdate()));
-            res.setLastSchemaUpdate(convertToXMLGregorianCalendar(olapInfoCube.lastSchemaUpdate()));
+            res.setLastDataUpdate(olapInfoCube.lastDataUpdate() != null ? LocalDateTime.ofInstant(olapInfoCube.lastDataUpdate(), ZoneId.systemDefault()) : null);
+            res.setLastSchemaUpdate(olapInfoCube.lastSchemaUpdate() != null ? LocalDateTime.ofInstant(olapInfoCube.lastSchemaUpdate(), ZoneId.systemDefault()) : null);
             return res;
         }
         return null;
@@ -415,7 +443,7 @@ public class MdDataSetConvertor {
         if (memberType != null) {
             MemberType res = new MemberType();
             res.setHierarchy(memberType.hierarchy());
-            res.setAny(convertElementList(memberType.any()));
+            res.setAny(convertElementList1(memberType.any()));
             return res;
         }
         return null;

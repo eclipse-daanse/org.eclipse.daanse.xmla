@@ -33,7 +33,7 @@ public class Mddataset {
     protected Axes axes;
     @XmlElement(name = "CellData")
     protected CellData cellData;
-    @XmlElement(name = "Exception")
+    @XmlElement(name = "Exception", namespace = "")
     protected Exception exception;
     @XmlElement(name = "Messages")
     protected Messages messages;
