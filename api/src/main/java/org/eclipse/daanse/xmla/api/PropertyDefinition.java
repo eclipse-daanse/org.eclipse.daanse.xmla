@@ -107,9 +107,6 @@ public enum PropertyDefinition {
             XmlaConstants.Method.DISCOVER, "The version of the Mondrian XMLA Provider"),
 
     // Mondrian-specific extension to XMLA.
-    /**
-     * @see Enumeration.ResponseMimeType
-     */
     ResponseMimeType(RowsetDefinitionType.STRING, null, XmlaConstants.Access.ReadWrite, "None",
             XmlaConstants.Method.DISCOVER_AND_EXECUTE,
             "Accepted mime type for RPC response; accepted are 'text/xml' "
