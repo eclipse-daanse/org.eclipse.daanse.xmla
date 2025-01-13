@@ -662,7 +662,7 @@ public class SoapUtil {
 
     private static void addRowSetRowItem(SOAPElement e, RowSetRowItem it) {
         if (it != null) {
-            SOAPElement el = addChildElement(e, it.tagName(), null);
+            SOAPElement el = addChildElement(e, it.tagName(), Constants.ROWSET.PREFIX);
             el.setTextContent(it.value());
             it.type().ifPresent(v -> setAttribute(el, "type", v.getValue()));
         }
@@ -1639,7 +1639,8 @@ public class SoapUtil {
 
     private static void addCellInfoItemName(SOAPElement e, CellInfoItem it) {
         if (it != null) {
-            SOAPElement el = addChildElement(e, it.tagName(), null);
+            String prefix = Constants.MDDATASET.PREFIX;
+            SOAPElement el = addChildElement(e, it.tagName(), prefix);
             setAttribute(el, "name", it.name());
             it.type().ifPresent(v -> setAttribute(el, "type", v));
         }
@@ -1648,7 +1649,7 @@ public class SoapUtil {
     private static void addCellInfoItem(SOAPElement e, CellInfoItem it) {
         if (it != null) {
             String prefix = Constants.MDDATASET.PREFIX;
-            SOAPElement el = addChildElement(e, it.tagName(), null);
+            SOAPElement el = addChildElement(e, it.tagName(), prefix);
             el.setTextContent(it.name());
             it.type().ifPresent(v -> setAttribute(el, "type", v));
         }
