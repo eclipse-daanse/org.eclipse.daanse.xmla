@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface UserPrincipal {
 
-    String getUserId();
+    String userId();
 
-    List<String> getRole();
+    List<String> roles();
 }
