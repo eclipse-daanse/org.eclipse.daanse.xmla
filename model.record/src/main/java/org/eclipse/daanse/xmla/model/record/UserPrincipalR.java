@@ -17,6 +17,6 @@ import org.eclipse.daanse.xmla.api.UserPrincipal;
 
 import java.util.List;
 
-public record UserPrincipalR(String getUserId, List<String> getRole) implements UserPrincipal {
+public record UserPrincipalR(String userId, List<String> roles) implements UserPrincipal {
 
 }
