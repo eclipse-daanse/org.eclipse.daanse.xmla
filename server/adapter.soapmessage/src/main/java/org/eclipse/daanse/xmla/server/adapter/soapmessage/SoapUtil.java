@@ -2084,8 +2084,8 @@ public class SoapUtil {
         SOAPElement se5 = addChildElement(s, Constants.XSD.QN_ELEMENT);
         se5.setAttribute("sql:field", "CUBE_GUID");
         se5.setAttribute("name", "CUBE_GUID");
-        se5.setAttribute("type", "xsd:string");
-        se2.setAttribute("minOccurs", "0");
+        se5.setAttribute("type", "uuid");
+        se5.setAttribute("minOccurs", "0");
 
         SOAPElement se6 = addChildElement(s, Constants.XSD.QN_ELEMENT);
         se6.setAttribute("sql:field", "CREATED_ON");
