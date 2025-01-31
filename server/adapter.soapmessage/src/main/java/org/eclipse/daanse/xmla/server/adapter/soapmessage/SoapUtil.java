@@ -370,7 +370,8 @@ import jakarta.xml.soap.SOAPException;
 
 public class SoapUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class);
+    private static final String UUID_VALUE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+	private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class);
 
     private SoapUtil() {
         // constructor
@@ -1746,7 +1747,7 @@ public class SoapUtil {
         SOAPElement r = addChildElement(st, Constants.XSD.QN_RESTRICTION);
         r.setAttribute("base", "xsd:string");
         SOAPElement p = addChildElement(r, Constants.XSD.QN_PATTERN);
-        p.setAttribute("value", "[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}");
+        p.setAttribute("value", UUID_VALUE);
 
         SOAPElement ct1 = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
         ct1.setAttribute("name", "row");
@@ -1814,7 +1815,7 @@ public class SoapUtil {
         SOAPElement r = addChildElement(st, Constants.XSD.QN_RESTRICTION);
         r.setAttribute("base", "xsd:string");
         SOAPElement p = addChildElement(r, Constants.XSD.QN_PATTERN);
-        p.setAttribute("value", "[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}");
+        p.setAttribute("value", UUID_VALUE);
 
         SOAPElement ct1 = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
         ct1.setAttribute("name", "xmlDocument");
@@ -2621,7 +2622,7 @@ public class SoapUtil {
         SOAPElement r = addChildElement(st, Constants.XSD.QN_RESTRICTION);
         r.setAttribute("base", "xsd:string");
         SOAPElement p = addChildElement(r, Constants.XSD.QN_PATTERN);
-        p.setAttribute("value", "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
+        p.setAttribute("value", UUID_VALUE);
         return schema;
     }
 
@@ -2685,7 +2686,7 @@ public class SoapUtil {
         SOAPElement restriction = addChildElement(simpleType, Constants.XSD.QN_RESTRICTION);
         restriction.setAttribute("base", "xsd:string");
         SOAPElement pattern = addChildElement(restriction, Constants.XSD.QN_RESTRICTION);
-        pattern.setAttribute("value", "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
+        pattern.setAttribute("value", UUID_VALUE);
 
         SOAPElement ct = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
         ct.setAttribute("name", "row");
