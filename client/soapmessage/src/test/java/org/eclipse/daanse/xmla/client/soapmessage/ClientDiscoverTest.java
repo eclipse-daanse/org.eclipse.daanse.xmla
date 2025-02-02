@@ -474,7 +474,7 @@ class ClientDiscoverTest {
         PropertiesR properties = new PropertiesR();
         properties.addProperty(PropertyListElementDefinition.DATA_SOURCE_INFO, "FoodMart");
         properties.addProperty(PropertyListElementDefinition.CONTENT, "SchemaData");
-        DiscoverPropertiesRestrictionsR restrictions = new DiscoverPropertiesRestrictionsR(Optional.of("PropertyName"));
+        DiscoverPropertiesRestrictionsR restrictions = new DiscoverPropertiesRestrictionsR(List.of("PropertyName"));
 
         RequestMetaData requestMetaData = null;
         UserPrincipal userPrincipal = null;
