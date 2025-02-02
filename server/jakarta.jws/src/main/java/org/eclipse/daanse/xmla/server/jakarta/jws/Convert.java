@@ -19,6 +19,7 @@ import static org.eclipse.daanse.xmla.server.jakarta.jws.ConvertorUtil.convertEx
 import static org.eclipse.daanse.xmla.server.jakarta.jws.ConvertorUtil.convertMessages;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -324,8 +325,11 @@ public class Convert {
         Map<String, String> map = restrictionsMap(requestWs);
 
         String propertyName = map.get(DiscoverPropertiesRestrictions.RESTRICTIONS_PROPERTY_NAME);
-
-        return new DiscoverPropertiesRestrictionsR(Optional.ofNullable(propertyName));
+        if (propertyName != null) {
+            String[] properties = propertyName.split("\\n");
+            return new DiscoverPropertiesRestrictionsR(Arrays.stream(properties).map(s -> s.trim()).filter(s -> s.length() > 0).toList());
+        }
+        return new DiscoverPropertiesRestrictionsR(List.of());
     }
 
     public static DiscoverPropertiesRequest fromDiscoverProperties(Discover requestWs) {

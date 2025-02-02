@@ -75,6 +75,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRestrictions.RESTRICTIONS_AUTHENTICATION_MODE;
 import static org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRestrictions.RESTRICTIONS_DATA_SOURCE_DESCRIPTION;
@@ -673,7 +674,10 @@ public class DiscoverConsumers {
                 discover.addChildElement(REQUEST_TYPE).setTextContent(DISCOVER_PROPERTIES);
                 SOAPElement restrictionList = discover.addChildElement(RESTRICTIONS).addChildElement(RESTRICTION_LIST);
 
-                dr.propertyName().ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_PROPERTY_NAME, v));
+                if (dr.propertyName().size() > 0) {
+                    String joinedStr = dr.propertyName().stream().collect(Collectors.joining("\n", "", ""));
+                    addChildElement(restrictionList, RESTRICTIONS_PROPERTY_NAME, joinedStr);
+                }
 
                 SOAPElement propertyList = discover.addChildElement(PROPERTIES).addChildElement(PROPERTY_LIST);
                 addChildElementPropertyList(propertyList, properties);

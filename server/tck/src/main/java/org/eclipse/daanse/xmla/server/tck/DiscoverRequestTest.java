@@ -16,7 +16,6 @@ package org.eclipse.daanse.xmla.server.tck;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.UserPrincipal;
 import org.eclipse.daanse.xmla.api.XmlaService;
-import org.eclipse.daanse.xmla.api.common.enums.ActionTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ColumnOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
@@ -161,7 +160,7 @@ class DiscoverRequestTest {
                 assertThat(p.format()).isNotNull().isNotPresent();
             });
             assertThat(d.restrictions()).isNotNull()
-                    .satisfies(r -> assertThat(r.propertyName()).isNotNull().isNotPresent());
+                    .satisfies(r -> assertThat(r.propertyName()).isNotNull());
         });
     }
 
@@ -205,7 +204,7 @@ class DiscoverRequestTest {
                 assertThat(p.format()).isNotNull().isPresent().contains(TABULAR);
             });
             assertThat(d.restrictions()).isNotNull()
-                    .satisfies(r -> assertThat(r.propertyName()).isNotNull().isPresent().contains("ProviderVersion"));
+                    .satisfies(r -> assertThat(r.propertyName()).isNotNull().contains("ProviderVersion"));
         });
     }
 

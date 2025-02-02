@@ -19,6 +19,7 @@ import java.math.BigInteger;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -114,9 +115,12 @@ public class Convert {
 
     public static DiscoverPropertiesRestrictionsR discoverPropertiesRestrictions(SOAPElement restriction) {
         Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
-        return new DiscoverPropertiesRestrictionsR(
-            Optional.ofNullable(m.get(PROPERTY_NAME))
-        );
+        String propertyName = m.get(PROPERTY_NAME);
+        if (propertyName != null) {
+            String[] properties = propertyName.split("\\n");
+            return new DiscoverPropertiesRestrictionsR(Arrays.stream(properties).map(s -> s.trim()).filter(s -> s.length() > 0).toList());
+        }
+        return new DiscoverPropertiesRestrictionsR(List.of());
     }
 
     public static PropertiesR propertiestoProperties(SOAPElement propertiesElement) {
