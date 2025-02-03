@@ -2832,7 +2832,7 @@ class SoapUtil {
         }
     }
 
-    private static SOAPElement addChildElement(SOAPElement element, String childElementName) {
+    static SOAPElement addChildElement(SOAPElement element, String childElementName) {
         try {
             return element.addChildElement(childElementName);
         } catch (SOAPException e) {

@@ -19,15 +19,12 @@ import java.math.BigInteger;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import jakarta.xml.soap.SOAPHeader;
-import org.eclipse.daanse.xmla.api.common.enums.ActionTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ColumnOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.CoordinateTypeEnum;
@@ -114,13 +111,12 @@ public class Convert {
     }
 
     public static DiscoverPropertiesRestrictionsR discoverPropertiesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
-        String propertyName = m.get(PROPERTY_NAME);
-        if (propertyName != null) {
-            String[] properties = propertyName.split("\\n");
-            return new DiscoverPropertiesRestrictionsR(Arrays.stream(properties).map(s -> s.trim()).filter(s -> s.length() > 0).toList());
+        NodeList nodeList = restriction.getElementsByTagName(RESTRICTION_LIST);
+        List<String> pnList = new ArrayList<>();
+        if (nodeList != null && nodeList.getLength() > 0 && nodeList.item(0) instanceof SOAPElement sEl) {
+            pnList = getValuesByTag(sEl, PROPERTY_NAME);
         }
-        return new DiscoverPropertiesRestrictionsR(List.of());
+        return new DiscoverPropertiesRestrictionsR(pnList);
     }
 
     public static PropertiesR propertiestoProperties(SOAPElement propertiesElement) {
@@ -7454,6 +7450,27 @@ public class Convert {
             return getMapValues(nodeList.item(0).getChildNodes());
         }
         return Map.of();
+    }
+
+    private static List<String> getValuesByTag(SOAPElement el, String tagName) {
+        NodeList nodeList = el.getElementsByTagName(tagName);
+
+        if (nodeList != null && nodeList.getLength() > 0) {
+            return getValues(nodeList.item(0).getChildNodes());
+        }
+        return List.of();
+    }
+
+    private static List<String> getValues(NodeList nl) {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < nl.getLength(); i++) {
+            org.w3c.dom.Node n = nl.item(i);
+            String val = n.getTextContent().trim();
+            if (val.length() > 0) {
+                result.add(val);
+            }
+        }
+        return result;
     }
 
     private static Map<String, String> getMapValues(NodeList nl) {
