@@ -75,7 +75,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRestrictions.RESTRICTIONS_AUTHENTICATION_MODE;
 import static org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRestrictions.RESTRICTIONS_DATA_SOURCE_DESCRIPTION;
@@ -200,7 +199,8 @@ import static org.eclipse.daanse.xmla.client.soapmessage.SoapUtil.addChildElemen
 
 public class DiscoverConsumers {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverConsumers.class);
+    private static final String VALUE = "Value";
+	private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverConsumers.class);
     private static final String NS_URI = "urn:schemas-microsoft-com:xml-analysis";
 
     private DiscoverConsumers() {
@@ -675,8 +675,10 @@ public class DiscoverConsumers {
                 SOAPElement restrictionList = discover.addChildElement(RESTRICTIONS).addChildElement(RESTRICTION_LIST);
 
                 if (dr.propertyName().size() > 0) {
-                    String joinedStr = dr.propertyName().stream().collect(Collectors.joining("\n", "", ""));
-                    addChildElement(restrictionList, RESTRICTIONS_PROPERTY_NAME, joinedStr);
+                    SOAPElement el = addChildElement(restrictionList, RESTRICTIONS_PROPERTY_NAME);
+                    for (String propName : dr.propertyName()) {
+                        addChildElement(el, VALUE, propName);
+                    }
                 }
 
                 SOAPElement propertyList = discover.addChildElement(PROPERTIES).addChildElement(PROPERTY_LIST);
