@@ -16,6 +16,7 @@ package org.eclipse.daanse.xmla.client.soapmessage;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.execute.ExecuteService;
+import org.eclipse.daanse.xmla.api.session.SessionService;
 
 public class XmlaServiceClientImpl implements XmlaService {
 
@@ -36,6 +37,11 @@ public class XmlaServiceClientImpl implements XmlaService {
     @Override
     public ExecuteService execute() {
         return es;
+    }
+
+    @Override
+    public SessionService session() {
+        return null;
     }
 
 }

@@ -15,10 +15,13 @@ package org.eclipse.daanse.xmla.api;
 
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.execute.ExecuteService;
+import org.eclipse.daanse.xmla.api.session.SessionService;
 
 public interface XmlaService {
 
     DiscoverService discover();
 
     ExecuteService execute();
+
+    SessionService session();
 }

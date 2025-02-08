@@ -13,16 +13,14 @@
 */
 package org.eclipse.daanse.xmla.server.adapter.soapmessage;
 
-import jakarta.xml.soap.MessageFactory;
-import jakarta.xml.soap.Node;
-import jakarta.xml.soap.SOAPBody;
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPEnvelope;
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPHeader;
-import jakarta.xml.soap.SOAPHeaderElement;
-import jakarta.xml.soap.SOAPMessage;
-import jakarta.xml.soap.SOAPPart;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.xml.namespace.QName;
+
 import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.UserPrincipal;
 import org.eclipse.daanse.xmla.api.XmlaService;
@@ -89,7 +87,9 @@ import org.eclipse.daanse.xmla.api.execute.clearcache.ClearCacheRequest;
 import org.eclipse.daanse.xmla.api.execute.clearcache.ClearCacheResponse;
 import org.eclipse.daanse.xmla.api.execute.statement.StatementRequest;
 import org.eclipse.daanse.xmla.api.execute.statement.StatementResponse;
+import org.eclipse.daanse.xmla.api.xmla.BeginSession;
 import org.eclipse.daanse.xmla.api.xmla.Command;
+import org.eclipse.daanse.xmla.api.xmla.EndSession;
 import org.eclipse.daanse.xmla.api.xmla.Session;
 import org.eclipse.daanse.xmla.model.record.UserPrincipalR;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
@@ -158,14 +158,16 @@ import org.eclipse.daanse.xmla.model.record.xmla.StatementR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.namespace.QName;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import jakarta.xml.soap.MessageFactory;
+import jakarta.xml.soap.Node;
+import jakarta.xml.soap.SOAPBody;
+import jakarta.xml.soap.SOAPElement;
+import jakarta.xml.soap.SOAPEnvelope;
+import jakarta.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPHeader;
+import jakarta.xml.soap.SOAPHeaderElement;
+import jakarta.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPPart;
 
 public class XmlaApiAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlaApiAdapter.class);
@@ -203,7 +205,7 @@ public class XmlaApiAdapter {
     private static final String MDSCHEMA_SETS = "MDSCHEMA_SETS";
     private static final String MDSCHEMA_KPIS = "MDSCHEMA_KPIS";
     private static final String MDSCHEMA_MEASUREGROUPS = "MDSCHEMA_MEASUREGROUPS";
-    private Set<String> sessions = new HashSet<>();
+    private static final QName QN_SESSION = new QName("urn:schemas-microsoft-com:xml-analysis", "Session");
 
     public SOAPMessage handleRequest(SOAPMessage messageRequest, Map<String, Object> headers) {
         try {
@@ -219,18 +221,17 @@ public class XmlaApiAdapter {
             envelopeResponse.addNamespaceDeclaration(Constants.EMPTY.PREFIX, Constants.EMPTY.NS_URN);
             envelopeResponse.addNamespaceDeclaration(Constants.XSI.PREFIX, Constants.XSI.NS_URN);
 
-            SOAPBody bodyResponse = envelopeResponse.getBody();
             Object role = headers.get("ROLE");
             Object user = headers.get("USER");
-            UserPrincipal userPrincipal = new UserPrincipalR(getStringOrNull(user), getRiles(role));
-            Optional<Session> ses = SessionUtil.getSession(messageRequest.getSOAPHeader(), sessions);
-            if (ses.isPresent()) {
+            UserPrincipal userPrincipal = new UserPrincipalR(getStringOrNull(user), getRoles(role));
+            Optional<Session> oSession =session(messageRequest.getSOAPHeader(),userPrincipal);
+            if (oSession.isPresent()) {
                 SOAPHeader header = envelopeResponse.getHeader();
-                QName session = new QName("urn:schemas-microsoft-com:xml-analysis", "Session");
-                SOAPHeaderElement sessionElement = header.addHeaderElement(session);
-                sessionElement.addAttribute(new QName("SessionId"), ses.get().sessionId());
+                SOAPHeaderElement sessionElement = header.addHeaderElement(QN_SESSION);
+                sessionElement.addAttribute(new QName("SessionId"), oSession.get().sessionId());
             }
-            RequestMetaData metaData = RequestMetaDataUtils.getRequestMetaData(headers, ses);
+            RequestMetaData metaData = RequestMetaDataUtils.getRequestMetaData(headers, oSession);
+            SOAPBody bodyResponse = envelopeResponse.getBody();
             handleBody(messageRequest.getSOAPBody(), bodyResponse, metaData, userPrincipal);
             return messageResponse;
         } catch (SOAPException e) {
@@ -239,7 +240,7 @@ public class XmlaApiAdapter {
         return null;
     }
 
-    private List<String> getRiles(Object ob) {
+    private List<String> getRoles(Object ob) {
         if (ob != null && ob instanceof String str) {
             return Arrays.asList(str.split(","));
         }
@@ -251,6 +252,31 @@ public class XmlaApiAdapter {
             return str;
         }
         return null;
+    }
+
+    private Optional<Session> session(SOAPHeader soapRequestHeader, UserPrincipal userPrincipal) throws SOAPException {
+        Optional<Session> oSession = Convert.getSession(soapRequestHeader);
+        if (oSession.isPresent()) {
+            boolean checked = xmlaService.session().checkSession(oSession.get(), userPrincipal);
+            if (checked) {
+                return oSession;
+            } else {
+                Optional.empty();
+            }
+        }
+
+        Optional<BeginSession> beginSession = Convert.getBeginSession(soapRequestHeader);
+        if (beginSession.isPresent()) {
+            return xmlaService.session().beginSession(beginSession.get(), userPrincipal);
+        }
+
+        Optional<EndSession> oEndSession = Convert.getEndSession(soapRequestHeader);
+        if (oEndSession.isPresent()) {
+            xmlaService.session().endSession(oEndSession.get(), userPrincipal);
+            return Optional.empty();
+        }
+
+        return Optional.empty();
     }
 
     private void handleBody(SOAPBody body, SOAPBody responseBody, RequestMetaData metaData, UserPrincipal userPrincipal)
@@ -279,6 +305,7 @@ public class XmlaApiAdapter {
         }
 
     }
+
 
     private void discover(SOAPElement discover, SOAPBody responseBody, RequestMetaData metaData,
             UserPrincipal userPrincipal) throws SOAPException {
