@@ -27,6 +27,7 @@
     <module>adapter.soapmessage</module>
     <module>jakarta.xml.ws.provider.soapmessage</module>
     <module>jakarta.saaj</module>
+    <module>jdk.httpserver</module>
     <module>authentication</module>
   </modules>
 </project>
