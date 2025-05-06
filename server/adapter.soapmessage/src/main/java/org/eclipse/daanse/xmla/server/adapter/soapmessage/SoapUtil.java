@@ -361,6 +361,7 @@ import org.eclipse.daanse.xmla.api.msxmla.NormTuple;
 import org.eclipse.daanse.xmla.api.msxmla.NormTuplesType;
 import org.eclipse.daanse.xmla.api.xmla.Restriction;
 import org.eclipse.daanse.xmla.api.xmla_empty.Emptyresult;
+import org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.XSD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1794,9 +1795,12 @@ public class SoapUtil {
     private static SOAPElement addDiscoverPropertiesRoot(SOAPElement body) throws SOAPException {
         SOAPElement seRoot = prepareRootElement(body);
         seRoot.setAttribute("xmlns:xsi", Constants.XSI.NS_URN);
-        seRoot.setAttribute("xmlns:xsd", Constants.XSD.NS_URN);
-        seRoot.setAttribute("xmlns:msxmla", "http://schemas.microsoft.com/analysisservices/2003/xmla");
+        seRoot.setAttribute("xmlns", "urn:schemas-microsoft-com:xml-analysis:rowset");
+        seRoot.setAttribute("xmlns:EX", "urn:schemas-microsoft-com:xml-analysis:exception");
         SOAPElement schema = addChildElement(seRoot, Constants.XSD.QN_SCHEMA);
+        schema.setAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+        schema.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        schema.setAttribute("xmlns", "urn:schemas-microsoft-com:xml-analysis:rowset");
         schema.setAttribute("targetNamespace", Constants.ROWSET.NS_URN);
         schema.setAttribute("xmlns:sql", Constants.SQL.NS_URN);
         schema.setAttribute("elementFormDefault", "qualified");
@@ -1817,13 +1821,13 @@ public class SoapUtil {
         SOAPElement p = addChildElement(r, Constants.XSD.QN_PATTERN);
         p.setAttribute("value", UUID_VALUE);
 
-        SOAPElement ct1 = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
-        ct1.setAttribute("name", "xmlDocument");
-        SOAPElement s1 = addChildElement(ct1, Constants.XSD.QN_SEQUENCE);
-        SOAPElement a = addChildElement(s1, Constants.XSD.QN_ANY);
+        //0SOAPElement ct1 = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
+        //ct1.setAttribute("name", "xmlDocument");
+        //SOAPElement s1 = addChildElement(ct1, Constants.XSD.QN_SEQUENCE);
+        //SOAPElement a = addChildElement(s1, Constants.XSD.QN_ANY);
 
         SOAPElement ct2 = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
-        ct1.setAttribute("name", "row");
+        ct2.setAttribute("name", "row");
         SOAPElement s2 = addChildElement(ct2, Constants.XSD.QN_SEQUENCE);
         SOAPElement s2e1 = addChildElement(s2, Constants.XSD.QN_ELEMENT);
         s2e1.setAttribute("sql:field", "PropertyName");
@@ -1834,13 +1838,13 @@ public class SoapUtil {
         s2e2.setAttribute("sql:field", "PropertyDescription");
         s2e2.setAttribute("name", "PropertyDescription");
         s2e2.setAttribute("type", "xsd:string");
-        s2e2.setAttribute("minOccurs", "0");
+        //s2e2.setAttribute("minOccurs", "0");
 
         SOAPElement s2e3 = addChildElement(s2, Constants.XSD.QN_ELEMENT);
         s2e3.setAttribute("sql:field", "PropertyType");
         s2e3.setAttribute("name", "PropertyType");
         s2e3.setAttribute("type", "xsd:string");
-        s2e3.setAttribute("minOccurs", "0");
+        //s2e3.setAttribute("minOccurs", "0");
 
         SOAPElement s2e4 = addChildElement(s2, Constants.XSD.QN_ELEMENT);
         s2e4.setAttribute("sql:field", "PropertyAccessType");
@@ -1851,13 +1855,13 @@ public class SoapUtil {
         s2e5.setAttribute("sql:field", "IsRequired");
         s2e5.setAttribute("name", "IsRequired");
         s2e5.setAttribute("type", "xsd:boolean");
-        s2e5.setAttribute("minOccurs", "0");
+        //s2e5.setAttribute("minOccurs", "0");
 
         SOAPElement s2e6 = addChildElement(s2, Constants.XSD.QN_ELEMENT);
         s2e6.setAttribute("sql:field", "Value");
         s2e6.setAttribute("name", "Value");
         s2e6.setAttribute("type", "xsd:string");
-        s2e6.setAttribute("minOccurs", "0");
+        //s2e6.setAttribute("minOccurs", "0");
 
         return seRoot;
     }
@@ -2538,12 +2542,13 @@ public class SoapUtil {
         SOAPElement schema = fillRoot(seRoot);
 
         SOAPElement s = prepareSequenceElement(schema);
-        addElement(s, "LiteralName", "xsd:string", null);
-        addElement(s, "LiteralValue", "xsd:string", "0");
-        addElement(s, "LiteralInvalidChars", "xsd:string", "0");
-        addElement(s, "LiteralInvalidStartingChars", "xsd:string", "0");
-        addElement(s, "LiteralMaxLength", "xsd:int", "0");
-        addElement(s, "LiteralNameEnumValue", "xsd:int", "0");
+        addElement(s, "DataSourceName", "xsd:string", null);
+        addElement(s, "DataSourceDescription", "xsd:string", "0");
+        addElement(s, "URL", "xsd:string", "0");
+        addElement(s, "DataSourceInfo", "xsd:string", "0");
+        addElement(s, "ProviderName", "xsd:string", "0");
+        addElement(s, "ProviderType", "xsd:string", "0");
+        addElement(s, "AuthenticationMode", "xsd:string", null);
         return seRoot;
     }
 
@@ -2597,7 +2602,7 @@ public class SoapUtil {
 
     private static SOAPElement fillRoot(SOAPElement root) {
         root.setAttribute("xmlns:xsi", Constants.XSI.NS_URN);
-        root.setAttribute("xmlns:xsd", Constants.XSD.NS_URN);
+        //root.setAttribute("xmlns:xsd", Constants.XSD.NS_URN);
         root.setAttribute("xmlns:EX", Constants.EX.NS_URN);
         SOAPElement schema = addChildElement(root, Constants.XSD.QN_SCHEMA);
         schema.setAttribute("xmlns:xsd", Constants.XSD.NS_URN);
@@ -2685,7 +2690,7 @@ public class SoapUtil {
         simpleType.setAttribute("name", "uuid");
         SOAPElement restriction = addChildElement(simpleType, Constants.XSD.QN_RESTRICTION);
         restriction.setAttribute("base", "xsd:string");
-        SOAPElement pattern = addChildElement(restriction, Constants.XSD.QN_RESTRICTION);
+        SOAPElement pattern = addChildElement(restriction, Constants.XSD.QN_PATTERN);
         pattern.setAttribute("value", UUID_VALUE);
 
         SOAPElement ct = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);

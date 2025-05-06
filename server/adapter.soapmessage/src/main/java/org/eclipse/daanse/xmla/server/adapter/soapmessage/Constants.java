@@ -29,14 +29,14 @@ public class Constants {
 
         public static final QName QN_COMMAND = new QName(NS_URN, "Command", PREFIX);
         public static final QName QN_DISCOVER = new QName(NS_URN, "Discover", PREFIX);
-        public static final QName QN_DISCOVER_RESPONSE = new QName(NS_URN, "DiscoverResponse", PREFIX);
+        public static final QName QN_DISCOVER_RESPONSE = new QName(NS_URN, "DiscoverResponse", "");
         public static final QName QN_EXECUTE = new QName(NS_URN, "Execute", PREFIX);
-        public static final QName QN_EXECUTE_RESPONSE = new QName(NS_URN, "ExecuteResponse", PREFIX);
+        public static final QName QN_EXECUTE_RESPONSE = new QName(NS_URN, "ExecuteResponse", "");
         public static final QName QN_PROPERTIES = new QName(NS_URN, "Properties", PREFIX);
         public static final QName QN_PROPERTY_LIST = new QName(NS_URN, "PropertyList", PREFIX);
         public static final QName QN_RESTRICTIONS = new QName(NS_URN, "Restrictions", PREFIX);
         public static final QName QN_RESTRICTION_LIST = new QName(NS_URN, "RestrictionList", PREFIX);
-        public static final QName QN_RETURN = new QName(NS_URN, "return", PREFIX);
+        public static final QName QN_RETURN = new QName(NS_URN, "return", "");
         public static final QName QN_REQUEST_TYPE = new QName(NS_URN, "RequestType", PREFIX);
 
     }
@@ -52,9 +52,9 @@ public class Constants {
     /////
     static class ROWSET {
 
-        public static final String PREFIX = "rowset";
+        public static final String PREFIX = "";
         public static final String NS_URN = "urn:schemas-microsoft-com:xml-analysis:rowset";
-        public static final QName QN_ROOT = new QName(ROWSET.NS_URN, "root", ROWSET.PREFIX);
+        public static final QName QN_ROOT = new QName(ROWSET.NS_URN, "root", "");
         public static final QName QN_ROW = new QName(ROWSET.NS_URN, "row", ROWSET.PREFIX);
 
         static class ROW_PROPERTY {
@@ -823,7 +823,7 @@ public class Constants {
     /////
 
     static class MDDATASET {
-        public static final String PREFIX = "mddataset";
+        public static final String PREFIX = "";
         public static final String NS_URN = "urn:schemas-microsoft-com:xml-analysis:mddataset";
         public static final QName QN_CELL_INFO = new QName(MDDATASET.NS_URN, "CellInfo", MDDATASET.PREFIX);
         public static final QName QN_OLAP_INFO = new QName(MDDATASET.NS_URN, "OlapInfo", MDDATASET.PREFIX);
