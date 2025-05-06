@@ -210,16 +210,17 @@ public class XmlaApiAdapter {
     public SOAPMessage handleRequest(SOAPMessage messageRequest, Map<String, Object> headers) {
         try {
             SOAPMessage messageResponse = MessageFactory.newInstance().createMessage();
+            messageResponse.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
             SOAPPart soapPartResponse = messageResponse.getSOAPPart();
             SOAPEnvelope envelopeResponse = soapPartResponse.getEnvelope();
 
-            envelopeResponse.addNamespaceDeclaration(Constants.MSXMLA.PREFIX, Constants.MSXMLA.NS_URN);
-            envelopeResponse.addNamespaceDeclaration(Constants.ROWSET.PREFIX, Constants.ROWSET.NS_URN);
-            envelopeResponse.addNamespaceDeclaration(Constants.MDDATASET.PREFIX, Constants.MDDATASET.NS_URN);
-            envelopeResponse.addNamespaceDeclaration(Constants.ENGINE.PREFIX, Constants.ENGINE.NS_URN);
-            envelopeResponse.addNamespaceDeclaration(Constants.ENGINE200.PREFIX, Constants.ENGINE200.NS_URN);
-            envelopeResponse.addNamespaceDeclaration(Constants.EMPTY.PREFIX, Constants.EMPTY.NS_URN);
-            envelopeResponse.addNamespaceDeclaration(Constants.XSI.PREFIX, Constants.XSI.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.MSXMLA.PREFIX, Constants.MSXMLA.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.ROWSET.PREFIX, Constants.ROWSET.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.MDDATASET.PREFIX, Constants.MDDATASET.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.ENGINE.PREFIX, Constants.ENGINE.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.ENGINE200.PREFIX, Constants.ENGINE200.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.EMPTY.PREFIX, Constants.EMPTY.NS_URN);
+            //envelopeResponse.addNamespaceDeclaration(Constants.XSI.PREFIX, Constants.XSI.NS_URN);
 
             Object role = headers.get("ROLE");
             Object user = headers.get("USER");
@@ -229,6 +230,9 @@ public class XmlaApiAdapter {
                 SOAPHeader header = envelopeResponse.getHeader();
                 SOAPHeaderElement sessionElement = header.addHeaderElement(QN_SESSION);
                 sessionElement.addAttribute(new QName("SessionId"), oSession.get().sessionId());
+            } else {
+                SOAPHeader header = envelopeResponse.getHeader();
+                header.setValue("\n");
             }
             RequestMetaData metaData = RequestMetaDataUtils.getRequestMetaData(headers, oSession);
             SOAPBody bodyResponse = envelopeResponse.getBody();
