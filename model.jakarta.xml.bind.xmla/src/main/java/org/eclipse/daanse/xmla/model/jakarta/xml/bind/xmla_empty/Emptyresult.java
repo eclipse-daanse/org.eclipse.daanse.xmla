@@ -30,7 +30,7 @@ import jakarta.xml.bind.annotation.XmlType;
 public class Emptyresult implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @XmlElement(name = "Exception")
+    @XmlElement(name = "Exception", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected Exception exception;
     @XmlElement(name = "Messages", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected Messages messages;

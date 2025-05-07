@@ -29,19 +29,19 @@ import jakarta.xml.bind.annotation.XmlType;
 public class MessageLocation implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @XmlElement(name = "Start", required = true)
+    @XmlElement(name = "Start", required = true, namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected MessageLocation.Start start;
-    @XmlElement(name = "End", required = true)
+    @XmlElement(name = "End", required = true, namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected MessageLocation.End end;
-    @XmlElement(name = "LineOffset")
+    @XmlElement(name = "LineOffset", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected Integer lineOffset;
-    @XmlElement(name = "TextLength")
+    @XmlElement(name = "TextLength", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected Integer textLength;
-    @XmlElement(name = "SourceObject")
+    @XmlElement(name = "SourceObject", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected WarningLocationObject sourceObject;
-    @XmlElement(name = "DependsOnObject")
+    @XmlElement(name = "DependsOnObject", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected WarningLocationObject dependsOnObject;
-    @XmlElement(name = "RowNumber")
+    @XmlElement(name = "RowNumber", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected Integer rowNumber;
 
     public MessageLocation.Start getStart() {
@@ -106,9 +106,9 @@ public class MessageLocation implements Serializable {
     })
     public abstract static class AbstractEndStart {
 
-        @XmlElement(name = "Line")
+        @XmlElement(name = "Line", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
         protected int line;
-        @XmlElement(name = "Column")
+        @XmlElement(name = "Column", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
         protected int column;
 
         public int getLine() {

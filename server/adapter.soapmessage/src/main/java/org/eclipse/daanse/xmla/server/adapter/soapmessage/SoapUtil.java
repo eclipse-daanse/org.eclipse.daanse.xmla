@@ -372,7 +372,7 @@ import jakarta.xml.soap.SOAPException;
 public class SoapUtil {
 
     private static final String UUID_VALUE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
-	private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class);
 
     private SoapUtil() {
         // constructor
