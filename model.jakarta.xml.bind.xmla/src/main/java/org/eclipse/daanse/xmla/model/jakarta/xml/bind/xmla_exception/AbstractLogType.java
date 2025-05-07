@@ -24,13 +24,13 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlSeeAlso({ ErrorType.class, WarningType.class })
 public abstract class AbstractLogType {
 
-    @XmlElement(name = "Location")
+    @XmlElement(name = "Location", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected MessageLocation location;
-    @XmlAttribute(name = "Description")
+    @XmlAttribute(name = "Description", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected String description;
-    @XmlAttribute(name = "Source")
+    @XmlAttribute(name = "Source", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected String source;
-    @XmlAttribute(name = "HelpFile")
+    @XmlAttribute(name = "HelpFile", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected String helpFile;
 
     public MessageLocation getLocation() {

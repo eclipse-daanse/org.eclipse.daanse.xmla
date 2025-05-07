@@ -27,8 +27,8 @@ import jakarta.xml.bind.annotation.XmlType;
 public class Messages implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @XmlElements({ @XmlElement(name = "Warning", type = WarningType.class),
-            @XmlElement(name = "Error", type = ErrorType.class) })
+    @XmlElements({ @XmlElement(name = "Warning", type = WarningType.class, namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset"),
+            @XmlElement(name = "Error", type = ErrorType.class, namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset") })
     private List<Serializable> warningOrError;
 
     public List<Serializable> getWarningOrError() {

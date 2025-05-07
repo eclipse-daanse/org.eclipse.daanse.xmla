@@ -28,9 +28,9 @@ import jakarta.xml.bind.annotation.XmlType;
 public class ErrorType extends AbstractLogType implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @XmlElement(name = "Callstack")
+    @XmlElement(name = "Callstack", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected String callstack;
-    @XmlAttribute(name = "ErrorCode")
+    @XmlAttribute(name = "ErrorCode", namespace = "urn:schemas-microsoft-com:xml-analysis:mddataset")
     protected Long errorCode;
 
     public String getCallstack() {
