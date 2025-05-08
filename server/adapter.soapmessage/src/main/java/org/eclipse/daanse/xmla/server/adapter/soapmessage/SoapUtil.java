@@ -31,260 +31,18 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.MDDAT
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.MDDATASET.QN_TUPLE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.MDDATASET.QN_TUPLES;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.MDDATASET.QN_UNION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.DESCRIPTION_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ALL_MEMBER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ANNOTATIONS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_APPLICATION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_AUTHENTICATION_MODE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_AUTO_UNIQUE_VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BASE_CUBE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BEST_MATCH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BOOKMARKS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BOOKMARK_DATA_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BOOKMARK_INFORMATION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BOOKMARK_MAXIMUM_LENGTH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_BOOKMARK_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CARDINALITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CASE_SENSITIVE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CATALOG_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CHARACTER_MAXIMUM_LENGTH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CHARACTER_OCTET_LENGTH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CHARACTER_SET_CATALOG;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CHARACTER_SET_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CHARACTER_SET_SCHEMA;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CHILDREN_CARDINALITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CLIENTCACHEREFRESHPOLICY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLLATION_CATALOG;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLLATION_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLLATION_SCHEMA;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_DEFAULT;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_FLAG;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_HAS_DEFAULT;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_OLAP_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_PROPID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COLUMN_SIZE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_COMPATIBILITY_LEVEL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CREATED_ON;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CREATE_PARAMS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CUBE_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CUBE_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CUBE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CUBE_SOURCE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CUBE_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CURRENTLY_USED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_CUSTOM_ROLLUP_SETTINGS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATABASE_ID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATA_SOURCE_DESCRIPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATA_SOURCE_INFO;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATA_SOURCE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATA_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATA_UPDATED_BY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATETIME_PRECISION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATE_CREATED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATE_MODIFIED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DATE_QUERIED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DEFAULT_FORMAT_STRING;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DEFAULT_HIERARCHY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DEFAULT_MEMBER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DESCRIPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DESCRIPTION_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSIONS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_CARDINALITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_GRANULARITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_IS_FACT_DIMENSION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_IS_SHARED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_IS_VISIBLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_MASTER_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_MASTER_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_ORDINAL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_PATH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIMENSION_UNIQUE_SETTINGS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DIRECTQUERY_PUSHABLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DLL_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DOMAIN_CATALOG;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DOMAIN_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_DOMAIN_SCHEMA;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ELEMENT_DESCRIPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ELEMENT_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ELEMENT_VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ENUM_DESCRIPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ENUM_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ENUM_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_EXPRESSION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_FIXED_PREC_SCALE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_FUNCTION_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_GROUPING_BEHAVIOR;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HELP_CONTEXT;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HELP_FILE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_CARDINALITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_DISPLAY_FOLDER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_IS_VISIBLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_ORDINAL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_ORIGIN;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_HIERARCHY_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_INSTANCE_SELECTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_INTERFACE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_INVOCATION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_DATAMEMBER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_DRILLTHROUGH_ENABLED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_FIXEDLENGTH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_LINKABLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_LONG;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_NULLABLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_PLACEHOLDERMEMBER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_READWRITE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_REQUIRED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_SQL_ENABLED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_VIRTUAL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_IS_WRITE_ENABLED;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KEYWORD;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_CURRENT_TIME_MEMBER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_DESCRIPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_DISPLAY_FOLDER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_GOAL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_PARENT_KPI_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_STATUS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_STATUS_GRAPHIC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_TREND;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_TREND_GRAPHIC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_KPI_WEIGHT;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LAST_SCHEMA_UPDATE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVELS_LIST;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_CARDINALITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_IS_VISIBLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_NUMBER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_ORIGIN;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LEVEL_UNIQUE_SETTINGS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LIBRARY_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_INVALID_CHARS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_INVALID_STARTING_CHARS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_MAX_LENGTH;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_NAME_ENUM_VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_PREFIX;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_SUFFIX;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LITERAL_VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_LOCAL_TYPE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MAXIMUM_SCALE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASUREGROUP_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASUREGROUP_CARDINALITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASUREGROUP_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_AGGREGATOR;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_DISPLAY_FOLDER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_GROUP_DIMENSION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_IS_VISIBLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_NAME_SQL_COLUMN_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_UNITS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_UNQUALIFIED_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEASURE_VISIBILITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBERS_LOOKUP;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_DISP_INFO;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_KEY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_ORDINAL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_REF;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MEMBER_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_META_DATA;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_MINIMUM_SCALE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_NAME_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_NORM_TUPLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_NORM_TUPLES;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_NUMERIC_PRECISION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_NUMERIC_SCALE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_OBJECT;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_OPTIONAL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ORDINAL_POSITION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ORIGIN;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PARAMETERINFO;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PARAMETER_LIST;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PARENT_COUNT;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PARENT_LEVEL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PARENT_UNIQUE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_POPULARITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PREFERRED_QUERY_PATTERNS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_ACCESS_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_CONTENT_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_DESCRIPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_NAME_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_ORIGIN;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_TYPE_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROPERTY_VISIBILITY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROVIDER_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_PROVIDER_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_REPEATABLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_REPEATGROUP;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_RESTRICTIONS;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_RESTRICTIONS_MASK;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_RETURN_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_ROLES;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SCHEMA_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SCHEMA_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SCHEMA_NAME_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SCHEMA_OWNER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SCHEMA_UPDATED_BY;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SCOPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SEARCHABLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SET_CAPTION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SET_DISPLAY_FOLDER;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SET_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_SQL_COLUMN_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_STRUCTURE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_STRUCTURE_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_CATALOG;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_PROP_ID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_SCHEMA;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TABLE_VERSION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TYPE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TYPE_GUID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TYPE_LC;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TYPE_LIB;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_TYPE_NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_UNSIGNED_ATTRIBUTE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_URL;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_VERSION;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.QN_WEIGHTEDPOPULARITY;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROWSET.ROW_PROPERTY.*;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.daanse.xmla.api.common.enums.ItemTypeEnum;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsResponseRow;
@@ -361,17 +119,23 @@ import org.eclipse.daanse.xmla.api.msxmla.NormTuple;
 import org.eclipse.daanse.xmla.api.msxmla.NormTuplesType;
 import org.eclipse.daanse.xmla.api.xmla.Restriction;
 import org.eclipse.daanse.xmla.api.xmla_empty.Emptyresult;
-import org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.XSD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import jakarta.xml.soap.SOAPBody;
 import jakarta.xml.soap.SOAPElement;
 import jakarta.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPFactory;
 
 public class SoapUtil {
 
-    private static final String UUID_VALUE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+    //private static final String UUID_VALUE = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+    private static final String UUID_VALUE = "[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}";
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class);
 
     private SoapUtil() {
@@ -666,7 +430,7 @@ public class SoapUtil {
         if (it != null) {
             SOAPElement el = addChildElement(e, it.tagName(), Constants.ROWSET.PREFIX);
             el.setTextContent(it.value());
-            it.type().ifPresent(v -> setAttribute(el, "type", v.getValue()));
+            //it.type().ifPresent(v -> setAttribute(el, "type", v.getValue()));
         }
     }
 
@@ -817,7 +581,7 @@ public class SoapUtil {
     private static void addDiscoverXmlMetaDataResponseRow(SOAPElement root, DiscoverXmlMetaDataResponseRow r)
             throws SOAPException {
         SOAPElement row = root.addChildElement(Constants.ROWSET.QN_ROW);
-        addChildElement(row, QN_META_DATA, r.metaData());
+        addChildElementTextNode(row, QN_META_DATA, r.metaData());
     }
 
     private static void addDbSchemaColumnsResponseRow(SOAPElement root, DbSchemaColumnsResponseRow r)
@@ -2530,10 +2294,15 @@ public class SoapUtil {
         SOAPElement seRoot = prepareRootElement(body);
         SOAPElement schema = fillRoot(seRoot);
 
+        SOAPElement el1complexType = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
+        el1complexType.setAttribute("name", "xmlDocument");
+        SOAPElement sequence = addChildElement(el1complexType, Constants.XSD.QN_SEQUENCE);
+        addChildElement(sequence, Constants.XSD.QN_ANY);
+
         SOAPElement s = prepareSequenceElement(schema);
-        addElement(s, "METADATA", "xsd:string", null);
-        addElement(s, "ObjectType", "xsd:string", "0");
-        addElement(s, "DatabaseID", "xsd:string", "0");
+        addElement(s, "METADATA", "xmlDocument", null);
+        //addElement(s, "ObjectType", "xsd:string", "0");
+        //addElement(s, "DatabaseID", "xsd:string", "0");
         return seRoot;
     }
 
@@ -2692,6 +2461,11 @@ public class SoapUtil {
         restriction.setAttribute("base", "xsd:string");
         SOAPElement pattern = addChildElement(restriction, Constants.XSD.QN_PATTERN);
         pattern.setAttribute("value", UUID_VALUE);
+
+        SOAPElement complexType = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
+        complexType.setAttribute("name", "xmlDocument");
+        SOAPElement sequence = addChildElement(complexType, Constants.XSD.QN_SEQUENCE);
+        addChildElement(sequence, Constants.XSD.QN_ANY);
 
         SOAPElement ct = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
         ct.setAttribute("name", "row");
@@ -3063,6 +2837,69 @@ public class SoapUtil {
         elementComplexTypeSequenceE3.setAttribute("type", "CellData");
     }
 
+    private static SOAPElement addChildElementTextNode(SOAPElement element, QName qNameOfChild, String valueOfChild) {
+        try {
+            SOAPElement createdChild = element.addChildElement(qNameOfChild);
+            createdChild.setAttribute("xmlns", "http://schemas.microsoft.com/analysisservices/2003/engine");
+            createdChild.setAttribute("xmlns:ddl2", "http://schemas.microsoft.com/analysisservices/2003/engine/2");
+            createdChild.setAttribute("xmlns:ddl2_2", "http://schemas.microsoft.com/analysisservices/2003/engine/2/2");
+            createdChild.setAttribute("xmlns:ddl100", "http://schemas.microsoft.com/analysisservices/2008/engine/100");
+            createdChild.setAttribute("xmlns:ddl100_100", "http://schemas.microsoft.com/analysisservices/2008/engine/100/100");
+            createdChild.setAttribute("xmlns:ddl200", "http://schemas.microsoft.com/analysisservices/2010/engine/200");
+            createdChild.setAttribute("xmlns:ddl200_200", "http://schemas.microsoft.com/analysisservices/2010/engine/200/200");
+            createdChild.setAttribute("xmlns:ddl300", "http://schemas.microsoft.com/analysisservices/2011/engine/300");
+            createdChild.setAttribute("xmlns:ddl300_300", "http://schemas.microsoft.com/analysisservices/2011/engine/300/300");
+            createdChild.setAttribute("xmlns:ddl400", "http://schemas.microsoft.com/analysisservices/2012/engine/400");
+            createdChild.setAttribute("xmlns:ddl400_400", "http://schemas.microsoft.com/analysisservices/2012/engine/400/400");
+            SOAPElement se = xmlStringToSoapElement(valueOfChild, createdChild);
+            createdChild.addChildElement(se);
+            return createdChild;
+
+        } catch (SOAPException | SAXException | IOException | ParserConfigurationException e) {
+            LOGGER.error("addChildElement {} error", qNameOfChild);
+            throw new RuntimeException("addChildElement error", e);
+        }
+    }
+
+    public static SOAPElement xmlStringToSoapElement(String xmlFragment, SOAPElement context) throws SAXException, IOException, ParserConfigurationException, SOAPException {
+        // Парсим XML-строку как DOM
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        Document doc = dbf.newDocumentBuilder()
+                .parse(new InputSource(new StringReader(xmlFragment)));
+
+        Element root = doc.getDocumentElement();
+
+        // Импортируем узел в документ SOAP'а
+        Node imported = context.getOwnerDocument().importNode(root, true);
+
+        // Преобразуем к SOAPElement (если возможно)
+        if (imported instanceof SOAPElement) {
+            return (SOAPElement) imported;
+        } else {
+            // Если нет — вручную создаём SOAPElement и копируем содержимое
+            SOAPFactory soapFactory = SOAPFactory.newInstance();
+            SOAPElement newElement = soapFactory.createElement(root.getNodeName(), "", root.getNamespaceURI());
+
+            // Копируем атрибуты
+            for (int i = 0; i < root.getAttributes().getLength(); i++) {
+                Node attr = root.getAttributes().item(i);
+                newElement.addAttribute(
+                        soapFactory.createName(attr.getNodeName()), attr.getNodeValue()
+                );
+            }
+
+            // Копируем дочерние узлы
+            Node child = root.getFirstChild();
+            while (child != null) {
+                Node importedChild = context.getOwnerDocument().importNode(child, true);
+                newElement.appendChild(importedChild);
+                child = child.getNextSibling();
+            }
+
+            return newElement;
+        }
+    }
     private static SOAPElement addChildElement(SOAPElement element, QName qNameOfChild, String valueOfChild) {
         try {
             SOAPElement createdChild = element.addChildElement(qNameOfChild);

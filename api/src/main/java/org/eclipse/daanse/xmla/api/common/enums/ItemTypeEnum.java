@@ -23,7 +23,9 @@ public enum ItemTypeEnum {
 
     DOUBLE("xsd:double"),
 
-    STRING("xsd:string");
+    STRING("xsd:string"),
+
+	DATETIME("xsd:dateTime");
 
     private final String value;
 
