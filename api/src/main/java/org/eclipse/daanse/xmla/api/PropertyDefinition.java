@@ -102,7 +102,7 @@ public enum PropertyDefinition {
     ProviderName(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "Mondrian XML for Analysis Provider",
             XmlaConstants.Method.DISCOVER, "The XML for Analysis Provider name."),
 
-    ProviderVersion(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "10.50.1600.1",
+    ProviderVersion(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "11.0.7001.0",
             // MondrianServer.forId(null).getVersion().getVersionString(),
             XmlaConstants.Method.DISCOVER, "The version of the Mondrian XMLA Provider"),
 

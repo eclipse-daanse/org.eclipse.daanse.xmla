@@ -179,8 +179,8 @@ public class Constants {
             public static final String AUTHENTICATION_MODE = "AuthenticationMode";
             public static final QName QN_AUTHENTICATION_MODE = new QName(ROWSET.NS_URN, AUTHENTICATION_MODE, ROWSET.PREFIX);
 
-            public static final String META_DATA = "MetaData";
-            public static final QName QN_META_DATA = new QName(ROWSET.NS_URN, META_DATA, ROWSET.PREFIX);
+            public static final String META_DATA = "METADATA";
+            public static final QName QN_META_DATA = new QName(ROWSET.NS_URN, META_DATA, "xars");
 
             public static final String SCHEMA_OWNER = "SCHEMA_OWNER";
             public static final QName QN_SCHEMA_OWNER = new QName(ROWSET.NS_URN, SCHEMA_OWNER, ROWSET.PREFIX);
