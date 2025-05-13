@@ -33,6 +33,7 @@ public class Constants {
         public static final QName QN_EXECUTE = new QName(NS_URN, "Execute", PREFIX);
         public static final QName QN_EXECUTE_RESPONSE = new QName(NS_URN, "ExecuteResponse", "");
         public static final QName QN_PROPERTIES = new QName(NS_URN, "Properties", PREFIX);
+        public static final QName QN_PARAMETERS = new QName(NS_URN, "Parameters", PREFIX);
         public static final QName QN_PROPERTY_LIST = new QName(NS_URN, "PropertyList", PREFIX);
         public static final QName QN_RESTRICTIONS = new QName(NS_URN, "Restrictions", PREFIX);
         public static final QName QN_RESTRICTION_LIST = new QName(NS_URN, "RestrictionList", PREFIX);

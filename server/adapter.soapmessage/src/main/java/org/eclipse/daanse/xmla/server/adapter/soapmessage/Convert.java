@@ -56,6 +56,7 @@ import org.eclipse.daanse.xmla.api.engine300_300.RelationshipEnd;
 import org.eclipse.daanse.xmla.api.engine300_300.RelationshipEndTranslation;
 import org.eclipse.daanse.xmla.api.engine300_300.Relationships;
 import org.eclipse.daanse.xmla.api.engine300_300.XEvent;
+import org.eclipse.daanse.xmla.api.execute.ExecuteParameter;
 import org.eclipse.daanse.xmla.api.xmla.*;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.catalogs.DbSchemaCatalogsRestrictionsR;
@@ -97,6 +98,7 @@ import org.eclipse.daanse.xmla.model.record.engine300_300.RelationshipEndTransla
 import org.eclipse.daanse.xmla.model.record.engine300_300.RelationshipR;
 import org.eclipse.daanse.xmla.model.record.engine300_300.RelationshipsR;
 import org.eclipse.daanse.xmla.model.record.engine300_300.XEventR;
+import org.eclipse.daanse.xmla.model.record.execute.ExecuteParameterR;
 import org.eclipse.daanse.xmla.model.record.xmla.*;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
@@ -131,6 +133,38 @@ public class Convert {
 
         }
         return new PropertiesR();
+
+    }
+
+    public static List<ExecuteParameter> parametersToParameters(SOAPElement parametersElement) {
+
+    	List<ExecuteParameter> parameters = new ArrayList<ExecuteParameter>();
+
+        Iterator<Node> nodeIteratorParameterList = parametersElement.getChildElements();
+        while (nodeIteratorParameterList.hasNext()) {
+            Node n = nodeIteratorParameterList.next();
+
+            if (n instanceof SOAPElement parameterElement) {
+                Iterator<Node> parameterList = parameterElement.getChildElements();
+                String name = null;
+                String value = null;
+                while (parameterList.hasNext()) {
+                    Node n1 = parameterList.next();
+                    if (n1 instanceof SOAPElement pElement) {
+                        if ("name".equalsIgnoreCase(pElement.getLocalName())) {
+                            name = pElement.getTextContent();
+                        }
+                        if ("value".equalsIgnoreCase(pElement.getLocalName())) {
+                            value = pElement.getTextContent();
+                        }
+                    }
+                }
+                if (name != null && value != null) {
+                    parameters.add(new ExecuteParameterR(name, value));
+                }
+            }
+        }
+        return parameters;
 
     }
 

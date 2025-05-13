@@ -186,7 +186,15 @@ public enum PropertyDefinition {
     // Microsoft-specific XMLA definition.
     DbpropMsmdSubqueries(RowsetDefinitionType.INTEGER, null, XmlaConstants.Access.ReadWrite, "1",
             XmlaConstants.Method.DISCOVER_AND_EXECUTE,
-            "An enumeration value that determines the behavior of subqueries.");
+            "An enumeration value that determines the behavior of subqueries."),
+
+    DbpropMsmdActivityID(RowsetDefinitionType.STRING, null, XmlaConstants.Access.ReadWrite, null,
+            XmlaConstants.Method.DISCOVER_AND_EXECUTE,
+            "DbpropMsmdActivityID"),
+
+    DBMSVersion(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "11.0.7001.0",
+            XmlaConstants.Method.DISCOVER_AND_EXECUTE,
+            "DBMSVersion");
 
     final RowsetDefinitionType type;
     final Set<? extends Enum> enumSet;
