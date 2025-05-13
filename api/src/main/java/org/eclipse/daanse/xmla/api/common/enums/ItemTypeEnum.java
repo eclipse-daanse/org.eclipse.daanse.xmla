@@ -25,7 +25,13 @@ public enum ItemTypeEnum {
 
     STRING("xsd:string"),
 
-	DATETIME("xsd:dateTime");
+	DATETIME("xsd:dateTime"),
+
+	UNSIGNEDSHOT("xsd:unsignedShort"),
+
+	UNSIGNEDINT("xsd:xsd:unsignedInt"),
+
+	BOOLEAN("xsd:boolean");
 
     private final String value;
 

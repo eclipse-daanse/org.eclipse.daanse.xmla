@@ -27,6 +27,7 @@ public class OperationNames {
     public static final String DBSCHEMA_CATALOGS = "DBSCHEMA_CATALOGS";
     public static final String DISCOVER_DATASOURCES = "DISCOVER_DATASOURCES";
     public static final String DISCOVER_XML_METADATA = "DISCOVER_XML_METADATA";
+    public static final String DISCOVER_CSDL_METADATA = "DISCOVER_CSDL_METADATA";
     public static final String DBSCHEMA_COLUMNS = "DBSCHEMA_COLUMNS";
     public static final String DBSCHEMA_PROVIDER_TYPES = "DBSCHEMA_PROVIDER_TYPES";
     public static final String DBSCHEMA_SCHEMATA = "DBSCHEMA_SCHEMATA";

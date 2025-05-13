@@ -353,6 +353,9 @@ public class XmlaApiAdapter {
                 if (properties == null && Constants.MSXMLA.QN_PROPERTIES.equals(element.getElementQName())) {
                     properties = Convert.propertiestoProperties(element);
                 }
+                if (parameters == null && Constants.MSXMLA.QN_PARAMETERS.equals(element.getElementQName())) {
+                	parameters = Convert.parametersToParameters(element);
+                }
                 if (command == null && Constants.MSXMLA.QN_COMMAND.equals(element.getElementQName())) {
                     command = Convert.commandtoCommand(element);
                 }
