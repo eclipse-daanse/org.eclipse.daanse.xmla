@@ -430,7 +430,7 @@ public class SoapUtil {
         if (it != null) {
             SOAPElement el = addChildElement(e, it.tagName(), Constants.ROWSET.PREFIX);
             el.setTextContent(it.value());
-            //it.type().ifPresent(v -> setAttribute(el, "type", v.getValue()));
+            it.type().ifPresent(v -> setAttribute(el, "type", v.getValue()));
         }
     }
 
@@ -2477,7 +2477,7 @@ public class SoapUtil {
                 ItemTypeEnum type = item.type().orElse(ItemTypeEnum.STRING);
                 ctSequenceEl1.setAttribute("minOccurs", "0");
                 ctSequenceEl1.setAttribute("name", item.tagName());
-                ctSequenceEl1.setAttribute("sql:field", item.tagName());
+                ctSequenceEl1.setAttribute("sql:field", item.fieldName());
                 ctSequenceEl1.setAttribute("type", type.getValue());
             }
         }
@@ -2851,8 +2851,10 @@ public class SoapUtil {
             createdChild.setAttribute("xmlns:ddl300_300", "http://schemas.microsoft.com/analysisservices/2011/engine/300/300");
             createdChild.setAttribute("xmlns:ddl400", "http://schemas.microsoft.com/analysisservices/2012/engine/400");
             createdChild.setAttribute("xmlns:ddl400_400", "http://schemas.microsoft.com/analysisservices/2012/engine/400/400");
-            SOAPElement se = xmlStringToSoapElement(valueOfChild, createdChild);
-            createdChild.addChildElement(se);
+            if (valueOfChild != null && !valueOfChild.isEmpty()) {
+                SOAPElement se = xmlStringToSoapElement(valueOfChild, createdChild);
+                createdChild.addChildElement(se);
+            }
             return createdChild;
 
         } catch (SOAPException | SAXException | IOException | ParserConfigurationException e) {

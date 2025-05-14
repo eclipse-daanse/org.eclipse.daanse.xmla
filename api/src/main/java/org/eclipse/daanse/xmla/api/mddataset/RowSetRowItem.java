@@ -21,6 +21,8 @@ public interface RowSetRowItem {
 
     String tagName();
 
+    String fieldName();
+
     String value();
 
     Optional<ItemTypeEnum> type();

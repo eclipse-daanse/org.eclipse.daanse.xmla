@@ -27,6 +27,6 @@ public interface DiscoverCsdlMetaDataRestrictions {
     @Restriction(name = "PERSPECTIVE_NAME", type = XSD_STRING, order = 1)
     Optional<String> perspectiveName();
 
-    @Restriction(name = "VERSION", type = XSD_STRING)
+    @Restriction(name = "VERSION", type = XSD_STRING, order = 2)
     Optional<String> version();
 }
