@@ -437,7 +437,7 @@ class DiscoverResponseTest {
     void testDiscoverXmlMetadata(@InjectService XmlaService xmlaService) throws SOAPException, IOException,
         TransformerException {
 
-        DiscoverXmlMetaDataResponseRowR row = new DiscoverXmlMetaDataResponseRowR("metaData");
+        DiscoverXmlMetaDataResponseRowR row = new DiscoverXmlMetaDataResponseRowR("");
 
         DiscoverService discoverService = xmlaService.discover();
         when(discoverService.xmlMetaData(any(), any(), any())).thenReturn(List.of(row));
@@ -453,7 +453,7 @@ class DiscoverResponseTest {
         XmlAssert xmlAssert = XMLUtil.createAssert(response);
         checkRow(xmlAssert);
         checkRowValues(xmlAssert, Map.of(
-            "MetaData", "metaData"
+            "MetaData", ""
         ));
     }
 

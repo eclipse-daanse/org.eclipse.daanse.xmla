@@ -18,6 +18,9 @@ import org.eclipse.daanse.xmla.api.mddataset.RowSetRowItem;
 
 import java.util.Optional;
 
-public record RowSetRowItemR(String tagName, String value, Optional<ItemTypeEnum> type) implements RowSetRowItem {
+public record RowSetRowItemR(String tagName, String fieldName, String value, Optional<ItemTypeEnum> type) implements RowSetRowItem {
 
+    public RowSetRowItemR(String tagName, String value, Optional<ItemTypeEnum> type) {
+        this(tagName, tagName, value, type);
+    }
 }
