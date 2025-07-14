@@ -209,7 +209,9 @@ public enum PropertyDefinition {
         // Thus the client will receive the same XML, regardless
         // of the server O/S.
         assert description.indexOf('\r') == -1;
-        assert value.indexOf('\r') == -1;
+        if (value != null) {
+            assert value.indexOf('\r') == -1;
+        }
         assert (enumSet != null) == type.isEnum();
         this.type = type;
         this.enumSet = enumSet;
