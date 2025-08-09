@@ -10,7 +10,7 @@
 * Contributors:
 *   SmartCity Jena - initial
 */
-package org.eclipse.daanse.xmla.server.jakarta.saaj;
+package org.eclipse.daanse.xmla.server.jakarta.saaj.impl;
 
 import jakarta.servlet.Servlet;
 import jakarta.xml.soap.MimeHeader;
@@ -18,10 +18,12 @@ import jakarta.xml.soap.SOAPMessage;
 import org.eclipse.daanse.jakarta.servlet.soap.AbstractSoapServlet;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlaApiAdapter;
+import org.eclipse.daanse.xmla.server.jakarta.saaj.api.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.servlet.whiteboard.propertytypes.HttpWhiteboardServletPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,18 +38,20 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @HttpWhiteboardServletPattern("/xmla")
-@Component(service = Servlet.class, scope = ServiceScope.PROTOTYPE)
+@Designate(ocd = XmlaServletOCD.class, factory = true)
+@Component(service = Servlet.class, scope = ServiceScope.PROTOTYPE, configurationPid = Constants.PID_XMLA_SERVLET)
 public class XmlaServlet extends AbstractSoapServlet {
 
+    private static final long serialVersionUID = 1L;
     private static Logger LOGGER = LoggerFactory.getLogger(XmlaServlet.class);
-    private XmlaApiAdapter wsAdapter;
+    private XmlaApiAdapter xmlaAdapter;
 
-    @Reference
+    @Reference(name = Constants.REFERENCE_XMLA_SERVICE)
     private XmlaService xmlaService;
 
     @Activate
     public void activate() {
-        wsAdapter = new XmlaApiAdapter(xmlaService);
+        xmlaAdapter = new XmlaApiAdapter(xmlaService);
     }
 
     @Override
@@ -57,9 +61,10 @@ public class XmlaServlet extends AbstractSoapServlet {
                 LOGGER.debug("SoapMessage in:", prettyPrint(soapMessage).toString());
             }
             Iterable<MimeHeader> iterable = () -> soapMessage.getMimeHeaders().getAllHeaders();
-            Map<String, Object> map = StreamSupport.stream(iterable.spliterator(), true).collect(Collectors.toMap(MimeHeader::getName, MimeHeader::getValue, (oldValue, newValue) -> oldValue));
+            Map<String, Object> map = StreamSupport.stream(iterable.spliterator(), true).collect(
+                    Collectors.toMap(MimeHeader::getName, MimeHeader::getValue, (oldValue, newValue) -> oldValue));
 
-            SOAPMessage returnMessage = wsAdapter.handleRequest(soapMessage, map);
+            SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map);
 
             LOGGER.debug("SoapMessage out:", prettyPrint(returnMessage).toString());
 
