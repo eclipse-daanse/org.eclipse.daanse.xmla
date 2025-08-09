@@ -10,4 +10,9 @@
 * Contributors:
 *   SmartCity Jena - initial
 */
-package org.eclipse.daanse.xmla.server.jakarta.saaj;
+@Export
+@Version("0.0.1")
+package org.eclipse.daanse.xmla.server.jakarta.saaj.api;
+
+import org.osgi.annotation.bundle.Export;
+import org.osgi.annotation.versioning.Version;

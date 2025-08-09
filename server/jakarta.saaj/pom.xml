@@ -32,6 +32,13 @@
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.service.servlet</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.metatype.annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.http.servlet-api</artifactId>
