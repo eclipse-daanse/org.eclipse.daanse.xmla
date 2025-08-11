@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.jdk.httpserver</artifactId>
+  <name>Daanse XMLA Server JDK HTTP Server Implementation</name>
+  <description>XMLA server implementation using the built-in JDK HTTP server (com.sun.net.httpserver). This module provides a lightweight, standalone XMLA server without requiring external servlet containers or application servers.</description>
   <dependencies>
 
 

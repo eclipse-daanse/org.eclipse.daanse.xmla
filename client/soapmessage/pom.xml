@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.client.soapmessage</artifactId>
+  <name>Daanse XMLA Client SOAP Message</name>
+  <description>SOAP message-based XMLA client implementation. Provides SOAP message handling, serialization, and communication capabilities for connecting to XMLA servers using web service protocols.</description>
 
   <dependencies>
     <dependency>

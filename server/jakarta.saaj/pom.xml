@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.jakarta.saaj</artifactId>
+  <name>Daanse XMLA Server Jakarta SAAJ Implementation</name>
+  <description>XMLA server implementation using Jakarta SOAP with Attachments API for Java (SAAJ). This module provides a servlet-based XMLA server that processes SOAP requests using the Jakarta EE SAAJ framework.</description>
   <dependencies>
 
     <dependency>

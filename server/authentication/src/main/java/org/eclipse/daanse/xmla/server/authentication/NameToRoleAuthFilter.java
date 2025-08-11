@@ -32,16 +32,7 @@ import static org.osgi.service.servlet.context.ServletContextHelper.AUTHENTICATI
 import static org.osgi.service.servlet.context.ServletContextHelper.REMOTE_USER;
 
 @Component(scope = ServiceScope.SINGLETON)
-@HttpWhiteboardFilterPattern("/xmla3")
-public class AuthFilter implements Filter {
-
-    public static final String ADMIN = "admin";
-    public static final String USER1 = "user1";
-    public static final String ROLE1 = "role1";
-    public static final String USER2 = "user2";
-    public static final String ROLE2 = "role2";
-    public static final String USER3 = "user3";
-    public static final String ROLE3 = "role3";
+public class NameToRoleAuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -67,7 +58,6 @@ public class AuthFilter implements Filter {
 
     protected boolean authenticated(HeaderMapRequestWrapper request) {
         request.setAttribute(AUTHENTICATION_TYPE, HttpServletRequest.BASIC_AUTH);
-        boolean success = false;
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null) {
@@ -77,38 +67,9 @@ public class AuthFilter implements Filter {
             String username = usernameAndPassword.substring(0, userNameIndex);
             String password = usernameAndPassword.substring(userNameIndex + 1);
 
-            success = (username.equals(ADMIN) && password.equals(ADMIN))
-                    || (username.equals(USER1) && password.equals(USER1))
-                    || (username.equals(USER2) && password.equals(USER2))
-                    || (username.equals(USER3) && password.equals(USER3));
-
-            if (success) {
-                switch (username) {
-                case ADMIN:
-                    request.setAttribute(REMOTE_USER, ADMIN);
-                    request.setAttribute("ROLE", ADMIN);
-                    // request.addHeader("ROLE", ADMIN);
-                    request.addHeader("USER", ADMIN);
-                    break;
-                case USER1:
-                    request.setAttribute(REMOTE_USER, USER1);
-                    request.addHeader("ROLE", ROLE1);
-                    request.addHeader("USER", USER1);
-                    break;
-                case USER2:
-                    request.setAttribute(REMOTE_USER, USER2);
-                    request.addHeader("ROLE", ROLE2);
-                    request.addHeader("USER", USER2);
-                    break;
-                case USER3:
-                    request.setAttribute(REMOTE_USER, USER3);
-                    request.addHeader("ROLE", ROLE3);
-                    request.addHeader("USER", USER3);
-                    break;
-                }
-            }
+            request.setAttribute(REMOTE_USER, username);
         }
-        return success;
+        return true;
     }
 
     @Override

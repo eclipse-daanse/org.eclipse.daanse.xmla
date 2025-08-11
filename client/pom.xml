@@ -21,6 +21,8 @@
   </parent>
   <artifactId>org.eclipse.daanse.xmla.client</artifactId>
   <packaging>pom</packaging>
+  <name>Daanse XMLA Client</name>
+  <description>Parent module for XMLA client implementations. Contains client-side components for communicating with XMLA servers, including SOAP message handling and web service client utilities.</description>
   <modules>
     <module>soapmessage</module>
   </modules>

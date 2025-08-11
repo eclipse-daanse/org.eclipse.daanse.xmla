@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.jakarta.xml.ws.provider.soapmessage</artifactId>
+  <name>Daanse XMLA Server Jakarta XML WS Provider SOAP Message</name>
+  <description>Jakarta XML Web Services provider with SOAP message support for XMLA server. Implements JAX-WS Provider interface for direct SOAP message handling and processing in XMLA server endpoints.</description>
   <dependencies>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>

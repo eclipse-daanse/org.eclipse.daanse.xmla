@@ -21,6 +21,8 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.jakarta.jws</artifactId>
+  <name>Daanse XMLA Server Jakarta JWS</name>
+  <description>Jakarta JWS (Java Web Services) implementation for XMLA server. Provides web service annotations and JWS-based endpoint implementations for exposing XMLA functionality as standard Java web services.</description>
 
   <dependencies>
     <dependency>

@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.tck</artifactId>
+  <name>Daanse XMLA Server TCK</name>
+  <description>Technology Compatibility Kit (TCK) for XMLA server implementations. Provides comprehensive test suites and compliance testing framework to validate XMLA server behavior and protocol conformance.</description>
   <properties>
     <sonar.exclusions>src/**/tck/**/*</sonar.exclusions>
   </properties>

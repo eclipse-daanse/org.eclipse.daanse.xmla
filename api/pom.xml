@@ -20,4 +20,6 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.api</artifactId>
+  <name>Daanse XMLA API</name>
+  <description>Core API interfaces and data structures for XML for Analysis (XMLA) protocol implementation. This module defines the fundamental contracts and types used for XMLA communication between clients and OLAP servers.</description>
 </project>
