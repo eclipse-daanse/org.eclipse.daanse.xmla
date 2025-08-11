@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.authentication</artifactId>
+  <name>Daanse XMLA Server Authentication</name>
+  <description>Authentication module for XMLA server. Provides security and authentication mechanisms for protecting XMLA endpoints, including servlet-based authentication and authorization support.</description>
   <dependencies>
     <dependency>
       <groupId>org.osgi</groupId>

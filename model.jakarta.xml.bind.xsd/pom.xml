@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.model.jakarta.xml.bind.xsd</artifactId>
+  <name>Daanse XMLA Jakarta XML Bind XSD Model</name>
+  <description>XSD-based Jakarta XML Binding model for XMLA protocol. Generates JAXB classes from XML Schema definitions, providing strongly-typed Java representations of XMLA data structures and protocol elements.</description>
   <dependencies>
     <dependency>
       <groupId>jakarta.xml.bind</groupId>

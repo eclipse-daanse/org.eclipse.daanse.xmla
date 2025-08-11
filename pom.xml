@@ -24,6 +24,8 @@
   <artifactId>org.eclipse.daanse.xmla</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
+  <name>Eclipse Daanse XMLA Protocol API and Implementation</name>
+  <description>Complete XMLA (XML for Analysis) protocol implementation providing standardized web service interfaces for OLAP data access. Includes comprehensive API definitions, client libraries, server adapters with multiple transport mechanisms, and Jakarta XML bindings for seamless integration with multidimensional databases and business intelligence applications.</description>
 
   <properties>
     <revision>0.0.1-SNAPSHOT</revision>

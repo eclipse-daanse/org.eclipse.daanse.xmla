@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server.adapter.soapmessage</artifactId>
+  <name>Daanse XMLA Server SOAP Message Adapter</name>
+  <description>SOAP message adapter for XMLA server implementations. Provides conversion and adaptation layer between XMLA API calls and SOAP message format, handling serialization and protocol adaptation.</description>
   <dependencies>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>

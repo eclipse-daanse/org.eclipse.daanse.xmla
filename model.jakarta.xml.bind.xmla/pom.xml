@@ -21,6 +21,8 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla</artifactId>
+  <name>Daanse XMLA Jakarta XML Bind Model</name>
+  <description>Jakarta XML Binding (JAXB) model for XMLA protocol. Provides JAXB-annotated classes and XML binding support for XMLA request/response structures and data types.</description>
   <dependencies>
     <dependency>
       <groupId>org.osgi</groupId>

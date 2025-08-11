@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.model.record</artifactId>
+  <name>Daanse XMLA Record Model</name>
+  <description>Record-based model implementation for XMLA protocol. Provides Java record classes for XMLA data structures, offering immutable and efficient representations of XMLA requests and responses.</description>
 
   <dependencies>
     <dependency>

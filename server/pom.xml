@@ -20,6 +20,8 @@
     <version>${revision}</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla.server</artifactId>
+  <name>Daanse XMLA Server Modules</name>
+  <description>Parent module for XMLA server implementations and related components. This aggregates various XMLA server technologies including Jakarta EE servlets, JDK HTTP server, and authentication mechanisms.</description>
   <packaging>pom</packaging>
   <modules>
     <module>tck</module>
