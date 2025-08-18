@@ -189,7 +189,7 @@ public class Convert {
     }
 
     public static MdSchemaFunctionsRestrictionsR discoverMdSchemaFunctionsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaFunctionsRestrictionsR(
             Optional.ofNullable(m.get(FUNCTION_NAME)),
             Optional.ofNullable(OriginEnum.fromValue(m.get(ORIGIN))),
@@ -200,7 +200,7 @@ public class Convert {
 
 
     public static MdSchemaDimensionsRestrictionsR discoverMdSchemaDimensionsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaDimensionsRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -213,7 +213,7 @@ public class Convert {
     }
 
     public static MdSchemaCubesRestrictionsR discoverMdSchemaCubesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaCubesRestrictionsR(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CUBE_NAME)),
@@ -223,7 +223,7 @@ public class Convert {
     }
 
     public static MdSchemaMeasureGroupsRestrictionsR discoverMdSchemaMeasureGroups(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaMeasureGroupsRestrictionsR(Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CUBE_NAME)),
@@ -232,7 +232,7 @@ public class Convert {
     }
 
     public static MdSchemaKpisRestrictionsR discoverMdSchemaKpisRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaKpisRestrictionsR(Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CUBE_NAME)),
@@ -242,7 +242,7 @@ public class Convert {
     }
 
     public static MdSchemaSetsRestrictionsR discoverMdSchemaSetsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaSetsRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -256,7 +256,7 @@ public class Convert {
     }
 
     public static MdSchemaPropertiesRestrictionsR discoverMdSchemaPropertiesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaPropertiesRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -275,7 +275,7 @@ public class Convert {
     }
 
     public static MdSchemaMembersRestrictionsR discoverMdSchemaMembersRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaMembersRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -294,7 +294,7 @@ public class Convert {
     }
 
     public static MdSchemaMeasuresRestrictionsR discoverMdSchemaMeasuresRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaMeasuresRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -310,7 +310,7 @@ public class Convert {
     public static MdSchemaMeasureGroupDimensionsRestrictionsR discoverMdSchemaMeasureGroupDimensionsRestrictions(
         SOAPElement restriction
     ) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaMeasureGroupDimensionsRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -322,7 +322,7 @@ public class Convert {
     }
 
     public static MdSchemaLevelsRestrictionsR discoverMdSchemaLevelsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaLevelsRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -340,7 +340,7 @@ public class Convert {
     }
 
     public static MdSchemaHierarchiesRestrictionsR discoverMdSchemaHierarchiesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaHierarchiesRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -356,7 +356,7 @@ public class Convert {
 
 
     public static DbSchemaTablesInfoRestrictionsR discoverDbSchemaTablesInfo(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaTablesInfoRestrictionsR(
             Optional.ofNullable(m.get(TABLE_CATALOG)),
             Optional.ofNullable(m.get(TABLE_SCHEMA)),
@@ -366,7 +366,7 @@ public class Convert {
     }
 
     public static DbSchemaSourceTablesRestrictionsR discoverDbSchemaSourceTablesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaSourceTablesRestrictionsR(
             Optional.ofNullable(m.get(TABLE_CATALOG)),
             Optional.ofNullable(m.get(TABLE_SCHEMA)),
@@ -376,7 +376,7 @@ public class Convert {
     }
 
     public static DbSchemaSchemataRestrictionsR discoverDbSchemaSchemataRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaSchemataRestrictionsR(
             m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME),
             m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME),
@@ -385,7 +385,7 @@ public class Convert {
     }
 
     public static DbSchemaProviderTypesRestrictionsR discoverDbSchemaProviderTypesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaProviderTypesRestrictionsR(
             Optional.ofNullable(LevelDbTypeEnum.fromValue(m.get(DATA_TYPE))),
             Optional.ofNullable(Boolean.valueOf(m.get(BEST_MATCH)))
@@ -393,7 +393,7 @@ public class Convert {
     }
 
     public static DbSchemaColumnsRestrictionsR discoverDbSchemaColumnsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaColumnsRestrictionsR(
             Optional.ofNullable(m.get(TABLE_CATALOG)),
             Optional.ofNullable(m.get(TABLE_SCHEMA)),
@@ -404,7 +404,7 @@ public class Convert {
     }
 
     public static DiscoverXmlMetaDataRestrictionsR discoverDiscoverXmlMetaDataRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DiscoverXmlMetaDataRestrictionsR(
             Optional.ofNullable(m.get(OBJECT_TYPE)),
             Optional.ofNullable(m.get(DATABASE_ID)),
@@ -433,7 +433,7 @@ public class Convert {
     }
 
     public static DiscoverDataSourcesRestrictionsR discoverDiscoverDataSourcesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DiscoverDataSourcesRestrictionsR(
             m.get(DATA_SOURCE_NAME),
             Optional.ofNullable(m.get(DATA_SOURCE_DESCRIPTION)),
@@ -446,42 +446,42 @@ public class Convert {
     }
 
     public static DbSchemaCatalogsRestrictionsR discoverDbSchemaCatalogsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaCatalogsRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME))
         );
     }
 
     public static DiscoverSchemaRowsetsRestrictionsR discoverSchemaRowsetsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DiscoverSchemaRowsetsRestrictionsR(
             Optional.ofNullable(m.get(SCHEMA_NAME_LOW))
         );
     }
 
     public static DiscoverEnumeratorsRestrictionsR discoverDiscoverEnumerators(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DiscoverEnumeratorsRestrictionsR(
             Optional.ofNullable(m.get(ENUM_NAME))
         );
     }
 
     public static DiscoverKeywordsRestrictionsR discoverKeywordsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DiscoverKeywordsRestrictionsR(
             Optional.ofNullable(m.get(KEYWORD))
         );
     }
 
     public static DiscoverLiteralsRestrictionsR discoverLiteralsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DiscoverLiteralsRestrictionsR(
             Optional.ofNullable(m.get(LITERAL_NAME))
         );
     }
 
     public static DbSchemaTablesRestrictionsR discoverDbSchemaTablesRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new DbSchemaTablesRestrictionsR(
             Optional.ofNullable(m.get(TABLE_CATALOG)),
             Optional.ofNullable(m.get(TABLE_SCHEMA)),
@@ -492,7 +492,7 @@ public class Convert {
 
 
     public static MdSchemaActionsRestrictionsR discoverMdSchemaActionsRestrictions(SOAPElement restriction) {
-        Map<String, String> m = getMapValuesByTag(restriction, RESTRICTION_LIST);
+        Map<String, String> m = getRestrictionMap(restriction);
         return new MdSchemaActionsRestrictionsR(
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.CATALOG_NAME)),
             Optional.ofNullable(m.get(Constants.ROWSET.ROW_PROPERTY.SCHEMA_NAME)),
@@ -7478,12 +7478,30 @@ public class Convert {
         return new AggregationDesignAttributeR(attributeID, Optional.ofNullable(estimatedCount));
     }
 
-    private static Map<String, String> getMapValuesByTag(SOAPElement el, String tagName) {
-        NodeList nodeList = el.getElementsByTagName(tagName);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return getMapValues(nodeList.item(0).getChildNodes());
+    private static Map<String, String> getRestrictionMap(SOAPElement el) {
+        Iterator<Node> nodeIterator = el.getChildElements();
+        while (nodeIterator.hasNext()) {
+            Node node = nodeIterator.next();
+            if (node instanceof SOAPElement restrictions
+                && Constants.MSXMLA.QN_RESTRICTION_LIST.equals(restrictions.getElementQName())) {
+                return restrictionValues(restrictions);
+            }
+
         }
         return Map.of();
+    }
+
+    private static Map<String, String> restrictionValues(SOAPElement restrictionList) {
+    Map<String, String> result = new HashMap<>();
+        Iterator<Node> nodeIteratorRestrictionList = restrictionList.getChildElements();
+        while (nodeIteratorRestrictionList.hasNext()) {
+            Node n = nodeIteratorRestrictionList.next();
+            if (n instanceof SOAPElement restrictionListElement) {
+                String name = restrictionListElement.getLocalName();
+                result.put(name, restrictionListElement.getTextContent());
+            }
+        }
+        return result;
     }
 
     private static List<String> getValuesByTag(SOAPElement el, String tagName) {
