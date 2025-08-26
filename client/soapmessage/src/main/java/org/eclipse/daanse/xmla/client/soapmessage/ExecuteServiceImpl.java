@@ -16,7 +16,7 @@ package org.eclipse.daanse.xmla.client.soapmessage;
 import jakarta.xml.soap.SOAPException;
 import jakarta.xml.soap.SOAPMessage;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.execute.ExecuteService;
 import org.eclipse.daanse.xmla.api.execute.alter.AlterRequest;
 import org.eclipse.daanse.xmla.api.execute.alter.AlterResponse;
@@ -49,7 +49,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 
     @Override
     public StatementResponse statement(StatementRequest statementRequest, RequestMetaData metaData,
-            UserPrincipal userPrincipal) {
+            UserRolePrincipal userPrincipal) {
         try {
             Consumer<SOAPMessage> msg = ExecuteConsumers.createStatementRequestConsumer(statementRequest);
             SOAPMessage message = soapClient.callSoapWebService(Optional.of(SOAP_ACTION_EXECUTE), msg);
@@ -61,7 +61,7 @@ public class ExecuteServiceImpl implements ExecuteService {
     }
 
     @Override
-    public AlterResponse alter(AlterRequest alterRequest, RequestMetaData metaData, UserPrincipal userPrincipal) {
+    public AlterResponse alter(AlterRequest alterRequest, RequestMetaData metaData, UserRolePrincipal userPrincipal) {
         try {
             Consumer<SOAPMessage> msg = ExecuteConsumers.createAlterRequestConsumer(alterRequest);
             SOAPMessage message = soapClient.callSoapWebService(Optional.of(SOAP_ACTION_EXECUTE), msg);
@@ -74,7 +74,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 
     @Override
     public ClearCacheResponse clearCache(ClearCacheRequest clearCacheRequest, RequestMetaData metaData,
-            UserPrincipal userPrincipal) {
+            UserRolePrincipal userPrincipal) {
         try {
             Consumer<SOAPMessage> msg = ExecuteConsumers.createClearCacheRequestConsumer(clearCacheRequest);
             SOAPMessage message = soapClient.callSoapWebService(Optional.of(SOAP_ACTION_EXECUTE), msg);
@@ -86,7 +86,7 @@ public class ExecuteServiceImpl implements ExecuteService {
     }
 
     @Override
-    public CancelResponse cancel(CancelRequest cancelRequest, RequestMetaData metaData, UserPrincipal userPrincipal) {
+    public CancelResponse cancel(CancelRequest cancelRequest, RequestMetaData metaData, UserRolePrincipal userPrincipal) {
         try {
             Consumer<SOAPMessage> msg = ExecuteConsumers.createCancelRequestConsumer(cancelRequest);
             SOAPMessage message = soapClient.callSoapWebService(Optional.of(SOAP_ACTION_EXECUTE), msg);

@@ -1,80 +1,87 @@
-/*
- * Copyright (c) 2023 Contributors to the Eclipse Foundation.
- *
- * This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License 2.0
- * which is available at https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *   SmartCity Jena - initial
- *   Stefan Bischof (bipolis.org) - initial
- */
 package org.eclipse.daanse.xmla.server.authentication;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ServiceScope;
-import org.osgi.service.servlet.whiteboard.propertytypes.HttpWhiteboardFilterPattern;
-
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.Base64;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static org.osgi.service.servlet.context.ServletContextHelper.AUTHENTICATION_TYPE;
-import static org.osgi.service.servlet.context.ServletContextHelper.REMOTE_USER;
-
-@Component(scope = ServiceScope.SINGLETON)
 public class NameToRoleAuthFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) {
-        // empty
-    }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-        final HttpServletRequest httpRequest = (HttpServletRequest) request;
-        final HttpServletResponse httpResponse = (HttpServletResponse) response;
-        if (httpRequest.getHeader("Authorization") == null) {
-            httpResponse.addHeader("WWW-Authenticate", "Basic");
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-        HeaderMapRequestWrapper requestWrapper = new HeaderMapRequestWrapper(httpRequest);
-        if (authenticated(requestWrapper)) {
-            chain.doFilter(requestWrapper, response);// sends request to next resource
-        } else {
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        String auth = request.getHeader("Authorization");
+        if (auth == null || !auth.startsWith("Basic ")) {
+            response.setHeader("WWW-Authenticate", "Basic realm=\"app\"");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
+        // --- Decode credentials ---
+        String base64 = auth.substring("Basic ".length());
+        String credentials = new String(Base64.getDecoder().decode(base64), StandardCharsets.UTF_8);
+
+        int idx = credentials.indexOf(':');
+        if (idx < 0) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Basic header");
+            return;
+        }
+
+        String usernameAndRoles = credentials.substring(0, idx);
+        String password = credentials.substring(idx + 1);
+
+        // Split username and roles using '|'
+        String[] parts = usernameAndRoles.split("\\|");
+        String username = parts[0];
+
+        Set<String> roles = Stream.of(parts).skip(1) // skip username
+                .collect(Collectors.toSet());
+
+        // Hier kannst du Passwort prüfen (DB, LDAP, etc.)
+        if (!authenticate(username, password)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        // Request wrappen, um Security-Methoden bereitzustellen
+        HttpServletRequest wrapped = new HttpServletRequestWrapper(request) {
+            private final Principal principal = (Principal) () -> username;
+
+            @Override
+            public Principal getUserPrincipal() {
+                return principal;
+            }
+
+            @Override
+            public String getRemoteUser() {
+                return username;
+            }
+
+            @Override
+            public String getAuthType() {
+                return HttpServletRequest.BASIC_AUTH;
+            }
+
+            @Override
+            public boolean isUserInRole(String role) {
+                return roles.contains(role);
+            }
+        };
+
+        chain.doFilter(wrapped, response);
     }
 
-    protected boolean authenticated(HeaderMapRequestWrapper request) {
-        request.setAttribute(AUTHENTICATION_TYPE, HttpServletRequest.BASIC_AUTH);
-        String authHeader = request.getHeader("Authorization");
-
-        if (authHeader != null) {
-            String usernameAndPassword = new String(Base64.getDecoder().decode(authHeader.substring(6).getBytes()));
-
-            int userNameIndex = usernameAndPassword.indexOf(":");
-            String username = usernameAndPassword.substring(0, userNameIndex);
-            String password = usernameAndPassword.substring(userNameIndex + 1);
-
-            request.setAttribute(REMOTE_USER, username);
-        }
+    private boolean authenticate(String u, String p) {
+        // sichere Prüfung implementieren
         return true;
     }
-
-    @Override
-    public void destroy() {
-        // empty
-    }
-
 }

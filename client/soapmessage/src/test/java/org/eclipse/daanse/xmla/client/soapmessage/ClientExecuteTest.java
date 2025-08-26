@@ -17,7 +17,7 @@ import jakarta.xml.soap.SOAPMessage;
 import jakarta.xml.ws.Provider;
 import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.properties.AxisFormat;
 import org.eclipse.daanse.xmla.api.common.properties.PropertyListElementDefinition;
 import org.eclipse.daanse.xmla.api.engine200.WarningColumn;
@@ -137,7 +137,7 @@ class ClientExecuteTest {
         Cancel command = new CancelR(BigInteger.valueOf(100), "SessionID", BigInteger.valueOf(101), true);
 
         RequestMetaData requestMetaData = null;
-        UserPrincipal userPrincipal = null;
+        UserRolePrincipal userPrincipal = null;
         CancelRequest cancelRequest = new CancelRequestR(properties, parameters, command);
 
         CancelResponse response = client.execute().cancel(cancelRequest, requestMetaData, userPrincipal);
@@ -192,7 +192,7 @@ class ClientExecuteTest {
         ClearCache command = new ClearCacheR(objectReference);
 
         RequestMetaData requestMetaData = null;
-        UserPrincipal userPrincipal = null;
+        UserRolePrincipal userPrincipal = null;
         ClearCacheRequest clearCacheRequest = new ClearCacheRequestR(properties, parameters, command);
 
         ClearCacheResponse response = client.execute().clearCache(clearCacheRequest, requestMetaData, userPrincipal);
@@ -280,7 +280,7 @@ class ClientExecuteTest {
         StatementR command = new StatementR(
                 "select [Measures].[Sales Count] on 0, non empty [Store].[Store State]" + ".members on 1 from [Sales]");
         RequestMetaData requestMetaData = null;
-        UserPrincipal userPrincipal = null;
+        UserRolePrincipal userPrincipal = null;
 
         StatementRequest statementRequest = new StatementRequestR(properties, parameters, command, null);
 
@@ -357,7 +357,7 @@ class ClientExecuteTest {
         AlterR command = new AlterR(object, objectDefinition, Scope.SESSION, true, ObjectExpansion.EXPAND_FULL);
 
         RequestMetaData requestMetaData = null;
-        UserPrincipal userPrincipal = null;
+        UserRolePrincipal userPrincipal = null;
         AlterRequest alterRequest = new AlterRequestR(properties, parameters, command);
 
         AlterResponse response = client.execute().alter(alterRequest, requestMetaData, userPrincipal);

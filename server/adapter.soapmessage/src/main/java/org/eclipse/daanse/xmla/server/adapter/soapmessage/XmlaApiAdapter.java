@@ -13,16 +13,17 @@
 */
 package org.eclipse.daanse.xmla.server.adapter.soapmessage;
 
-import java.util.Arrays;
+import java.security.Principal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 import javax.xml.namespace.QName;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsResponseRow;
@@ -91,7 +92,6 @@ import org.eclipse.daanse.xmla.api.xmla.BeginSession;
 import org.eclipse.daanse.xmla.api.xmla.Command;
 import org.eclipse.daanse.xmla.api.xmla.EndSession;
 import org.eclipse.daanse.xmla.api.xmla.Session;
-import org.eclipse.daanse.xmla.model.record.UserPrincipalR;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.catalogs.DbSchemaCatalogsRequestR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.catalogs.DbSchemaCatalogsRestrictionsR;
@@ -207,25 +207,48 @@ public class XmlaApiAdapter {
     private static final String MDSCHEMA_MEASUREGROUPS = "MDSCHEMA_MEASUREGROUPS";
     private static final QName QN_SESSION = new QName("urn:schemas-microsoft-com:xml-analysis", "Session");
 
-    public SOAPMessage handleRequest(SOAPMessage messageRequest, Map<String, Object> headers) {
+    public SOAPMessage handleRequest(SOAPMessage messageRequest, Map<String, Object> headers, Principal principal,
+            Function<String, Boolean> isUserInRoleFunction) {
         try {
             SOAPMessage messageResponse = MessageFactory.newInstance().createMessage();
             messageResponse.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
             SOAPPart soapPartResponse = messageResponse.getSOAPPart();
             SOAPEnvelope envelopeResponse = soapPartResponse.getEnvelope();
 
-            //envelopeResponse.addNamespaceDeclaration(Constants.MSXMLA.PREFIX, Constants.MSXMLA.NS_URN);
-            //envelopeResponse.addNamespaceDeclaration(Constants.ROWSET.PREFIX, Constants.ROWSET.NS_URN);
-            //envelopeResponse.addNamespaceDeclaration(Constants.MDDATASET.PREFIX, Constants.MDDATASET.NS_URN);
-            //envelopeResponse.addNamespaceDeclaration(Constants.ENGINE.PREFIX, Constants.ENGINE.NS_URN);
-            //envelopeResponse.addNamespaceDeclaration(Constants.ENGINE200.PREFIX, Constants.ENGINE200.NS_URN);
-            //envelopeResponse.addNamespaceDeclaration(Constants.EMPTY.PREFIX, Constants.EMPTY.NS_URN);
-            //envelopeResponse.addNamespaceDeclaration(Constants.XSI.PREFIX, Constants.XSI.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.MSXMLA.PREFIX,
+            // Constants.MSXMLA.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.ROWSET.PREFIX,
+            // Constants.ROWSET.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.MDDATASET.PREFIX,
+            // Constants.MDDATASET.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.ENGINE.PREFIX,
+            // Constants.ENGINE.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.ENGINE200.PREFIX,
+            // Constants.ENGINE200.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.EMPTY.PREFIX,
+            // Constants.EMPTY.NS_URN);
+            // envelopeResponse.addNamespaceDeclaration(Constants.XSI.PREFIX,
+            // Constants.XSI.NS_URN);
 
-            Object role = headers.get("ROLE");
-            Object user = headers.get("USER");
-            UserPrincipal userPrincipal = new UserPrincipalR(getStringOrNull(user), getRoles(role));
-            Optional<Session> oSession =session(messageRequest.getSOAPHeader(),userPrincipal);
+            UserRolePrincipal userPrincipal = new UserRolePrincipal() {
+
+                @Override
+                public String userName() {
+                    if (principal == null) {
+                        return "";
+                    }
+                    return principal.getName();
+                }
+
+                @Override
+                public boolean hasRole(String role) {
+                    if (isUserInRoleFunction == null) {
+                        return false;
+                    }
+                    return isUserInRoleFunction.apply(role);
+                }
+            };
+            Optional<Session> oSession = session(messageRequest.getSOAPHeader(), userPrincipal);
             if (oSession.isPresent()) {
                 SOAPHeader header = envelopeResponse.getHeader();
                 SOAPHeaderElement sessionElement = header.addHeaderElement(QN_SESSION);
@@ -244,21 +267,7 @@ public class XmlaApiAdapter {
         return null;
     }
 
-    private List<String> getRoles(Object ob) {
-        if (ob != null && ob instanceof String str) {
-            return Arrays.asList(str.split(","));
-        }
-        return List.of();
-    }
-
-    private String getStringOrNull(Object ob) {
-        if (ob != null && ob instanceof String str) {
-            return str;
-        }
-        return null;
-    }
-
-    private Optional<Session> session(SOAPHeader soapRequestHeader, UserPrincipal userPrincipal) throws SOAPException {
+    private Optional<Session> session(SOAPHeader soapRequestHeader, UserRolePrincipal userPrincipal) throws SOAPException {
         Optional<Session> oSession = Convert.getSession(soapRequestHeader);
         if (oSession.isPresent()) {
             boolean checked = xmlaService.session().checkSession(oSession.get(), userPrincipal);
@@ -283,7 +292,7 @@ public class XmlaApiAdapter {
         return Optional.empty();
     }
 
-    private void handleBody(SOAPBody body, SOAPBody responseBody, RequestMetaData metaData, UserPrincipal userPrincipal)
+    private void handleBody(SOAPBody body, SOAPBody responseBody, RequestMetaData metaData, UserRolePrincipal userPrincipal)
             throws SOAPException {
         SOAPElement node = null;
 
@@ -310,9 +319,8 @@ public class XmlaApiAdapter {
 
     }
 
-
     private void discover(SOAPElement discover, SOAPBody responseBody, RequestMetaData metaData,
-            UserPrincipal userPrincipal) throws SOAPException {
+            UserRolePrincipal userPrincipal) throws SOAPException {
 
         String requestType = null;
         PropertiesR properties = null;
@@ -340,7 +348,7 @@ public class XmlaApiAdapter {
     }
 
     private void execute(SOAPElement discover, SOAPBody responseBody, RequestMetaData metaData,
-            UserPrincipal userPrincipal) throws SOAPException {
+            UserRolePrincipal userPrincipal) throws SOAPException {
 
         Command command = null;
         PropertiesR properties = null;
@@ -379,7 +387,7 @@ public class XmlaApiAdapter {
     }
 
     private void execute(Command command, PropertiesR properties, List<ExecuteParameter> parameters,
-            SOAPBody responseBody, RequestMetaData metaData, UserPrincipal userPrincipal) throws SOAPException {
+            SOAPBody responseBody, RequestMetaData metaData, UserRolePrincipal userPrincipal) throws SOAPException {
 
         if (command instanceof StatementR statement) {
             handleStatement(metaData, userPrincipal, statement, properties, parameters, responseBody);
@@ -395,7 +403,7 @@ public class XmlaApiAdapter {
         }
     }
 
-    private void discover(String requestType, RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void discover(String requestType, RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR properties, SOAPElement restrictionElement, SOAPBody responseBody) throws SOAPException {
 
         switch (requestType) {
@@ -456,7 +464,7 @@ public class XmlaApiAdapter {
         }
     }
 
-    private void handleMdSchemaMeasureGroups(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleMdSchemaMeasureGroups(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMeasureGroupsRestrictionsR restrictionsR = Convert.discoverMdSchemaMeasureGroups(restrictionElement);
         MdSchemaMeasureGroupsRequest request = new MdSchemaMeasureGroupsRequestR(propertiesR, restrictionsR);
@@ -466,7 +474,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaMeasureGroups(rows, body);
     }
 
-    private void handleMdSchemaKpis(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaKpis(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaKpisRestrictionsR restrictionsR = Convert.discoverMdSchemaKpisRestrictions(restrictionElement);
         MdSchemaKpisRequest request = new MdSchemaKpisRequestR(propertiesR, restrictionsR);
@@ -475,7 +483,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaKpis(rows, body);
     }
 
-    private void handleMdSchemaSets(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaSets(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaSetsRestrictionsR restrictionsR = Convert.discoverMdSchemaSetsRestrictions(restrictionElement);
         MdSchemaSetsRequest request = new MdSchemaSetsRequestR(propertiesR, restrictionsR);
@@ -484,7 +492,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaSets(rows, body);
     }
 
-    private void handleMdSchemaProperties(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleMdSchemaProperties(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaPropertiesRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaPropertiesRestrictions(restrictionElement);
@@ -496,7 +504,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleMdSchemaMembers(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaMembers(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMembersRestrictionsR restrictionsR = Convert.discoverMdSchemaMembersRestrictions(restrictionElement);
         MdSchemaMembersRequest request = new MdSchemaMembersRequestR(propertiesR, restrictionsR);
@@ -507,7 +515,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleMdSchemaMeasures(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaMeasures(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMeasuresRestrictionsR restrictionsR = Convert.discoverMdSchemaMeasuresRestrictions(restrictionElement);
         MdSchemaMeasuresRequest request = new MdSchemaMeasuresRequestR(propertiesR, restrictionsR);
@@ -518,7 +526,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleMdSchemaMeasureGroupDimensions(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleMdSchemaMeasureGroupDimensions(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMeasureGroupDimensionsRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaMeasureGroupDimensionsRestrictions(restrictionElement);
@@ -531,7 +539,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleMdSchemaLevels(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaLevels(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaLevelsRestrictionsR restrictionsR = Convert.discoverMdSchemaLevelsRestrictions(restrictionElement);
         MdSchemaLevelsRequest request = new MdSchemaLevelsRequestR(propertiesR, restrictionsR);
@@ -540,7 +548,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaLevels(rows, body);
     }
 
-    private void handleMdSchemaHierarchies(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleMdSchemaHierarchies(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaHierarchiesRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaHierarchiesRestrictions(restrictionElement);
@@ -551,7 +559,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaHierarchies(rows, body);
     }
 
-    private void handleDbSchemaTablesInfo(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDbSchemaTablesInfo(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaTablesInfoRestrictionsR restrictionsR = Convert.discoverDbSchemaTablesInfo(restrictionElement);
         DbSchemaTablesInfoRequest request = new DbSchemaTablesInfoRequestR(propertiesR, restrictionsR);
@@ -562,7 +570,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDbSchemaSourceTables(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDbSchemaSourceTables(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaSourceTablesRestrictionsR restrictionsR = Convert
                 .discoverDbSchemaSourceTablesRestrictions(restrictionElement);
@@ -574,7 +582,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDbSchemaSchemata(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaSchemata(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaSchemataRestrictionsR restrictionsR = Convert.discoverDbSchemaSchemataRestrictions(restrictionElement);
         DbSchemaSchemataRequest request = new DbSchemaSchemataRequestR(propertiesR, restrictionsR);
@@ -585,7 +593,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDbSchemaProviderTypes(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDbSchemaProviderTypes(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaProviderTypesRestrictionsR restrictionsR = Convert
                 .discoverDbSchemaProviderTypesRestrictions(restrictionElement);
@@ -597,7 +605,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDbSchemaColumns(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaColumns(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaColumnsRestrictionsR restrictionsR = Convert.discoverDbSchemaColumnsRestrictions(restrictionElement);
         DbSchemaColumnsRequest request = new DbSchemaColumnsRequestR(propertiesR, restrictionsR);
@@ -608,7 +616,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDiscoverXmlMetaData(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDiscoverXmlMetaData(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverXmlMetaDataRestrictionsR restrictionsR = Convert
                 .discoverDiscoverXmlMetaDataRestrictions(restrictionElement);
@@ -620,7 +628,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDiscoverDataSources(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDiscoverDataSources(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverDataSourcesRestrictionsR restrictionsR = Convert
                 .discoverDiscoverDataSourcesRestrictions(restrictionElement);
@@ -632,7 +640,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDbSchemaCatalogs(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaCatalogs(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaCatalogsRestrictionsR restrictionsR = Convert.discoverDbSchemaCatalogsRestrictions(restrictionElement);
         DbSchemaCatalogsRequest request = new DbSchemaCatalogsRequestR(propertiesR, restrictionsR);
@@ -643,7 +651,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDiscoverSchemaRowsets(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDiscoverSchemaRowsets(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverSchemaRowsetsRestrictionsR restrictionsR = Convert
                 .discoverSchemaRowsetsRestrictions(restrictionElement);
@@ -655,7 +663,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDiscoverEnumerators(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDiscoverEnumerators(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverEnumeratorsRestrictionsR restrictionsR = Convert.discoverDiscoverEnumerators(restrictionElement);
         DiscoverEnumeratorsRequest request = new DiscoverEnumeratorsRequestR(propertiesR, restrictionsR);
@@ -666,7 +674,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDiscoverKeywords(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDiscoverKeywords(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverKeywordsRestrictionsR restrictionsR = Convert.discoverKeywordsRestrictions(restrictionElement);
         DiscoverKeywordsRequest request = new DiscoverKeywordsRequestR(propertiesR, restrictionsR);
@@ -677,7 +685,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDiscoverLiterals(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDiscoverLiterals(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverLiteralsRestrictionsR restrictionsR = Convert.discoverLiteralsRestrictions(restrictionElement);
         DiscoverLiteralsRequest request = new DiscoverLiteralsRequestR(propertiesR, restrictionsR);
@@ -688,7 +696,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleDbSchemaTables(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaTables(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaTablesRestrictionsR restrictionsR = Convert.discoverDbSchemaTablesRestrictions(restrictionElement);
         DbSchemaTablesRequest request = new DbSchemaTablesRequestR(propertiesR, restrictionsR);
@@ -698,7 +706,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void handleMdSchemaActions(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaActions(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaActionsRestrictionsR restrictionsR = Convert.discoverMdSchemaActionsRestrictions(restrictionElement);
         MdSchemaActionsRequest request = new MdSchemaActionsRequestR(propertiesR, restrictionsR);
@@ -708,7 +716,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaActions(rows, body);
     }
 
-    private void handleMdSchemaCubes(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaCubes(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaCubesRestrictionsR restrictionsR = Convert.discoverMdSchemaCubesRestrictions(restrictionElement);
         MdSchemaCubesRequest request = new MdSchemaCubesRequestR(propertiesR, restrictionsR);
@@ -717,7 +725,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaCubes(rows, body);
     }
 
-    private void handleMdSchemaDimensions(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleMdSchemaDimensions(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaDimensionsRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaDimensionsRestrictions(restrictionElement);
@@ -728,7 +736,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaDimensions(rows, body);
     }
 
-    private void handleDiscoverProperties(RequestMetaData metaData, UserPrincipal userPrincipal,
+    private void handleDiscoverProperties(RequestMetaData metaData, UserRolePrincipal userPrincipal,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
 
         DiscoverPropertiesRestrictionsR restrictionsR = Convert.discoverPropertiesRestrictions(restrictionElement);
@@ -739,7 +747,7 @@ public class XmlaApiAdapter {
         SoapUtil.toDiscoverProperties(rows, body);
     }
 
-    private void handleMdSchemaFunctions(RequestMetaData metaData, UserPrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaFunctions(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
 
         MdSchemaFunctionsRestrictionsR restrictionsR = Convert
@@ -751,7 +759,7 @@ public class XmlaApiAdapter {
         SoapUtil.toMdSchemaFunctions(rows, body);
     }
 
-    private void handleStatement(RequestMetaData metaData, UserPrincipal userPrincipal, StatementR statement,
+    private void handleStatement(RequestMetaData metaData, UserRolePrincipal userPrincipal, StatementR statement,
             PropertiesR properties, List<ExecuteParameter> parameters, SOAPBody responseBody) throws SOAPException {
         String sessionId = metaData != null && metaData.sessionId() != null && metaData.sessionId().isPresent()
                 ? metaData.sessionId().get()
@@ -762,14 +770,14 @@ public class XmlaApiAdapter {
         SoapUtil.toStatementResponse(statementResponse, responseBody);
     }
 
-    private void handleAlter(RequestMetaData metaData, UserPrincipal userPrincipal, AlterR alter,
+    private void handleAlter(RequestMetaData metaData, UserRolePrincipal userPrincipal, AlterR alter,
             PropertiesR properties, List<ExecuteParameter> parameters, SOAPBody responseBody) throws SOAPException {
         AlterRequest alterRequest = new AlterRequestR(properties, parameters, alter);
         AlterResponse alterResponse = xmlaService.execute().alter(alterRequest, metaData, userPrincipal);
         SoapUtil.toAlterResponse(alterResponse, responseBody);
     }
 
-    private void handleClearCache(RequestMetaData metaData, UserPrincipal userPrincipal, ClearCacheR clearCache,
+    private void handleClearCache(RequestMetaData metaData, UserRolePrincipal userPrincipal, ClearCacheR clearCache,
             PropertiesR properties, List<ExecuteParameter> parameters, SOAPBody responseBody) throws SOAPException {
         ClearCacheRequest clearCacheRequest = new ClearCacheRequestR(properties, parameters, clearCache);
         ClearCacheResponse clearCacheResponse = xmlaService.execute().clearCache(clearCacheRequest, metaData,
@@ -777,7 +785,7 @@ public class XmlaApiAdapter {
         SoapUtil.toClearCacheResponse(clearCacheResponse, responseBody);
     }
 
-    private void handleCancel(RequestMetaData metaData, UserPrincipal userPrincipal, CancelR cancel,
+    private void handleCancel(RequestMetaData metaData, UserRolePrincipal userPrincipal, CancelR cancel,
             PropertiesR properties, List<ExecuteParameter> parameters, SOAPBody responseBody) throws SOAPException {
         CancelRequest cancelRequest = new CancelRequestR(properties, parameters, cancel);
         CancelResponse cancelResponse = xmlaService.execute().cancel(cancelRequest, metaData, userPrincipal);

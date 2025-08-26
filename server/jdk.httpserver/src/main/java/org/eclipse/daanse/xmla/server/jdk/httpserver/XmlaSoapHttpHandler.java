@@ -29,6 +29,6 @@ public class XmlaSoapHttpHandler extends AbstractSoapHttpHandler {
 
     @Override
     protected SOAPMessage onMessage(SOAPMessage req) {
-        return adapter.handleRequest(req, Collections.emptyMap());
+        return adapter.handleRequest(req, Collections.emptyMap(),null,null);
     }
 };

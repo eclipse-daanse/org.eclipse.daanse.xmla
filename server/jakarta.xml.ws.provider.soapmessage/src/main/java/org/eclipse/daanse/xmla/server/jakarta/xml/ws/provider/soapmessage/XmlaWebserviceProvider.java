@@ -76,7 +76,7 @@ public class XmlaWebserviceProvider implements Provider<SOAPMessage> {
                 .get(MessageContext.HTTP_REQUEST_HEADERS);
 
         LOGGER.debug("===== The provider got a request =====");
-        return wsAdapter.handleRequest(request, headers);
+        return wsAdapter.handleRequest(request, headers,null,null);
     }
 
     private SOAPFault getFault(Exception ex) {

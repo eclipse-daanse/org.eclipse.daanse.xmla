@@ -14,7 +14,7 @@
 package org.eclipse.daanse.xmla.server.tck;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.api.execute.ExecuteService;
 import org.eclipse.daanse.xmla.api.execute.alter.AlterRequest;
@@ -95,7 +95,7 @@ class ExecuteRequestTest {
     void testStatement(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<StatementRequest> captor = ArgumentCaptor.forClass(StatementRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         SOAPUtil.callSoapWebService(Constants.SOAP_ENDPOINT_URL, Optional.of(Constants.SOAP_ACTION_EXECUTE),
                 SOAPUtil.envelop(STATEMENT_REQUEST));
 
@@ -121,7 +121,7 @@ class ExecuteRequestTest {
     void testClearcache(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<ClearCacheRequest> captor = ArgumentCaptor.forClass(ClearCacheRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         SOAPUtil.callSoapWebService(Constants.SOAP_ENDPOINT_URL, Optional.of(Constants.SOAP_ACTION_EXECUTE),
                 SOAPUtil.envelop(CLEAR_CACHE_REQUEST));
 
@@ -167,7 +167,7 @@ class ExecuteRequestTest {
     void testCancel(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<CancelRequest> captor = ArgumentCaptor.forClass(CancelRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         SOAPUtil.callSoapWebService(Constants.SOAP_ENDPOINT_URL, Optional.of(Constants.SOAP_ACTION_EXECUTE),
                 SOAPUtil.envelop(CANCEL_REQUEST));
 
@@ -195,7 +195,7 @@ class ExecuteRequestTest {
     void testAlter(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<AlterRequest> captor = ArgumentCaptor.forClass(AlterRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         Duration duration = Duration.parse("-PT1S");
 
         SOAPUtil.callSoapWebService(Constants.SOAP_ENDPOINT_URL, Optional.of(Constants.SOAP_ACTION_EXECUTE),

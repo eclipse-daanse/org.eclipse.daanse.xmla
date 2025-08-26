@@ -15,17 +15,17 @@ package org.eclipse.daanse.xmla.api.session;
 
 import java.util.Optional;
 
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.xmla.BeginSession;
 import org.eclipse.daanse.xmla.api.xmla.EndSession;
 import org.eclipse.daanse.xmla.api.xmla.Session;
 
 public interface SessionService {
 
-    Optional<Session> beginSession(BeginSession beginSession, UserPrincipal userPrincipal);
+    Optional<Session> beginSession(BeginSession beginSession, UserRolePrincipal userPrincipal);
 
-    boolean checkSession(Session session, UserPrincipal userPrincipal);
+    boolean checkSession(Session session, UserRolePrincipal userPrincipal);
 
-    void endSession(EndSession endSession, UserPrincipal userPrincipal);
+    void endSession(EndSession endSession, UserRolePrincipal userPrincipal);
 
 }
