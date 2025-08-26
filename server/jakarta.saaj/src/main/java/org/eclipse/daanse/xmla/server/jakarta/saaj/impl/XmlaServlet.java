@@ -33,7 +33,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
+import java.security.Principal;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -55,7 +57,7 @@ public class XmlaServlet extends AbstractSoapServlet {
     }
 
     @Override
-    public SOAPMessage onMessage(SOAPMessage soapMessage) {
+    public SOAPMessage onMessage(SOAPMessage soapMessage,Principal principal, Function<String, Boolean> isUserInRoleFunction) {
         try {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SoapMessage in:", prettyPrint(soapMessage).toString());
@@ -64,7 +66,7 @@ public class XmlaServlet extends AbstractSoapServlet {
             Map<String, Object> map = StreamSupport.stream(iterable.spliterator(), true).collect(
                     Collectors.toMap(MimeHeader::getName, MimeHeader::getValue, (oldValue, newValue) -> oldValue));
 
-            SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map);
+            SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map, principal,  isUserInRoleFunction);
 
             LOGGER.debug("SoapMessage out:", prettyPrint(returnMessage).toString());
 

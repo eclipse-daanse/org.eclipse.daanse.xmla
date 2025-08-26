@@ -14,7 +14,7 @@
 package org.eclipse.daanse.xmla.server.tck;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ColumnOlapTypeEnum;
@@ -128,7 +128,7 @@ class DiscoverRequestTest {
     void testDiscoverPropertiesLocaleIdentifier(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverPropertiesRequest> captor = ArgumentCaptor.forClass(DiscoverPropertiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -168,7 +168,7 @@ class DiscoverRequestTest {
     void testDiscoverPropertiesRestricted(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverPropertiesRequest> captor = ArgumentCaptor.forClass(DiscoverPropertiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -213,7 +213,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<DiscoverSchemaRowsetsRequest> captor = ArgumentCaptor
                 .forClass(DiscoverSchemaRowsetsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                     <RequestType>DISCOVER_SCHEMA_ROWSETS</RequestType>
@@ -258,7 +258,7 @@ class DiscoverRequestTest {
     void testDiscoverEnumerators(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverEnumeratorsRequest> captor = ArgumentCaptor.forClass(DiscoverEnumeratorsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -302,7 +302,7 @@ class DiscoverRequestTest {
     void testDiscoverKeywords(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverKeywordsRequest> captor = ArgumentCaptor.forClass(DiscoverKeywordsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>DISCOVER_KEYWORDS</RequestType>
@@ -345,7 +345,7 @@ class DiscoverRequestTest {
     void testDiscoverLiterals(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverLiteralsRequest> captor = ArgumentCaptor.forClass(DiscoverLiteralsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>DISCOVER_LITERALS</RequestType>
@@ -388,7 +388,7 @@ class DiscoverRequestTest {
     void testDbSchemaTables(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DbSchemaTablesRequest> captor = ArgumentCaptor.forClass(DbSchemaTablesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                 <RequestType>DBSCHEMA_TABLES</RequestType>
@@ -438,7 +438,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaActionsRequest> captor = ArgumentCaptor.forClass(MdSchemaActionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>MDSCHEMA_ACTIONS</RequestType>
@@ -503,7 +503,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaCubesRequest> captor = ArgumentCaptor.forClass(MdSchemaCubesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                 <RequestType>MDSCHEMA_CUBES</RequestType>
@@ -557,7 +557,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaDimensionsRequest> captor = ArgumentCaptor.forClass(MdSchemaDimensionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>MDSCHEMA_DIMENSIONS</RequestType>
@@ -617,7 +617,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaFunctionsRequest> captor = ArgumentCaptor.forClass(MdSchemaFunctionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>MDSCHEMA_FUNCTIONS</RequestType>
@@ -664,7 +664,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaHierarchiesRequest> captor = ArgumentCaptor.forClass(MdSchemaHierarchiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>MDSCHEMA_HIERARCHIES</RequestType>
@@ -728,7 +728,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DiscoverDataSourcesRequest> captor = ArgumentCaptor.forClass(DiscoverDataSourcesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>DISCOVER_DATASOURCES</RequestType>
@@ -790,7 +790,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DiscoverXmlMetaDataRequest> captor = ArgumentCaptor.forClass(DiscoverXmlMetaDataRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>DISCOVER_XML_METADATA</RequestType>
@@ -885,7 +885,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaColumnsRequest> captor = ArgumentCaptor.forClass(DbSchemaColumnsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>DBSCHEMA_COLUMNS</RequestType>
@@ -942,7 +942,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<DbSchemaProviderTypesRequest> captor = ArgumentCaptor
                 .forClass(DbSchemaProviderTypesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                         <RequestType>DBSCHEMA_PROVIDER_TYPES</RequestType>
@@ -992,7 +992,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaLevelsRequest> captor = ArgumentCaptor.forClass(MdSchemaLevelsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_LEVELS</RequestType>
@@ -1061,7 +1061,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<MdSchemaMeasureGroupDimensionsRequest> captor = ArgumentCaptor
                 .forClass(MdSchemaMeasureGroupDimensionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_MEASUREGROUP_DIMENSIONS</RequestType>
@@ -1122,7 +1122,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaMeasuresRequest> captor = ArgumentCaptor.forClass(MdSchemaMeasuresRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_MEASURES</RequestType>
@@ -1186,7 +1186,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaMembersRequest> captor = ArgumentCaptor.forClass(MdSchemaMembersRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1261,7 +1261,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaPropertiesRequest> captor = ArgumentCaptor.forClass(MdSchemaPropertiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_PROPERTIES</RequestType>
@@ -1334,7 +1334,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaSetsRequest> captor = ArgumentCaptor.forClass(MdSchemaSetsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_SETS</RequestType>
@@ -1396,7 +1396,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaKpisRequest> captor = ArgumentCaptor.forClass(MdSchemaKpisRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_KPIS</RequestType>
@@ -1455,7 +1455,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<MdSchemaMeasureGroupsRequest> captor = ArgumentCaptor
                 .forClass(MdSchemaMeasureGroupsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>MDSCHEMA_MEASUREGROUPS</RequestType>
@@ -1511,7 +1511,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaTablesInfoRequest> captor = ArgumentCaptor.forClass(DbSchemaTablesInfoRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>DBSCHEMA_TABLES_INFO</RequestType>
@@ -1567,7 +1567,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaSourceTablesRequest> captor = ArgumentCaptor.forClass(DbSchemaSourceTablesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>DBSCHEMA_SOURCE_TABLES</RequestType>
@@ -1623,7 +1623,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaSchemataRequest> captor = ArgumentCaptor.forClass(DbSchemaSchemataRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
-        ArgumentCaptor<UserPrincipal> up = ArgumentCaptor.forClass(UserPrincipal.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
                                         <RequestType>DBSCHEMA_SCHEMATA</RequestType>

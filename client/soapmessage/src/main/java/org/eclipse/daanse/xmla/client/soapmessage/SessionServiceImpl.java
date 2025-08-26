@@ -15,7 +15,7 @@ package org.eclipse.daanse.xmla.client.soapmessage;
 
 import java.util.Optional;
 
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.session.SessionService;
 import org.eclipse.daanse.xmla.api.xmla.BeginSession;
 import org.eclipse.daanse.xmla.api.xmla.EndSession;
@@ -24,17 +24,17 @@ import org.eclipse.daanse.xmla.api.xmla.Session;
 public class SessionServiceImpl implements SessionService {
 
     @Override
-    public Optional<Session> beginSession(BeginSession beginSession, UserPrincipal userPrincipal) {
+    public Optional<Session> beginSession(BeginSession beginSession, UserRolePrincipal userPrincipal) {
         return Optional.empty();
     }
 
     @Override
-    public boolean checkSession(Session session, UserPrincipal userPrincipal) {
+    public boolean checkSession(Session session, UserRolePrincipal userPrincipal) {
         return true;
     }
 
     @Override
-    public void endSession(EndSession endSession, UserPrincipal userPrincipal) {
+    public void endSession(EndSession endSession, UserRolePrincipal userPrincipal) {
 
     }
 

@@ -11,12 +11,11 @@
  *   SmartCity Jena - initial
  *   Stefan Bischof (bipolis.org) - initial
  */
-package org.eclipse.daanse.xmla.model.record;
+package org.eclipse.daanse.xmla.api;
 
-import org.eclipse.daanse.xmla.api.UserPrincipal;
+public interface UserRolePrincipal {
 
-import java.util.List;
+    String userName();
 
-public record UserPrincipalR(String userId, List<String> roles) implements UserPrincipal {
-
+    boolean hasRole(String role);
 }
