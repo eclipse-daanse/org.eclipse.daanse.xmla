@@ -310,7 +310,7 @@ public class XmlaApiAdapter {
 
         if (node != null && Constants.MSXMLA.QN_DISCOVER.equals(node.getElementQName())) {
 
-            discover(node, responseBody, metaData, userPrincipal);
+            discover(node, responseBody, metaData);
 
         }
         if (node != null && Constants.MSXMLA.QN_EXECUTE.equals(node.getElementQName())) {
@@ -319,8 +319,7 @@ public class XmlaApiAdapter {
 
     }
 
-    private void discover(SOAPElement discover, SOAPBody responseBody, RequestMetaData metaData,
-            UserRolePrincipal userPrincipal) throws SOAPException {
+    private void discover(SOAPElement discover, SOAPBody responseBody, RequestMetaData metaData) throws SOAPException {
 
         String requestType = null;
         PropertiesR properties = null;
@@ -344,7 +343,7 @@ public class XmlaApiAdapter {
             }
         }
 
-        discover(requestType, metaData, userPrincipal, properties, restictions, responseBody);
+        discover(requestType, metaData, properties, restictions, responseBody);
     }
 
     private void execute(SOAPElement discover, SOAPBody responseBody, RequestMetaData metaData,
@@ -403,358 +402,337 @@ public class XmlaApiAdapter {
         }
     }
 
-    private void discover(String requestType, RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void discover(String requestType, RequestMetaData metaData,
             PropertiesR properties, SOAPElement restrictionElement, SOAPBody responseBody) throws SOAPException {
 
         switch (requestType) {
         case MDSCHEMA_FUNCTIONS ->
-            handleMdSchemaFunctions(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaFunctions(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_DIMENSIONS ->
-            handleMdSchemaDimensions(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaDimensions(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_CUBES ->
-            handleMdSchemaCubes(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaCubes(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_ACTIONS ->
-            handleMdSchemaActions(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaActions(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_TABLES ->
-            handleDbSchemaTables(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaTables(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_LITERALS ->
-            handleDiscoverLiterals(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverLiterals(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_KEYWORDS ->
-            handleDiscoverKeywords(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverKeywords(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_ENUMERATORS ->
-            handleDiscoverEnumerators(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverEnumerators(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_SCHEMA_ROWSETS ->
-            handleDiscoverSchemaRowsets(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverSchemaRowsets(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_PROPERTIES ->
-            handleDiscoverProperties(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverProperties(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_CATALOGS ->
-            handleDbSchemaCatalogs(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaCatalogs(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_DATASOURCES ->
-            handleDiscoverDataSources(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverDataSources(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_XML_METADATA ->
-            handleDiscoverXmlMetaData(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDiscoverXmlMetaData(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_COLUMNS ->
-            handleDbSchemaColumns(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaColumns(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_PROVIDER_TYPES ->
-            handleDbSchemaProviderTypes(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaProviderTypes(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_SCHEMATA ->
-            handleDbSchemaSchemata(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaSchemata(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_SOURCE_TABLES ->
-            handleDbSchemaSourceTables(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaSourceTables(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_TABLES_INFO ->
-            handleDbSchemaTablesInfo(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleDbSchemaTablesInfo(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_HIERARCHIES ->
-            handleMdSchemaHierarchies(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaHierarchies(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_LEVELS ->
-            handleMdSchemaLevels(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaLevels(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_MEASUREGROUP_DIMENSIONS ->
-            handleMdSchemaMeasureGroupDimensions(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaMeasureGroupDimensions(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_MEASURES ->
-            handleMdSchemaMeasures(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaMeasures(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_MEMBERS ->
-            handleMdSchemaMembers(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaMembers(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_PROPERTIES ->
-            handleMdSchemaProperties(metaData, userPrincipal, properties, restrictionElement, responseBody);
-        case MDSCHEMA_SETS -> handleMdSchemaSets(metaData, userPrincipal, properties, restrictionElement, responseBody);
-        case MDSCHEMA_KPIS -> handleMdSchemaKpis(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaProperties(metaData, properties, restrictionElement, responseBody);
+        case MDSCHEMA_SETS -> handleMdSchemaSets(metaData, properties, restrictionElement, responseBody);
+        case MDSCHEMA_KPIS -> handleMdSchemaKpis(metaData, properties, restrictionElement, responseBody);
         case MDSCHEMA_MEASUREGROUPS ->
-            handleMdSchemaMeasureGroups(metaData, userPrincipal, properties, restrictionElement, responseBody);
+            handleMdSchemaMeasureGroups(metaData, properties, restrictionElement, responseBody);
         default -> throw new IllegalArgumentException("Unexpected value: " + requestType);
 
         }
     }
 
-    private void handleMdSchemaMeasureGroups(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleMdSchemaMeasureGroups(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMeasureGroupsRestrictionsR restrictionsR = Convert.discoverMdSchemaMeasureGroups(restrictionElement);
         MdSchemaMeasureGroupsRequest request = new MdSchemaMeasureGroupsRequestR(propertiesR, restrictionsR);
-        List<MdSchemaMeasureGroupsResponseRow> rows = xmlaService.discover().mdSchemaMeasureGroups(request, metaData,
-                userPrincipal);
+        List<MdSchemaMeasureGroupsResponseRow> rows = xmlaService.discover().mdSchemaMeasureGroups(request, metaData);
 
         SoapUtil.toMdSchemaMeasureGroups(rows, body);
     }
 
-    private void handleMdSchemaKpis(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaKpis(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaKpisRestrictionsR restrictionsR = Convert.discoverMdSchemaKpisRestrictions(restrictionElement);
         MdSchemaKpisRequest request = new MdSchemaKpisRequestR(propertiesR, restrictionsR);
-        List<MdSchemaKpisResponseRow> rows = xmlaService.discover().mdSchemaKpis(request, metaData, userPrincipal);
+        List<MdSchemaKpisResponseRow> rows = xmlaService.discover().mdSchemaKpis(request, metaData);
 
         SoapUtil.toMdSchemaKpis(rows, body);
     }
 
-    private void handleMdSchemaSets(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaSets(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaSetsRestrictionsR restrictionsR = Convert.discoverMdSchemaSetsRestrictions(restrictionElement);
         MdSchemaSetsRequest request = new MdSchemaSetsRequestR(propertiesR, restrictionsR);
-        List<MdSchemaSetsResponseRow> rows = xmlaService.discover().mdSchemaSets(request, metaData, userPrincipal);
+        List<MdSchemaSetsResponseRow> rows = xmlaService.discover().mdSchemaSets(request, metaData);
 
         SoapUtil.toMdSchemaSets(rows, body);
     }
 
-    private void handleMdSchemaProperties(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleMdSchemaProperties(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaPropertiesRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaPropertiesRestrictions(restrictionElement);
         MdSchemaPropertiesRequest request = new MdSchemaPropertiesRequestR(propertiesR, restrictionsR);
-        List<MdSchemaPropertiesResponseRow> rows = xmlaService.discover().mdSchemaProperties(request, metaData,
-                userPrincipal);
+        List<MdSchemaPropertiesResponseRow> rows = xmlaService.discover().mdSchemaProperties(request, metaData);
 
         SoapUtil.toMdSchemaProperties(rows, body);
 
     }
 
-    private void handleMdSchemaMembers(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaMembers(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMembersRestrictionsR restrictionsR = Convert.discoverMdSchemaMembersRestrictions(restrictionElement);
         MdSchemaMembersRequest request = new MdSchemaMembersRequestR(propertiesR, restrictionsR);
-        List<MdSchemaMembersResponseRow> rows = xmlaService.discover().mdSchemaMembers(request, metaData,
-                userPrincipal);
+        List<MdSchemaMembersResponseRow> rows = xmlaService.discover().mdSchemaMembers(request, metaData);
 
         SoapUtil.toMdSchemaMembers(rows, body);
 
     }
 
-    private void handleMdSchemaMeasures(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaMeasures(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMeasuresRestrictionsR restrictionsR = Convert.discoverMdSchemaMeasuresRestrictions(restrictionElement);
         MdSchemaMeasuresRequest request = new MdSchemaMeasuresRequestR(propertiesR, restrictionsR);
-        List<MdSchemaMeasuresResponseRow> rows = xmlaService.discover().mdSchemaMeasures(request, metaData,
-                userPrincipal);
+        List<MdSchemaMeasuresResponseRow> rows = xmlaService.discover().mdSchemaMeasures(request, metaData);
 
         SoapUtil.toMdSchemaMeasures(rows, body);
 
     }
 
-    private void handleMdSchemaMeasureGroupDimensions(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleMdSchemaMeasureGroupDimensions(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaMeasureGroupDimensionsRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaMeasureGroupDimensionsRestrictions(restrictionElement);
         MdSchemaMeasureGroupDimensionsRequest request = new MdSchemaMeasureGroupDimensionsRequestR(propertiesR,
                 restrictionsR);
         List<MdSchemaMeasureGroupDimensionsResponseRow> rows = xmlaService.discover()
-                .mdSchemaMeasureGroupDimensions(request, metaData, userPrincipal);
+                .mdSchemaMeasureGroupDimensions(request, metaData);
 
         SoapUtil.toMdSchemaMeasureGroupDimensions(rows, body);
 
     }
 
-    private void handleMdSchemaLevels(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaLevels(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaLevelsRestrictionsR restrictionsR = Convert.discoverMdSchemaLevelsRestrictions(restrictionElement);
         MdSchemaLevelsRequest request = new MdSchemaLevelsRequestR(propertiesR, restrictionsR);
-        List<MdSchemaLevelsResponseRow> rows = xmlaService.discover().mdSchemaLevels(request, metaData, userPrincipal);
+        List<MdSchemaLevelsResponseRow> rows = xmlaService.discover().mdSchemaLevels(request, metaData);
 
         SoapUtil.toMdSchemaLevels(rows, body);
     }
 
-    private void handleMdSchemaHierarchies(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleMdSchemaHierarchies(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaHierarchiesRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaHierarchiesRestrictions(restrictionElement);
         MdSchemaHierarchiesRequest request = new MdSchemaHierarchiesRequestR(propertiesR, restrictionsR);
-        List<MdSchemaHierarchiesResponseRow> rows = xmlaService.discover().mdSchemaHierarchies(request, metaData,
-                userPrincipal);
+        List<MdSchemaHierarchiesResponseRow> rows = xmlaService.discover().mdSchemaHierarchies(request, metaData);
 
         SoapUtil.toMdSchemaHierarchies(rows, body);
     }
 
-    private void handleDbSchemaTablesInfo(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDbSchemaTablesInfo(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaTablesInfoRestrictionsR restrictionsR = Convert.discoverDbSchemaTablesInfo(restrictionElement);
         DbSchemaTablesInfoRequest request = new DbSchemaTablesInfoRequestR(propertiesR, restrictionsR);
-        List<DbSchemaTablesInfoResponseRow> rows = xmlaService.discover().dbSchemaTablesInfo(request, metaData,
-                userPrincipal);
+        List<DbSchemaTablesInfoResponseRow> rows = xmlaService.discover().dbSchemaTablesInfo(request, metaData);
 
         SoapUtil.toDbSchemaTablesInfo(rows, body);
 
     }
 
-    private void handleDbSchemaSourceTables(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDbSchemaSourceTables(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaSourceTablesRestrictionsR restrictionsR = Convert
                 .discoverDbSchemaSourceTablesRestrictions(restrictionElement);
         DbSchemaSourceTablesRequest request = new DbSchemaSourceTablesRequestR(propertiesR, restrictionsR);
-        List<DbSchemaSourceTablesResponseRow> rows = xmlaService.discover().dbSchemaSourceTables(request, metaData,
-                userPrincipal);
+        List<DbSchemaSourceTablesResponseRow> rows = xmlaService.discover().dbSchemaSourceTables(request, metaData);
 
         SoapUtil.toDbSchemaSourceTables(rows, body);
 
     }
 
-    private void handleDbSchemaSchemata(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaSchemata(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaSchemataRestrictionsR restrictionsR = Convert.discoverDbSchemaSchemataRestrictions(restrictionElement);
         DbSchemaSchemataRequest request = new DbSchemaSchemataRequestR(propertiesR, restrictionsR);
-        List<DbSchemaSchemataResponseRow> rows = xmlaService.discover().dbSchemaSchemata(request, metaData,
-                userPrincipal);
+        List<DbSchemaSchemataResponseRow> rows = xmlaService.discover().dbSchemaSchemata(request, metaData);
 
         SoapUtil.toDbSchemaSchemata(rows, body);
 
     }
 
-    private void handleDbSchemaProviderTypes(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDbSchemaProviderTypes(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaProviderTypesRestrictionsR restrictionsR = Convert
                 .discoverDbSchemaProviderTypesRestrictions(restrictionElement);
         DbSchemaProviderTypesRequest request = new DbSchemaProviderTypesRequestR(propertiesR, restrictionsR);
-        List<DbSchemaProviderTypesResponseRow> rows = xmlaService.discover().dbSchemaProviderTypes(request, metaData,
-                userPrincipal);
+        List<DbSchemaProviderTypesResponseRow> rows = xmlaService.discover().dbSchemaProviderTypes(request, metaData);
 
         SoapUtil.toDbSchemaProviderTypes(rows, body);
 
     }
 
-    private void handleDbSchemaColumns(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaColumns(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaColumnsRestrictionsR restrictionsR = Convert.discoverDbSchemaColumnsRestrictions(restrictionElement);
         DbSchemaColumnsRequest request = new DbSchemaColumnsRequestR(propertiesR, restrictionsR);
-        List<DbSchemaColumnsResponseRow> rows = xmlaService.discover().dbSchemaColumns(request, metaData,
-                userPrincipal);
+        List<DbSchemaColumnsResponseRow> rows = xmlaService.discover().dbSchemaColumns(request, metaData);
 
         SoapUtil.toDbSchemaColumns(rows, body);
 
     }
 
-    private void handleDiscoverXmlMetaData(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDiscoverXmlMetaData(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverXmlMetaDataRestrictionsR restrictionsR = Convert
                 .discoverDiscoverXmlMetaDataRestrictions(restrictionElement);
         DiscoverXmlMetaDataRequest request = new DiscoverXmlMetaDataRequestR(propertiesR, restrictionsR);
-        List<DiscoverXmlMetaDataResponseRow> rows = xmlaService.discover().xmlMetaData(request, metaData,
-                userPrincipal);
+        List<DiscoverXmlMetaDataResponseRow> rows = xmlaService.discover().xmlMetaData(request, metaData);
 
         SoapUtil.toDiscoverXmlMetaData(rows, body);
 
     }
 
-    private void handleDiscoverDataSources(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDiscoverDataSources(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverDataSourcesRestrictionsR restrictionsR = Convert
                 .discoverDiscoverDataSourcesRestrictions(restrictionElement);
         DiscoverDataSourcesRequest request = new DiscoverDataSourcesRequestR(propertiesR, restrictionsR);
-        List<DiscoverDataSourcesResponseRow> rows = xmlaService.discover().dataSources(request, metaData,
-                userPrincipal);
+        List<DiscoverDataSourcesResponseRow> rows = xmlaService.discover().dataSources(request, metaData);
 
         SoapUtil.toDiscoverDataSources(rows, body);
 
     }
 
-    private void handleDbSchemaCatalogs(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaCatalogs(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaCatalogsRestrictionsR restrictionsR = Convert.discoverDbSchemaCatalogsRestrictions(restrictionElement);
         DbSchemaCatalogsRequest request = new DbSchemaCatalogsRequestR(propertiesR, restrictionsR);
-        List<DbSchemaCatalogsResponseRow> rows = xmlaService.discover().dbSchemaCatalogs(request, metaData,
-                userPrincipal);
+        List<DbSchemaCatalogsResponseRow> rows = xmlaService.discover().dbSchemaCatalogs(request, metaData);
 
         SoapUtil.toDbSchemaCatalogs(rows, body);
 
     }
 
-    private void handleDiscoverSchemaRowsets(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDiscoverSchemaRowsets(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverSchemaRowsetsRestrictionsR restrictionsR = Convert
                 .discoverSchemaRowsetsRestrictions(restrictionElement);
         DiscoverSchemaRowsetsRequest request = new DiscoverSchemaRowsetsRequestR(propertiesR, restrictionsR);
-        List<DiscoverSchemaRowsetsResponseRow> rows = xmlaService.discover().discoverSchemaRowsets(request, metaData,
-                userPrincipal);
+        List<DiscoverSchemaRowsetsResponseRow> rows = xmlaService.discover().discoverSchemaRowsets(request, metaData);
 
         SoapUtil.toDiscoverSchemaRowsets(rows, body);
 
     }
 
-    private void handleDiscoverEnumerators(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDiscoverEnumerators(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverEnumeratorsRestrictionsR restrictionsR = Convert.discoverDiscoverEnumerators(restrictionElement);
         DiscoverEnumeratorsRequest request = new DiscoverEnumeratorsRequestR(propertiesR, restrictionsR);
-        List<DiscoverEnumeratorsResponseRow> rows = xmlaService.discover().discoverEnumerators(request, metaData,
-                userPrincipal);
+        List<DiscoverEnumeratorsResponseRow> rows = xmlaService.discover().discoverEnumerators(request, metaData);
 
         SoapUtil.toDiscoverEnumerators(rows, body);
 
     }
 
-    private void handleDiscoverKeywords(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDiscoverKeywords(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverKeywordsRestrictionsR restrictionsR = Convert.discoverKeywordsRestrictions(restrictionElement);
         DiscoverKeywordsRequest request = new DiscoverKeywordsRequestR(propertiesR, restrictionsR);
-        List<DiscoverKeywordsResponseRow> rows = xmlaService.discover().discoverKeywords(request, metaData,
-                userPrincipal);
+        List<DiscoverKeywordsResponseRow> rows = xmlaService.discover().discoverKeywords(request, metaData);
 
         SoapUtil.toDiscoverKeywords(rows, body);
 
     }
 
-    private void handleDiscoverLiterals(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDiscoverLiterals(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DiscoverLiteralsRestrictionsR restrictionsR = Convert.discoverLiteralsRestrictions(restrictionElement);
         DiscoverLiteralsRequest request = new DiscoverLiteralsRequestR(propertiesR, restrictionsR);
-        List<DiscoverLiteralsResponseRow> rows = xmlaService.discover().discoverLiterals(request, metaData,
-                userPrincipal);
+        List<DiscoverLiteralsResponseRow> rows = xmlaService.discover().discoverLiterals(request, metaData);
 
         SoapUtil.toDiscoverLiterals(rows, body);
 
     }
 
-    private void handleDbSchemaTables(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleDbSchemaTables(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         DbSchemaTablesRestrictionsR restrictionsR = Convert.discoverDbSchemaTablesRestrictions(restrictionElement);
         DbSchemaTablesRequest request = new DbSchemaTablesRequestR(propertiesR, restrictionsR);
-        List<DbSchemaTablesResponseRow> rows = xmlaService.discover().dbSchemaTables(request, metaData, userPrincipal);
+        List<DbSchemaTablesResponseRow> rows = xmlaService.discover().dbSchemaTables(request, metaData);
 
         SoapUtil.toDbSchemaTables(rows, body);
 
     }
 
-    private void handleMdSchemaActions(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaActions(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaActionsRestrictionsR restrictionsR = Convert.discoverMdSchemaActionsRestrictions(restrictionElement);
         MdSchemaActionsRequest request = new MdSchemaActionsRequestR(propertiesR, restrictionsR);
-        List<MdSchemaActionsResponseRow> rows = xmlaService.discover().mdSchemaActions(request, metaData,
-                userPrincipal);
+        List<MdSchemaActionsResponseRow> rows = xmlaService.discover().mdSchemaActions(request, metaData);
 
         SoapUtil.toMdSchemaActions(rows, body);
     }
 
-    private void handleMdSchemaCubes(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaCubes(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaCubesRestrictionsR restrictionsR = Convert.discoverMdSchemaCubesRestrictions(restrictionElement);
         MdSchemaCubesRequest request = new MdSchemaCubesRequestR(propertiesR, restrictionsR);
-        List<MdSchemaCubesResponseRow> rows = xmlaService.discover().mdSchemaCubes(request, metaData, userPrincipal);
+        List<MdSchemaCubesResponseRow> rows = xmlaService.discover().mdSchemaCubes(request, metaData);
 
         SoapUtil.toMdSchemaCubes(rows, body);
     }
 
-    private void handleMdSchemaDimensions(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleMdSchemaDimensions(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
         MdSchemaDimensionsRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaDimensionsRestrictions(restrictionElement);
         MdSchemaDimensionsRequest request = new MdSchemaDimensionsRequestR(propertiesR, restrictionsR);
-        List<MdSchemaDimensionsResponseRow> rows = xmlaService.discover().mdSchemaDimensions(request, metaData,
-                userPrincipal);
+        List<MdSchemaDimensionsResponseRow> rows = xmlaService.discover().mdSchemaDimensions(request, metaData);
 
         SoapUtil.toMdSchemaDimensions(rows, body);
     }
 
-    private void handleDiscoverProperties(RequestMetaData metaData, UserRolePrincipal userPrincipal,
+    private void handleDiscoverProperties(RequestMetaData metaData,
             PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
 
         DiscoverPropertiesRestrictionsR restrictionsR = Convert.discoverPropertiesRestrictions(restrictionElement);
         DiscoverPropertiesRequest request = new DiscoverPropertiesRequestR(propertiesR, restrictionsR);
-        List<DiscoverPropertiesResponseRow> rows = xmlaService.discover().discoverProperties(request, metaData,
-                userPrincipal);
+        List<DiscoverPropertiesResponseRow> rows = xmlaService.discover().discoverProperties(request, metaData);
 
         SoapUtil.toDiscoverProperties(rows, body);
     }
 
-    private void handleMdSchemaFunctions(RequestMetaData metaData, UserRolePrincipal userPrincipal, PropertiesR propertiesR,
+    private void handleMdSchemaFunctions(RequestMetaData metaData, PropertiesR propertiesR,
             SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
 
         MdSchemaFunctionsRestrictionsR restrictionsR = Convert
                 .discoverMdSchemaFunctionsRestrictions(restrictionElement);
         MdSchemaFunctionsRequest request = new MdSchemaFunctionsRequestR(propertiesR, restrictionsR);
-        List<MdSchemaFunctionsResponseRow> rows = xmlaService.discover().mdSchemaFunctions(request, metaData,
-                userPrincipal);
+        List<MdSchemaFunctionsResponseRow> rows = xmlaService.discover().mdSchemaFunctions(request, metaData);
 
         SoapUtil.toMdSchemaFunctions(rows, body);
     }
