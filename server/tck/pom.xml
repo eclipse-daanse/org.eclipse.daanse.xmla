@@ -49,13 +49,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.xml.ws.api</artifactId>
-      <version>${revision}</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.service.component.annotations</artifactId>
       <scope>compile</scope>
