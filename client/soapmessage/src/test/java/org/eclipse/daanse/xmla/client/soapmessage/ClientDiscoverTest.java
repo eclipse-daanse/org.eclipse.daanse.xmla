@@ -15,7 +15,7 @@ package org.eclipse.daanse.xmla.client.soapmessage;
 
 import jakarta.xml.soap.SOAPMessage;
 import jakarta.xml.ws.Provider;
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.AccessEnum;
@@ -179,7 +179,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.RequireServiceComponentRuntime;
-import org.osgi.service.servlet.whiteboard.annotations.RequireHttpWhiteboard;
+//import org.osgi.service.servlet.whiteboard.annotations.RequireHttpWhiteboard;
 import org.osgi.test.common.annotation.InjectBundleContext;
 import org.osgi.test.common.annotation.Property;
 import org.osgi.test.common.annotation.config.WithFactoryConfiguration;
@@ -217,12 +217,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RequireSoapWhiteboard
+//@RequireSoapWhiteboard
 @ExtendWith(ConfigurationExtension.class)
 @WithFactoryConfiguration(factoryPid = "org.eclipse.daanse.jakarta.xml.ws.handler.SOAPLoggingHandler", name = "test-ms-config", location = "?", properties = {
         @Property(key = "osgi.soap.endpoint.selector", value = "(service.pid=*)") })
 @RequireServiceComponentRuntime
-@RequireHttpWhiteboard
+//@RequireHttpWhiteboard
 class ClientDiscoverTest {
     XmlaServiceClientImpl client = new XmlaServiceClientImpl("http://localhost:8090/xmla");
     // Register a Provider using whiteboardpattern and xmlassert to check xml

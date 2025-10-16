@@ -15,7 +15,7 @@ package org.eclipse.daanse.xmla.client.soapmessage;
 
 import jakarta.xml.soap.SOAPMessage;
 import jakarta.xml.ws.Provider;
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.properties.AxisFormat;
@@ -105,7 +105,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@RequireSoapWhiteboard
+//@RequireSoapWhiteboard
 @ExtendWith(ConfigurationExtension.class)
 @WithFactoryConfiguration(factoryPid = "org.eclipse.daanse.jakarta.xml.ws.handler.SOAPLoggingHandler", name = "test-ms-config", location = "?", properties = {
         @Property(key = "osgi.soap.endpoint.selector", value = "(service.pid=*)") })

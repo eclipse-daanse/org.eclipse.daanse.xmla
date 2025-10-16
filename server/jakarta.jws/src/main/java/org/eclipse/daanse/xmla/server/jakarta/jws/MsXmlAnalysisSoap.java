@@ -13,8 +13,8 @@
 */
 package org.eclipse.daanse.xmla.server.jakarta.jws;
 
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.prototypes.SOAPWhiteboardEndpoint;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.prototypes.SOAPWhiteboardEndpoint;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.ext.Authenticate;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.ext.AuthenticateResponse;
@@ -63,9 +63,9 @@ import jakarta.xml.ws.WebServiceContext;
         org.eclipse.daanse.xmla.model.jakarta.xml.bind.engine100_100.ObjectFactory.class,
         org.eclipse.daanse.xmla.model.jakarta.xml.bind.engine200_200.ObjectFactory.class })
 @Component(service = MsXmlAnalysisSoap.class, name = MsXmlAnalysisSoap.PID)
-@RequireSoapWhiteboard
+//@RequireSoapWhiteboard
 @Designate(factory = true, ocd = MsXmlAnalysisSoap.Config.class)
-@SOAPWhiteboardEndpoint(contextpath = "/xmla")
+//@SOAPWhiteboardEndpoint(contextpath = "/xmla")
 public class MsXmlAnalysisSoap {
 
     public static final String PID="org.eclipse.daanse.xmla.server.jakarta.jws.MsXmlAnalysisSoap";

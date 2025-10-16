@@ -25,8 +25,8 @@ import jakarta.xml.ws.ServiceMode;
 import jakarta.xml.ws.WebServiceContext;
 import jakarta.xml.ws.WebServiceProvider;
 import jakarta.xml.ws.handler.MessageContext;
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.prototypes.SOAPWhiteboardEndpoint;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.prototypes.SOAPWhiteboardEndpoint;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlaApiAdapter;
 import org.osgi.service.component.annotations.Activate;
@@ -42,10 +42,10 @@ import java.util.Map;
 
 @WebServiceProvider()
 @ServiceMode(value = Service.Mode.MESSAGE)
-@RequireSoapWhiteboard
+//@RequireSoapWhiteboard
 @Component(service = Provider.class)
 @Designate(factory = true, ocd = XmlaWebserviceProvider.Config.class)
-@SOAPWhiteboardEndpoint(contextpath = "xmla")
+//@SOAPWhiteboardEndpoint(contextpath = "xmla")
 public class XmlaWebserviceProvider implements Provider<SOAPMessage> {
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlaWebserviceProvider.class);
     private static final String USER_AGENT = "User-agent";

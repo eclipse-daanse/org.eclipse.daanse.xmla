@@ -21,7 +21,7 @@ import jakarta.xml.soap.MessageFactory;
 import jakarta.xml.soap.SOAPBody;
 import jakarta.xml.soap.SOAPEnvelope;
 import jakarta.xml.soap.SOAPPart;
-import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
+//import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
 
 import jakarta.xml.soap.SOAPException;
 import jakarta.xml.soap.SOAPMessage;
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @WebServiceProvider()
 @ServiceMode(value = Service.Mode.MESSAGE)
-@RequireSoapWhiteboard
+//@RequireSoapWhiteboard
 public class MockProvider implements Provider<SOAPMessage> {
     String response;
 

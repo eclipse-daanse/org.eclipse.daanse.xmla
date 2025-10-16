@@ -61,17 +61,20 @@
       <artifactId>org.osgi.service.servlet</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.metatype.annotations</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla</artifactId>
       <version>${revision}</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.xml.ws.api</artifactId>
-      <version>${revision}</version>
-      <scope>compile</scope>
-    </dependency>
+
 
     <!--
 Using the dependency scope allows to distinguish projects which contribute
@@ -80,28 +83,22 @@ Using the dependency scope allows to distinguish projects which contribute
     the report.
     test : Only execution data is considered for the report.
     -->
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.xml.ws.runtime.registrar</artifactId>
-      <version>${revision}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.xml.ws.handler</artifactId>
-      <version>${revision}</version>
-      <scope>runtime</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.eclipse.daanse</groupId>-->
+<!--      <artifactId>org.eclipse.daanse.jakarta.xml.ws.runtime.registrar</artifactId>-->
+<!--      <version>${revision}</version>-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>org.eclipse.daanse</groupId>-->
+<!--      <artifactId>org.eclipse.daanse.jakarta.xml.ws.handler</artifactId>-->
+<!--      <version>${revision}</version>-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>com.sun.xml.ws</groupId>
       <artifactId>jaxws-rt</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.jakarta.xml.ws.runtime.httpwhiteboard</artifactId>
-      <version>${revision}</version>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
