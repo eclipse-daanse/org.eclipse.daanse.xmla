@@ -208,7 +208,7 @@ public class XmlaApiAdapter {
     private static final QName QN_SESSION = new QName("urn:schemas-microsoft-com:xml-analysis", "Session");
 
     public SOAPMessage handleRequest(SOAPMessage messageRequest, Map<String, Object> headers, Principal principal,
-            Function<String, Boolean> isUserInRoleFunction) {
+            Function<String, Boolean> isUserInRoleFunction, String url) {
         try {
             SOAPMessage messageResponse = MessageFactory.newInstance().createMessage();
             messageResponse.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
@@ -257,7 +257,7 @@ public class XmlaApiAdapter {
                 SOAPHeader header = envelopeResponse.getHeader();
                 header.setValue("\n");
             }
-            RequestMetaData metaData = RequestMetaDataUtils.getRequestMetaData(headers, oSession);
+            RequestMetaData metaData = RequestMetaDataUtils.getRequestMetaData(headers, oSession, url);
             SOAPBody bodyResponse = envelopeResponse.getBody();
             handleBody(messageRequest.getSOAPBody(), bodyResponse, metaData, userPrincipal);
             return messageResponse;

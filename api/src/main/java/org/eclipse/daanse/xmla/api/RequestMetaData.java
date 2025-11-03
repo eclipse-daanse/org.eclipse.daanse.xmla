@@ -19,4 +19,6 @@ public interface RequestMetaData {
     Optional<String> userAgent();
 
     Optional<String> sessionId();
+
+    Optional<String> url();
 }

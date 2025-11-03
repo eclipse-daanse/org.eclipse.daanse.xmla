@@ -57,7 +57,7 @@ public class XmlaServlet extends AbstractSoapServlet {
     }
 
     @Override
-    public SOAPMessage onMessage(SOAPMessage soapMessage,Principal principal, Function<String, Boolean> isUserInRoleFunction) {
+    public SOAPMessage onMessage(SOAPMessage soapMessage,Principal principal, Function<String, Boolean> isUserInRoleFunction, String url) {
         try {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("SoapMessage in:", prettyPrint(soapMessage).toString());
@@ -66,7 +66,7 @@ public class XmlaServlet extends AbstractSoapServlet {
             Map<String, Object> map = StreamSupport.stream(iterable.spliterator(), true).collect(
                     Collectors.toMap(MimeHeader::getName, MimeHeader::getValue, (oldValue, newValue) -> oldValue));
 
-            SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map, principal,  isUserInRoleFunction);
+            SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map, principal,  isUserInRoleFunction, url);
 
             LOGGER.debug("SoapMessage out:", prettyPrint(returnMessage).toString());
 

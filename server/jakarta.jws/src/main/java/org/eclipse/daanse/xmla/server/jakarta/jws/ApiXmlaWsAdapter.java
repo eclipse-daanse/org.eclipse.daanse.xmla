@@ -224,6 +224,11 @@ public class ApiXmlaWsAdapter implements WsAdapter {
                 return Optional.empty();
             }
 
+            @Override
+            public Optional<String> url() {
+                return Optional.empty();
+            }
+
         };
 
         DbSchemaCatalogsRequest requestApi = Convert.fromDiscoverDbSchemaCatalogs(requestWs);
