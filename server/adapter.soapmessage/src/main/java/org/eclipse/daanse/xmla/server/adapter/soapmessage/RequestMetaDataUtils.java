@@ -25,10 +25,11 @@ public class RequestMetaDataUtils {
 
     public static final String USER_AGENT = "User-agent";
 
-    public static RequestMetaData getRequestMetaData(Map<String, Object> headers, Optional<Session> oSession) {
+    public static RequestMetaData getRequestMetaData(Map<String, Object> headers, Optional<Session> oSession, String url) {
         Optional<String> oUserAgent = getUserAgent(headers.get(USER_AGENT));
         return new RequestMetaDataR(oUserAgent,
-                oSession.isPresent() ? Optional.of(oSession.get().sessionId()) : Optional.empty());
+                oSession.isPresent() ? Optional.of(oSession.get().sessionId()) : Optional.empty(),
+                Optional.ofNullable(url));
     }
 
     private static Optional<String> getUserAgent(Object o) {
