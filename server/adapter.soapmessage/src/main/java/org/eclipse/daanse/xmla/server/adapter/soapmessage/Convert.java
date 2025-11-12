@@ -522,7 +522,7 @@ public class Convert {
     }
 
     public static Optional<Session> getSession(SOAPElement soapHeader) {
-        NodeList nl = soapHeader.getElementsByTagName("Session");
+        NodeList nl = soapHeader.getElementsByTagNameNS("urn:schemas-microsoft-com:xml-analysis", "Session");
         if (nl != null && nl.getLength() > 0) {
             NamedNodeMap nnm = nl.item(0).getAttributes();
             org.w3c.dom.Node n = nnm.getNamedItem("SessionId");
@@ -541,7 +541,7 @@ public class Convert {
     }
 
     public static Optional<EndSession> getEndSession(SOAPElement soapHeader) {
-        NodeList nl = soapHeader.getElementsByTagName("EndSession");
+        NodeList nl = soapHeader.getElementsByTagNameNS("urn:schemas-microsoft-com:xml-analysis", "EndSession");
         if (nl != null && nl.getLength() > 0) {
             NamedNodeMap nnm = nl.item(0).getAttributes();
             org.w3c.dom.Node n = nnm.getNamedItem("SessionId");
@@ -560,7 +560,7 @@ public class Convert {
     }
 
     public static Optional<BeginSession> getBeginSession(SOAPElement soapHeader) {
-        NodeList nl = soapHeader.getElementsByTagName("BeginSession");
+        NodeList nl = soapHeader.getElementsByTagNameNS("urn:schemas-microsoft-com:xml-analysis", "BeginSession");
         if (nl != null && nl.getLength() > 0) {
             NamedNodeMap nnm = nl.item(0).getAttributes();
             org.w3c.dom.Node n = nnm.getNamedItem("mustUnderstand");
