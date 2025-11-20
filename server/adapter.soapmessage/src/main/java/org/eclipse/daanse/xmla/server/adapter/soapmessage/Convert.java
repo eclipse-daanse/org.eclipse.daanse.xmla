@@ -66,6 +66,7 @@ import org.eclipse.daanse.xmla.model.record.discover.dbschema.schemata.DbSchemaS
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.sourcetables.DbSchemaSourceTablesRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tables.DbSchemaTablesRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tablesinfo.DbSchemaTablesInfoRestrictionsR;
+import org.eclipse.daanse.xmla.model.record.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.datasources.DiscoverDataSourcesRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.enumerators.DiscoverEnumeratorsRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.keywords.DiscoverKeywordsRestrictionsR;
@@ -429,6 +430,15 @@ public class Convert {
             Optional.ofNullable(m.get(DATA_SOURCE_VIEW_ID)),
             Optional.ofNullable(m.get(DATA_SOURCE_PERMISSION_ID)),
             Optional.ofNullable(ObjectExpansionEnum.fromValue(m.get(OBJECT_EXPANSION)))
+        );
+    }
+
+    public static DiscoverCsdlMetaDataRestrictionsR discoverDiscoverCsdlMetaDataRestrictions(SOAPElement restriction) {
+        Map<String, String> m = getRestrictionMap(restriction);
+        return new DiscoverCsdlMetaDataRestrictionsR(
+            Optional.ofNullable(m.get(CATALOG_NAME)),
+            Optional.ofNullable(m.get(PERSPECTIVE_NAME)),
+            Optional.ofNullable(m.get(VERSION))
         );
     }
 

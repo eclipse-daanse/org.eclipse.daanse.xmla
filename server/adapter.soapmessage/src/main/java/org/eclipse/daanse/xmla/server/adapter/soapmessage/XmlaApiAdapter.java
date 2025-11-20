@@ -51,6 +51,8 @@ import org.eclipse.daanse.xmla.api.discover.discover.properties.DiscoverProperti
 import org.eclipse.daanse.xmla.api.discover.discover.properties.DiscoverPropertiesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.schemarowsets.DiscoverSchemaRowsetsRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.schemarowsets.DiscoverSchemaRowsetsResponseRow;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRequest;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata.DiscoverXmlMetaDataRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata.DiscoverXmlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsRequest;
@@ -107,6 +109,8 @@ import org.eclipse.daanse.xmla.model.record.discover.dbschema.tables.DbSchemaTab
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tables.DbSchemaTablesRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tablesinfo.DbSchemaTablesInfoRequestR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tablesinfo.DbSchemaTablesInfoRestrictionsR;
+import org.eclipse.daanse.xmla.model.record.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRequestR;
+import org.eclipse.daanse.xmla.model.record.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.datasources.DiscoverDataSourcesRequestR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.datasources.DiscoverDataSourcesRestrictionsR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.enumerators.DiscoverEnumeratorsRequestR;
@@ -191,6 +195,7 @@ public class XmlaApiAdapter {
     private static final String DBSCHEMA_CATALOGS = "DBSCHEMA_CATALOGS";
     private static final String DISCOVER_DATASOURCES = "DISCOVER_DATASOURCES";
     private static final String DISCOVER_XML_METADATA = "DISCOVER_XML_METADATA";
+    private static final String DISCOVER_CSDL_METADATA = "DISCOVER_CSDL_METADATA";
     private static final String DBSCHEMA_COLUMNS = "DBSCHEMA_COLUMNS";
     private static final String DBSCHEMA_PROVIDER_TYPES = "DBSCHEMA_PROVIDER_TYPES";
     private static final String DBSCHEMA_SCHEMATA = "DBSCHEMA_SCHEMATA";
@@ -432,6 +437,8 @@ public class XmlaApiAdapter {
             handleDiscoverDataSources(metaData, properties, restrictionElement, responseBody);
         case DISCOVER_XML_METADATA ->
             handleDiscoverXmlMetaData(metaData, properties, restrictionElement, responseBody);
+        case DISCOVER_CSDL_METADATA ->
+            handleDiscoverCsdlMetaData(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_COLUMNS ->
             handleDbSchemaColumns(metaData, properties, restrictionElement, responseBody);
         case DBSCHEMA_PROVIDER_TYPES ->
@@ -613,6 +620,17 @@ public class XmlaApiAdapter {
         List<DiscoverXmlMetaDataResponseRow> rows = xmlaService.discover().xmlMetaData(request, metaData);
 
         SoapUtil.toDiscoverXmlMetaData(rows, body);
+
+    }
+
+    private void handleDiscoverCsdlMetaData(RequestMetaData metaData,
+            PropertiesR propertiesR, SOAPElement restrictionElement, SOAPBody body) throws SOAPException {
+        DiscoverCsdlMetaDataRestrictionsR restrictionsR = Convert
+                .discoverDiscoverCsdlMetaDataRestrictions(restrictionElement);
+        DiscoverCsdlMetaDataRequest request = new DiscoverCsdlMetaDataRequestR(propertiesR, restrictionsR);
+        List<DiscoverCsdlMetaDataResponseRow> rows = xmlaService.discover().csdlMetaData(request, metaData);
+
+        SoapUtil.toDiscoverCsdlMetaData(rows, body);
 
     }
 
