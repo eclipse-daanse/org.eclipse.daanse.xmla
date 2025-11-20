@@ -31,6 +31,8 @@ import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesReques
 import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesRestrictions;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoRestrictions;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRequest;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRestrictions;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRestrictions;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsRequest;
@@ -194,6 +196,8 @@ import static org.eclipse.daanse.xmla.client.soapmessage.Constants.RESTRICTION_L
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.SCHEMA_NAME1;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.TABLE_CATALOG;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.TABLE_SCHEMA;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.RESTRICTIONS_PERSPECTIVE_NAME;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.RESTRICTIONS_VERSION;
 import static org.eclipse.daanse.xmla.client.soapmessage.SoapUtil.addChildElement;
 import static org.eclipse.daanse.xmla.client.soapmessage.SoapUtil.addChildElementPropertyList;
 
@@ -614,6 +618,28 @@ public class DiscoverConsumers {
                         .ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_DATA_SOURCE_PERMISSION_ID, v));
                 dr.objectExpansion()
                         .ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_OBJECT_EXPANSION, v.getValue()));
+
+                SOAPElement propertyList = discover.addChildElement(PROPERTIES).addChildElement(PROPERTY_LIST);
+                addChildElementPropertyList(propertyList, properties);
+
+            } catch (SOAPException e) {
+                LOGGER.error("DiscoverConsumers DiscoverSchemaRowsetsRequest accept error", e);
+            }
+        };
+    }
+
+    static Consumer<SOAPMessage> createDiscoverCsdlMetaDataRequestConsumer(DiscoverCsdlMetaDataRequest requestApi) {
+        return message -> {
+            try {
+                DiscoverCsdlMetaDataRestrictions dr = requestApi.restrictions();
+                Properties properties = requestApi.properties();
+                SOAPElement discover = message.getSOAPBody().addChildElement(DISCOVER, null, NS_URI);
+                discover.addChildElement(REQUEST_TYPE).setTextContent(DISCOVER_XML_METADATA);
+                SOAPElement restrictionList = discover.addChildElement(RESTRICTIONS).addChildElement(RESTRICTION_LIST);
+
+                dr.catalogName().ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_CATALOG_NAME, v));
+                dr.perspectiveName().ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_PERSPECTIVE_NAME, v));
+                dr.version().ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_VERSION, v));
 
                 SOAPElement propertyList = discover.addChildElement(PROPERTIES).addChildElement(PROPERTY_LIST);
                 addChildElementPropertyList(propertyList, properties);

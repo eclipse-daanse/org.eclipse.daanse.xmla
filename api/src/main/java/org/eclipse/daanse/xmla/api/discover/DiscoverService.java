@@ -31,6 +31,8 @@ import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesReques
 import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoResponseRow;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRequest;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsRequest;
@@ -308,4 +310,13 @@ public interface DiscoverService {
      * @return the list
      */
     List<DiscoverXmlMetaDataResponseRow> xmlMetaData(DiscoverXmlMetaDataRequest request, RequestMetaData metaData);
+
+    /**
+     * returns a CsdlMetaData.
+     *
+     * @param request the request
+     * @return the list
+     */
+    List<DiscoverCsdlMetaDataResponseRow> csdlMetaData(DiscoverCsdlMetaDataRequest request, RequestMetaData metaData);
+
 }

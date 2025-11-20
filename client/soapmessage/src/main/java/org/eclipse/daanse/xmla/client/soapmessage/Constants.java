@@ -478,5 +478,6 @@ public class Constants {
     public static final String DEFAULT_DETAILS_POSITION = "DefaultDetailsPosition";
     public static final String SORT_PROPERTIES_POSITION = "SortPropertiesPosition";
     public static final String FOLDER_POSITION = "FolderPosition";
-
+    public static final String RESTRICTIONS_PERSPECTIVE_NAME = "PERSPECTIVE_NAME";
+    public static final String RESTRICTIONS_VERSION = "VERSION";
 }

@@ -13,7 +13,7 @@
 */
 package org.eclipse.daanse.xmla.model.record.discover.discover.csdlmetadata;
 
-import org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata.DiscoverXmlMetaDataResponseRow;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
 
-public record DiscoverCsdlMetaDataResponseRowR(String metaData) implements DiscoverXmlMetaDataResponseRow {
+public record DiscoverCsdlMetaDataResponseRowR(String metaData) implements DiscoverCsdlMetaDataResponseRow {
 }

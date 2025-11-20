@@ -33,6 +33,8 @@ import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesReques
 import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoResponseRow;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRequest;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsRequest;
@@ -95,6 +97,7 @@ import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDisc
 import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverPropertiesResponseRow;
 import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverSchemaRowsetsResponseRow;
 import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverXmlMetaDataResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverCsdlMetaDataResponseRow;
 import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaActionsResponseRow;
 import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaCubesResponseRow;
 import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaDimensionsResponseRow;
@@ -304,6 +307,19 @@ public class DiscoverServiceImpl implements DiscoverService {
             Consumer<SOAPMessage> msg = DiscoverConsumers.createDiscoverXmlMetaDataRequestConsumer(requestApi);
             SOAPMessage message = soapClient.callSoapWebService(Optional.of(SOAP_ACTION_DISCOVER), msg);
             return convertToDiscoverXmlMetaDataResponseRow(message.getSOAPBody());
+        } catch (SOAPException e) {
+            LOGGER.error("DiscoverService xmlMetaData error", e);
+        }
+        return List.of();
+    }
+
+    @Override
+    public List<DiscoverCsdlMetaDataResponseRow> csdlMetaData(DiscoverCsdlMetaDataRequest requestApi,
+            RequestMetaData metaData) {
+        try {
+            Consumer<SOAPMessage> msg = DiscoverConsumers.createDiscoverCsdlMetaDataRequestConsumer(requestApi);
+            SOAPMessage message = soapClient.callSoapWebService(Optional.of(SOAP_ACTION_DISCOVER), msg);
+            return convertToDiscoverCsdlMetaDataResponseRow(message.getSOAPBody());
         } catch (SOAPException e) {
             LOGGER.error("DiscoverService xmlMetaData error", e);
         }

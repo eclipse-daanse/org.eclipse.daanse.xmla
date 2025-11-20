@@ -52,6 +52,7 @@ import org.eclipse.daanse.xmla.api.discover.dbschema.schemata.DbSchemaSchemataRe
 import org.eclipse.daanse.xmla.api.discover.dbschema.sourcetables.DbSchemaSourceTablesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoResponseRow;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.keywords.DiscoverKeywordsResponseRow;
@@ -326,6 +327,16 @@ public class SoapUtil {
 
     }
 
+    public static void toDiscoverCsdlMetaData(List<DiscoverCsdlMetaDataResponseRow> rows, SOAPBody body)
+            throws SOAPException {
+        SOAPElement root = addDiscoverCsdlMetaDataRoot(body);
+
+        for (DiscoverCsdlMetaDataResponseRow discoverCsdlMetaDataResponseRow : rows) {
+            addDiscoverCsdlMetaDataResponseRow(root, discoverCsdlMetaDataResponseRow);
+        }
+
+    }
+
     public static void toDiscoverDataSources(List<DiscoverDataSourcesResponseRow> rows, SOAPBody body)
             throws SOAPException {
         SOAPElement root = addDiscoverDataSourcesRoot(body);
@@ -579,6 +590,12 @@ public class SoapUtil {
     }
 
     private static void addDiscoverXmlMetaDataResponseRow(SOAPElement root, DiscoverXmlMetaDataResponseRow r)
+            throws SOAPException {
+        SOAPElement row = root.addChildElement(Constants.ROWSET.QN_ROW);
+        addChildElementTextNode(row, QN_META_DATA, r.metaData());
+    }
+
+    private static void addDiscoverCsdlMetaDataResponseRow(SOAPElement root, DiscoverCsdlMetaDataResponseRow r)
             throws SOAPException {
         SOAPElement row = root.addChildElement(Constants.ROWSET.QN_ROW);
         addChildElementTextNode(row, QN_META_DATA, r.metaData());
@@ -2303,6 +2320,20 @@ public class SoapUtil {
         addElement(s, "METADATA", "xmlDocument", null);
         //addElement(s, "ObjectType", "xsd:string", "0");
         //addElement(s, "DatabaseID", "xsd:string", "0");
+        return seRoot;
+    }
+
+    private static SOAPElement addDiscoverCsdlMetaDataRoot(SOAPBody body) throws SOAPException {
+        SOAPElement seRoot = prepareRootElement(body);
+        SOAPElement schema = fillRoot(seRoot);
+
+        SOAPElement el1complexType = addChildElement(schema, Constants.XSD.QN_COMPLEX_TYPE);
+        el1complexType.setAttribute("name", "xmlDocument");
+        SOAPElement sequence = addChildElement(el1complexType, Constants.XSD.QN_SEQUENCE);
+        addChildElement(sequence, Constants.XSD.QN_ANY);
+
+        SOAPElement s = prepareSequenceElement(schema);
+        addElement(s, "METADATA", "xmlDocument", null);
         return seRoot;
     }
 

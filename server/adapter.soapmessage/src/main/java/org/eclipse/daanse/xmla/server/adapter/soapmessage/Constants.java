@@ -1077,4 +1077,7 @@ public class Constants {
     public static final String KEYWORD = "Keyword";
     public static final String ENUM_NAME = "EnumName";
     public static final String SCHEMA_NAME_LOW = "SchemaName";
+    public static final String CATALOG_NAME = "CATALOG_NAME";
+    public static final String PERSPECTIVE_NAME = "PERSPECTIVE_NAME";
+    public static final String VERSION = "VERSION";
 }

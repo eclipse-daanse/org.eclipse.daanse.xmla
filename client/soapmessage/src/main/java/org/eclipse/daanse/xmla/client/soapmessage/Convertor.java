@@ -63,6 +63,7 @@ import org.eclipse.daanse.xmla.api.discover.dbschema.schemata.DbSchemaSchemataRe
 import org.eclipse.daanse.xmla.api.discover.dbschema.sourcetables.DbSchemaSourceTablesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoResponseRow;
+import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.datasources.DiscoverDataSourcesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.discover.keywords.DiscoverKeywordsResponseRow;
@@ -111,6 +112,7 @@ import org.eclipse.daanse.xmla.model.record.discover.dbschema.schemata.DbSchemaS
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.sourcetables.DbSchemaSourceTablesResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tables.DbSchemaTablesResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.tablesinfo.DbSchemaTablesInfoResponseRowR;
+import org.eclipse.daanse.xmla.model.record.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.datasources.DiscoverDataSourcesResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.enumerators.DiscoverEnumeratorsResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.discover.keywords.DiscoverKeywordsResponseRowR;
@@ -675,6 +677,13 @@ class Convertor {
         List<Map<String, String>> l = getMapValuesList(b);
         return l.stream()
                 .map(m -> (DiscoverXmlMetaDataResponseRow) new DiscoverXmlMetaDataResponseRowR(m.get("MetaData")))
+                .toList();
+    }
+
+    static List<DiscoverCsdlMetaDataResponseRow> convertToDiscoverCsdlMetaDataResponseRow(SOAPBody b) {
+        List<Map<String, String>> l = getMapValuesList(b);
+        return l.stream()
+                .map(m -> (DiscoverCsdlMetaDataResponseRow) new DiscoverCsdlMetaDataResponseRowR(m.get("MetaData")))
                 .toList();
     }
 
