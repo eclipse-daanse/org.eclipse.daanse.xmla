@@ -131,10 +131,10 @@ public class XmlaConstants
    /**
     * This is the namespace used to qualify the faultcode identifier.
     */
-    public static final String MONDRIAN_NAMESPACE = "http://mondrian.sourceforge.net";
+    public static final String DAANSE_NAMESPACE = "http://daanse.sourceforge.net";
     public static final String FAULT_NS_PREFIX = "XA";
 
-    public static final String FAULT_ACTOR = "Mondrian";
+    public static final String FAULT_ACTOR = "Daanse";
 
     // soap 1.1 default faultcodes
     public static final String VERSION_MISSMATCH_FAULT_FC = "VersionMismatch";
@@ -143,8 +143,8 @@ public class XmlaConstants
     public static final String SERVER_FAULT_FC = "Server";
 
       //<faultcode>XA:Mondrian.XML.88BA1202</faultcode>
-    public static final String FAULT_FC_PREFIX = "Mondrian";
-    public static final String FAULT_FS_PREFIX = "The Mondrian XML: ";
+    public static final String FAULT_FC_PREFIX = "Daanse";
+    public static final String FAULT_FS_PREFIX = "The Daanse XML: ";
 
     /////////////////////////////////////////////////////////////////////////
     // Servlet Initialization Error : SIE

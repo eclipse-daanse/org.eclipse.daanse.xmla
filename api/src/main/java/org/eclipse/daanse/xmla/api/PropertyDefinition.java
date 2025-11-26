@@ -88,7 +88,7 @@ public enum PropertyDefinition {
             """
                     Use this to read or set the numeric locale identifier for this request. The default is provider-specific.
                     For the complete hexadecimal list of language identifiers, search on "Language Identifiers" in the MSDN Library at http://www.msdn.microsoft.com.
-                    As an extension to the XMLA standard, Mondrian also allows locale codes as specified by ISO-639 and ISO-3166 and as used by Java; for example 'en-US'.
+                    As an extension to the XMLA standard, Daanse also allows locale codes as specified by ISO-639 and ISO-3166 and as used by Java; for example 'en-US'.
                     """),
 
     MDXSupport(RowsetDefinitionType.ENUM_STRING, EnumSet.allOf(XmlaConstants.MdxSupport.class),
@@ -99,12 +99,12 @@ public enum PropertyDefinition {
             XmlaConstants.Method.DISCOVER_AND_EXECUTE,
             "This property is deprecated in XMLA 1.1. To support legacy applications, the provider accepts but ignores the Password property setting when it is used with the Discover and Execute method"),
 
-    ProviderName(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "Mondrian XML for Analysis Provider",
+    ProviderName(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "Daanse XML for Analysis Provider",
             XmlaConstants.Method.DISCOVER, "The XML for Analysis Provider name."),
 
     ProviderVersion(RowsetDefinitionType.STRING, null, XmlaConstants.Access.Read, "11.0.7001.0",
             // MondrianServer.forId(null).getVersion().getVersionString(),
-            XmlaConstants.Method.DISCOVER, "The version of the Mondrian XMLA Provider"),
+            XmlaConstants.Method.DISCOVER, "The version of the Daanse XMLA Provider"),
 
     // Mondrian-specific extension to XMLA.
     ResponseMimeType(RowsetDefinitionType.STRING, null, XmlaConstants.Access.ReadWrite, "None",
