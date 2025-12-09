@@ -11,7 +11,7 @@
 *     SmartCity Jena - initial
 *     Stefan Bischof (bipolis.org) - initial
 */
-package org.eclipse.daanse.xmla.server.jakarta.jws;
+package org.eclipse.daanse.xmla.server.jakarta.jws.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -28,6 +28,7 @@ import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla.Return;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_rowset.Row;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_rowset.Rowset;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_rowset.discover.DiscoverPropertiesResponseRowXml;
+import org.eclipse.daanse.xmla.server.jakarta.jws.MsXmlAnalysisSoap;
 import org.eclipse.daanse.xmla.server.tck.Constants;
 import org.eclipse.daanse.xmla.server.tck.SOAPUtil;
 import org.eclipse.daanse.xmla.server.tck.XMLUtil;

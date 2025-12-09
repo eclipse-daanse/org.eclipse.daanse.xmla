@@ -11,7 +11,7 @@
  *   SmartCity Jena - initial
  *   Stefan Bischof (bipolis.org) - initial
  */
-package org.eclipse.daanse.xmla.client.soapmessage;
+package org.eclipse.daanse.xmla.client.soapmessage.integration;
 
 import jakarta.xml.soap.SOAPMessage;
 import jakarta.xml.ws.Provider;
@@ -118,6 +118,10 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.properties.MdSchemaProperti
 import org.eclipse.daanse.xmla.api.discover.mdschema.properties.MdSchemaPropertiesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.sets.MdSchemaSetsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.sets.MdSchemaSetsResponseRow;
+import org.eclipse.daanse.xmla.client.soapmessage.MockProvider;
+import org.eclipse.daanse.xmla.client.soapmessage.Responses;
+import org.eclipse.daanse.xmla.client.soapmessage.XMLUtil;
+import org.eclipse.daanse.xmla.client.soapmessage.XmlaServiceClientImpl;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.catalogs.DbSchemaCatalogsRequestR;
 import org.eclipse.daanse.xmla.model.record.discover.dbschema.catalogs.DbSchemaCatalogsRestrictionsR;
