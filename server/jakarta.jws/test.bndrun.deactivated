@@ -40,7 +40,7 @@ org.slf4j.simpleLogger.defaultLogLevel=debug,\
 
 
 
--runee: JavaSE-21
+-runee: JavaSE-25
 #-runfw: org.apache.felix.framework
 -runfw: org.eclipse.osgi
 
