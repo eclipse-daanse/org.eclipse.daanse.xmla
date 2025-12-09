@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.eclipse.daanse</groupId>
     <artifactId>org.eclipse.daanse.pom.parent</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.5-SNAPSHOT</version>
   </parent>
   <artifactId>org.eclipse.daanse.xmla</artifactId>
   <version>${revision}</version>
@@ -62,6 +62,20 @@
     <servlet-api.version>2.4</servlet-api.version>
     <xmlunit.version>2.10.0</xmlunit.version>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>ossrh</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
   <modules>
     <module>api</module>
