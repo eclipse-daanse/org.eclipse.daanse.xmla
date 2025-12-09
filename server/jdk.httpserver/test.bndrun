@@ -39,7 +39,7 @@ port                              :   17290
 
 
 
--runee: JavaSE-21
+-runee: JavaSE-25
 #-runfw: org.apache.felix.framework
 -runfw: org.eclipse.osgi
 
