@@ -11,13 +11,14 @@
 *   SmartCity Jena - initial
 *   Stefan Bischof (bipolis.org) - initial
 */
-package org.eclipse.daanse.xmla.server.tck;
+package org.eclipse.daanse.xmla.server.tck.integration;
 
 import static org.mockito.Mockito.mock;
 
 import java.util.Map;
 
 import org.eclipse.daanse.xmla.api.XmlaService;
+import org.eclipse.daanse.xmla.server.tck.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

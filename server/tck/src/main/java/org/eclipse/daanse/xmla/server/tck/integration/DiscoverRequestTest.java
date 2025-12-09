@@ -11,7 +11,7 @@
 *     SmartCity Jena - initial
 *     Stefan Bischof (bipolis.org) - initial
 */
-package org.eclipse.daanse.xmla.server.tck;
+package org.eclipse.daanse.xmla.server.tck.integration;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.XmlaService;
@@ -55,6 +55,8 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.measures.MdSchemaMeasuresRe
 import org.eclipse.daanse.xmla.api.discover.mdschema.members.MdSchemaMembersRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.properties.MdSchemaPropertiesRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.sets.MdSchemaSetsRequest;
+import org.eclipse.daanse.xmla.server.tck.Constants;
+import org.eclipse.daanse.xmla.server.tck.SOAPUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
