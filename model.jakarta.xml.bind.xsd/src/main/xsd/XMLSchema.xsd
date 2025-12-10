@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xs:schema PUBLIC "-//W3C//DTD XSD 1.1//EN" "../dtd/XMLSchema.dtd">
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace"
   elementFormDefault="qualified" xml:lang="EN"
   targetNamespace="http://www.w3.org/2001/XMLSchema" version="1.0">
   <xs:annotation>
@@ -30,15 +31,15 @@
       The simpleType element and all of its members are defined
       towards the end of this schema document.</xs:documentation>
   </xs:annotation>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
-    schemaLocation="http://www.w3.org/2001/xml.xsd">
+  <!-- xml:lang attribute definition (inline to avoid network fetch of xml.xsd) -->
+  <xs:attribute name="lang" type="xs:language" form="qualified">
     <xs:annotation>
       <xs:documentation>
-        Get access to the xml: attribute groups for xml:lang
-        as declared on 'schema' and 'documentation' below
+        Denotes the natural language of the content.
+        Defined inline to avoid network dependency on xml.xsd.
       </xs:documentation>
     </xs:annotation>
-  </xs:import>
+  </xs:attribute>
   <xs:complexType name="openAttrs">
     <xs:annotation>
       <xs:documentation>
@@ -207,7 +208,7 @@
           <xs:attribute name="xpathDefaultNamespace"
             type="xs:xpathDefaultNamespace" default="##local" use="optional" />
           <xs:attribute name="id" type="xs:ID" />
-          <xs:attribute ref="xml:lang" />
+          <xs:attribute ref="xs:lang" />
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>
@@ -1359,7 +1360,7 @@
         <xs:any processContents="lax" />
       </xs:sequence>
       <xs:attribute name="source" type="xs:anyURI" />
-      <xs:attribute ref="xml:lang" />
+      <xs:attribute ref="xs:lang" />
       <xs:anyAttribute namespace="##other" processContents="lax" />
     </xs:complexType>
   </xs:element>
