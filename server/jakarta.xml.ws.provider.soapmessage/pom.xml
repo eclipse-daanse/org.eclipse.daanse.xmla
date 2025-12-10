@@ -48,7 +48,7 @@
     <dependency>
       <groupId>biz.aQute.bnd</groupId>
       <artifactId>biz.aQute.bnd.annotation</artifactId>
-      <version>${bnd.version}</version>
+      <version>7.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>

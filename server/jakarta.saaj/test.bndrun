@@ -14,16 +14,12 @@
 
 -tester: biz.aQute.tester.junit-platform
 
-
-
-
 -runtrace: true
 -runvm: ${def;argLine}
 
 -runproperties: \
 org.slf4j.simpleLogger.defaultLogLevel=debug,\
 	org.osgi.service.http.port=8090
-
 
 port                              :   17290
 -runproperties.local.agent        :   osgi.fx.agent.port=0.0.0.0:${port}
@@ -36,8 +32,6 @@ port                              :   17290
 	bnd.identity;id=junit-platform-launcher,\
 	bnd.identity;id='com.sun.xml.messaging.saaj.impl',\
 	bnd.identity;id='org.eclipse.daanse.xmla.server.tck'
-
-
 
 -runee: JavaSE-25
 #-runfw: org.apache.felix.framework
@@ -59,14 +53,14 @@ port                              :   17290
 	jakarta.xml.soap-api;version='[3.0.1,3.0.2)',\
 	javax.activation-api;version='[1.2.0,1.2.1)',\
 	jaxb-api;version='[2.3.1,2.3.2)',\
-	junit-jupiter-api;version='[5.9.2,5.9.3)',\
-	junit-jupiter-engine;version='[5.9.2,5.9.3)',\
-	junit-jupiter-params;version='[5.9.2,5.9.3)',\
-	junit-platform-commons;version='[1.9.2,1.9.3)',\
-	junit-platform-engine;version='[1.9.2,1.9.3)',\
-	junit-platform-launcher;version='[1.9.2,1.9.3)',\
-	net.bytebuddy.byte-buddy;version='[1.14.16,1.14.17)',\
-	net.bytebuddy.byte-buddy-agent;version='[1.12.16,1.12.17)',\
+	junit-jupiter-api;version='[5.12.2,5.12.3)',\
+	junit-jupiter-engine;version='[5.12.2,5.12.3)',\
+	junit-jupiter-params;version='[5.12.2,5.12.3)',\
+	junit-platform-commons;version='[1.12.2,1.12.3)',\
+	junit-platform-engine;version='[1.12.2,1.12.3)',\
+	junit-platform-launcher;version='[1.12.2,1.12.3)',\
+	net.bytebuddy.byte-buddy;version='[1.17.5,1.17.6)',\
+	net.bytebuddy.byte-buddy-agent;version='[1.17.5,1.17.6)',\
 	org.apache.aries.spifly.dynamic.framework.extension;version='[1.3.7,1.3.8)',\
 	org.apache.commons.commons-fileupload;version='[1.5.0,1.5.1)',\
 	org.apache.commons.commons-io;version='[2.11.0,2.11.1)',\
@@ -74,6 +68,7 @@ port                              :   17290
 	org.apache.felix.http.jetty12.light;version='[1.0.2,1.0.3)',\
 	org.apache.felix.http.servlet-api;version='[3.0.0,3.0.1)',\
 	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
+	org.apache.tomcat-servlet-api;version='[9.0.80,9.0.81)',\
 	org.eclipse.daanse.jakarta.servlet.soap;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.api;version='[0.0.1,0.0.2)',\
 	org.eclipse.daanse.xmla.model.record;version='[0.0.1,0.0.2)',\
@@ -96,8 +91,14 @@ port                              :   17290
 	org.glassfish.hk2.osgi-resource-locator;version='[2.4.0,2.4.1)',\
 	org.jvnet.staxex.stax-ex;version='[2.1.0,2.1.1)',\
 	org.mockito.mockito-core;version='[4.9.0,4.9.1)',\
+	org.objectweb.asm;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.commons;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.tree.analysis;version='[9.9.0,9.9.1)',\
+	org.objectweb.asm.util;version='[9.9.0,9.9.1)',\
 	org.objenesis;version='[3.3.0,3.3.1)',\
-	org.opentest4j;version='[1.2.0,1.2.1)',\
+	org.opentest4j;version='[1.3.0,1.3.1)',\
+	org.osgi.service.cm;version='[1.6.1,1.6.2)',\
 	org.osgi.service.component;version='[1.5.1,1.5.2)',\
 	org.osgi.test.common;version='[1.3.0,1.3.1)',\
 	org.osgi.test.junit5;version='[1.3.0,1.3.1)',\
