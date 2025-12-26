@@ -80,6 +80,7 @@
     <module>model.jakarta.xml.bind.xmla</module>
     <module>client</module>
     <module>server</module>
+    <module>csdl</module>
   </modules>
 
 

@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.eclipse.daanse</groupId>
+    <artifactId>org.eclipse.daanse.xmla.csdl</artifactId>
+    <version>${revision}</version>
+  </parent>
+  <artifactId>org.eclipse.daanse.xmla.csdl.model</artifactId>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>v2</module>
+  </modules>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>ossrhp</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>
