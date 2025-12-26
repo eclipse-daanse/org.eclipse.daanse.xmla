@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="bi"
+  targetNamespace="http://schemas.microsoft.com/sqlbi/2010/10/edm/extensions"
+  elementFormDefault="qualified"
+  xmlns:bi="http://schemas.microsoft.com/sqlbi/2010/10/edm/extensions"
+  xmlns:edm="http://schemas.microsoft.com/ado/2008/09/edm"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/ado/2008/09/edm"
+    schemaLocation="csdl_v21.xsd" />
+
+
+  <xs:element name="EntityContainer" type="bi:TEntityContainer" />
+  <xs:element name="EntitySet" type="bi:TEntitySet" />
+  <xs:element name="Cultures" type="bi:TCultures" />
+  <xs:element name="AssociationSet" type="bi:TAssociationSet" />
+  <xs:element name="EntityType" type="bi:TEntityType" />
+  <xs:element name="Property" type="bi:TProperty" />
+  <xs:element name="NavigationProperty" type="bi:TNavigationProperty" />
+  <xs:element name="Measure" type="bi:TMeasure" />
+  <xs:element name="SourceDescription" type="xs:string" />
+  <xs:complexType name="TEntityContainer">
+    <xs:sequence>
+      <xs:element name="CompareOptions" type="bi:TCompareOptions" />
+      <xs:element name="ModelCapabilities" type="bi:TModelCapabilities" />
+    </xs:sequence>
+    <xs:attribute name="Caption" type="xs:string" use="optional" />
+    <xs:attribute name="Culture" type="xs:string" />
+    <xs:attribute name="DirectQueryMode" type="bi:TDirectQueryMode" />
+    <xs:attribute name="PreferOrdinalStringEquality" type="xs:boolean"
+      default="false" />
+  </xs:complexType>
+  <xs:simpleType name="TDirectQueryMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="InMemory" />
+      <xs:enumeration value="InMemoryWithDirectQuery" />
+      <xs:enumeration value="DirectQueryWithInMemory" />
+      <xs:enumeration value="DirectQuery" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TCompareOptions">
+    <xs:attribute name="IgnoreCase" type="xs:boolean" default="false" />
+    <xs:attribute name="IgnoreNonSpace" type="xs:boolean" default="false" />
+    <xs:attribute name="IgnoreKanaType" type="xs:boolean" default="false" />
+    <xs:attribute name="IgnoreWidth" type="xs:boolean" default="false" />
+  </xs:complexType>
+  <xs:complexType name="TModelCapabilities">
+    <xs:sequence>
+      <xs:element name="CrossFilteringWithinTable"
+        type="bi:TCrossFilteringWithinTable"
+        minOccurs="0" maxOccurs="1" />
+      <xs:element name="GroupByValidation" type="bi:TGroupByValidation"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="FiveStateKPIRange" type="bi:TFiveStateKPIRange"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="MultiColumnFiltering" type="bi:TMultiColumnFiltering"
+        minOccurs="0" maxOccurs="1" />
+      <xs:element name="QueryAggregateUsage" type="bi:TQueryAggregateUsage"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="DiscourageCompositeModels"
+        type="bi:TDiscourageCompositeModels"
+        minOccurs="0" maxOccurs="1" />
+      <xs:element name="EncourageIsEmptyDAXFunctionUsage"
+        type="bi:TEncourageIsEmptyDAXFunctionUsage" />
+      <xs:element name="QueryBatching" type="bi:TQueryBatching" />
+      <xs:element name="Variables" type="bi:TVariables" />
+      <xs:element name="InOperator" type="bi:TInOperator" />
+      <xs:element name="TableConstructor" type="bi:TTableConstructor" />
+      <xs:element name="ExecutionMetrics" type="bi:TExecutionMetrics"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="VirtualColumns" type="bi:TVirtualColumns" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="DataSourceVariables" type="bi:TDataSourceVariables"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="VisualCalculations" type="bi:TVisualCalculations"
+        minOccurs="0" maxOccurs="1" />
+      <xs:element name="DAXFunctions" type="bi:TDAXFunctions" />
+
+
+      <xs:element name="MParameters" type="bi:TMParameters" minOccurs="0"
+        maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="TCrossFilteringWithinTable">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Always" />
+      <xs:enumeration value="Never" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TGroupByValidation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Relaxed" />
+      <xs:enumeration value="Enforced" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TQueryAggregateUsage">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Encourage" />
+      <xs:enumeration value="Discourage" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TEncourageIsEmptyDAXFunctionUsage">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="false" />
+      <xs:enumeration value="true" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TFiveStateKPIRange">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TQueryBatching">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TVariables">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
+      <xs:enumeration value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TDAXFunctions">
+    <xs:sequence>
+      <xs:element name="SummarizeColumns" type="bi:TSummarizeColumns"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="SubstituteWithIndex" type="bi:TSubstituteWithIndex"
+        minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="LeftOuterJoin" type="bi:TLeftOuterJoin" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="StringMinMax" type="bi:TStringMinMax" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="BinaryMinMax" type="bi:TBinaryMinMax" />
+      <xs:element name="TreatAs" type="bi:TTreatAs" minOccurs="0" maxOccurs="1" />
+
+
+      <xs:element name="Error" type="bi:TError" />
+      <xs:element name="SampleAxisWithLocalMinMax"
+        type="bi:TSampleAxisWithLocalMinMax"
+      />
+      <xs:element name="SampleCartesianPointsByCover"
+        type="bi:TSampleCartesianPointsByCover" />
+      <xs:element name="OptimizedNotInOperator"
+        type="bi:TOptimizedNotInOperator" />
+      <xs:element name="NonVisual" type="bi:TNonVisual" />
+      <xs:element name="IsAfter" type="bi:TIsAfter" />
+      <xs:element name="FormatByLocale" type="bi:TFormatByLocale" />
+      <xs:element name="VariantMinxMaxx" type="bi:TVariantMinxMaxx" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="TSummarizeColumns">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TSubstituteWithIndex">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLeftOuterJoin">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TBinaryMinMax">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTreatAs">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TSampleAxisWithLocalMinMax">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TSampleCartesianPointsByCover">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TOptimizedNotInOperator">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="TNonVisual">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TIsAfter">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TFormatByLocale">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TVariantMinxMaxx">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TStringMinMax">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TError">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TMultiColumnFiltering">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unrestricted" />
+      <xs:enumeration value="LimitedToGroupByColumns" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TDiscourageCompositeModels">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TInOperator">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTableConstructor">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+
+
+  </xs:simpleType>
+  <xs:simpleType name="TVirtualColumns">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TDataSourceVariables">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TVisualCalculations">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TExecutionMetrics">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TMParameters">
+    <xs:sequence>
+      <xs:element name="MParameter" type="bi:TMParameter" minOccurs="1"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TMParameter">
+    <xs:sequence>
+      <xs:element name="ParameterValuesColumn" type="bi:TParameterValuesColumn" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="LineageTag" type="xs:string" use="optional" />
+    <xs:attribute name="ActualType" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="TParameterValuesColumn">
+    <xs:sequence>
+      <xs:element name="EntityRef" type="bi:TEntityRef" minOccurs="1"
+        maxOccurs="1" />
+      <xs:element name="PropertyRef" type="bi:TPropertyRef" minOccurs="1"
+        maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TEntitySet">
+    <xs:attribute name="Caption" type="xs:string" use="optional" />
+    <xs:attribute name="CollectionCaption" type="xs:string" use="optional" />
+    <xs:attribute name="ReferenceName" type="xs:string" use="optional" />
+    <xs:attribute name="Hidden" type="xs:boolean" default="false" use="optional" />
+    <xs:attribute name="LineageTag" type="xs:string" use="optional" />
+    <xs:attribute name="Private" type="xs:boolean" default="false"
+      use="optional" />
+    <xs:attribute name="ShowAsVariationsOnly" type="xs:boolean" default="false"
+      use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TAssociationSet">
+    <xs:attribute name="State" type="bi:TState" default="Active" />
+    <xs:attribute name="Hidden" type="xs:boolean" default="false" />
+
+    <xs:attribute name="CrossFilterDirection" type="bi:TCrossFilterDirection"
+      default="Single" />
+    <xs:attribute name="Behavior" type="bi:TBehavior" />
+  </xs:complexType>
+  <xs:simpleType name="TState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Active" />
+      <xs:enumeration value="Inactive" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TCrossFilterDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Single" />
+      <xs:enumeration value="Both" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TBehavior">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Weak" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TEntityType">
+    <xs:sequence>
+      <xs:element name="DisplayKey" type="bi:TMemberRefs" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="DefaultDetails" type="bi:TMemberRefs" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="DefaultImage" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MemberRef" type="bi:TMemberRef" minOccurs="1"
+              maxOccurs="1"
+            />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DefaultMeasure" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MemberRef" type="bi:TMemberRef" minOccurs="1"
+              maxOccurs="1"
+            />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SortMembers" type="bi:TMemberRefs" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="Hierarchy" type="bi:THierarchy" minOccurs="0"
+        maxOccurs="unbounded" />
+      <xs:element name="DisplayFolders" type="bi:TDisplayFolders" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="Statistics" type="bi:TEntityStatistics" minOccurs="0"
+        maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="Contents" type="xs:string" default="Regular"
+      use="optional" />
+    <xs:attribute name="IsCalculationGroup" type="xs:boolean" default="false"
+      use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TDisplayFolders">
+    <xs:sequence>
+      <xs:element name="DisplayFolder" type="bi:TDisplayFolder"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="TDisplayFolder">
+    <xs:sequence>
+      <xs:element name="PropertyRef" type="bi:TPropertyRef"
+        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="HierarchyRef" type="bi:THierarchyRef"
+        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="Cultures" type="bi:TCultures" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="DisplayFolder" type="bi:TDisplayFolder"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Caption" type="xs:string" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TMemberRefs">
+    <xs:sequence>
+      <xs:element name="MemberRef" type="bi:TMemberRef" minOccurs="1"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TMemberRef">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="THierarchy">
+    <xs:complexContent>
+      <xs:extension base="bi:TMember">
+        <xs:sequence>
+          <xs:element name="Documentation" type="bi:TDocumentation"
+            minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="Cultures" type="bi:TCultures" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="Level" type="bi:TLevel" minOccurs="1"
+            maxOccurs="unbounded"
+          />
+        </xs:sequence>
+        <xs:attribute name="Name" type="xs:string" use="required" />
+        <xs:attribute name="LineageTag" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="THierarchyRef">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="TMember" abstract="true">
+    <xs:attribute name="Caption" type="xs:string" use="optional" />
+    <xs:attribute name="ContextualNameRule" type="bi:TContextualNameRule"
+      default="None"
+    />
+    <xs:attribute name="Hidden" type="xs:boolean" default="false" />
+    <xs:attribute name="ReferenceName" type="xs:string" use="optional" />
+  </xs:complexType>
+  <xs:simpleType name="TContextualNameRule">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Context" />
+      <xs:enumeration value="Merge" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TDocumentation">
+    <xs:sequence>
+      <xs:element name="Summary" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="TLevel">
+    <xs:complexContent>
+      <xs:extension base="bi:TMember">
+        <xs:sequence>
+          <xs:element name="Cultures" type="bi:TCultures" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="Source" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="PropertyRef" type="bi:TPropertyRef"
+                  minOccurs="1"
+                  maxOccurs="1" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Documentation" type="bi:TDocumentation"
+            minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="ContainsHiddenMembers" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="HideMembers" type="bi:THideMembers"
+                  minOccurs="1"
+                  maxOccurs="1" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="Name" type="xs:string" use="required" />
+        <xs:attribute name="LineageTag" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="THideMembers">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Never" />
+      <xs:enumeration value="OnlyChildWithNoName" />
+      <xs:enumeration value="OnlyChildWithParentName" />
+      <xs:enumeration value="NoName" />
+      <xs:enumeration value="ParentName" />
+      <xs:enumeration value="BlankKey" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TCultures">
+    <xs:sequence>
+      <xs:element name="Culture" type="bi:TCulture" minOccurs="1"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TCulture">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Caption" type="xs:string" use="optional" />
+    <xs:attribute name="Description" type="xs:string" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TProperty">
+    <xs:complexContent>
+      <xs:extension base="bi:TBaseProperty">
+        <xs:sequence>
+          <xs:element name="DefaultValue" type="xs:anyType" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="Cultures" type="bi:TCultures" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="GroupBy" type="bi:TPropertyRefs" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="FilterNullsBy" type="bi:TPropertyRefs" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="OrderBy" type="bi:TPropertyRefs" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="RelatedTo" type="bi:TPropertyRefs" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="Statistics" type="bi:TPropertyStatistics"
+            minOccurs="0"
+            maxOccurs="1" />
+        </xs:sequence>
+
+        <xs:attribute name="Private" type="xs:boolean" default="false"
+          use="optional" />
+        <xs:attribute name="Contents" type="bi:TContents" use="optional"
+          default="Regular" />
+        <xs:attribute name="DefaultAggregateFunction"
+          type="bi:TDefaultAggregateFunction"
+          default="Default" />
+        <xs:attribute name="GroupingBehavior" type="bi:TGroupingBehavior"
+          default="GroupOnValue" />
+        <xs:attribute name="Stability" type="bi:TStability" default="Stable" />
+        <xs:attribute name="AggregateBehavior" type="xs:boolean" default="true"
+          use="optional" />
+        <xs:attribute name="LocaleImpact" type="xs:boolean" default="false"
+          use="optional" />
+        <xs:attribute name="LineageTag" type="xs:string" use="optional" />
+        <xs:attribute name="IsError" type="xs:boolean" default="false" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="TContents">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="TDefaultAggregateFunction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Sum" />
+      <xs:enumeration value="Count" />
+      <xs:enumeration value="Average" />
+      <xs:enumeration value="Min" />
+      <xs:enumeration value="Max" />
+      <xs:enumeration value="DistinctCount" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TGroupingBehavior">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GroupOnValue" />
+      <xs:enumeration value="GroupOnEntityKey" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TStability">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Stable" />
+      <xs:enumeration value="RowNumber" />
+      <xs:enumeration value="Volatile" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TPropertyStatistics">
+    <xs:sequence>
+      <xs:element name="MinValue" type="xs:anyType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="MaxValue" type="xs:anyType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="DistinctValueCount" type="xs:long" use="optional" />
+    <xs:attribute name="StringValueMaxLength" type="xs:long" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TBaseProperty" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="bi:TMember">
+        <xs:attribute name="Alignment" type="bi:TAlignment" use="optional" />
+        <xs:attribute name="FormatString" type="xs:string" use="optional" />
+        <xs:attribute name="Units" type="xs:string" use="optional" />
+        <xs:attribute name="SortDirection" type="bi:TSortDirection"
+          default="Default" />
+        <xs:attribute name="IsRightToLeft" type="xs:boolean" default="false" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="TAlignment">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Left" />
+      <xs:enumeration value="Right" />
+      <xs:enumeration value="Center" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TSortDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Ascending" />
+      <xs:enumeration value="Descending" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TPropertyRefs">
+    <xs:sequence>
+      <xs:element name="PropertyRef" type="bi:TPropertyRef" minOccurs="1"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TPropertyRef">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="TMeasure">
+    <xs:complexContent>
+      <xs:extension base="bi:TBaseProperty">
+        <xs:sequence>
+          <xs:element name="Cultures" type="bi:TCultures" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="Kpi" type="bi:TKpi" minOccurs="0" maxOccurs="1" />
+          <xs:element name="FormatBy" type="bi:TPropertyRefs" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="ApplyCulture" type="bi:TPropertyRefs" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="ContainsDetailRows" type="xs:boolean" minOccurs="0"
+            maxOccurs="1" />
+          <xs:element name="DistributiveBy" type="bi:TDistributiveBy"
+            minOccurs="0"
+            maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="Private" type="xs:boolean" default="true"
+          use="optional" />
+        <xs:attribute name="IsSimpleMeasure" type="xs:boolean" default="true" />
+        <xs:attribute name="ActualType" type="xs:string" />
+        <xs:attribute name="Contents" type="xs:string" />
+        <xs:attribute name="LineageTag" type="xs:string" use="optional" />
+        <xs:attribute name="IsError" type="xs:boolean" default="false" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TKpi">
+    <xs:sequence>
+      <xs:element name="Documentation" type="bi:TDocumentation" minOccurs="0"
+        maxOccurs="1" />
+      <xs:element name="KpiGoal" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="PropertyRef" type="bi:TPropertyRef" minOccurs="1"
+              maxOccurs="1" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="KpiStatus" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+
+
+            <xs:element name="PropertyRef" type="bi:TPropertyRef" minOccurs="1"
+              maxOccurs="1" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="KpiTrend" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="PropertyRef" type="bi:TPropertyRef" minOccurs="1"
+              maxOccurs="1" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="StatusGraphic" type="xs:string" use="optional" />
+    <xs:attribute name="TrendGraphic" type="xs:string" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TDistributiveBy">
+    <xs:sequence>
+      <xs:element name="EntityRef" type="bi:TEntityRef" minOccurs="1"
+        maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="AggregationKind" type="bi:TAggregationKind"
+      use="required" />
+  </xs:complexType>
+  <xs:simpleType name="TAggregationKind">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Sum" />
+      <xs:enumeration value="Min" />
+      <xs:enumeration value="Max" />
+      <xs:enumeration value="Count" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TEntityRef">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="TNavigationProperty">
+    <xs:complexContent>
+      <xs:extension base="bi:TMember">
+        <xs:attribute name="CollectionCaption" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TEntityStatistics">
+    <xs:attribute name="RowCount" type="xs:long" use="optional" />
+  </xs:complexType>
+</xs:schema>
+
