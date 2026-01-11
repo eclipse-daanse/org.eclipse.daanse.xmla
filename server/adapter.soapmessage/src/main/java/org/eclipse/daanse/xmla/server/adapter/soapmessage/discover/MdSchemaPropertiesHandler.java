@@ -122,6 +122,7 @@ public class MdSchemaPropertiesHandler implements DiscoverHandler {
         r.dimensionUniqueName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DIMENSION_UNIQUE_NAME, v));
         r.hierarchyUniqueName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_HIERARCHY_UNIQUE_NAME, v));
         r.levelUniqueName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_LEVEL_UNIQUE_NAME, v));
+        r.memberUniqueName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEMBER_UNIQUE_NAME, v));
         r.propertyName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_PROPERTY_NAME, v));
         r.propertyCaption().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_PROPERTY_CAPTION, v));
         r.propertyType()
