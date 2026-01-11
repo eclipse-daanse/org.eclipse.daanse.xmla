@@ -13,19 +13,20 @@
  */
 package org.eclipse.daanse.xmla.server.adapter.soapmessage;
 
-import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.xmla.Session;
-import org.eclipse.daanse.xmla.model.record.RequestMetaDataR;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.xmla.Session;
+import org.eclipse.daanse.xmla.model.record.RequestMetaDataR;
 
 public class RequestMetaDataUtils {
 
     public static final String USER_AGENT = "User-agent";
 
-    public static RequestMetaData getRequestMetaData(Map<String, Object> headers, Optional<Session> oSession, String url) {
+    public static RequestMetaData getRequestMetaData(Map<String, Object> headers, Optional<Session> oSession,
+            String url) {
         Optional<String> oUserAgent = getUserAgent(headers.get(USER_AGENT));
         return new RequestMetaDataR(oUserAgent,
                 oSession.isPresent() ? Optional.of(oSession.get().sessionId()) : Optional.empty(),
@@ -33,10 +34,8 @@ public class RequestMetaDataUtils {
     }
 
     private static Optional<String> getUserAgent(Object o) {
-        if (o instanceof List list) {
-            if (list.isEmpty()) {
-                return Optional.of((String) list.get(0));
-            }
+        if (o instanceof List<?> list && !list.isEmpty() && list.getFirst() instanceof String s) {
+            return Optional.of(s);
         }
         if (o instanceof String s) {
             return Optional.of(s);

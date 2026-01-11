@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.dbschema.schemata;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DBSCHEMA_SCHEMATA;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DBSCHEMA_SCHEMATA;
 
 @Operation(name = DBSCHEMA_SCHEMATA, guid = "c8b52225-5cf3-11ce-ade5-00aa0044773d")
 public interface DbSchemaSchemataRequest {

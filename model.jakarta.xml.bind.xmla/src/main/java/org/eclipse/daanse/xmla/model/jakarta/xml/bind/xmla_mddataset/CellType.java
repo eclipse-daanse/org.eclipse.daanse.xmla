@@ -13,6 +13,11 @@
  */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_mddataset;
 
+import java.util.List;
+
+import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.CellTypeEnum;
+import org.w3c.dom.Element;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
@@ -21,11 +26,6 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlMixed;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
-
-import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.CellTypeEnum;
-import org.w3c.dom.Element;
-
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CellType", propOrder = { "value", "any" })
@@ -70,7 +70,6 @@ public class CellType {
         @XmlElement(name = "Error")
         protected List<CellTypeError> error;
 
-        @SuppressWarnings("java:S1700")
         @XmlMixed
         protected List<String> value;
 

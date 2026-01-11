@@ -13,6 +13,7 @@
  */
 package org.eclipse.daanse.xmla.server.jakarta.jws;
 
+@SuppressWarnings("serial")
 public class ConvertorException extends RuntimeException{
 
     public ConvertorException(Exception e) {

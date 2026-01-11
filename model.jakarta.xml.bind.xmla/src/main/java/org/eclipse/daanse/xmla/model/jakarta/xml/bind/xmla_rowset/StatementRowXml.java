@@ -13,13 +13,14 @@
  */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_rowset;
 
+import java.util.List;
+
+import org.w3c.dom.Element;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlType;
-import org.w3c.dom.Element;
-
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StatementRowXml")

@@ -13,9 +13,9 @@
  */
 package org.eclipse.daanse.xmla.api.common.enums;
 
-import org.eclipse.daanse.xmla.api.annotation.Enumerator;
-
 import java.util.stream.Stream;
+
+import org.eclipse.daanse.xmla.api.annotation.Enumerator;
 
 @Enumerator(name = "Access")
 public enum AccessEnum {

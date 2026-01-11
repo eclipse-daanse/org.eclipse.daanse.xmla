@@ -16,6 +16,7 @@ package org.eclipse.daanse.xmla.api;
 import static org.eclipse.daanse.xmla.api.XmlaConstants.CLIENT_FAULT_FC;
 import static org.eclipse.daanse.xmla.api.XmlaConstants.USM_DOM_PARSE_CODE;
 import static org.eclipse.daanse.xmla.api.XmlaConstants.USM_DOM_PARSE_FAULT_FS;
+
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,21 +231,6 @@ public class XmlaUtil {
         }
         return numericStr;
     }
-
-
-    private static <T> String toString(List<T> list) {
-        StringBuilder buf = new StringBuilder();
-        int k = -1;
-        for (T t : list) {
-            if (++k > 0) {
-                buf.append(", ");
-            }
-            buf.append(t);
-        }
-        return buf.toString();
-    }
-
-
 
     /**
      * Result of a metadata query.

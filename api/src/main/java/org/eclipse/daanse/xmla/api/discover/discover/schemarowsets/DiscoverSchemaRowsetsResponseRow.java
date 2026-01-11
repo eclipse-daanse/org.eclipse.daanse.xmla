@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.discover.schemarowsets;
 
-import org.eclipse.daanse.xmla.api.xmla.Restriction;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.eclipse.daanse.xmla.api.xmla.Restriction;
 
 /**
  * This schema rowset returns the names, restrictions, description, and other information for all

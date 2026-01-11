@@ -13,14 +13,14 @@
  */
 package org.eclipse.daanse.xmla.api.discover.mdschema.functions;
 
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_INTEGER;
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.annotation.Restriction;
 import org.eclipse.daanse.xmla.api.common.enums.InterfaceNameEnum;
 import org.eclipse.daanse.xmla.api.common.enums.OriginEnum;
-
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_INTEGER;
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 public interface MdSchemaFunctionsRestrictions {
 

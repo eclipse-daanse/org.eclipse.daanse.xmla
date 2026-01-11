@@ -128,7 +128,6 @@ class ClientExecuteTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testCancel() throws Exception {
         Provider<SOAPMessage> provider = registerService(CANCEL);
         PropertiesR properties = new PropertiesR();
@@ -178,7 +177,6 @@ class ClientExecuteTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testClearCache() throws Exception {
         Provider<SOAPMessage> provider = registerService(CLEAR_CACHE);
         PropertiesR properties = new PropertiesR();
@@ -271,7 +269,6 @@ class ClientExecuteTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testStatement() throws Exception {
         Provider<SOAPMessage> provider = registerService(STATEMENT);
         PropertiesR properties = new PropertiesR();
@@ -294,7 +291,7 @@ class ClientExecuteTest {
         assertThat(mddataset.olapInfo()).isNotNull();
         assertThat(mddataset.messages()).isNotNull();
         checkOlapInfo(mddataset.olapInfo());
-        Messages messages = mddataset.messages();
+        mddataset.messages();
 
         verify(provider, (times(1))).invoke(requestMessageCaptor.capture());
 
@@ -320,7 +317,6 @@ class ClientExecuteTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testAlter() throws Exception {
         Provider<SOAPMessage> provider = registerService(ALTER);
         PropertiesR properties = new PropertiesR();

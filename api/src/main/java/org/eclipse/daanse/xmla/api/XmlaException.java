@@ -21,6 +21,7 @@ package org.eclipse.daanse.xmla.api;
  *
  * @author <a>Richard M. Emberson</a>
  */
+@SuppressWarnings("serial")
 public class XmlaException extends RuntimeException {
 
     public static String formatFaultCode(XmlaException xex) {

@@ -13,13 +13,13 @@
  */
 package org.eclipse.daanse.xmla.model.record.discover.mdschema.measures;
 
+import java.util.Optional;
+
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
 import org.eclipse.daanse.xmla.api.common.enums.LevelDbTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.MeasureAggregatorEnum;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
 import org.eclipse.daanse.xmla.api.discover.mdschema.measures.MdSchemaMeasuresResponseRow;
-
-import java.util.Optional;
 
 public record MdSchemaMeasuresResponseRowR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> measureName, Optional<String> measureUniqueName,

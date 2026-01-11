@@ -13,11 +13,11 @@
  */
 package org.eclipse.daanse.xmla.api.discover.mdschema.measuregroups;
 
-import org.eclipse.daanse.xmla.api.annotation.Restriction;
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 import java.util.Optional;
 
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+import org.eclipse.daanse.xmla.api.annotation.Restriction;
 
 public interface MdSchemaMeasureGroupsRestrictions {
 

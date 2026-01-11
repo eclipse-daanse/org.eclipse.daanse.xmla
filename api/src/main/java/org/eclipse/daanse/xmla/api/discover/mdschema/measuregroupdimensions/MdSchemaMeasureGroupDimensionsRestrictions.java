@@ -13,13 +13,12 @@
  */
 package org.eclipse.daanse.xmla.api.discover.mdschema.measuregroupdimensions;
 
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.annotation.Restriction;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
-
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_INTEGER;
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 public interface MdSchemaMeasureGroupDimensionsRestrictions {
 

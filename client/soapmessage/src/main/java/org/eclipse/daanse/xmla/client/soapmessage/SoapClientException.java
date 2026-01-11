@@ -15,6 +15,7 @@ package org.eclipse.daanse.xmla.client.soapmessage;
 
 import jakarta.xml.soap.SOAPException;
 
+@SuppressWarnings("serial")
 public class SoapClientException extends RuntimeException {
 
     public SoapClientException(String msg, SOAPException e) {

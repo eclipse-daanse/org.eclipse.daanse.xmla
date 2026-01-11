@@ -403,6 +403,7 @@ public class Convert {
         return responseWs;
     }
 
+    @SuppressWarnings("deprecation")
     private static Row convertDbSchemaCatalogsResponseRow(DbSchemaCatalogsResponseRow apiRow) {
         DbSchemaCatalogsResponseRowXml row = new DbSchemaCatalogsResponseRowXml();
 
@@ -947,6 +948,7 @@ public class Convert {
         return responseWs;
     }
 
+    @SuppressWarnings("deprecation")
     private static Row convertDiscoverMdSchemaFunctionsResponseRow(MdSchemaFunctionsResponseRow apiRow) {
         MdSchemaFunctionsResponseRowXml row = new MdSchemaFunctionsResponseRowXml();
 
@@ -1698,6 +1700,7 @@ public class Convert {
             return responseWs;
     }
 
+    @SuppressWarnings("deprecation")
     private static Row convertMdSchemaMeasuresResponseRow(MdSchemaMeasuresResponseRow apiRow) {
         MdSchemaMeasuresResponseRowXml row = new MdSchemaMeasuresResponseRowXml();
 

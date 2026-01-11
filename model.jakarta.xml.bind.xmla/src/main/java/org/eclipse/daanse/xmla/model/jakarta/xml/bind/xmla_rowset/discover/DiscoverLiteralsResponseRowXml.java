@@ -27,6 +27,8 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "DiscoverLiteralsResponseRowXml")
 public class DiscoverLiteralsResponseRowXml extends Row implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The name of the literal.
      */

@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.mdschema.demensions;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_DIMENSIONS;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_DIMENSIONS;
 
 @Operation(name = MDSCHEMA_DIMENSIONS, guid = "C8B522D9-5CF3-11CE-ADE5-00AA0044773D")
 public interface MdSchemaDimensionsRequest {

@@ -13,11 +13,11 @@
  */
 package org.eclipse.daanse.xmla.api.discover.dbschema.catalogs;
 
-import org.eclipse.daanse.xmla.api.annotation.Restriction;
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 import java.util.Optional;
 
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+import org.eclipse.daanse.xmla.api.annotation.Restriction;
 
 public interface DbSchemaCatalogsRestrictions {
     String RESTRICTIONS_CATALOG_NAME = "CATALOG_NAME";

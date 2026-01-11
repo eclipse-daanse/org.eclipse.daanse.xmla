@@ -19,7 +19,6 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlType;
 
-@SuppressWarnings("java:S2166")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Exception")
 public class Exception implements Serializable {

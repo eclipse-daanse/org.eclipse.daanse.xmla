@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.discover.properties;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DISCOVER_PROPERTIES;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DISCOVER_PROPERTIES;
 
 @Operation(name = DISCOVER_PROPERTIES, guid = "4B40ADFB-8B09-4758-97BB-636E8AE97BCF")
 public interface DiscoverPropertiesRequest {

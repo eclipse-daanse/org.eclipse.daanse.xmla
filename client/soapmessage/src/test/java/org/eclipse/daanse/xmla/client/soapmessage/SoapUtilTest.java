@@ -13,10 +13,20 @@
  */
 package org.eclipse.daanse.xmla.client.soapmessage;
 
-import jakarta.xml.soap.MessageFactory;
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPMessage;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.DESCRIPTION;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.ID;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.NAME;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.NAME_LC;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.VALUE2;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.math.BigInteger;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+
 import org.eclipse.daanse.xmla.api.engine.ImpersonationInfo;
 import org.eclipse.daanse.xmla.api.engine300.AttributeHierarchyProcessingState;
 import org.eclipse.daanse.xmla.api.engine300.CalculationPropertiesVisualizationProperties;
@@ -29,140 +39,15 @@ import org.eclipse.daanse.xmla.api.engine300_300.RelationshipEndTranslation;
 import org.eclipse.daanse.xmla.api.engine300_300.Relationships;
 import org.eclipse.daanse.xmla.api.engine300_300.XEvent;
 import org.eclipse.daanse.xmla.api.execute.ExecuteParameter;
-import org.eclipse.daanse.xmla.api.xmla.AccessEnum;
-import org.eclipse.daanse.xmla.api.xmla.Account;
-import org.eclipse.daanse.xmla.api.xmla.Action;
-import org.eclipse.daanse.xmla.api.xmla.Aggregation;
-import org.eclipse.daanse.xmla.api.xmla.AggregationAttribute;
-import org.eclipse.daanse.xmla.api.xmla.AggregationDesign;
-import org.eclipse.daanse.xmla.api.xmla.AggregationDesignAttribute;
-import org.eclipse.daanse.xmla.api.xmla.AggregationDesignDimension;
-import org.eclipse.daanse.xmla.api.xmla.AggregationDimension;
-import org.eclipse.daanse.xmla.api.xmla.AggregationInstance;
-import org.eclipse.daanse.xmla.api.xmla.AggregationInstanceAttribute;
-import org.eclipse.daanse.xmla.api.xmla.AggregationInstanceDimension;
-import org.eclipse.daanse.xmla.api.xmla.AggregationInstanceMeasure;
-import org.eclipse.daanse.xmla.api.xmla.AlgorithmParameter;
-import org.eclipse.daanse.xmla.api.xmla.Alter;
-import org.eclipse.daanse.xmla.api.xmla.AndOrType;
-import org.eclipse.daanse.xmla.api.xmla.AndOrTypeEnum;
-import org.eclipse.daanse.xmla.api.xmla.Annotation;
-import org.eclipse.daanse.xmla.api.xmla.Assembly;
-import org.eclipse.daanse.xmla.api.xmla.AttributePermission;
-import org.eclipse.daanse.xmla.api.xmla.AttributeRelationship;
-import org.eclipse.daanse.xmla.api.xmla.AttributeTranslation;
-import org.eclipse.daanse.xmla.api.xmla.Binding;
-import org.eclipse.daanse.xmla.api.xmla.BoolBinop;
-import org.eclipse.daanse.xmla.api.xmla.CalculationProperty;
-import org.eclipse.daanse.xmla.api.xmla.Cancel;
-import org.eclipse.daanse.xmla.api.xmla.CellPermission;
-import org.eclipse.daanse.xmla.api.xmla.ClearCache;
-import org.eclipse.daanse.xmla.api.xmla.ColumnBinding;
-import org.eclipse.daanse.xmla.api.xmla.Command;
-import org.eclipse.daanse.xmla.api.xmla.Cube;
-import org.eclipse.daanse.xmla.api.xmla.CubeAttribute;
-import org.eclipse.daanse.xmla.api.xmla.CubeDimension;
-import org.eclipse.daanse.xmla.api.xmla.CubeDimensionPermission;
-import org.eclipse.daanse.xmla.api.xmla.CubeHierarchy;
-import org.eclipse.daanse.xmla.api.xmla.CubePermission;
-import org.eclipse.daanse.xmla.api.xmla.CubeStorageModeEnumType;
-import org.eclipse.daanse.xmla.api.xmla.DataItem;
-import org.eclipse.daanse.xmla.api.xmla.DataItemFormatEnum;
-import org.eclipse.daanse.xmla.api.xmla.DataSource;
-import org.eclipse.daanse.xmla.api.xmla.DataSourcePermission;
-import org.eclipse.daanse.xmla.api.xmla.DataSourceView;
-import org.eclipse.daanse.xmla.api.xmla.DataSourceViewBinding;
-import org.eclipse.daanse.xmla.api.xmla.Database;
-import org.eclipse.daanse.xmla.api.xmla.DatabasePermission;
-import org.eclipse.daanse.xmla.api.xmla.Dimension;
-import org.eclipse.daanse.xmla.api.xmla.DimensionAttribute;
-import org.eclipse.daanse.xmla.api.xmla.DimensionAttributeTypeEnumType;
-import org.eclipse.daanse.xmla.api.xmla.DimensionCurrentStorageModeEnumType;
-import org.eclipse.daanse.xmla.api.xmla.DimensionPermission;
-import org.eclipse.daanse.xmla.api.xmla.ErrorConfiguration;
-import org.eclipse.daanse.xmla.api.xmla.Event;
-import org.eclipse.daanse.xmla.api.xmla.EventColumnID;
-import org.eclipse.daanse.xmla.api.xmla.EventSession;
-import org.eclipse.daanse.xmla.api.xmla.EventType;
-import org.eclipse.daanse.xmla.api.xmla.FoldingParameters;
-import org.eclipse.daanse.xmla.api.xmla.Hierarchy;
-import org.eclipse.daanse.xmla.api.xmla.IncrementalProcessingNotification;
-import org.eclipse.daanse.xmla.api.xmla.InvalidXmlCharacterEnum;
-import org.eclipse.daanse.xmla.api.xmla.Kpi;
-import org.eclipse.daanse.xmla.api.xmla.Level;
-import org.eclipse.daanse.xmla.api.xmla.MajorObject;
-import org.eclipse.daanse.xmla.api.xmla.ManyToManyMeasureGroupDimension;
-import org.eclipse.daanse.xmla.api.xmla.MdxScript;
-import org.eclipse.daanse.xmla.api.xmla.Measure;
-import org.eclipse.daanse.xmla.api.xmla.MeasureGroup;
-import org.eclipse.daanse.xmla.api.xmla.MeasureGroupBinding;
-import org.eclipse.daanse.xmla.api.xmla.MeasureGroupDimension;
-import org.eclipse.daanse.xmla.api.xmla.MeasureGroupDimensionBinding;
-import org.eclipse.daanse.xmla.api.xmla.MeasureGroupStorageModeEnumType;
-import org.eclipse.daanse.xmla.api.xmla.Member;
-import org.eclipse.daanse.xmla.api.xmla.MiningModel;
-import org.eclipse.daanse.xmla.api.xmla.MiningModelColumn;
-import org.eclipse.daanse.xmla.api.xmla.MiningModelPermission;
-import org.eclipse.daanse.xmla.api.xmla.MiningModelingFlag;
-import org.eclipse.daanse.xmla.api.xmla.MiningStructure;
-import org.eclipse.daanse.xmla.api.xmla.MiningStructureColumn;
-import org.eclipse.daanse.xmla.api.xmla.MiningStructurePermission;
-import org.eclipse.daanse.xmla.api.xmla.NotType;
-import org.eclipse.daanse.xmla.api.xmla.NullProcessingEnum;
-import org.eclipse.daanse.xmla.api.xmla.ObjectExpansion;
-import org.eclipse.daanse.xmla.api.xmla.ObjectReference;
-import org.eclipse.daanse.xmla.api.xmla.Partition;
-import org.eclipse.daanse.xmla.api.xmla.PartitionCurrentStorageModeEnumType;
-import org.eclipse.daanse.xmla.api.xmla.PartitionModes;
-import org.eclipse.daanse.xmla.api.xmla.PartitionStorageModeEnumType;
-import org.eclipse.daanse.xmla.api.xmla.Permission;
-import org.eclipse.daanse.xmla.api.xmla.PersistenceEnum;
-import org.eclipse.daanse.xmla.api.xmla.Perspective;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveAction;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveAttribute;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveCalculation;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveDimension;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveHierarchy;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveKpi;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveMeasure;
-import org.eclipse.daanse.xmla.api.xmla.PerspectiveMeasureGroup;
-import org.eclipse.daanse.xmla.api.xmla.ProactiveCaching;
-import org.eclipse.daanse.xmla.api.xmla.ProactiveCachingBinding;
-import org.eclipse.daanse.xmla.api.xmla.ProactiveCachingIncrementalProcessingBinding;
-import org.eclipse.daanse.xmla.api.xmla.QueryBinding;
-import org.eclipse.daanse.xmla.api.xmla.ReadDefinitionEnum;
-import org.eclipse.daanse.xmla.api.xmla.ReadWritePermissionEnum;
-import org.eclipse.daanse.xmla.api.xmla.RefreshPolicyEnum;
-import org.eclipse.daanse.xmla.api.xmla.RetentionModes;
-import org.eclipse.daanse.xmla.api.xmla.Role;
-import org.eclipse.daanse.xmla.api.xmla.ScalarMiningStructureColumn;
-import org.eclipse.daanse.xmla.api.xmla.Scope;
-import org.eclipse.daanse.xmla.api.xmla.Server;
-import org.eclipse.daanse.xmla.api.xmla.ServerProperty;
-import org.eclipse.daanse.xmla.api.xmla.TabularBinding;
-import org.eclipse.daanse.xmla.api.xmla.TargetTypeEnum;
-import org.eclipse.daanse.xmla.api.xmla.Trace;
-import org.eclipse.daanse.xmla.api.xmla.TraceFilter;
-import org.eclipse.daanse.xmla.api.xmla.Translation;
-import org.eclipse.daanse.xmla.api.xmla.TypeEnum;
-import org.eclipse.daanse.xmla.api.xmla.UnknownMemberEnumType;
+import org.eclipse.daanse.xmla.api.xmla.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
-import java.math.BigInteger;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
-
-import static org.eclipse.daanse.xmla.client.soapmessage.Constants.DESCRIPTION;
-import static org.eclipse.daanse.xmla.client.soapmessage.Constants.ID;
-import static org.eclipse.daanse.xmla.client.soapmessage.Constants.NAME;
-import static org.eclipse.daanse.xmla.client.soapmessage.Constants.NAME_LC;
-import static org.eclipse.daanse.xmla.client.soapmessage.Constants.VALUE2;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import jakarta.xml.soap.MessageFactory;
+import jakarta.xml.soap.SOAPElement;
+import jakarta.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPMessage;
 
 class SoapUtilTest {
 
@@ -1089,10 +974,6 @@ class SoapUtilTest {
         return it;
     }
 
-    private Command createCommand() {
-        return createAlter();
-    }
-
     private Alter createAlter() {
         Alter it = mock(Alter.class);
         ObjectReference object = createObjectReference();
@@ -2007,7 +1888,7 @@ class SoapUtilTest {
 
     private AndOrType createAndOrType() {
         AndOrType andOrType = mock(AndOrType.class);
-        List l = List.of(AndOrTypeEnum.And);
+        List<AndOrTypeEnum> l = List.of(AndOrTypeEnum.And);
         when(andOrType.notOrOrOrAnd()).thenReturn(l);
         return andOrType;
     }
@@ -2727,19 +2608,6 @@ class SoapUtilTest {
         xmlAssert.valueByXPath(p + "/Width").isEqualTo("2");
         xmlAssert.valueByXPath(p + "/DefaultDetailsPosition").isEqualTo("2");
         xmlAssert.valueByXPath(p + "/SortPropertiesPosition").isEqualTo("0");
-    }
-
-    private void checkCommandList(XmlAssert xmlAssert, String path) {
-        String p = new StringBuilder(path).append("/Commands").toString();
-        xmlAssert.nodesByXPath(p).exist();
-        checkCommand(xmlAssert, p);
-    }
-
-    private void checkCommand(XmlAssert xmlAssert, String path) {
-        String p = new StringBuilder(path).append("/Command").toString();
-        xmlAssert.nodesByXPath(p).exist();
-        checkAlter(xmlAssert, p);
-        // maybe need check other commands
     }
 
     private void checkAlter(XmlAssert xmlAssert, String path) {

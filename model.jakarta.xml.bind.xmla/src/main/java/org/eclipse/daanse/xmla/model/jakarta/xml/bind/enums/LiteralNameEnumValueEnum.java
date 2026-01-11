@@ -13,11 +13,11 @@
  */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums;
 
+import java.util.stream.Stream;
+
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
-
-import java.util.stream.Stream;
 
 @XmlType(name = "LiteralNameEnumValue")
 @XmlEnum

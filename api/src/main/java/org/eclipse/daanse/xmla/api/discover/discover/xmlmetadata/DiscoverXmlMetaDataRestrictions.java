@@ -13,12 +13,12 @@
  */
 package org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata;
 
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.annotation.Restriction;
 import org.eclipse.daanse.xmla.api.common.enums.ObjectExpansionEnum;
-
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 public interface DiscoverXmlMetaDataRestrictions {
     public static final String RESTRICTIONS_OBJECT_TYPE = "ObjectType";

@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.mdschema.sets;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_SETS;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_SETS;
 
 @Operation(name = MDSCHEMA_SETS, guid = "A07CCD0B-8148-11D0-87BB-00C04FC33942")
 public interface MdSchemaSetsRequest {

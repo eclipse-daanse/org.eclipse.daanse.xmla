@@ -20,13 +20,13 @@ import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.PropertyCardinalityE
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.PropertyContentTypeEnum;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.PropertyOriginEnum;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.PropertyTypeEnum;
+import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.VisibilityEnum;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
-import org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.VisibilityEnum;
 
 /**
  * This schema rowset describes the properties of members and cell properties.

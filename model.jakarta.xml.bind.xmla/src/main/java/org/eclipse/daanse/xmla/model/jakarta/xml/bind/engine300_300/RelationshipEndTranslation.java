@@ -13,14 +13,14 @@
  */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.engine300_300;
 
+import java.io.Serializable;
+
+import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla.AbstractTranslation;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
-
-import java.io.Serializable;
-
-import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla.AbstractTranslation;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RelationshipEndTranslation", propOrder = {

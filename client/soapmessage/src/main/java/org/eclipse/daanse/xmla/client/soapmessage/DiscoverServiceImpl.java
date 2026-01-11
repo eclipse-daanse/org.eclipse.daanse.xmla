@@ -13,11 +13,42 @@
  */
 package org.eclipse.daanse.xmla.client.soapmessage;
 
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPMessage;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.SOAP_ACTION_DISCOVER;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaCatalogsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaColumnsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaProviderTypesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaSchemataResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaSourceTablesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaTablesInfoResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaTablesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverCsdlMetaDataResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverDataSourcesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverEnumeratorsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverKeywordsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverLiteralsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverPropertiesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverSchemaRowsetsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverXmlMetaDataResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaActionsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaCubesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaDimensionsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaFunctionsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaHierarchiesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaKpisResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaLevelsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMeasureGroupDimensionsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMeasureGroupsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMeasuresResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMembersResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaPropertiesResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaSetsResponseRow;
+import static org.eclipse.daanse.xmla.client.soapmessage.DiscoverConsumers.createDiscoverDataSourcesRequestConsumer;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsResponseRow;
@@ -78,40 +109,8 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.sets.MdSchemaSetsResponseRo
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-
-import static org.eclipse.daanse.xmla.client.soapmessage.Constants.SOAP_ACTION_DISCOVER;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaCatalogsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaColumnsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaProviderTypesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaSchemataResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaSourceTablesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaTablesInfoResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDbSchemaTablesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverDataSourcesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverEnumeratorsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverKeywordsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverLiteralsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverPropertiesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverSchemaRowsetsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverXmlMetaDataResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToDiscoverCsdlMetaDataResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaActionsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaCubesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaDimensionsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaFunctionsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaHierarchiesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaKpisResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaLevelsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMeasureGroupDimensionsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMeasureGroupsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMeasuresResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaMembersResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaPropertiesResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.Convertor.convertToMdSchemaSetsResponseRow;
-import static org.eclipse.daanse.xmla.client.soapmessage.DiscoverConsumers.createDiscoverDataSourcesRequestConsumer;
+import jakarta.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPMessage;
 
 public class DiscoverServiceImpl implements DiscoverService {
 

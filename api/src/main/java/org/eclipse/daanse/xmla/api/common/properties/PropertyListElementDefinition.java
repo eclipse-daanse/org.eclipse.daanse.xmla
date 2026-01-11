@@ -31,14 +31,14 @@ public enum PropertyListElementDefinition {
     LOCALE_IDENTIFIER("LocaleIdentifier", Type.UNSIGNED_INTEGER, null, Access.READ_WRITE, null, true, true);
 
     final Type type;
-    final Set<? extends Enum> enumSet;
+    final Set<? extends Enum<?>> enumSet;
     final Access access;
     final boolean discover;
     final boolean execute;
     final String value;
     final String nameValue;
 
-    PropertyListElementDefinition(String nameValue, Type type, Set<? extends Enum> enumSet, Access access, String value,
+    PropertyListElementDefinition(String nameValue, Type type, Set<? extends Enum<?>> enumSet, Access access, String value,
             boolean discover, boolean execute) {
 
         assert (enumSet != null) == type.isEnum();

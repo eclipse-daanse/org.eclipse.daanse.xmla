@@ -13,16 +13,16 @@
  */
 package org.eclipse.daanse.xmla.api.discover.mdschema.levels;
 
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_INTEGER;
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_SHORT;
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.annotation.Restriction;
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
 import org.eclipse.daanse.xmla.api.common.enums.LevelOriginEnum;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
-
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_INTEGER;
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_SHORT;
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 public interface MdSchemaLevelsRestrictions {
 
