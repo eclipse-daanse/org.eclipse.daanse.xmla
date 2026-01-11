@@ -22,10 +22,10 @@ public class Constants {
 
     public static final String XMLASERVICE_FILTER_KEY = "type";
     public static final String XMLASERVICE_FILTER_VALUE = "mock";
-    @SuppressWarnings("java:S1075")
+
     public static final String WS_PATH = "/xmla";
 
-    public static final String SERVER_PORT_WHITEBOARD = "8090";
+    public static final String SERVER_PORT_WHITEBOARD = "18090";
     public static final String URN_SCHEMAS_MICROSOFT_COM_XML_ANALYSIS = "urn:schemas-microsoft-com:xml-analysis";
 
     public static final QName QNAME_Discover = new QName(URN_SCHEMAS_MICROSOFT_COM_XML_ANALYSIS, "Discover");
