@@ -64,7 +64,7 @@ public class XmlaServlet extends AbstractSoapServlet {
             }
             Iterable<MimeHeader> iterable = () -> soapMessage.getMimeHeaders().getAllHeaders();
             Map<String, Object> map = StreamSupport.stream(iterable.spliterator(), true).collect(
-                    Collectors.toMap(MimeHeader::getName, MimeHeader::getValue, (oldValue, newValue) -> oldValue));
+                    Collectors.toMap(MimeHeader::getName, MimeHeader::getValue, (oldValue, _) -> oldValue));
 
             SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map, principal,  isUserInRoleFunction, url);
 
@@ -73,7 +73,7 @@ public class XmlaServlet extends AbstractSoapServlet {
             return returnMessage;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error processing SOAP message", e);
             return null;
         }
     }

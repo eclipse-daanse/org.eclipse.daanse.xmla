@@ -13,11 +13,38 @@
  */
 package org.eclipse.daanse.xmla.client.soapmessage.integration;
 
-import jakarta.xml.soap.SOAPMessage;
-import jakarta.xml.ws.Provider;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.ACTIONS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.CATALOGS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.CUBES;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.DATA_SOURCES;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.DIMENSIONS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.ENUMERARORS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.FUNCTIONS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.KEYWORDS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.LITERALS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.PROPERTIES;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.PROVIDER_TYPES;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.SCHEMAROWSETS;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.SCHEMATA;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.SOURCE_TABLES;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.TABLES;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.TABLES_INFO;
+import static org.eclipse.daanse.xmla.client.soapmessage.Responses.XML_META_DATA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
 //import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.AccessEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ActionTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
@@ -191,35 +218,8 @@ import org.osgi.test.common.dictionary.Dictionaries;
 import org.osgi.test.junit5.cm.ConfigurationExtension;
 import org.xmlunit.assertj3.XmlAssert;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.ACTIONS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.CATALOGS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.CUBES;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.DATA_SOURCES;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.DIMENSIONS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.ENUMERARORS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.FUNCTIONS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.KEYWORDS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.LITERALS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.PROPERTIES;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.PROVIDER_TYPES;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.SCHEMAROWSETS;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.SCHEMATA;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.SOURCE_TABLES;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.TABLES;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.TABLES_INFO;
-import static org.eclipse.daanse.xmla.client.soapmessage.Responses.XML_META_DATA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import jakarta.xml.soap.SOAPMessage;
+import jakarta.xml.ws.Provider;
 
 //@RequireSoapWhiteboard
 @ExtendWith(ConfigurationExtension.class)
@@ -587,7 +587,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testXmlMetaData() throws Exception {
         Provider<SOAPMessage> provider = registerService(XML_META_DATA);
         PropertiesR properties = new PropertiesR();
@@ -710,6 +709,7 @@ class ClientDiscoverTest {
                 .isEqualTo("SchemaData");
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     void testCatalogs() throws Exception {
 
@@ -721,7 +721,6 @@ class ClientDiscoverTest {
         properties.addProperty(PropertyListElementDefinition.DATA_SOURCE_INFO, "FoodMart");
         properties.addProperty(PropertyListElementDefinition.CONTENT, "SchemaData");
         DbSchemaCatalogsRestrictionsR restrictions = new DbSchemaCatalogsRestrictionsR(Optional.of("CatalogName"));
-
 
         DbSchemaCatalogsRequest dbSchemaCatalogsRequest = new DbSchemaCatalogsRequestR(properties, restrictions);
 
@@ -775,7 +774,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testColumns() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.COLUMNS);
         PropertiesR properties = new PropertiesR();
@@ -868,7 +866,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testProviderTypes() throws Exception {
         Provider<SOAPMessage> provider = registerService(PROVIDER_TYPES);
         PropertiesR properties = new PropertiesR();
@@ -1138,7 +1135,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testTablesInfo() throws Exception {
         Provider<SOAPMessage> provider = registerService(TABLES_INFO);
         PropertiesR properties = new PropertiesR();
@@ -1213,7 +1209,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testActions() throws Exception {
         Provider<SOAPMessage> provider = registerService(ACTIONS);
         PropertiesR properties = new PropertiesR();
@@ -1303,7 +1298,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testCubes() throws Exception {
         Provider<SOAPMessage> provider = registerService(CUBES);
         PropertiesR properties = new PropertiesR();
@@ -1387,7 +1381,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testDimensions() throws Exception {
         Provider<SOAPMessage> provider = registerService(DIMENSIONS);
         PropertiesR properties = new PropertiesR();
@@ -1476,8 +1469,8 @@ class ClientDiscoverTest {
                 .isEqualTo("SchemaData");
     }
 
+    @SuppressWarnings("deprecation")
     @Test
-    @SuppressWarnings("java:S5961")
     void testFunctions() throws Exception {
         Provider<SOAPMessage> provider = registerService(FUNCTIONS);
         PropertiesR properties = new PropertiesR();
@@ -1557,7 +1550,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testHierarchies() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.HIERARCHIES);
         PropertiesR properties = new PropertiesR();
@@ -1663,7 +1655,6 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
     void testKpis() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.KPIS);
         PropertiesR properties = new PropertiesR();
@@ -1746,7 +1737,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+
     void testLevels() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.LEVELS);
         PropertiesR properties = new PropertiesR();
@@ -1850,7 +1841,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+
     void testMeasureGroupDimensions() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.MEASURE_GROUP_DIMENSIONS);
         PropertiesR properties = new PropertiesR();
@@ -1934,7 +1925,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+
     void testMeasureGroups() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.MEASURE_GROUPS);
         PropertiesR properties = new PropertiesR();
@@ -2004,7 +1995,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+    @SuppressWarnings({ "deprecation" })
     void testMeasures() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.MEASURES);
         PropertiesR properties = new PropertiesR();
@@ -2099,7 +2090,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+
     void testMembers() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.MEMBERS);
         PropertiesR properties = new PropertiesR();
@@ -2212,7 +2203,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+
     void testMdProperties() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.MD_PROPERTIES);
         PropertiesR properties = new PropertiesR();
@@ -2325,7 +2316,7 @@ class ClientDiscoverTest {
     }
 
     @Test
-    @SuppressWarnings("java:S5961")
+
     void testSets() throws Exception {
         Provider<SOAPMessage> provider = registerService(Responses.SETS);
         PropertiesR properties = new PropertiesR();

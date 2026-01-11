@@ -13,18 +13,8 @@
 */
 package org.eclipse.daanse.xmla.server.jakarta.xml.ws.provider.soapmessage;
 
-import jakarta.annotation.Resource;
-import jakarta.xml.soap.SOAPConstants;
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPFactory;
-import jakarta.xml.soap.SOAPFault;
-import jakarta.xml.soap.SOAPMessage;
-import jakarta.xml.ws.Provider;
-import jakarta.xml.ws.Service;
-import jakarta.xml.ws.ServiceMode;
-import jakarta.xml.ws.WebServiceContext;
-import jakarta.xml.ws.WebServiceProvider;
-import jakarta.xml.ws.handler.MessageContext;
+import java.util.Map;
+
 //import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.annotations.RequireSoapWhiteboard;
 //import org.eclipse.daanse.jakarta.xml.ws.api.whiteboard.prototypes.SOAPWhiteboardEndpoint;
 import org.eclipse.daanse.xmla.api.XmlaService;
@@ -38,7 +28,14 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
+import jakarta.annotation.Resource;
+import jakarta.xml.soap.SOAPMessage;
+import jakarta.xml.ws.Provider;
+import jakarta.xml.ws.Service;
+import jakarta.xml.ws.ServiceMode;
+import jakarta.xml.ws.WebServiceContext;
+import jakarta.xml.ws.WebServiceProvider;
+import jakarta.xml.ws.handler.MessageContext;
 
 @WebServiceProvider()
 @ServiceMode(value = Service.Mode.MESSAGE)
@@ -48,7 +45,7 @@ import java.util.Map;
 //@SOAPWhiteboardEndpoint(contextpath = "xmla")
 public class XmlaWebserviceProvider implements Provider<SOAPMessage> {
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlaWebserviceProvider.class);
-    private static final String USER_AGENT = "User-agent";
+//    private static final String USER_AGENT = "User-agent";
 
     @ObjectClassDefinition()
     @interface Config {
@@ -72,22 +69,23 @@ public class XmlaWebserviceProvider implements Provider<SOAPMessage> {
     @Override
     public SOAPMessage invoke(SOAPMessage request) {
 
-        Map<String, Object> headers = (Map<String, Object>) context.getMessageContext()
-                .get(MessageContext.HTTP_REQUEST_HEADERS);
+        Object o = context.getMessageContext().get(MessageContext.HTTP_REQUEST_HEADERS);
+        @SuppressWarnings("unchecked")
+        Map<String, Object> headers = (Map<String, Object>) o;
 
         LOGGER.debug("===== The provider got a request =====");
-        return wsAdapter.handleRequest(request, headers,null,null, null);
+        return wsAdapter.handleRequest(request, headers, null, null, null);
     }
 
-    private SOAPFault getFault(Exception ex) {
-        try {
-            SOAPFault fault = SOAPFactory.newInstance().createFault();
-            fault.setFaultCode(SOAPConstants.SOAP_SENDER_FAULT);
-            fault.setFaultString(ex.toString());
-            return fault;
-        } catch (SOAPException e) {
-            throw new IllegalStateException(e);
-        }
-    }
+//    private SOAPFault getFault(Exception ex) {
+//        try {
+//            SOAPFault fault = SOAPFactory.newInstance().createFault();
+//            fault.setFaultCode(SOAPConstants.SOAP_SENDER_FAULT);
+//            fault.setFaultString(ex.toString());
+//            return fault;
+//        } catch (SOAPException e) {
+//            throw new IllegalStateException(e);
+//        }
+//    }
 
 }

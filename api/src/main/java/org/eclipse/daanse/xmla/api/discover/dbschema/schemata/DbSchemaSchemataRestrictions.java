@@ -13,9 +13,9 @@
  */
 package org.eclipse.daanse.xmla.api.discover.dbschema.schemata;
 
-import org.eclipse.daanse.xmla.api.annotation.Restriction;
-
 import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+
+import org.eclipse.daanse.xmla.api.annotation.Restriction;
 
 public interface DbSchemaSchemataRestrictions {
 

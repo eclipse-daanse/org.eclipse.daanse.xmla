@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.dbschema.providertypes;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DBSCHEMA_PROVIDER_TYPES;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DBSCHEMA_PROVIDER_TYPES;
 
 @Operation(name = DBSCHEMA_PROVIDER_TYPES, guid = "C8B5222C-5CF3-11CE-ADE5-00AA0044773D")
 public interface DbSchemaProviderTypesRequest {

@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DISCOVER_CSDL_METADATA;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DISCOVER_CSDL_METADATA;
 
 @Operation(name = DISCOVER_CSDL_METADATA, guid = "87B86062-21C3-460F-B4F8-5BE98394F13B")
 public interface DiscoverCsdlMetaDataRequest {

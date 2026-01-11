@@ -16,15 +16,10 @@ package org.eclipse.daanse.xmla.server.jakarta.jws;
 import static org.eclipse.daanse.xmla.server.jakarta.jws.ConvertorUtil.convertException;
 import static org.eclipse.daanse.xmla.server.jakarta.jws.ConvertorUtil.convertMessages;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -234,19 +229,19 @@ public class MdDataSetConvertor {
         return null;
     }
 
-    private static XMLGregorianCalendar convertToXMLGregorianCalendar(Instant instant) {
-        GregorianCalendar gregorianCalendar = GregorianCalendar
-            .from(instant.atZone(ZoneId.systemDefault()));
-        try {
-            return DatatypeFactory
-                .newInstance()
-                .newXMLGregorianCalendar(
-                    gregorianCalendar
-                );
-        } catch (DatatypeConfigurationException e) {
-            throw new ConvertorException(e);
-        }
-    }
+//    private static XMLGregorianCalendar convertToXMLGregorianCalendar(Instant instant) {
+//        GregorianCalendar gregorianCalendar = GregorianCalendar
+//            .from(instant.atZone(ZoneId.systemDefault()));
+//        try {
+//            return DatatypeFactory
+//                .newInstance()
+//                .newXMLGregorianCalendar(
+//                    gregorianCalendar
+//                );
+//        } catch (DatatypeConfigurationException e) {
+//            throw new ConvertorException(e);
+//        }
+//    }
 
     private static CellInfo convertCellInfo(org.eclipse.daanse.xmla.api.mddataset.CellInfo cellInfo) {
         if (cellInfo != null) {

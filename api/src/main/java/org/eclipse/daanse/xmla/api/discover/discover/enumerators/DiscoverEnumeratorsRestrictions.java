@@ -13,11 +13,11 @@
  */
 package org.eclipse.daanse.xmla.api.discover.discover.enumerators;
 
-import org.eclipse.daanse.xmla.api.annotation.Restriction;
+import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 
 import java.util.Optional;
 
-import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
+import org.eclipse.daanse.xmla.api.annotation.Restriction;
 
 public interface DiscoverEnumeratorsRestrictions {
     String RESTRICTIONS_ENUM_NAME = "EnumName";

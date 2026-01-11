@@ -15,14 +15,11 @@ package org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_mddataset;
 
 import java.time.LocalDateTime;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.adapters.LocalDateTimeAdapter;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 

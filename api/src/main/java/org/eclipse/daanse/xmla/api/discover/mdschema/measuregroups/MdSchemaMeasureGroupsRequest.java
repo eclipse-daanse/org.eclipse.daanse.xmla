@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.mdschema.measuregroups;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_MEASUREGROUPS;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_MEASUREGROUPS;
 
 @Operation(name = MDSCHEMA_MEASUREGROUPS, guid = "E1625EBF-FA96-42FD-BEA6-DB90ADAFD96B")
 public interface MdSchemaMeasureGroupsRequest {

@@ -12,11 +12,11 @@
 */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums;
 
+import java.util.stream.Stream;
+
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;
 import jakarta.xml.bind.annotation.XmlType;
-
-import java.util.stream.Stream;
 
 /**
  * The number of instances a dimension member can have for a single instance of a measure group

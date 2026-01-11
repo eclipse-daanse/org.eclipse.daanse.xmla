@@ -282,28 +282,13 @@ public class PropertiesR implements Properties {
     protected Optional<Boolean> advancedFlag = Optional.of(false);
 
     public void addProperty(PropertyListElementDefinition property, String value) {
-
         switch (property) {
-        case CONTENT: {
-            content = Optional.of(Content.fromValue(value));
+            case CONTENT -> content = Optional.of(Content.fromValue(value));
+            case DATA_SOURCE_INFO -> dataSourceInfo = Optional.of(value);
+            case FORMAT -> format = Optional.of(Format.fromValue(value));
+            case LOCALE_IDENTIFIER -> localeIdentifier = Optional.of(Integer.valueOf(value));
+            default -> { }
         }
-            break;
-        case DATA_SOURCE_INFO: {
-            dataSourceInfo = Optional.of(value);
-        }
-            break;
-        case FORMAT: {
-            format = Optional.of(Format.fromValue(value));
-        }
-            break;
-        case LOCALE_IDENTIFIER: {
-            localeIdentifier = Optional.of(Integer.valueOf(value));
-        }
-            break;
-        default:
-            break;
-        }
-
     }
 
     public Optional<String> applicationContext() {

@@ -13,10 +13,10 @@
  */
 package org.eclipse.daanse.xmla.model.record.mddataset;
 
+import java.util.Optional;
+
 import org.eclipse.daanse.xmla.api.common.enums.ItemTypeEnum;
 import org.eclipse.daanse.xmla.api.mddataset.RowSetRowItem;
-
-import java.util.Optional;
 
 public record RowSetRowItemR(String tagName, String fieldName, String value, Optional<ItemTypeEnum> type) implements RowSetRowItem {
 

@@ -1,0 +1,835 @@
+/*
+ * Copyright (c) 2023 Contributors to the Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   SmartCity Jena - initial
+ *   Stefan Bischof (bipolis.org) - initial
+ */
+package org.eclipse.daanse.xmla.server.adapter.soapmessage.discover;
+
+import javax.xml.namespace.QName;
+
+/**
+ * Constants for XMLA Discover operations. Contains ROWSET namespace and row
+ * property QNames used by discover handlers.
+ */
+public interface DiscoverConstants {
+
+    /**
+     * ROWSET namespace constants for discover response formatting.
+     */
+    interface ROWSET {
+        String PREFIX = "";
+        String NS_URN = "urn:schemas-microsoft-com:xml-analysis:rowset";
+
+        QName QN_ROOT = new QName(NS_URN, "root", PREFIX);
+        QName QN_ROW = new QName(NS_URN, "row", PREFIX);
+    }
+
+    /**
+     * Row property constants for discover response elements. Each property has a
+     * String name and corresponding QName.
+     */
+    interface ROW {
+        String NS_URN = ROWSET.NS_URN;
+        String PREFIX = ROWSET.PREFIX;
+
+        // Catalog/Schema
+        String CATALOG_NAME = "CATALOG_NAME";
+        QName QN_CATALOG_NAME = new QName(NS_URN, CATALOG_NAME, PREFIX);
+
+        String SCHEMA_NAME = "SCHEMA_NAME";
+        QName QN_SCHEMA_NAME = new QName(NS_URN, SCHEMA_NAME, PREFIX);
+
+        String SCHEMA_NAME_LC = "SchemaName";
+        QName QN_SCHEMA_NAME_LC = new QName(NS_URN, SCHEMA_NAME_LC, PREFIX);
+
+        // Cube
+        String CUBE_NAME = "CUBE_NAME";
+        QName QN_CUBE_NAME = new QName(NS_URN, CUBE_NAME, PREFIX);
+
+        String CUBE_TYPE = "CUBE_TYPE";
+        QName QN_CUBE_TYPE = new QName(NS_URN, CUBE_TYPE, PREFIX);
+
+        String CUBE_GUID = "CUBE_GUID";
+        QName QN_CUBE_GUID = new QName(NS_URN, CUBE_GUID, PREFIX);
+
+        String CUBE_CAPTION = "CUBE_CAPTION";
+        QName QN_CUBE_CAPTION = new QName(NS_URN, CUBE_CAPTION, PREFIX);
+
+        String CUBE_SOURCE = "CUBE_SOURCE";
+        QName QN_CUBE_SOURCE = new QName(NS_URN, CUBE_SOURCE, PREFIX);
+
+        String BASE_CUBE_NAME = "BASE_CUBE_NAME";
+        QName QN_BASE_CUBE_NAME = new QName(NS_URN, BASE_CUBE_NAME, PREFIX);
+
+        // Actions
+        String ACTION_NAME = "ACTION_NAME";
+        QName QN_ACTION_NAME = new QName(NS_URN, ACTION_NAME, PREFIX);
+
+        String ACTION_TYPE = "ACTION_TYPE";
+        QName QN_ACTION_TYPE = new QName(NS_URN, ACTION_TYPE, PREFIX);
+
+        String ACTION_CAPTION = "ACTION_CAPTION";
+        QName QN_ACTION_CAPTION = new QName(NS_URN, ACTION_CAPTION, PREFIX);
+
+        String COORDINATE = "COORDINATE";
+        QName QN_COORDINATE = new QName(NS_URN, COORDINATE, PREFIX);
+
+        String COORDINATE_TYPE = "COORDINATE_TYPE";
+        QName QN_COORDINATE_TYPE = new QName(NS_URN, COORDINATE_TYPE, PREFIX);
+
+        String INVOCATION = "INVOCATION";
+        QName QN_INVOCATION = new QName(NS_URN, INVOCATION, PREFIX);
+
+        // Common
+        String DESCRIPTION = "DESCRIPTION";
+        QName QN_DESCRIPTION = new QName(NS_URN, DESCRIPTION, PREFIX);
+
+        String DESCRIPTION_LC = "Description";
+        QName QN_DESCRIPTION_LC = new QName(NS_URN, DESCRIPTION_LC, PREFIX);
+
+        String CONTENT = "CONTENT";
+        QName QN_CONTENT = new QName(NS_URN, CONTENT, PREFIX);
+
+        String APPLICATION = "APPLICATION";
+        QName QN_APPLICATION = new QName(NS_URN, APPLICATION, PREFIX);
+
+        String TYPE = "TYPE";
+        QName QN_TYPE = new QName(NS_URN, TYPE, PREFIX);
+
+        String VERSION = "VERSION";
+        QName QN_VERSION = new QName(NS_URN, VERSION, PREFIX);
+
+        // Dimension
+        String DIMENSION_NAME = "DIMENSION_NAME";
+        QName QN_DIMENSION_NAME = new QName(NS_URN, DIMENSION_NAME, PREFIX);
+
+        String DIMENSION_UNIQUE_NAME = "DIMENSION_UNIQUE_NAME";
+        QName QN_DIMENSION_UNIQUE_NAME = new QName(NS_URN, DIMENSION_UNIQUE_NAME, PREFIX);
+
+        String DIMENSION_GUID = "DIMENSION_GUID";
+        QName QN_DIMENSION_GUID = new QName(NS_URN, DIMENSION_GUID, PREFIX);
+
+        String DIMENSION_CAPTION = "DIMENSION_CAPTION";
+        QName QN_DIMENSION_CAPTION = new QName(NS_URN, DIMENSION_CAPTION, PREFIX);
+
+        String DIMENSION_ORDINAL = "DIMENSION_ORDINAL";
+        QName QN_DIMENSION_ORDINAL = new QName(NS_URN, DIMENSION_ORDINAL, PREFIX);
+
+        String DIMENSION_TYPE = "DIMENSION_TYPE";
+        QName QN_DIMENSION_TYPE = new QName(NS_URN, DIMENSION_TYPE, PREFIX);
+
+        String DIMENSION_CARDINALITY = "DIMENSION_CARDINALITY";
+        QName QN_DIMENSION_CARDINALITY = new QName(NS_URN, DIMENSION_CARDINALITY, PREFIX);
+
+        String DIMENSION_IS_VISIBLE = "DIMENSION_IS_VISIBLE";
+        QName QN_DIMENSION_IS_VISIBLE = new QName(NS_URN, DIMENSION_IS_VISIBLE, PREFIX);
+
+        String DIMENSION_IS_SHARED = "DIMENSION_IS_SHARED";
+        QName QN_DIMENSION_IS_SHARED = new QName(NS_URN, DIMENSION_IS_SHARED, PREFIX);
+
+        String DIMENSION_VISIBILITY = "DIMENSION_VISIBILITY";
+        QName QN_DIMENSION_VISIBILITY = new QName(NS_URN, DIMENSION_VISIBILITY, PREFIX);
+
+        String DIMENSION_MASTER_NAME = "DIMENSION_MASTER_NAME";
+        QName QN_DIMENSION_MASTER_NAME = new QName(NS_URN, DIMENSION_MASTER_NAME, PREFIX);
+
+        String DIMENSION_MASTER_UNIQUE_NAME = "DIMENSION_MASTER_UNIQUE_NAME";
+        QName QN_DIMENSION_MASTER_UNIQUE_NAME = new QName(NS_URN, DIMENSION_MASTER_UNIQUE_NAME, PREFIX);
+
+        String DIMENSION_UNIQUE_SETTINGS = "DIMENSION_UNIQUE_SETTINGS";
+        QName QN_DIMENSION_UNIQUE_SETTINGS = new QName(NS_URN, DIMENSION_UNIQUE_SETTINGS, PREFIX);
+
+        String DIMENSION_IS_FACT_DIMENSION = "DIMENSION_IS_FACT_DIMENSION";
+        QName QN_DIMENSION_IS_FACT_DIMENSION = new QName(NS_URN, DIMENSION_IS_FACT_DIMENSION, PREFIX);
+
+        String DIMENSION_GRANULARITY = "DIMENSION_GRANULARITY";
+        QName QN_DIMENSION_GRANULARITY = new QName(NS_URN, DIMENSION_GRANULARITY, PREFIX);
+
+        String DIMENSION_PATH = "DIMENSION_PATH";
+        QName QN_DIMENSION_PATH = new QName(NS_URN, DIMENSION_PATH, PREFIX);
+
+        String DEFAULT_HIERARCHY = "DEFAULT_HIERARCHY";
+        QName QN_DEFAULT_HIERARCHY = new QName(NS_URN, DEFAULT_HIERARCHY, PREFIX);
+
+        // Hierarchy
+        String HIERARCHY_NAME = "HIERARCHY_NAME";
+        QName QN_HIERARCHY_NAME = new QName(NS_URN, HIERARCHY_NAME, PREFIX);
+
+        String HIERARCHY_UNIQUE_NAME = "HIERARCHY_UNIQUE_NAME";
+        QName QN_HIERARCHY_UNIQUE_NAME = new QName(NS_URN, HIERARCHY_UNIQUE_NAME, PREFIX);
+
+        String HIERARCHY_GUID = "HIERARCHY_GUID";
+        QName QN_HIERARCHY_GUID = new QName(NS_URN, HIERARCHY_GUID, PREFIX);
+
+        String HIERARCHY_CAPTION = "HIERARCHY_CAPTION";
+        QName QN_HIERARCHY_CAPTION = new QName(NS_URN, HIERARCHY_CAPTION, PREFIX);
+
+        String HIERARCHY_CARDINALITY = "HIERARCHY_CARDINALITY";
+        QName QN_HIERARCHY_CARDINALITY = new QName(NS_URN, HIERARCHY_CARDINALITY, PREFIX);
+
+        String HIERARCHY_ORDINAL = "HIERARCHY_ORDINAL";
+        QName QN_HIERARCHY_ORDINAL = new QName(NS_URN, HIERARCHY_ORDINAL, PREFIX);
+
+        String HIERARCHY_IS_VISIBLE = "HIERARCHY_IS_VISIBLE";
+        QName QN_HIERARCHY_IS_VISIBLE = new QName(NS_URN, HIERARCHY_IS_VISIBLE, PREFIX);
+
+        String HIERARCHY_ORIGIN = "HIERARCHY_ORIGIN";
+        QName QN_HIERARCHY_ORIGIN = new QName(NS_URN, HIERARCHY_ORIGIN, PREFIX);
+
+        String HIERARCHY_DISPLAY_FOLDER = "HIERARCHY_DISPLAY_FOLDER";
+        QName QN_HIERARCHY_DISPLAY_FOLDER = new QName(NS_URN, HIERARCHY_DISPLAY_FOLDER, PREFIX);
+
+        String DEFAULT_MEMBER = "DEFAULT_MEMBER";
+        QName QN_DEFAULT_MEMBER = new QName(NS_URN, DEFAULT_MEMBER, PREFIX);
+
+        String ALL_MEMBER = "ALL_MEMBER";
+        QName QN_ALL_MEMBER = new QName(NS_URN, ALL_MEMBER, PREFIX);
+
+        String STRUCTURE = "STRUCTURE";
+        QName QN_STRUCTURE = new QName(NS_URN, STRUCTURE, PREFIX);
+
+        String STRUCTURE_TYPE = "STRUCTURE_TYPE";
+        QName QN_STRUCTURE_TYPE = new QName(NS_URN, STRUCTURE_TYPE, PREFIX);
+
+        String IS_VIRTUAL = "IS_VIRTUAL";
+        QName QN_IS_VIRTUAL = new QName(NS_URN, IS_VIRTUAL, PREFIX);
+
+        String IS_READWRITE = "IS_READWRITE";
+        QName QN_IS_READWRITE = new QName(NS_URN, IS_READWRITE, PREFIX);
+
+        String GROUPING_BEHAVIOR = "GROUPING_BEHAVIOR";
+        QName QN_GROUPING_BEHAVIOR = new QName(NS_URN, GROUPING_BEHAVIOR, PREFIX);
+
+        String INSTANCE_SELECTION = "INSTANCE_SELECTION";
+        QName QN_INSTANCE_SELECTION = new QName(NS_URN, INSTANCE_SELECTION, PREFIX);
+
+        // Level
+        String LEVEL_NAME = "LEVEL_NAME";
+        QName QN_LEVEL_NAME = new QName(NS_URN, LEVEL_NAME, PREFIX);
+
+        String LEVEL_UNIQUE_NAME = "LEVEL_UNIQUE_NAME";
+        QName QN_LEVEL_UNIQUE_NAME = new QName(NS_URN, LEVEL_UNIQUE_NAME, PREFIX);
+
+        String LEVEL_GUID = "LEVEL_GUID";
+        QName QN_LEVEL_GUID = new QName(NS_URN, LEVEL_GUID, PREFIX);
+
+        String LEVEL_CAPTION = "LEVEL_CAPTION";
+        QName QN_LEVEL_CAPTION = new QName(NS_URN, LEVEL_CAPTION, PREFIX);
+
+        String LEVEL_NUMBER = "LEVEL_NUMBER";
+        QName QN_LEVEL_NUMBER = new QName(NS_URN, LEVEL_NUMBER, PREFIX);
+
+        String LEVEL_CARDINALITY = "LEVEL_CARDINALITY";
+        QName QN_LEVEL_CARDINALITY = new QName(NS_URN, LEVEL_CARDINALITY, PREFIX);
+
+        String LEVEL_TYPE = "LEVEL_TYPE";
+        QName QN_LEVEL_TYPE = new QName(NS_URN, LEVEL_TYPE, PREFIX);
+
+        String LEVEL_IS_VISIBLE = "LEVEL_IS_VISIBLE";
+        QName QN_LEVEL_IS_VISIBLE = new QName(NS_URN, LEVEL_IS_VISIBLE, PREFIX);
+
+        String LEVEL_ORIGIN = "LEVEL_ORIGIN";
+        QName QN_LEVEL_ORIGIN = new QName(NS_URN, LEVEL_ORIGIN, PREFIX);
+
+        String LEVEL_UNIQUE_SETTINGS = "LEVEL_UNIQUE_SETTINGS";
+        QName QN_LEVEL_UNIQUE_SETTINGS = new QName(NS_URN, LEVEL_UNIQUE_SETTINGS, PREFIX);
+
+        String CUSTOM_ROLLUP_SETTINGS = "CUSTOM_ROLLUP_SETTINGS";
+        QName QN_CUSTOM_ROLLUP_SETTINGS = new QName(NS_URN, CUSTOM_ROLLUP_SETTINGS, PREFIX);
+
+        // Measure
+        String MEASURE_NAME = "MEASURE_NAME";
+        QName QN_MEASURE_NAME = new QName(NS_URN, MEASURE_NAME, PREFIX);
+
+        String MEASURE_UNIQUE_NAME = "MEASURE_UNIQUE_NAME";
+        QName QN_MEASURE_UNIQUE_NAME = new QName(NS_URN, MEASURE_UNIQUE_NAME, PREFIX);
+
+        String MEASURE_CAPTION = "MEASURE_CAPTION";
+        QName QN_MEASURE_CAPTION = new QName(NS_URN, MEASURE_CAPTION, PREFIX);
+
+        String MEASURE_GUID = "MEASURE_GUID";
+        QName QN_MEASURE_GUID = new QName(NS_URN, MEASURE_GUID, PREFIX);
+
+        String MEASURE_AGGREGATOR = "MEASURE_AGGREGATOR";
+        QName QN_MEASURE_AGGREGATOR = new QName(NS_URN, MEASURE_AGGREGATOR, PREFIX);
+
+        String MEASURE_IS_VISIBLE = "MEASURE_IS_VISIBLE";
+        QName QN_MEASURE_IS_VISIBLE = new QName(NS_URN, MEASURE_IS_VISIBLE, PREFIX);
+
+        String MEASURE_VISIBILITY = "MEASURE_VISIBILITY";
+        QName QN_MEASURE_VISIBILITY = new QName(NS_URN, MEASURE_VISIBILITY, PREFIX);
+
+        String MEASURE_UNITS = "MEASURE_UNITS";
+        QName QN_MEASURE_UNITS = new QName(NS_URN, MEASURE_UNITS, PREFIX);
+
+        String MEASURE_DISPLAY_FOLDER = "MEASURE_DISPLAY_FOLDER";
+        QName QN_MEASURE_DISPLAY_FOLDER = new QName(NS_URN, MEASURE_DISPLAY_FOLDER, PREFIX);
+
+        String MEASURE_UNQUALIFIED_CAPTION = "MEASURE_UNQUALIFIED_CAPTION";
+        QName QN_MEASURE_UNQUALIFIED_CAPTION = new QName(NS_URN, MEASURE_UNQUALIFIED_CAPTION, PREFIX);
+
+        String MEASURE_NAME_SQL_COLUMN_NAME = "MEASURE_NAME_SQL_COLUMN_NAME";
+        QName QN_MEASURE_NAME_SQL_COLUMN_NAME = new QName(NS_URN, MEASURE_NAME_SQL_COLUMN_NAME, PREFIX);
+
+        String DEFAULT_FORMAT_STRING = "DEFAULT_FORMAT_STRING";
+        QName QN_DEFAULT_FORMAT_STRING = new QName(NS_URN, DEFAULT_FORMAT_STRING, PREFIX);
+
+        String EXPRESSION = "EXPRESSION";
+        QName QN_EXPRESSION = new QName(NS_URN, EXPRESSION, PREFIX);
+
+        String LEVELS_LIST = "LEVELS_LIST";
+        QName QN_LEVELS_LIST = new QName(NS_URN, LEVELS_LIST, PREFIX);
+
+        // MeasureGroup
+        String MEASUREGROUP_NAME = "MEASUREGROUP_NAME";
+        QName QN_MEASUREGROUP_NAME = new QName(NS_URN, MEASUREGROUP_NAME, PREFIX);
+
+        String MEASUREGROUP_CAPTION = "MEASUREGROUP_CAPTION";
+        QName QN_MEASUREGROUP_CAPTION = new QName(NS_URN, MEASUREGROUP_CAPTION, PREFIX);
+
+        String MEASUREGROUP_CARDINALITY = "MEASUREGROUP_CARDINALITY";
+        QName QN_MEASUREGROUP_CARDINALITY = new QName(NS_URN, MEASUREGROUP_CARDINALITY, PREFIX);
+
+        String IS_WRITE_ENABLED = "IS_WRITE_ENABLED";
+        QName QN_IS_WRITE_ENABLED = new QName(NS_URN, IS_WRITE_ENABLED, PREFIX);
+
+        String MEASURE_GROUP_DIMENSION = "MeasureGroupDimension";
+        QName QN_MEASURE_GROUP_DIMENSION = new QName(NS_URN, MEASURE_GROUP_DIMENSION, PREFIX);
+
+        // Member
+        String MEMBER_NAME = "MEMBER_NAME";
+        QName QN_MEMBER_NAME = new QName(NS_URN, MEMBER_NAME, PREFIX);
+
+        String MEMBER_UNIQUE_NAME = "MEMBER_UNIQUE_NAME";
+        QName QN_MEMBER_UNIQUE_NAME = new QName(NS_URN, MEMBER_UNIQUE_NAME, PREFIX);
+
+        String MEMBER_TYPE = "MEMBER_TYPE";
+        QName QN_MEMBER_TYPE = new QName(NS_URN, MEMBER_TYPE, PREFIX);
+
+        String MEMBER_GUID = "MEMBER_GUID";
+        QName QN_MEMBER_GUID = new QName(NS_URN, MEMBER_GUID, PREFIX);
+
+        String MEMBER_CAPTION = "MEMBER_CAPTION";
+        QName QN_MEMBER_CAPTION = new QName(NS_URN, MEMBER_CAPTION, PREFIX);
+
+        String MEMBER_ORDINAL = "MEMBER_ORDINAL";
+        QName QN_MEMBER_ORDINAL = new QName(NS_URN, MEMBER_ORDINAL, PREFIX);
+
+        String MEMBER_KEY = "MEMBER_KEY";
+        QName QN_MEMBER_KEY = new QName(NS_URN, MEMBER_KEY, PREFIX);
+
+        String CHILDREN_CARDINALITY = "CHILDREN_CARDINALITY";
+        QName QN_CHILDREN_CARDINALITY = new QName(NS_URN, CHILDREN_CARDINALITY, PREFIX);
+
+        String PARENT_LEVEL = "PARENT_LEVEL";
+        QName QN_PARENT_LEVEL = new QName(NS_URN, PARENT_LEVEL, PREFIX);
+
+        String PARENT_UNIQUE_NAME = "PARENT_UNIQUE_NAME";
+        QName QN_PARENT_UNIQUE_NAME = new QName(NS_URN, PARENT_UNIQUE_NAME, PREFIX);
+
+        String PARENT_COUNT = "PARENT_COUNT";
+        QName QN_PARENT_COUNT = new QName(NS_URN, PARENT_COUNT, PREFIX);
+
+        String IS_PLACEHOLDERMEMBER = "IS_PLACEHOLDERMEMBER";
+        QName QN_IS_PLACEHOLDERMEMBER = new QName(NS_URN, IS_PLACEHOLDERMEMBER, PREFIX);
+
+        String IS_DATAMEMBER = "IS_DATAMEMBER";
+        QName QN_IS_DATAMEMBER = new QName(NS_URN, IS_DATAMEMBER, PREFIX);
+
+        // Property
+        String PROPERTY_NAME = "PROPERTY_NAME";
+        QName QN_PROPERTY_NAME = new QName(NS_URN, PROPERTY_NAME, PREFIX);
+
+        String PROPERTY_NAME_LC = "PropertyName";
+        QName QN_PROPERTY_NAME_LC = new QName(NS_URN, PROPERTY_NAME_LC, PREFIX);
+
+        String PROPERTY_TYPE = "PROPERTY_TYPE";
+        QName QN_PROPERTY_TYPE = new QName(NS_URN, PROPERTY_TYPE, PREFIX);
+
+        String PROPERTY_TYPE_LC = "PropertyType";
+        QName QN_PROPERTY_TYPE_LC = new QName(NS_URN, PROPERTY_TYPE_LC, PREFIX);
+
+        String PROPERTY_CAPTION = "PROPERTY_CAPTION";
+        QName QN_PROPERTY_CAPTION = new QName(NS_URN, PROPERTY_CAPTION, PREFIX);
+
+        String PROPERTY_CONTENT_TYPE = "PROPERTY_CONTENT_TYPE";
+        QName QN_PROPERTY_CONTENT_TYPE = new QName(NS_URN, PROPERTY_CONTENT_TYPE, PREFIX);
+
+        String PROPERTY_ORIGIN = "PROPERTY_ORIGIN";
+        QName QN_PROPERTY_ORIGIN = new QName(NS_URN, PROPERTY_ORIGIN, PREFIX);
+
+        String PROPERTY_VISIBILITY = "PROPERTY_VISIBILITY";
+        QName QN_PROPERTY_VISIBILITY = new QName(NS_URN, PROPERTY_VISIBILITY, PREFIX);
+
+        String PROPERTY_DESCRIPTION = "PropertyDescription";
+        QName QN_PROPERTY_DESCRIPTION = new QName(NS_URN, PROPERTY_DESCRIPTION, PREFIX);
+
+        String PROPERTY_ACCESS_TYPE = "PropertyAccessType";
+        QName QN_PROPERTY_ACCESS_TYPE = new QName(NS_URN, PROPERTY_ACCESS_TYPE, PREFIX);
+
+        String IS_REQUIRED = "IsRequired";
+        QName QN_IS_REQUIRED = new QName(NS_URN, IS_REQUIRED, PREFIX);
+
+        String SCOPE = "SCOPE";
+        QName QN_SCOPE = new QName(NS_URN, SCOPE, PREFIX);
+
+        String SQL_COLUMN_NAME = "SQL_COLUMN_NAME";
+        QName QN_SQL_COLUMN_NAME = new QName(NS_URN, SQL_COLUMN_NAME, PREFIX);
+
+        // Set
+        String SET_NAME = "SET_NAME";
+        QName QN_SET_NAME = new QName(NS_URN, SET_NAME, PREFIX);
+
+        String SET_CAPTION = "SET_CAPTION";
+        QName QN_SET_CAPTION = new QName(NS_URN, SET_CAPTION, PREFIX);
+
+        String SET_DISPLAY_FOLDER = "SET_DISPLAY_FOLDER";
+        QName QN_SET_DISPLAY_FOLDER = new QName(NS_URN, SET_DISPLAY_FOLDER, PREFIX);
+
+        String DIMENSIONS = "DIMENSIONS";
+        QName QN_DIMENSIONS = new QName(NS_URN, DIMENSIONS, PREFIX);
+
+        // KPI
+        String KPI_NAME = "KPI_NAME";
+        QName QN_KPI_NAME = new QName(NS_URN, KPI_NAME, PREFIX);
+
+        String KPI_CAPTION = "KPI_CAPTION";
+        QName QN_KPI_CAPTION = new QName(NS_URN, KPI_CAPTION, PREFIX);
+
+        String KPI_DESCRIPTION = "KPI_DESCRIPTION";
+        QName QN_KPI_DESCRIPTION = new QName(NS_URN, KPI_DESCRIPTION, PREFIX);
+
+        String KPI_DISPLAY_FOLDER = "KPI_DISPLAY_FOLDER";
+        QName QN_KPI_DISPLAY_FOLDER = new QName(NS_URN, KPI_DISPLAY_FOLDER, PREFIX);
+
+        String KPI_VALUE = "KPI_VALUE";
+        QName QN_KPI_VALUE = new QName(NS_URN, KPI_VALUE, PREFIX);
+
+        String KPI_GOAL = "KPI_GOAL";
+        QName QN_KPI_GOAL = new QName(NS_URN, KPI_GOAL, PREFIX);
+
+        String KPI_STATUS = "KPI_STATUS";
+        QName QN_KPI_STATUS = new QName(NS_URN, KPI_STATUS, PREFIX);
+
+        String KPI_TREND = "KPI_TREND";
+        QName QN_KPI_TREND = new QName(NS_URN, KPI_TREND, PREFIX);
+
+        String KPI_STATUS_GRAPHIC = "KPI_STATUS_GRAPHIC";
+        QName QN_KPI_STATUS_GRAPHIC = new QName(NS_URN, KPI_STATUS_GRAPHIC, PREFIX);
+
+        String KPI_TREND_GRAPHIC = "KPI_TREND_GRAPHIC";
+        QName QN_KPI_TREND_GRAPHIC = new QName(NS_URN, KPI_TREND_GRAPHIC, PREFIX);
+
+        String KPI_WEIGHT = "KPI_WEIGHT";
+        QName QN_KPI_WEIGHT = new QName(NS_URN, KPI_WEIGHT, PREFIX);
+
+        String KPI_CURRENT_TIME_MEMBER = "KPI_CURRENT_TIME_MEMBER";
+        QName QN_KPI_CURRENT_TIME_MEMBER = new QName(NS_URN, KPI_CURRENT_TIME_MEMBER, PREFIX);
+
+        String KPI_PARENT_KPI_NAME = "KPI_PARENT_KPI_NAME";
+        QName QN_KPI_PARENT_KPI_NAME = new QName(NS_URN, KPI_PARENT_KPI_NAME, PREFIX);
+
+        // DB Schema - Catalog
+        String DATE_QUERIED = "DATE_QUERIED";
+        QName QN_DATE_QUERIED = new QName(NS_URN, DATE_QUERIED, PREFIX);
+
+        String CURRENTLY_USED = "CURRENTLY_USED";
+        QName QN_CURRENTLY_USED = new QName(NS_URN, CURRENTLY_USED, PREFIX);
+
+        String POPULARITY = "POPULARITY";
+        QName QN_POPULARITY = new QName(NS_URN, POPULARITY, PREFIX);
+
+        String WEIGHTEDPOPULARITY = "WEIGHTEDPOPULARITY";
+        QName QN_WEIGHTEDPOPULARITY = new QName(NS_URN, WEIGHTEDPOPULARITY, PREFIX);
+
+        String CLIENTCACHEREFRESHPOLICY = "CLIENTCACHEREFRESHPOLICY";
+        QName QN_CLIENTCACHEREFRESHPOLICY = new QName(NS_URN, CLIENTCACHEREFRESHPOLICY, PREFIX);
+
+        // DB Schema - Table
+        String TABLE_CATALOG = "TABLE_CATALOG";
+        QName QN_TABLE_CATALOG = new QName(NS_URN, TABLE_CATALOG, PREFIX);
+
+        String TABLE_SCHEMA = "TABLE_SCHEMA";
+        QName QN_TABLE_SCHEMA = new QName(NS_URN, TABLE_SCHEMA, PREFIX);
+
+        String TABLE_NAME = "TABLE_NAME";
+        QName QN_TABLE_NAME = new QName(NS_URN, TABLE_NAME, PREFIX);
+
+        String TABLE_TYPE = "TABLE_TYPE";
+        QName QN_TABLE_TYPE = new QName(NS_URN, TABLE_TYPE, PREFIX);
+
+        String TABLE_GUID = "TABLE_GUID";
+        QName QN_TABLE_GUID = new QName(NS_URN, TABLE_GUID, PREFIX);
+
+        String TABLE_PROP_ID = "TABLE_PROP_ID";
+        QName QN_TABLE_PROP_ID = new QName(NS_URN, TABLE_PROP_ID, PREFIX);
+
+        String BOOKMARKS = "BOOKMARKS";
+        QName QN_BOOKMARKS = new QName(NS_URN, BOOKMARKS, PREFIX);
+
+        String BOOKMARK_TYPE = "BOOKMARK_TYPE";
+        QName QN_BOOKMARK_TYPE = new QName(NS_URN, BOOKMARK_TYPE, PREFIX);
+
+        String BOOKMARK_DATATYPE = "BOOKMARK_DATATYPE";
+        QName QN_BOOKMARK_DATATYPE = new QName(NS_URN, BOOKMARK_DATATYPE, PREFIX);
+        QName QN_BOOKMARK_DATA_TYPE = QN_BOOKMARK_DATATYPE; // Alias for compatibility
+
+        String BOOKMARK_MAXIMUM_LENGTH = "BOOKMARK_MAXIMUM_LENGTH";
+        QName QN_BOOKMARK_MAXIMUM_LENGTH = new QName(NS_URN, BOOKMARK_MAXIMUM_LENGTH, PREFIX);
+
+        String BOOKMARK_INFORMATION = "BOOKMARK_INFORMATION";
+        QName QN_BOOKMARK_INFORMATION = new QName(NS_URN, BOOKMARK_INFORMATION, PREFIX);
+
+        String TABLE_VERSION = "TABLE_VERSION";
+        QName QN_TABLE_VERSION = new QName(NS_URN, TABLE_VERSION, PREFIX);
+
+        String CARDINALITY = "CARDINALITY";
+        QName QN_CARDINALITY = new QName(NS_URN, CARDINALITY, PREFIX);
+
+        // DB Schema - Column
+        String COLUMN_NAME = "COLUMN_NAME";
+        QName QN_COLUMN_NAME = new QName(NS_URN, COLUMN_NAME, PREFIX);
+
+        String COLUMN_GUID = "COLUMN_GUID";
+        QName QN_COLUMN_GUID = new QName(NS_URN, COLUMN_GUID, PREFIX);
+
+        String COLUMN_PROPID = "COLUMN_PROPID";
+        QName QN_COLUMN_PROPID = new QName(NS_URN, COLUMN_PROPID, PREFIX);
+
+        String ORDINAL_POSITION = "ORDINAL_POSITION";
+        QName QN_ORDINAL_POSITION = new QName(NS_URN, ORDINAL_POSITION, PREFIX);
+
+        String COLUMN_HAS_DEFAULT = "COLUMN_HAS_DEFAULT";
+        QName QN_COLUMN_HAS_DEFAULT = new QName(NS_URN, COLUMN_HAS_DEFAULT, PREFIX);
+
+        String COLUMN_DEFAULT = "COLUMN_DEFAULT";
+        QName QN_COLUMN_DEFAULT = new QName(NS_URN, COLUMN_DEFAULT, PREFIX);
+
+        String COLUMN_FLAG = "COLUMN_FLAG";
+        QName QN_COLUMN_FLAG = new QName(NS_URN, COLUMN_FLAG, PREFIX);
+
+        String COLUMN_FLAGS = "COLUMN_FLAGS";
+        QName QN_COLUMN_FLAGS = new QName(NS_URN, COLUMN_FLAGS, PREFIX);
+
+        String TYPE_GUID = "TYPE_GUID";
+        QName QN_TYPE_GUID = new QName(NS_URN, TYPE_GUID, PREFIX);
+
+        String CHARACTER_MAXIMUM_LENGTH = "CHARACTER_MAXIMUM_LENGTH";
+        QName QN_CHARACTER_MAXIMUM_LENGTH = new QName(NS_URN, CHARACTER_MAXIMUM_LENGTH, PREFIX);
+
+        String CHARACTER_OCTET_LENGTH = "CHARACTER_OCTET_LENGTH";
+        QName QN_CHARACTER_OCTET_LENGTH = new QName(NS_URN, CHARACTER_OCTET_LENGTH, PREFIX);
+
+        String DATETIME_PRECISION = "DATETIME_PRECISION";
+        QName QN_DATETIME_PRECISION = new QName(NS_URN, DATETIME_PRECISION, PREFIX);
+
+        String CHARACTER_SET_CATALOG = "CHARACTER_SET_CATALOG";
+        QName QN_CHARACTER_SET_CATALOG = new QName(NS_URN, CHARACTER_SET_CATALOG, PREFIX);
+
+        String CHARACTER_SET_SCHEMA = "CHARACTER_SET_SCHEMA";
+        QName QN_CHARACTER_SET_SCHEMA = new QName(NS_URN, CHARACTER_SET_SCHEMA, PREFIX);
+
+        String CHARACTER_SET_NAME = "CHARACTER_SET_NAME";
+        QName QN_CHARACTER_SET_NAME = new QName(NS_URN, CHARACTER_SET_NAME, PREFIX);
+
+        String COLLATION_CATALOG = "COLLATION_CATALOG";
+        QName QN_COLLATION_CATALOG = new QName(NS_URN, COLLATION_CATALOG, PREFIX);
+
+        String COLLATION_SCHEMA = "COLLATION_SCHEMA";
+        QName QN_COLLATION_SCHEMA = new QName(NS_URN, COLLATION_SCHEMA, PREFIX);
+
+        String COLLATION_NAME = "COLLATION_NAME";
+        QName QN_COLLATION_NAME = new QName(NS_URN, COLLATION_NAME, PREFIX);
+
+        String DOMAIN_CATALOG = "DOMAIN_CATALOG";
+        QName QN_DOMAIN_CATALOG = new QName(NS_URN, DOMAIN_CATALOG, PREFIX);
+
+        String DOMAIN_SCHEMA = "DOMAIN_SCHEMA";
+        QName QN_DOMAIN_SCHEMA = new QName(NS_URN, DOMAIN_SCHEMA, PREFIX);
+
+        String DOMAIN_NAME = "DOMAIN_NAME";
+        QName QN_DOMAIN_NAME = new QName(NS_URN, DOMAIN_NAME, PREFIX);
+
+        String COLUMN_OLAP_TYPE = "COLUMN_OLAP_TYPE";
+        QName QN_COLUMN_OLAP_TYPE = new QName(NS_URN, COLUMN_OLAP_TYPE, PREFIX);
+
+        // DB Schema - Schema
+        String SCHEMA_OWNER = "SCHEMA_OWNER";
+        QName QN_SCHEMA_OWNER = new QName(NS_URN, SCHEMA_OWNER, PREFIX);
+
+        // DB Schema - Provider Types
+        String TYPE_NAME = "TYPE_NAME";
+        QName QN_TYPE_NAME = new QName(NS_URN, TYPE_NAME, PREFIX);
+
+        String COLUMN_SIZE = "COLUMN_SIZE";
+        QName QN_COLUMN_SIZE = new QName(NS_URN, COLUMN_SIZE, PREFIX);
+
+        String LITERAL_PREFIX = "LITERAL_PREFIX";
+        QName QN_LITERAL_PREFIX = new QName(NS_URN, LITERAL_PREFIX, PREFIX);
+
+        String LITERAL_SUFFIX = "LITERAL_SUFFIX";
+        QName QN_LITERAL_SUFFIX = new QName(NS_URN, LITERAL_SUFFIX, PREFIX);
+
+        String CREATE_PARAMS = "CREATE_PARAMS";
+        QName QN_CREATE_PARAMS = new QName(NS_URN, CREATE_PARAMS, PREFIX);
+
+        String CASE_SENSITIVE = "CASE_SENSITIVE";
+        QName QN_CASE_SENSITIVE = new QName(NS_URN, CASE_SENSITIVE, PREFIX);
+
+        String SEARCHABLE = "SEARCHABLE";
+        QName QN_SEARCHABLE = new QName(NS_URN, SEARCHABLE, PREFIX);
+
+        String UNSIGNED_ATTRIBUTE = "UNSIGNED_ATTRIBUTE";
+        QName QN_UNSIGNED_ATTRIBUTE = new QName(NS_URN, UNSIGNED_ATTRIBUTE, PREFIX);
+
+        String FIXED_PREC_SCALE = "FIXED_PREC_SCALE";
+        QName QN_FIXED_PREC_SCALE = new QName(NS_URN, FIXED_PREC_SCALE, PREFIX);
+
+        String AUTO_UNIQUE_VALUE = "AUTO_UNIQUE_VALUE";
+        QName QN_AUTO_UNIQUE_VALUE = new QName(NS_URN, AUTO_UNIQUE_VALUE, PREFIX);
+
+        String LOCAL_TYPE_NAME = "LOCAL_TYPE_NAME";
+        QName QN_LOCAL_TYPE_NAME = new QName(NS_URN, LOCAL_TYPE_NAME, PREFIX);
+
+        String MINIMUM_SCALE = "MINIMUM_SCALE";
+        QName QN_MINIMUM_SCALE = new QName(NS_URN, MINIMUM_SCALE, PREFIX);
+
+        String MAXIMUM_SCALE = "MAXIMUM_SCALE";
+        QName QN_MAXIMUM_SCALE = new QName(NS_URN, MAXIMUM_SCALE, PREFIX);
+
+        String GUID = "GUID";
+        QName QN_GUID = new QName(NS_URN, GUID, PREFIX);
+
+        String TYPELIB = "TYPELIB";
+        QName QN_TYPELIB = new QName(NS_URN, TYPELIB, PREFIX);
+
+        String IS_LONG = "IS_LONG";
+        QName QN_IS_LONG = new QName(NS_URN, IS_LONG, PREFIX);
+
+        String BEST_MATCH = "BEST_MATCH";
+        QName QN_BEST_MATCH = new QName(NS_URN, BEST_MATCH, PREFIX);
+
+        String IS_FIXEDLENGTH = "IS_FIXEDLENGTH";
+        QName QN_IS_FIXEDLENGTH = new QName(NS_URN, IS_FIXEDLENGTH, PREFIX);
+
+        // DB Schema - Source Tables
+        String TABLE_OLAP_TYPE = "TABLE_OLAP_TYPE";
+        QName QN_TABLE_OLAP_TYPE = new QName(NS_URN, TABLE_OLAP_TYPE, PREFIX);
+
+        String TYPE_LIB = "TYPE_LIB";
+        QName QN_TYPE_LIB = new QName(NS_URN, TYPE_LIB, PREFIX);
+
+        // Discover Enumerators
+        String ENUM_NAME = "EnumName";
+        QName QN_ENUM_NAME = new QName(NS_URN, ENUM_NAME, PREFIX);
+
+        String ENUM_DESCRIPTION = "EnumDescription";
+        QName QN_ENUM_DESCRIPTION = new QName(NS_URN, ENUM_DESCRIPTION, PREFIX);
+
+        String ENUM_TYPE = "EnumType";
+        QName QN_ENUM_TYPE = new QName(NS_URN, ENUM_TYPE, PREFIX);
+
+        String ELEMENT_NAME = "ElementName";
+        QName QN_ELEMENT_NAME = new QName(NS_URN, ELEMENT_NAME, PREFIX);
+
+        String ELEMENT_DESCRIPTION = "ElementDescription";
+        QName QN_ELEMENT_DESCRIPTION = new QName(NS_URN, ELEMENT_DESCRIPTION, PREFIX);
+
+        String ELEMENT_VALUE = "ElementValue";
+        QName QN_ELEMENT_VALUE = new QName(NS_URN, ELEMENT_VALUE, PREFIX);
+
+        // Discover Keywords
+        String KEYWORD = "Keyword";
+        QName QN_KEYWORD = new QName(NS_URN, KEYWORD, PREFIX);
+
+        // Discover Schema Rowsets
+        String SCHEMA_GUID = "SchemaGuid";
+        QName QN_SCHEMA_GUID = new QName(NS_URN, SCHEMA_GUID, PREFIX);
+
+        String RESTRICTIONS_MASK = "RestrictionsMask";
+        QName QN_RESTRICTIONS_MASK = new QName(NS_URN, RESTRICTIONS_MASK, PREFIX);
+
+        // Discover XML Metadata
+        String META_DATA = "METADATA";
+        QName QN_META_DATA = new QName(NS_URN, META_DATA, "xars");
+
+        // Discover Literals
+        String LITERAL_NAME = "LiteralName";
+        QName QN_LITERAL_NAME = new QName(NS_URN, LITERAL_NAME, PREFIX);
+
+        String LITERAL_VALUE = "LiteralValue";
+        QName QN_LITERAL_VALUE = new QName(NS_URN, LITERAL_VALUE, PREFIX);
+
+        String LITERAL_INVALID_CHARS = "LiteralInvalidChars";
+        QName QN_LITERAL_INVALID_CHARS = new QName(NS_URN, LITERAL_INVALID_CHARS, PREFIX);
+
+        String LITERAL_INVALID_STARTING_CHARS = "LiteralInvalidStartingChars";
+        QName QN_LITERAL_INVALID_STARTING_CHARS = new QName(NS_URN, LITERAL_INVALID_STARTING_CHARS, PREFIX);
+
+        String LITERAL_MAX_LENGTH = "LiteralMaxLength";
+        QName QN_LITERAL_MAX_LENGTH = new QName(NS_URN, LITERAL_MAX_LENGTH, PREFIX);
+
+        String LITERAL_NAME_ENUM_VALUE = "LiteralNameEnumValue";
+        QName QN_LITERAL_NAME_ENUM_VALUE = new QName(NS_URN, LITERAL_NAME_ENUM_VALUE, PREFIX);
+
+        // Discover Data Sources
+        String DATA_SOURCE_NAME = "DataSourceName";
+        QName QN_DATA_SOURCE_NAME = new QName(NS_URN, DATA_SOURCE_NAME, PREFIX);
+
+        String DATA_SOURCE_DESCRIPTION = "DataSourceDescription";
+        QName QN_DATA_SOURCE_DESCRIPTION = new QName(NS_URN, DATA_SOURCE_DESCRIPTION, PREFIX);
+
+        String DATA_SOURCE_INFO = "DataSourceInfo";
+        QName QN_DATA_SOURCE_INFO = new QName(NS_URN, DATA_SOURCE_INFO, PREFIX);
+
+        String URL = "URL";
+        QName QN_URL = new QName(NS_URN, URL, PREFIX);
+
+        String PROVIDER_NAME = "ProviderName";
+        QName QN_PROVIDER_NAME = new QName(NS_URN, PROVIDER_NAME, PREFIX);
+
+        String PROVIDER_TYPE = "ProviderType";
+        QName QN_PROVIDER_TYPE = new QName(NS_URN, PROVIDER_TYPE, PREFIX);
+
+        String AUTHENTICATION_MODE = "AuthenticationMode";
+        QName QN_AUTHENTICATION_MODE = new QName(NS_URN, AUTHENTICATION_MODE, PREFIX);
+
+        // Function parameter info
+        String OPTIONAL = "Optional";
+        QName QN_OPTIONAL = new QName(NS_URN, OPTIONAL, PREFIX);
+
+        String REPEATABLE = "Repeatable";
+        QName QN_REPEATABLE = new QName(NS_URN, REPEATABLE, PREFIX);
+
+        String REPEATGROUP = "RepeatGroup";
+        QName QN_REPEATGROUP = new QName(NS_URN, REPEATGROUP, PREFIX);
+
+        // Function
+        String FUNCTION_NAME = "FUNCTION_NAME";
+        QName QN_FUNCTION_NAME = new QName(NS_URN, FUNCTION_NAME, PREFIX);
+
+        String PARAMETER_LIST = "PARAMETER_LIST";
+        QName QN_PARAMETER_LIST = new QName(NS_URN, PARAMETER_LIST, PREFIX);
+
+        String RETURN_TYPE = "RETURN_TYPE";
+        QName QN_RETURN_TYPE = new QName(NS_URN, RETURN_TYPE, PREFIX);
+
+        String ORIGIN = "ORIGIN";
+        QName QN_ORIGIN = new QName(NS_URN, ORIGIN, PREFIX);
+
+        String INTERFACE_NAME = "INTERFACE_NAME";
+        QName QN_INTERFACE_NAME = new QName(NS_URN, INTERFACE_NAME, PREFIX);
+
+        String LIBRARY_NAME = "LIBRARY_NAME";
+        QName QN_LIBRARY_NAME = new QName(NS_URN, LIBRARY_NAME, PREFIX);
+
+        String DLL_NAME = "DLL_NAME";
+        QName QN_DLL_NAME = new QName(NS_URN, DLL_NAME, PREFIX);
+
+        String HELP_FILE = "HELP_FILE";
+        QName QN_HELP_FILE = new QName(NS_URN, HELP_FILE, PREFIX);
+
+        String HELP_CONTEXT = "HELP_CONTEXT";
+        QName QN_HELP_CONTEXT = new QName(NS_URN, HELP_CONTEXT, PREFIX);
+
+        String OBJECT = "OBJECT";
+        QName QN_OBJECT = new QName(NS_URN, OBJECT, PREFIX);
+
+        String CAPTION = "CAPTION";
+        QName QN_CAPTION = new QName(NS_URN, CAPTION, PREFIX);
+
+        String DIRECTQUERY_PUSHABLE = "DIRECTQUERY_PUSHABLE";
+        QName QN_DIRECTQUERY_PUSHABLE = new QName(NS_URN, DIRECTQUERY_PUSHABLE, PREFIX);
+
+        String PARAMETERINFO = "PARAMETERINFO";
+        QName QN_PARAMETERINFO = new QName(NS_URN, PARAMETERINFO, PREFIX);
+
+        // Data types
+        String DATA_TYPE = "DATA_TYPE";
+        QName QN_DATA_TYPE = new QName(NS_URN, DATA_TYPE, PREFIX);
+
+        String NUMERIC_PRECISION = "NUMERIC_PRECISION";
+        QName QN_NUMERIC_PRECISION = new QName(NS_URN, NUMERIC_PRECISION, PREFIX);
+
+        String NUMERIC_SCALE = "NUMERIC_SCALE";
+        QName QN_NUMERIC_SCALE = new QName(NS_URN, NUMERIC_SCALE, PREFIX);
+
+        String IS_NULLABLE = "IS_NULLABLE";
+        QName QN_IS_NULLABLE = new QName(NS_URN, IS_NULLABLE, PREFIX);
+
+        // Perspective
+        String PERSPECTIVE_NAME = "PERSPECTIVE_NAME";
+        QName QN_PERSPECTIVE_NAME = new QName(NS_URN, PERSPECTIVE_NAME, PREFIX);
+
+        // Common metadata
+        String ANNOTATIONS = "ANNOTATIONS";
+        QName QN_ANNOTATIONS = new QName(NS_URN, ANNOTATIONS, PREFIX);
+
+        String ROLES = "ROLES";
+        QName QN_ROLES = new QName(NS_URN, ROLES, PREFIX);
+
+        String DATE_MODIFIED = "DATE_MODIFIED";
+        QName QN_DATE_MODIFIED = new QName(NS_URN, DATE_MODIFIED, PREFIX);
+
+        String DATE_CREATED = "DATE_CREATED";
+        QName QN_DATE_CREATED = new QName(NS_URN, DATE_CREATED, PREFIX);
+
+        String CREATED_ON = "CREATED_ON";
+        QName QN_CREATED_ON = new QName(NS_URN, CREATED_ON, PREFIX);
+
+        String LAST_SCHEMA_UPDATE = "LAST_SCHEMA_UPDATE";
+        QName QN_LAST_SCHEMA_UPDATE = new QName(NS_URN, LAST_SCHEMA_UPDATE, PREFIX);
+
+        String SCHEMA_UPDATED_BY = "SCHEMA_UPDATED_BY";
+        QName QN_SCHEMA_UPDATED_BY = new QName(NS_URN, SCHEMA_UPDATED_BY, PREFIX);
+
+        String LAST_DATA_UPDATE = "LAST_DATA_UPDATE";
+        QName QN_LAST_DATA_UPDATE = new QName(NS_URN, LAST_DATA_UPDATE, PREFIX);
+
+        String DATA_UPDATED_BY = "DATA_UPDATED_BY";
+        QName QN_DATA_UPDATED_BY = new QName(NS_URN, DATA_UPDATED_BY, PREFIX);
+
+        String COMPATIBILITY_LEVEL = "COMPATIBILITY_LEVEL";
+        QName QN_COMPATIBILITY_LEVEL = new QName(NS_URN, COMPATIBILITY_LEVEL, PREFIX);
+
+        String DATABASE_ID = "DATABASE_ID";
+        QName QN_DATABASE_ID = new QName(NS_URN, DATABASE_ID, PREFIX);
+
+        // Boolean flags
+        String IS_DRILLTHROUGH_ENABLED = "IS_DRILLTHROUGH_ENABLED";
+        QName QN_IS_DRILLTHROUGH_ENABLED = new QName(NS_URN, IS_DRILLTHROUGH_ENABLED, PREFIX);
+
+        String IS_LINKABLE = "IS_LINKABLE";
+        QName QN_IS_LINKABLE = new QName(NS_URN, IS_LINKABLE, PREFIX);
+
+        String IS_SQL_ENABLED = "IS_SQL_ENABLED";
+        QName QN_IS_SQL_ENABLED = new QName(NS_URN, IS_SQL_ENABLED, PREFIX);
+
+        String PREFERRED_QUERY_PATTERNS = "PREFERRED_QUERY_PATTERNS";
+        QName QN_PREFERRED_QUERY_PATTERNS = new QName(NS_URN, PREFERRED_QUERY_PATTERNS, PREFIX);
+
+        // Name/Value common
+        String NAME = "NAME";
+        QName QN_NAME = new QName(NS_URN, NAME, PREFIX);
+
+        String NAME_LC = "Name";
+        QName QN_NAME_LC = new QName(NS_URN, NAME_LC, PREFIX);
+
+        String VALUE = "Value";
+        QName QN_VALUE = new QName(NS_URN, VALUE, PREFIX);
+
+        String TYPE_LC = "Type";
+        QName QN_TYPE_LC = new QName(NS_URN, TYPE_LC, PREFIX);
+
+        String RESTRICTIONS = "Restrictions";
+        QName QN_RESTRICTIONS = new QName(NS_URN, RESTRICTIONS, PREFIX);
+    }
+}

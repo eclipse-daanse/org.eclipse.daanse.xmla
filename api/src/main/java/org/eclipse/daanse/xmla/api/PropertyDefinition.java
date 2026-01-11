@@ -18,7 +18,6 @@
 package org.eclipse.daanse.xmla.api;
 
 import java.util.EnumSet;
-import java.util.Enumeration;
 import java.util.Set;
 
 /**
@@ -197,13 +196,13 @@ public enum PropertyDefinition {
             "DBMSVersion");
 
     final RowsetDefinitionType type;
-    final Set<? extends Enum> enumSet;
+    final Set<? extends Enum<?>> enumSet;
     final XmlaConstants.Access access;
     final XmlaConstants.Method usage;
     final String value;
     final String description;
 
-    PropertyDefinition(RowsetDefinitionType type, Set<? extends Enum> enumSet, XmlaConstants.Access access,
+    PropertyDefinition(RowsetDefinitionType type, Set<? extends Enum<?>> enumSet, XmlaConstants.Access access,
             String value, XmlaConstants.Method usage, String description) {
         // Line endings must be UNIX style (LF) not Windows style (LF+CR).
         // Thus the client will receive the same XML, regardless

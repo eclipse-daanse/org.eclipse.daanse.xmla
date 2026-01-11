@@ -14,7 +14,6 @@
 package org.eclipse.daanse.xmla.model.record.discover.discover.properties;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.discover.discover.properties.DiscoverPropertiesRestrictions;
 

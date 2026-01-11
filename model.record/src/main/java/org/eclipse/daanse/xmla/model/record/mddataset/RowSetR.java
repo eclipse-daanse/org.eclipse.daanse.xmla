@@ -13,10 +13,10 @@
  */
 package org.eclipse.daanse.xmla.model.record.mddataset;
 
+import java.util.List;
+
 import org.eclipse.daanse.xmla.api.mddataset.RowSet;
 import org.eclipse.daanse.xmla.api.mddataset.RowSetRow;
-
-import java.util.List;
 
 public record RowSetR(List<RowSetRow> rowSetRows) implements RowSet {
 

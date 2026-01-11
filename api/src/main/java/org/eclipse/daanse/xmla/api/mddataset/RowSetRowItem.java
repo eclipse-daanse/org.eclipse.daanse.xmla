@@ -13,9 +13,9 @@
  */
 package org.eclipse.daanse.xmla.api.mddataset;
 
-import org.eclipse.daanse.xmla.api.common.enums.ItemTypeEnum;
-
 import java.util.Optional;
+
+import org.eclipse.daanse.xmla.api.common.enums.ItemTypeEnum;
 
 public interface RowSetRowItem {
 

@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.mdschema.cubes;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_CUBES;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.MDSCHEMA_CUBES;
 
 @Operation(name = MDSCHEMA_CUBES, guid = "C8B522D8-5CF3-11CE-ADE5-00AA0044773D")
 public interface MdSchemaCubesRequest {

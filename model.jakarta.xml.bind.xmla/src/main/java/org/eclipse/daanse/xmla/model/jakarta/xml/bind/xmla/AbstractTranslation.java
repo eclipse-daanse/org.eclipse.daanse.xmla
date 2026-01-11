@@ -12,6 +12,10 @@
 */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla;
 
+import java.util.List;
+
+import org.eclipse.daanse.xmla.model.jakarta.xml.bind.engine300_300.RelationshipEndTranslation;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -19,10 +23,6 @@ import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
-
-import java.util.List;
-
-import org.eclipse.daanse.xmla.model.jakarta.xml.bind.engine300_300.RelationshipEndTranslation;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AbstractTranslation", propOrder = {

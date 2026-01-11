@@ -13,9 +13,9 @@
 */
 package org.eclipse.daanse.xmla.api.discover.discover.properties;
 
-import org.eclipse.daanse.xmla.api.common.enums.AccessEnum;
-
 import java.util.Optional;
+
+import org.eclipse.daanse.xmla.api.common.enums.AccessEnum;
 
 /**
  * This schema rowset returns a list of information and values about the properties that are

@@ -13,10 +13,10 @@
 */
 package org.eclipse.daanse.xmla.api.discover.discover.schemarowsets;
 
+import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DISCOVER_SCHEMA_ROWSETS;
+
 import org.eclipse.daanse.xmla.api.annotation.Operation;
 import org.eclipse.daanse.xmla.api.discover.Properties;
-
-import static org.eclipse.daanse.xmla.api.common.properties.OperationNames.DISCOVER_SCHEMA_ROWSETS;
 
 @Operation(name = DISCOVER_SCHEMA_ROWSETS, guid = "EEA0302B-7922-4992-8991-0E605D0E5593")
 public interface DiscoverSchemaRowsetsRequest {

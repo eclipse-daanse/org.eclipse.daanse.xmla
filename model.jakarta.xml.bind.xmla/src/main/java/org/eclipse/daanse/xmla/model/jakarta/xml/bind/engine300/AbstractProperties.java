@@ -13,13 +13,13 @@
  */
 package org.eclipse.daanse.xmla.model.jakarta.xml.bind.engine300;
 
+import java.math.BigInteger;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
-
-import java.math.BigInteger;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AbstractProperties", propOrder = { "folderPosition", "contextualNameRule", "alignment",
