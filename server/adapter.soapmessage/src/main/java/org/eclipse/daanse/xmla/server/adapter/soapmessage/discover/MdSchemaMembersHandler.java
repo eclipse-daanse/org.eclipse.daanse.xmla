@@ -129,6 +129,7 @@ public class MdSchemaMembersHandler implements DiscoverHandler {
         r.parentUniqueName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_PARENT_UNIQUE_NAME, v));
         r.parentCount().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_PARENT_COUNT, String.valueOf(v)));
         r.description().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DESCRIPTION, v));
+        r.expression().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_EXPRESSION, v));
         r.memberKey().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEMBER_KEY, v));
         r.isPlaceHolderMember()
                 .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_IS_PLACEHOLDERMEMBER, String.valueOf(v)));
