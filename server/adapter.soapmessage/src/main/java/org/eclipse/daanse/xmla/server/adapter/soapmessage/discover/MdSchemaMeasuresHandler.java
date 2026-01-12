@@ -119,11 +119,11 @@ public class MdSchemaMeasuresHandler implements DiscoverHandler {
         r.numericPrecision().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_NUMERIC_PRECISION, String.valueOf(v)));
         r.numericScale().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_NUMERIC_SCALE, String.valueOf(v)));
         r.measureUnits().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_UNITS, v));
-        r.description().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DESCRIPTION, v));
         r.expression().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_EXPRESSION, v));
         r.measureIsVisible()
                 .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_IS_VISIBLE, String.valueOf(v)));
         r.levelsList().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_LEVELS_LIST, v));
+        r.description().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DESCRIPTION, v));
         r.measureNameSqlColumnName()
                 .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_NAME_SQL_COLUMN_NAME, v));
         r.measureUnqualifiedCaption()
@@ -132,5 +132,7 @@ public class MdSchemaMeasuresHandler implements DiscoverHandler {
         r.measureDisplayFolder().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_DISPLAY_FOLDER, v));
         r.defaultFormatString().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DEFAULT_FORMAT_STRING, v));
         r.cubeSource().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_CUBE_SOURCE, String.valueOf(v.getValue())));
+        r.measureVisibility()
+        .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_VISIBILITY, String.valueOf(v.getValue())));
     }
 }
