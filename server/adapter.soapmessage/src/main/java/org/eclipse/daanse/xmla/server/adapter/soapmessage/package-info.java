@@ -25,8 +25,6 @@
  * <ul>
  * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlaApiAdapter}
  * - Main entry point, routes SOAP requests to appropriate handlers</li>
- * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.Convert} -
- * Facade for XML-to-API object conversion methods</li>
  * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.SoapUtil} -
  * SOAP message building utilities</li>
  * </ul>
@@ -51,7 +49,7 @@
  *
  * <h2>Subpackages</h2>
  * <ul>
- * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.convert} - XML
+ * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage} - XML
  * parsing utilities</li>
  * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.discover} -
  * Discover operation handlers</li>
