@@ -2107,7 +2107,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TSchema">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="TSchema"/>
+      <details key="name" value="Schema"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="gSchemaBodyElements" unique="false"
