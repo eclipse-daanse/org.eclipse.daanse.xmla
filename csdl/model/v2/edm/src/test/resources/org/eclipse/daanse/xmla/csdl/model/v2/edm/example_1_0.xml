@@ -1,0 +1,922 @@
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm"
+  xmlns:edm_annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+  xmlns:bi="http://schemas.microsoft.com/sqlbi/2010/10/edm/extensions"
+  bi:Version="1.0" Namespace="Sandbox">
+  <EntityContainer Name="Sandbox">
+    <Documentation>
+      <Summary>DescriptionRolePlayingDimensionsDB</Summary>
+    </Documentation>
+    <EntitySet Name="DimCustomer" EntityType="Sandbox.DimCustomer">
+      <Documentation>
+        <Summary>Description_Dimension_DimCustomer</Summary>
+      </Documentation>
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimEmployee" EntityType="Sandbox.DimEmployee">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimGeography" EntityType="Sandbox.DimGeography">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimProduct" EntityType="Sandbox.DimProduct">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimProductCategory" EntityType="Sandbox.DimProductCategory">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimProductSubcategory"
+      EntityType="Sandbox.DimProductSubcategory">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimStore" EntityType="Sandbox.DimStore">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="DimTime" EntityType="Sandbox.DimTime">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="FactInternetSales" EntityType="Sandbox.FactInternetSales">
+      <bi:EntitySet />
+    </EntitySet>
+    <AssociationSet Name="DimCustomer_DimGeography_Geography"
+      Association="Sandbox.DimCustomer_DimGeography_Geography">
+      <End EntitySet="DimCustomer" />
+      <End EntitySet="DimGeography" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="DimProduct_DimProductSubcategory_Subcategory"
+      Association="Sandbox.DimProduct_DimProductSubcategory_Subcategory">
+      <End EntitySet="DimProduct" />
+      <End EntitySet="DimProductSubcategory" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="DimProductSubcategory_DimProductCategory_Category"
+      Association="Sandbox.DimProductSubcategory_DimProductCategory_Category">
+      <End EntitySet="DimProductSubcategory" />
+      <End EntitySet="DimProductCategory" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="DimStore_DimGeography_Geography2"
+      Association="Sandbox.DimStore_DimGeography_Geography2">
+      <End EntitySet="DimStore" />
+      <End EntitySet="DimGeography" />
+      <bi:AssociationSet State="Inactive" />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimCustomer_Customer2"
+      Association="Sandbox.FactInternetSales_DimCustomer_Customer2">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimCustomer" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimCustomer_Customer_2"
+      Association="Sandbox.FactInternetSales_DimCustomer_Customer_2">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimCustomer" />
+      <bi:AssociationSet State="Inactive" />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimTime_Time"
+      Association="Sandbox.FactInternetSales_DimTime_Time">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimTime" />
+      <bi:AssociationSet State="Inactive" />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimTime_Time_2"
+      Association="Sandbox.FactInternetSales_DimTime_Time_2">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimTime" />
+      <bi:AssociationSet State="Inactive" />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimTime_Time_3"
+      Association="Sandbox.FactInternetSales_DimTime_Time_3">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimTime" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimStore_Store2"
+      Association="Sandbox.FactInternetSales_DimStore_Store2">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimStore" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimEmployee_Employee"
+      Association="Sandbox.FactInternetSales_DimEmployee_Employee">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimEmployee" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="FactInternetSales_DimProduct_Product2"
+      Association="Sandbox.FactInternetSales_DimProduct_Product2">
+      <End EntitySet="FactInternetSales" />
+      <End EntitySet="DimProduct" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <bi:EntityContainer Caption="CaptionRolePlayingDimensionsDB" Culture="ja-JP">
+      <bi:CompareOptions IgnoreCase="true" IgnoreKanaType="true"
+        IgnoreWidth="true" />
+    </bi:EntityContainer>
+  </EntityContainer>
+  <EntityType Name="DimCustomer">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="CustomerKey" Type="Int64" Nullable="false">
+      <Documentation>
+        <Summary>Description_Dimension_CustomerKey</Summary>
+      </Documentation>
+      <bi:Property Caption="Caption_Dimension_CustomerKey" Hidden="true">
+        <bi:OrderBy>
+          <bi:PropertyRef Name="GeographyKey" />
+        </bi:OrderBy>
+      </bi:Property>
+    </Property>
+    <Property Name="GeographyKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CustomerAlternateKey" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Title" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property ContextualNameRule="Context" Alignment="Left" Units="money"
+        SortDirection="Ascending" IsRightToLeft="true"
+        DefaultAggregateFunction="Max" />
+    </Property>
+    <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="MiddleName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="NameStyle" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="BirthDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="MaritalStatus" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Suffix" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Gender" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EmailAddress" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="YearlyIncome" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="TotalChildren" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="NumberChildrenAtHome" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishEducation" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishEducation" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchEducation" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishOccupation" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishOccupation" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchOccupation" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="HouseOwnerFlag" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="NumberCarsOwned" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="AddressLine1" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="AddressLine2" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Phone" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="DateFirstPurchase" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="CommuteDistance" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <NavigationProperty Name="Geography"
+      Relationship="Sandbox.DimCustomer_DimGeography_Geography"
+      FromRole="Customer" ToRole="Geography">
+      <Documentation>
+        <Summary>DESCRIPTION_RelationshipEnd_Cust_Geog</Summary>
+      </Documentation>
+      <bi:NavigationProperty Caption="CAPTION_RelationshipEnd_Cust_Geog"
+        ContextualNameRule="Context" />
+    </NavigationProperty>
+    <bi:EntityType Contents="Customers">
+      <bi:DisplayKey>
+        <bi:MemberRef Name="Geography" />
+        <bi:MemberRef Name="Title" />
+      </bi:DisplayKey>
+      <bi:DefaultDetails>
+        <bi:MemberRef Name="Title" />
+        <bi:MemberRef Name="Geography" />
+      </bi:DefaultDetails>
+      <bi:DefaultImage>
+        <bi:MemberRef Name="Title" />
+      </bi:DefaultImage>
+      <bi:SortMembers>
+        <bi:MemberRef Name="Title" />
+      </bi:SortMembers>
+    </bi:EntityType>
+  </EntityType>
+  <EntityType Name="DimEmployee">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="EmployeeKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ParentEmployeeKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="EmployeeNationalIDAlternateKey" Type="String"
+      MaxLength="Max" Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ParentEmployeeNationalIDAlternateKey" Type="String"
+      MaxLength="Max" Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesTerritoryKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="MiddleName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="NameStyle" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="Title" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="HireDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="BirthDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="LoginID" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EmailAddress" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Phone" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="MaritalStatus" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EmergencyContactName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EmergencyContactPhone" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalariedFlag" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="Gender" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="PayFrequency" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="BaseRate" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="VacationHours" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="SickLeaveHours" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CurrentFlag" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesPersonFlag" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="DepartmentName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="StartDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="EndDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="Status" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="DimGeography">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="GeographyKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="City" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="StateProvinceCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="StateProvinceName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CountryRegionCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishCountryRegionName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishCountryRegionName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchCountryRegionName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="PostalCode" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesTerritoryKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="DimProduct">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="ProductKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductAlternateKey" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductSubcategoryKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="WeightUnitMeasureCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SizeUnitMeasureCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishProductName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishProductName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchProductName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="StandardCost" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="FinishedGoodsFlag" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="Color" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SafetyStockLevel" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ReorderPoint" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ListPrice" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="Size" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SizeRange" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Weight" Type="Double">
+      <bi:Property />
+    </Property>
+    <Property Name="DaysToManufacture" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductLine" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="DealerPrice" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="Class" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Style" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ModelName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishDescription" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchDescription" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ChineseDescription" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ArabicDescription" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="HebrewDescription" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ThaiDescription" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="StartDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="EndDate" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="Status" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <NavigationProperty Name="Subcategory"
+      Relationship="Sandbox.DimProduct_DimProductSubcategory_Subcategory"
+      FromRole="Product" ToRole="Subcategory">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="DimProductCategory">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="ProductCategoryKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductCategoryAlternateKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishProductCategoryName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishProductCategoryName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchProductCategoryName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="DimProductSubcategory">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="ProductSubcategoryKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductSubcategoryAlternateKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishProductSubcategoryName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishProductSubcategoryName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchProductSubcategoryName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductCategoryKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <NavigationProperty Name="Category"
+      Relationship="Sandbox.DimProductSubcategory_DimProductCategory_Category"
+      FromRole="Subcategory2" ToRole="Category">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="DimStore">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="StoreKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Geography_Key" Type="Int64">
+      <bi:Property Caption="Geography Key" ReferenceName="Geography Key" />
+    </Property>
+    <Property Name="StoreName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Number_of_Employees" Type="Int64">
+      <bi:Property Caption="Number of Employees"
+        ReferenceName="Number of Employees" />
+    </Property>
+    <Property Name="Sales" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <NavigationProperty Name="Geography2"
+      Relationship="Sandbox.DimStore_DimGeography_Geography2" FromRole="Store"
+      ToRole="Geography2">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="DimTime">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="TimeKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FullDateAlternateKey" Type="DateTime">
+      <bi:Property />
+    </Property>
+    <Property Name="DayNumberOfWeek" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishDayNameOfWeek" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishDayNameOfWeek" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchDayNameOfWeek" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="DayNumberOfMonth" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="DayNumberOfYear" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="WeekNumberOfYear" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="EnglishMonthName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SpanishMonthName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FrenchMonthName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="MonthNumberOfYear" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CalendarQuarter" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CalendarYear" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CalendarSemester" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="FiscalQuarter" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="FiscalYear" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="FiscalSemester" Type="Int64">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="FactInternetSales">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="ProductKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="OrderDateKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="DueDateKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ShipDateKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CustomerKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="PromotionKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CurrencyKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesTerritoryKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesOrderNumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesOrderLineNumber" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="RevisionNumber" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="OrderQuantity" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="ExtendedAmount" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="UnitPriceDiscountPct" Type="Double">
+      <bi:Property />
+    </Property>
+    <Property Name="DiscountAmount" Type="Double">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductStandardCost" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="TotalProductCost" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesAmount" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="TaxAmt" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="Freight" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="CarrierTrackingNumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CustomerPONumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="EmployeeKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="BillingCustomerKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="StoreKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="TotalSales" Type="Int64">
+      <Documentation>
+        <Summary>DescriptionRolePlayingDimensionsDB</Summary>
+      </Documentation>
+      <bi:Measure Caption="CaptionRolePlayingDimensionsDB"
+        ContextualNameRule="Context" Alignment="Right"
+        FormatString="&quot;$&quot;#,0.00;(&quot;$&quot;#,0.00);&quot;$&quot;#,0.00"
+        Units="money" SortDirection="Ascending" IsRightToLeft="true"
+        IsSimpleMeasure="true" />
+    </Property>
+    <NavigationProperty Name="Customer2"
+      Relationship="Sandbox.FactInternetSales_DimCustomer_Customer2"
+      FromRole="Sales" ToRole="Customer2">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Customer_2"
+      Relationship="Sandbox.FactInternetSales_DimCustomer_Customer_2"
+      FromRole="Sales2" ToRole="Customer_2">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Time"
+      Relationship="Sandbox.FactInternetSales_DimTime_Time" FromRole="Sales3"
+      ToRole="Time">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Time_2"
+      Relationship="Sandbox.FactInternetSales_DimTime_Time_2" FromRole="Sales4"
+      ToRole="Time_2">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Time_3"
+      Relationship="Sandbox.FactInternetSales_DimTime_Time_3" FromRole="Sales5"
+      ToRole="Time_3">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Store2"
+      Relationship="Sandbox.FactInternetSales_DimStore_Store2" FromRole="Sales6"
+      ToRole="Store2">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Employee"
+      Relationship="Sandbox.FactInternetSales_DimEmployee_Employee"
+      FromRole="Sales7" ToRole="Employee">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <NavigationProperty Name="Product2"
+      Relationship="Sandbox.FactInternetSales_DimProduct_Product2"
+      FromRole="FactInternetSales" ToRole="Product2">
+      <bi:NavigationProperty ContextualNameRule="Merge" />
+    </NavigationProperty>
+    <bi:EntityType>
+      <bi:DefaultDetails>
+        <bi:MemberRef Name="TotalSales" />
+      </bi:DefaultDetails>
+      <bi:DefaultMeasure>
+        <bi:MemberRef Name="TotalSales" />
+      </bi:DefaultMeasure>
+    </bi:EntityType>
+  </EntityType>
+  <Association Name="DimCustomer_DimGeography_Geography">
+    <End Role="Customer" Type="Sandbox.DimCustomer" Multiplicity="*" />
+    <End Role="Geography" Type="Sandbox.DimGeography" Multiplicity="0..1" />
+  </Association>
+  <Association Name="DimProduct_DimProductSubcategory_Subcategory">
+    <End Role="Product" Type="Sandbox.DimProduct" Multiplicity="*" />
+    <End Role="Subcategory" Type="Sandbox.DimProductSubcategory"
+      Multiplicity="0..1" />
+  </Association>
+  <Association Name="DimProductSubcategory_DimProductCategory_Category">
+    <End Role="Subcategory2" Type="Sandbox.DimProductSubcategory"
+      Multiplicity="*" />
+    <End Role="Category" Type="Sandbox.DimProductCategory" Multiplicity="0..1" />
+  </Association>
+  <Association Name="DimStore_DimGeography_Geography2">
+    <End Role="Store" Type="Sandbox.DimStore" Multiplicity="*" />
+    <End Role="Geography2" Type="Sandbox.DimGeography" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimCustomer_Customer2">
+    <End Role="Sales" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Customer2" Type="Sandbox.DimCustomer" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimCustomer_Customer_2">
+    <End Role="Sales2" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Customer_2" Type="Sandbox.DimCustomer" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimTime_Time">
+    <End Role="Sales3" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Time" Type="Sandbox.DimTime" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimTime_Time_2">
+    <End Role="Sales4" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Time_2" Type="Sandbox.DimTime" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimTime_Time_3">
+    <End Role="Sales5" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Time_3" Type="Sandbox.DimTime" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimStore_Store2">
+    <End Role="Sales6" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Store2" Type="Sandbox.DimStore" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimEmployee_Employee">
+    <End Role="Sales7" Type="Sandbox.FactInternetSales" Multiplicity="*" />
+    <End Role="Employee" Type="Sandbox.DimEmployee" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FactInternetSales_DimProduct_Product2">
+    <End Role="FactInternetSales" Type="Sandbox.FactInternetSales"
+      Multiplicity="*" />
+    <End Role="Product2" Type="Sandbox.DimProduct" Multiplicity="0..1" />
+  </Association>
+</Schema>

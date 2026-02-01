@@ -1,0 +1,431 @@
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm"
+  xmlns:edm_annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
+  xmlns:bi="http://schemas.microsoft.com/sqlbi/2010/10/edm/extensions"
+  bi:Version="1.1" Namespace="Sandbox">
+  <EntityContainer Name="Sandbox">
+    <EntitySet Name="Bike" EntityType="Sandbox.Bike">
+      <bi:EntitySet Hidden="true" />
+    </EntitySet>
+    <EntitySet Name="BikeSales" EntityType="Sandbox.BikeSales">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="BikeSubcategory" EntityType="Sandbox.BikeSubcategory">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="CalendarQuarter" EntityType="Sandbox.CalendarQuarter">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="Country" EntityType="Sandbox.Country">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="Currency" EntityType="Sandbox.Currency">
+      <bi:EntitySet />
+    </EntitySet>
+    <EntitySet Name="SalesChannel" EntityType="Sandbox.SalesChannel">
+      <bi:EntitySet />
+    </EntitySet>
+    <AssociationSet
+      Name="Bike_BikeSubcategory_BikeSubcategory_ProductSubcategoryKey"
+      Association="Sandbox.Bike_BikeSubcategory_BikeSubcategory_ProductSubcategoryKey">
+      <End EntitySet="Bike" />
+      <End EntitySet="BikeSubcategory" />
+      <bi:AssociationSet Hidden="true" />
+    </AssociationSet>
+    <AssociationSet Name="BikeSales_Bike_Bike_ProductKey"
+      Association="Sandbox.BikeSales_Bike_Bike_ProductKey">
+      <End EntitySet="BikeSales" />
+      <End EntitySet="Bike" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet
+      Name="BikeSales_CalendarQuarter_CalendarQuarter_CalendarQuarter"
+      Association="Sandbox.BikeSales_CalendarQuarter_CalendarQuarter_CalendarQuarter">
+      <End EntitySet="BikeSales" />
+      <End EntitySet="CalendarQuarter" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="BikeSales_Country_Country_CountryCode"
+      Association="Sandbox.BikeSales_Country_Country_CountryCode">
+      <End EntitySet="BikeSales" />
+      <End EntitySet="Country" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="BikeSales_Currency_Currency_CurrencyKey"
+      Association="Sandbox.BikeSales_Currency_Currency_CurrencyKey">
+      <End EntitySet="BikeSales" />
+      <End EntitySet="Currency" />
+      <bi:AssociationSet />
+    </AssociationSet>
+    <AssociationSet Name="BikeSales_SalesChannel_SalesChannel_SalesChannelCode"
+      Association="Sandbox.BikeSales_SalesChannel_SalesChannel_SalesChannelCode">
+      <End EntitySet="BikeSales" />
+      <End EntitySet="SalesChannel" />
+      <bi:AssociationSet State="Inactive" />
+    </AssociationSet>
+    <bi:EntityContainer Caption="CSDLTest" Culture="en-US">
+      <bi:CompareOptions IgnoreCase="true" />
+    </bi:EntityContainer>
+  </EntityContainer>
+  <EntityType Name="Bike">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="ProductKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductAlternateKey" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductSubcategoryKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="StandardCost" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="FinishedGoodsFlag" Type="Boolean">
+      <bi:Property />
+    </Property>
+    <Property Name="Color" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property ContextualNameRule="Context" Alignment="Left" Units="counts"
+        SortDirection="Descending" IsRightToLeft="true"
+        DefaultAggregateFunction="Max" />
+    </Property>
+    <Property Name="ListPrice" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="Size" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SizeRange" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Weight" Type="Double">
+      <bi:Property />
+    </Property>
+    <Property Name="DealerPrice" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="Class" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Style" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="ModelName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="WeightUnitMeasureCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SizeUnitMeasureCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SafetyStockLevel" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ReorderPoint" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="DaysToManufacture" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductLine" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <NavigationProperty Name="BikeSubcategory_ProductSubcategoryKey"
+      Relationship="Sandbox.Bike_BikeSubcategory_BikeSubcategory_ProductSubcategoryKey"
+      FromRole="Bike_ProductSubcategoryKey"
+      ToRole="BikeSubcategory_ProductSubcategoryKey">
+      <bi:NavigationProperty />
+    </NavigationProperty>
+    <bi:EntityType>
+      <bi:DisplayKey>
+        <bi:MemberRef Name="Color" />
+      </bi:DisplayKey>
+      <bi:DefaultDetails>
+        <bi:MemberRef Name="Color" />
+      </bi:DefaultDetails>
+      <bi:SortMembers>
+        <bi:MemberRef Name="Color" />
+      </bi:SortMembers>
+      <bi:Hierarchy Name="Product_Hierarchy" Caption="Product Hierarchy"
+        ReferenceName="Product Hierarchy">
+        <bi:Documentation>
+          <bi:Summary>DESCRIPTION_ProductModelCateg_Hierarchies</bi:Summary>
+        </bi:Documentation>
+        <bi:Level Name="ProductLine">
+          <bi:Source>
+            <bi:PropertyRef Name="ProductLine" />
+          </bi:Source>
+        </bi:Level>
+        <bi:Level Name="ModelName">
+          <bi:Source>
+            <bi:PropertyRef Name="ModelName" />
+          </bi:Source>
+        </bi:Level>
+      </bi:Hierarchy>
+    </bi:EntityType>
+  </EntityType>
+  <EntityType Name="BikeSales">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="SalesOrderNumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesOrderLineNumber" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="RevisionNumber" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CountryCode" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CurrencyKey" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="CalendarQuarter" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesChannelCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="OrderQuantity" Type="Int64">
+      <bi:Property />
+    </Property>
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="ExtendedAmount" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="UnitPriceDiscountPct" Type="Double">
+      <bi:Property />
+    </Property>
+    <Property Name="DiscountAmount" Type="Double">
+      <bi:Property />
+    </Property>
+    <Property Name="ProductStandardCost" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="TotalProductCost" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesAmount" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="TaxAmt" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="Freight" Type="Decimal" Precision="19" Scale="4">
+      <bi:Property />
+    </Property>
+    <Property Name="CarrierTrackingNumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CustomerPONumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CustomerAccountNumber" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Sum_of_TotalProductCost" Type="Decimal" Precision="19"
+      Scale="4">
+      <bi:Measure Caption="Sum of TotalProductCost"
+        ReferenceName="Sum of TotalProductCost"
+        FormatString="\$#,0.00;(\$#,0.00);\$#,0.00" />
+    </Property>
+    <Property Name="Sum_of_SalesAmount" Type="Decimal" Precision="19" Scale="4">
+      <Documentation>
+        <Summary>KPI Description</Summary>
+      </Documentation>
+      <bi:Measure Caption="Sum of SalesAmount"
+        ReferenceName="Sum of SalesAmount"
+        FormatString="\$#,0.00;(\$#,0.00);\$#,0.00">
+        <bi:Kpi StatusGraphic="Three Circles Colored">
+          <bi:KpiGoal>
+            <bi:PropertyRef Name="v_Sum_of_SalesAmount_Goal" />
+          </bi:KpiGoal>
+          <bi:KpiStatus>
+            <bi:PropertyRef Name="v_Sum_of_SalesAmount_Status" />
+          </bi:KpiStatus>
+        </bi:Kpi>
+      </bi:Measure>
+    </Property>
+    <NavigationProperty Name="Bike_ProductKey"
+      Relationship="Sandbox.BikeSales_Bike_Bike_ProductKey"
+      FromRole="BikeSales_ProductKey" ToRole="Bike_ProductKey">
+      <bi:NavigationProperty />
+    </NavigationProperty>
+    <NavigationProperty Name="CalendarQuarter_CalendarQuarter"
+      Relationship="Sandbox.BikeSales_CalendarQuarter_CalendarQuarter_CalendarQuarter"
+      FromRole="BikeSales_CalendarQuarter"
+      ToRole="CalendarQuarter_CalendarQuarter">
+      <bi:NavigationProperty />
+    </NavigationProperty>
+    <NavigationProperty Name="Country_CountryCode"
+      Relationship="Sandbox.BikeSales_Country_Country_CountryCode"
+      FromRole="BikeSales_CountryCode" ToRole="Country_CountryCode">
+      <bi:NavigationProperty />
+    </NavigationProperty>
+    <NavigationProperty Name="Currency_CurrencyKey"
+      Relationship="Sandbox.BikeSales_Currency_Currency_CurrencyKey"
+      FromRole="BikeSales_CurrencyKey" ToRole="Currency_CurrencyKey">
+      <bi:NavigationProperty />
+    </NavigationProperty>
+    <NavigationProperty Name="SalesChannel_SalesChannelCode"
+      Relationship="Sandbox.BikeSales_SalesChannel_SalesChannel_SalesChannelCode"
+      FromRole="BikeSales_SalesChannelCode"
+      ToRole="SalesChannel_SalesChannelCode">
+      <bi:NavigationProperty />
+    </NavigationProperty>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="BikeSubcategory">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="ProductSubcategoryKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="Subcategory" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="CalendarQuarter">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="CalendarQuarter2" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false" Nullable="false">
+      <bi:Property Caption="CalendarQuarter" ReferenceName="CalendarQuarter" />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="CountryCode" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CountryName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="CurrencyKey" Type="Int64" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CurrencyAlternateKey" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <Property Name="CurrencyName" Type="String" MaxLength="Max" Unicode="true"
+      FixedLength="false">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <EntityType Name="SalesChannel">
+    <Key>
+      <PropertyRef Name="RowNumber" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" Nullable="false">
+      <bi:Property Hidden="true" Contents="RowNumber" Stability="RowNumber" />
+    </Property>
+    <Property Name="SalesChannelCode" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false" Nullable="false">
+      <bi:Property />
+    </Property>
+    <Property Name="SalesChannelName" Type="String" MaxLength="Max"
+      Unicode="true" FixedLength="false">
+      <bi:Property />
+    </Property>
+    <bi:EntityType />
+  </EntityType>
+  <Association Name="Bike_BikeSubcategory_BikeSubcategory_ProductSubcategoryKey">
+    <End Role="Bike_ProductSubcategoryKey" Type="Sandbox.Bike" Multiplicity="*" />
+    <End Role="BikeSubcategory_ProductSubcategoryKey"
+      Type="Sandbox.BikeSubcategory" Multiplicity="0..1" />
+  </Association>
+  <Association Name="BikeSales_Bike_Bike_ProductKey">
+    <End Role="BikeSales_ProductKey" Type="Sandbox.BikeSales" Multiplicity="*" />
+    <End Role="Bike_ProductKey" Type="Sandbox.Bike" Multiplicity="0..1" />
+  </Association>
+  <Association Name="BikeSales_CalendarQuarter_CalendarQuarter_CalendarQuarter">
+    <End Role="BikeSales_CalendarQuarter" Type="Sandbox.BikeSales"
+      Multiplicity="*" />
+    <End Role="CalendarQuarter_CalendarQuarter" Type="Sandbox.CalendarQuarter"
+      Multiplicity="0..1" />
+  </Association>
+  <Association Name="BikeSales_Country_Country_CountryCode">
+    <End Role="BikeSales_CountryCode" Type="Sandbox.BikeSales" Multiplicity="*" />
+    <End Role="Country_CountryCode" Type="Sandbox.Country" Multiplicity="0..1" />
+  </Association>
+  <Association Name="BikeSales_Currency_Currency_CurrencyKey">
+    <End Role="BikeSales_CurrencyKey" Type="Sandbox.BikeSales" Multiplicity="*" />
+    <End Role="Currency_CurrencyKey" Type="Sandbox.Currency" Multiplicity="0..1" />
+  </Association>
+  <Association Name="BikeSales_SalesChannel_SalesChannel_SalesChannelCode">
+    <End Role="BikeSales_SalesChannelCode" Type="Sandbox.BikeSales"
+      Multiplicity="*" />
+    <End Role="SalesChannel_SalesChannelCode" Type="Sandbox.SalesChannel"
+      Multiplicity="0..1" />
+  </Association>
+</Schema>
