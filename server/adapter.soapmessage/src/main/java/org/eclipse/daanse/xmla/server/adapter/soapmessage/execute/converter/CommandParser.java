@@ -114,6 +114,10 @@ public class CommandParser {
 
     static Command getCommand(org.w3c.dom.Node n, MajorObjectParser majorObjectParser) {
         String nodeName = n.getNodeName();
+        int colonIndex = nodeName.indexOf(':');
+        if (colonIndex >= 0) {
+            nodeName = nodeName.substring(colonIndex + 1);
+        }
         if (STATEMENT.equals(nodeName)) {
             return new StatementR(n.getTextContent());
         }

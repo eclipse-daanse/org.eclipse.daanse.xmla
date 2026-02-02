@@ -73,13 +73,16 @@ public class ExecuteDispatcher {
         while (nodeIterator.hasNext()) {
             Node node = nodeIterator.next();
             if (node instanceof SOAPElement element) {
-                if (properties == null && Constants.MSXMLA.QN_PROPERTIES.equals(element.getElementQName())) {
+                if (properties == null && Constants.MSXMLA.QN_PROPERTIES.getLocalPart().equals(element.getElementQName().getLocalPart())
+                        && Constants.MSXMLA.QN_PROPERTIES.getNamespaceURI().equals(element.getElementQName().getNamespaceURI())) {
                     properties = PropertyConverter.propertiestoProperties(element);
                 }
-                if (parameters == null && Constants.MSXMLA.QN_PARAMETERS.equals(element.getElementQName())) {
+                if (parameters == null && Constants.MSXMLA.QN_PARAMETERS.getLocalPart().equals(element.getElementQName().getLocalPart())
+                        && Constants.MSXMLA.QN_PARAMETERS.getNamespaceURI().equals(element.getElementQName().getNamespaceURI())) {
                     parameters = parametersToParameters(element);
                 }
-                if (command == null && Constants.MSXMLA.QN_COMMAND.equals(element.getElementQName())) {
+                if (command == null && Constants.MSXMLA.QN_COMMAND.getLocalPart().equals(element.getElementQName().getLocalPart())
+                        && Constants.MSXMLA.QN_COMMAND.getNamespaceURI().equals(element.getElementQName().getNamespaceURI())) {
                     command = CommandConverter.commandToCommand(element);
                 }
             }
