@@ -49,8 +49,8 @@
  *
  * <h2>Subpackages</h2>
  * <ul>
- * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage} - XML
- * parsing utilities</li>
+ * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage} - XML parsing
+ * utilities</li>
  * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.discover} -
  * Discover operation handlers</li>
  * <li>{@link org.eclipse.daanse.xmla.server.adapter.soapmessage.execute} -

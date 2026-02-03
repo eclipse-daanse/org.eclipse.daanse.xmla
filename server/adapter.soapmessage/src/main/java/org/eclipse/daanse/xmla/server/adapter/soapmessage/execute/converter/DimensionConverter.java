@@ -55,8 +55,9 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VISIB
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VISUALIZATION_PROPERTIES;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.WRITE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getAttribute;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getNodeType;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
@@ -121,7 +122,7 @@ public class DimensionConverter {
     }
 
     public static List<Dimension> getDimensionList(NodeList nl) {
-        return getList(nl, DIMENSION, childNodes -> getDimension(childNodes));
+        return getListByLocalName(nl, DIMENSION, childNodes -> getDimension(childNodes));
     }
 
     public static Dimension getDimension(NodeList nl) {
@@ -164,114 +165,114 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if (MINING_MODEL_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MINING_MODEL_ID)) {
                     miningModelID = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = node.getTextContent();
                 }
-                if ("UnknownMember".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "UnknownMember")) {
                     unknownMember = getDimensionUnknownMember(node.getChildNodes());
                 }
-                if ("MdxMissingMemberMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MdxMissingMemberMode")) {
                     mdxMissingMemberMode = node.getTextContent();
                 }
-                if (ERROR_CONFIGURATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ERROR_CONFIGURATION)) {
                     errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
                 }
-                if (STORAGE_MODE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STORAGE_MODE)) {
                     storageMode = node.getTextContent();
                 }
-                if ("WriteEnabled".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "WriteEnabled")) {
                     writeEnabled = toBoolean(node.getTextContent());
                 }
-                if (PROCESSING_PRIORITY.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_PRIORITY)) {
                     processingPriority = toBigInteger(node.getTextContent());
                 }
-                if (LAST_PROCESSED.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_PROCESSED)) {
                     lastProcessed = toInstant(node.getTextContent());
                 }
-                if ("DimensionPermissions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DimensionPermissions")) {
                     dimensionPermissions = getDimensionPermissionList(node.getChildNodes());
                 }
-                if ("DependsOnDimensionID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DependsOnDimensionID")) {
                     dependsOnDimensionID = node.getTextContent();
                 }
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = toBigInteger(node.getTextContent());
                 }
-                if (COLLATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLLATION)) {
                     collation = node.getTextContent();
                 }
-                if ("UnknownMemberName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "UnknownMemberName")) {
                     unknownMemberName = node.getTextContent();
                 }
-                if ("UnknownMemberTranslations".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "UnknownMemberTranslations")) {
                     unknownMemberTranslations = CommonConverter.getTranslationList(node.getChildNodes(),
                             "UnknownMemberTranslation");
                 }
-                if (STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STATE)) {
                     state = node.getTextContent();
                 }
-                if (PROACTIVE_CACHING.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROACTIVE_CACHING)) {
                     proactiveCaching = CommonConverter.getProactiveCaching(node.getChildNodes());
                 }
-                if (PROCESSING_MODE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_MODE)) {
                     processingMode = node.getTextContent();
                 }
-                if ("ProcessingGroup".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ProcessingGroup")) {
                     processingGroup = node.getTextContent();
                 }
-                if ("CurrentStorageMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CurrentStorageMode")) {
                     processingGroup = node.getTextContent();
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (ATTRIBUTES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTES)) {
                     attributes = getDimensionAttributeList(node.getChildNodes());
                 }
-                if ("AttributeAllMemberName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeAllMemberName")) {
                     attributeAllMemberName = node.getTextContent();
                 }
-                if ("AttributeAllMemberTranslations".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeAllMemberTranslations")) {
                     attributeAllMemberTranslations = CommonConverter.getTranslationList(node.getChildNodes(),
                             "AttributeAllMemberTranslation");
                 }
-                if (HIERARCHIES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, HIERARCHIES)) {
                     hierarchies = getHierarchyList(node.getChildNodes());
                 }
-                if ("ProcessingRecommendation".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ProcessingRecommendation")) {
                     processingRecommendation = node.getTextContent();
                 }
-                if ("Relationships".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Relationships")) {
                     relationships = getRelationships(node.getChildNodes());
                 }
-                if ("StringStoresCompatibilityLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "StringStoresCompatibilityLevel")) {
                     stringStoresCompatibilityLevel = toInteger(node.getTextContent());
                 }
-                if ("CurrentStringStoresCompatibilityLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CurrentStringStoresCompatibilityLevel")) {
                     currentStringStoresCompatibilityLevel = toInteger(node.getTextContent());
                 }
             }
@@ -286,7 +287,7 @@ public class DimensionConverter {
     }
 
     public static List<DimensionPermission> getDimensionPermissionList(NodeList nl) {
-        return getList(nl, "DimensionPermission", childNodes -> getDimensionPermission(childNodes));
+        return getListByLocalName(nl, "DimensionPermission", childNodes -> getDimensionPermission(childNodes));
     }
 
     public static DimensionPermission getDimensionPermission(NodeList nl) {
@@ -306,43 +307,43 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (ROLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE_ID)) {
                     roleID = node.getTextContent();
                 }
-                if (PROCESS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESS)) {
                     process = toBoolean(node.getTextContent());
                 }
-                if (READ_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, READ_DEFINITION)) {
                     readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
                 }
-                if ("Read".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Read")) {
                     read = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if (WRITE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, WRITE)) {
                     write = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if ("AttributePermissions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributePermissions")) {
                     attributePermissions = getAttributePermissionList(node.getChildNodes());
                 }
-                if ("AllowedRowsExpression".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AllowedRowsExpression")) {
                     allowedRowsExpression = node.getTextContent();
                 }
             }
@@ -357,7 +358,7 @@ public class DimensionConverter {
     }
 
     public static List<AttributePermission> getAttributePermissionList(NodeList nl) {
-        return getList(nl, "AttributePermission", childNodes -> getAttributePermission(childNodes));
+        return getListByLocalName(nl, "AttributePermission", childNodes -> getAttributePermission(childNodes));
     }
 
     public static AttributePermission getAttributePermission(NodeList nl) {
@@ -371,25 +372,25 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (DEFAULT_MEMBER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DEFAULT_MEMBER)) {
                     defaultMember = node.getTextContent();
                 }
-                if ("VisualTotals".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "VisualTotals")) {
                     visualTotals = node.getTextContent();
                 }
-                if ("AllowedSet".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AllowedSet")) {
                     allowedSet = node.getTextContent();
                 }
-                if ("DeniedSet".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DeniedSet")) {
                     deniedSet = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -413,7 +414,7 @@ public class DimensionConverter {
     }
 
     public static List<DimensionAttribute> getDimensionAttributeList(NodeList nl) {
-        return getList(nl, ATTRIBUTE, childNodes -> getDimensionAttribute(childNodes));
+        return getListByLocalName(nl, ATTRIBUTE, childNodes -> getDimensionAttribute(childNodes));
     }
 
     public static DimensionAttribute getDimensionAttribute(NodeList nl) {
@@ -461,128 +462,128 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = getDimensionAttributeType(node.getChildNodes());
                 }
-                if ("Usage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Usage")) {
                     usage = node.getTextContent();
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if ("EstimatedCount".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "EstimatedCount")) {
                     estimatedCount = toLong(node.getTextContent());
                 }
-                if (KEY_COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, KEY_COLUMNS)) {
                     keyColumns = CommonConverter.getDataItemList(node.getChildNodes(), KEY_COLUMN);
                 }
-                if ("NameColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NameColumn")) {
                     nameColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if ("ValueColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ValueColumn")) {
                     valueColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getAttributeTranslationList(node.getChildNodes());
                 }
-                if ("AttributeRelationships".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeRelationships")) {
                     translations = getAttributeRelationshipsList(node.getChildNodes());
                 }
-                if ("DiscretizationMethod".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DiscretizationMethod")) {
                     discretizationMethod = node.getTextContent();
                 }
-                if ("DiscretizationBucketCount".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DiscretizationBucketCount")) {
                     discretizationBucketCount = toBigInteger(node.getTextContent());
                 }
-                if ("RootMemberIf".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "RootMemberIf")) {
                     rootMemberIf = node.getTextContent();
                 }
-                if ("OrderBy".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "OrderBy")) {
                     orderBy = node.getTextContent();
                 }
-                if (DEFAULT_MEMBER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DEFAULT_MEMBER)) {
                     defaultMember = node.getTextContent();
                 }
-                if ("OrderByAttributeID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "OrderByAttributeID")) {
                     orderByAttributeID = node.getTextContent();
                 }
-                if ("SkippedLevelsColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SkippedLevelsColumn")) {
                     skippedLevelsColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if ("NamingTemplate".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NamingTemplate")) {
                     namingTemplate = node.getTextContent();
                 }
-                if ("MembersWithData".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MembersWithData")) {
                     membersWithData = node.getTextContent();
                 }
-                if ("MembersWithDataCaption".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MembersWithDataCaption")) {
                     membersWithDataCaption = node.getTextContent();
                 }
-                if ("NamingTemplateTranslations".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NamingTemplateTranslations")) {
                     namingTemplateTranslations = getNamingTemplateTranslationList(node.getChildNodes());
                 }
-                if ("CustomRollupColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CustomRollupColumn")) {
                     customRollupColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if ("CustomRollupPropertiesColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CustomRollupPropertiesColumn")) {
                     customRollupPropertiesColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if ("unaryOperatorColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "unaryOperatorColumn")) {
                     unaryOperatorColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if ("AttributeHierarchyOrdered".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeHierarchyOrdered")) {
                     attributeHierarchyOrdered = toBoolean(node.getTextContent());
                 }
-                if ("MemberNamesUnique".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MemberNamesUnique")) {
                     memberNamesUnique = toBoolean(node.getTextContent());
                 }
-                if ("IsAggregatable".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsAggregatable")) {
                     isAggregatable = toBoolean(node.getTextContent());
                 }
-                if ("AttributeHierarchyEnabled".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeHierarchyEnabled")) {
                     attributeHierarchyEnabled = toBoolean(node.getTextContent());
                 }
-                if ("AttributeHierarchyOptimizedState".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeHierarchyOptimizedState")) {
                     attributeHierarchyOptimizedState = node.getTextContent();
                 }
-                if (ATTRIBUTE_HIERARCHY_VISIBLE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_HIERARCHY_VISIBLE)) {
                     attributeHierarchyVisible = toBoolean(node.getTextContent());
                 }
-                if ("AttributeHierarchyDisplayFolder".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeHierarchyDisplayFolder")) {
                     attributeHierarchyDisplayFolder = node.getTextContent();
                 }
-                if ("KeyUniquenessGuarantee".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyUniquenessGuarantee")) {
                     keyUniquenessGuarantee = toBoolean(node.getTextContent());
                 }
-                if ("GroupingBehavior".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "GroupingBehavior")) {
                     groupingBehavior = node.getTextContent();
                 }
-                if ("InstanceSelection".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "InstanceSelection")) {
                     instanceSelection = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (PROCESSING_STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_STATE)) {
                     processingState = node.getTextContent();
                 }
-                if ("AttributeHierarchyProcessingState".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AttributeHierarchyProcessingState")) {
                     attributeHierarchyProcessingState = AttributeHierarchyProcessingState
                             .fromValue(node.getTextContent());
                 }
-                if (VISUALIZATION_PROPERTIES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VISUALIZATION_PROPERTIES)) {
                     visualizationProperties = getDimensionAttributeVisualizationProperties(node.getChildNodes());
                 }
-                if ("ExtendedType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ExtendedType")) {
                     extendedType = node.getTextContent();
                 }
             }
@@ -616,46 +617,46 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (FOLDER_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FOLDER_POSITION)) {
                     folderPosition = toBigInteger(node.getTextContent());
                 }
-                if (CONTEXTUAL_NAME_RULE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CONTEXTUAL_NAME_RULE)) {
                     contextualNameRule = node.getTextContent();
                 }
-                if ("Alignment".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Alignment")) {
                     alignment = node.getTextContent();
                 }
-                if ("IsFolderDefault".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsFolderDefault")) {
                     isFolderDefault = toBoolean(node.getTextContent());
                 }
-                if ("IsRightToLeft".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsRightToLeft")) {
                     isRightToLeft = toBoolean(node.getTextContent());
                 }
-                if ("SortDirection".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SortDirection")) {
                     sortDirection = node.getTextContent();
                 }
-                if ("Units".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Units")) {
                     units = node.getTextContent();
                 }
-                if ("Width".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Width")) {
                     width = toBigInteger(node.getTextContent());
                 }
-                if (DEFAULT_DETAILS_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DEFAULT_DETAILS_POSITION)) {
                     defaultDetailsPosition = toBigInteger(node.getTextContent());
                 }
-                if (SORT_PROPERTIES_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SORT_PROPERTIES_POSITION)) {
                     sortPropertiesPosition = toBigInteger(node.getTextContent());
                 }
-                if ("CommonIdentifierPosition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CommonIdentifierPosition")) {
                     commonIdentifierPosition = toBigInteger(node.getTextContent());
                 }
-                if ("DisplayKeyPosition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DisplayKeyPosition")) {
                     displayKeyPosition = toBigInteger(node.getTextContent());
                 }
-                if ("IsDefaultImage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsDefaultImage")) {
                     isDefaultImage = toBoolean(node.getTextContent());
                 }
-                if ("DefaultAggregateFunction".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DefaultAggregateFunction")) {
                     defaultAggregateFunction = node.getTextContent();
                 }
             }
@@ -667,11 +668,11 @@ public class DimensionConverter {
     }
 
     public static List<Translation> getNamingTemplateTranslationList(NodeList nl) {
-        return getList(nl, "NamingTemplateTranslation", childNodes -> getTranslation(childNodes));
+        return getListByLocalName(nl, "NamingTemplateTranslation", childNodes -> getTranslation(childNodes));
     }
 
     public static List<AttributeTranslation> getAttributeRelationshipsList(NodeList nl) {
-        return getList(nl, "AttributeRelationship", childNodes -> getAttributeRelationship(childNodes));
+        return getListByLocalName(nl, "AttributeRelationship", childNodes -> getAttributeRelationship(childNodes));
     }
 
     private static AttributeTranslation getAttributeRelationship(NodeList nl) {
@@ -699,7 +700,7 @@ public class DimensionConverter {
     }
 
     public static List<Hierarchy> getHierarchyList(NodeList nl) {
-        return getList(nl, HIERARCHY, childNodes -> getHierarchy(childNodes));
+        return getListByLocalName(nl, HIERARCHY, childNodes -> getHierarchy(childNodes));
     }
 
     public static Hierarchy getHierarchy(NodeList nl) {
@@ -721,50 +722,50 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (PROCESSING_STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_STATE)) {
                     processingState = node.getTextContent();
                 }
-                if ("StructureType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "StructureType")) {
                     structureType = node.getTextContent();
                 }
-                if (DISPLAY_FOLDER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DISPLAY_FOLDER)) {
                     displayFolder = node.getTextContent();
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if ("AllMemberName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AllMemberName")) {
                     allMemberName = node.getTextContent();
                 }
-                if ("AllMemberTranslations".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AllMemberTranslations")) {
                     allMemberTranslations = CommonConverter.getTranslationList(node.getChildNodes(),
                             "AllMemberTranslation");
                 }
-                if ("MemberNamesUnique".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MemberNamesUnique")) {
                     memberNamesUnique = toBoolean(node.getTextContent());
                 }
-                if ("MemberKeysUnique".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MemberKeysUnique")) {
                     memberKeysUnique = node.getTextContent();
                 }
-                if ("AllowDuplicateNames".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AllowDuplicateNames")) {
                     allowDuplicateNames = toBoolean(node.getTextContent());
                 }
-                if ("Levels".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Levels")) {
                     levels = getLevelList(node.getChildNodes());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (VISUALIZATION_PROPERTIES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VISUALIZATION_PROPERTIES)) {
                     visualizationProperties = getHierarchyVisualizationProperties(node.getChildNodes());
                 }
             }
@@ -780,10 +781,10 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (CONTEXTUAL_NAME_RULE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CONTEXTUAL_NAME_RULE)) {
                     contextualNameRule = node.getTextContent();
                 }
-                if (FOLDER_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FOLDER_POSITION)) {
                     folderPosition = toBigInteger(node.getTextContent());
                 }
             }
@@ -792,7 +793,7 @@ public class DimensionConverter {
     }
 
     public static List<Level> getLevelList(NodeList nl) {
-        return getList(nl, "Level", childNodes -> getLevel(childNodes));
+        return getListByLocalName(nl, "Level", childNodes -> getLevel(childNodes));
     }
 
     public static Level getLevel(NodeList nl) {
@@ -806,25 +807,25 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if ("SourceAttributeID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SourceAttributeID")) {
                     sourceAttributeID = node.getTextContent();
                 }
-                if ("HideMemberIf".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "HideMemberIf")) {
                     hideMemberIf = node.getTextContent();
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -836,7 +837,7 @@ public class DimensionConverter {
         List<Relationship> relationship = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Relationship".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Relationship")) {
                 relationship.add(getRelationship(node.getChildNodes()));
                 break;
             }
@@ -852,16 +853,16 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (VISIBLE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VISIBLE)) {
                     visible = toBoolean(node.getTextContent());
                 }
-                if ("FromRelationshipEnd".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FromRelationshipEnd")) {
                     fromRelationshipEnd = getRelationshipEnd(node.getChildNodes());
                 }
-                if ("ToRelationshipEnd".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ToRelationshipEnd")) {
                     toRelationshipEnd = getRelationshipEnd(node.getChildNodes());
                 }
             }
@@ -879,22 +880,22 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ROLE2.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE2)) {
                     role = node.getTextContent();
                 }
-                if ("Multiplicity".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Multiplicity")) {
                     multiplicity = node.getTextContent();
                 }
-                if (DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSION_ID)) {
                     dimensionID = node.getTextContent();
                 }
-                if (ATTRIBUTES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTES)) {
                     attributes = getRelationshipEndAttributes(node.getChildNodes());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = getRelationshipEndTranslations(node.getChildNodes());
                 }
-                if (VISUALIZATION_PROPERTIES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VISUALIZATION_PROPERTIES)) {
                     visualizationProperties = getRelationshipEndVisualizationProperties(node.getChildNodes());
                 }
             }
@@ -914,28 +915,28 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (FOLDER_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FOLDER_POSITION)) {
                     folderPosition = toBigInteger(node.getTextContent());
                 }
-                if (CONTEXTUAL_NAME_RULE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CONTEXTUAL_NAME_RULE)) {
                     contextualNameRule = node.getTextContent();
                 }
-                if (DEFAULT_DETAILS_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DEFAULT_DETAILS_POSITION)) {
                     defaultDetailsPosition = toBigInteger(node.getTextContent());
                 }
-                if ("DisplayKeyPosition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DisplayKeyPosition")) {
                     displayKeyPosition = toBigInteger(node.getTextContent());
                 }
-                if ("CommonIdentifierPosition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CommonIdentifierPosition")) {
                     commonIdentifierPosition = toBigInteger(node.getTextContent());
                 }
-                if ("IsDefaultMeasure".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsDefaultMeasure")) {
                     isDefaultMeasure = toBoolean(node.getTextContent());
                 }
-                if ("IsDefaultImage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsDefaultImage")) {
                     isDefaultImage = toBoolean(node.getTextContent());
                 }
-                if (SORT_PROPERTIES_POSITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SORT_PROPERTIES_POSITION)) {
                     sortPropertiesPosition = toBigInteger(node.getTextContent());
                 }
             }
@@ -948,7 +949,7 @@ public class DimensionConverter {
         List<RelationshipEndTranslation> translations = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (TRANSLATION.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, TRANSLATION)) {
                 translations.add(getRelationshipEndTranslation(node.getChildNodes()));
             }
         }
@@ -965,22 +966,22 @@ public class DimensionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = toLong(node.getTextContent());
                 }
-                if (CAPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION)) {
                     caption = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (DISPLAY_FOLDER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DISPLAY_FOLDER)) {
                     displayFolder = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("CollectionCaption".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CollectionCaption")) {
                     collectionCaption = node.getTextContent();
                 }
             }
@@ -993,7 +994,7 @@ public class DimensionConverter {
         List<String> attributes = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ATTRIBUTE.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ATTRIBUTE)) {
                 attributes.add(getAttributeId(node.getChildNodes()));
             }
         }
@@ -1003,7 +1004,7 @@ public class DimensionConverter {
     public static String getAttributeId(NodeList nl) {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ATTRIBUTE_ID.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ATTRIBUTE_ID)) {
                 return node.getTextContent();
             }
         }

@@ -73,16 +73,13 @@ public class ExecuteDispatcher {
         while (nodeIterator.hasNext()) {
             Node node = nodeIterator.next();
             if (node instanceof SOAPElement element) {
-                if (properties == null && Constants.MSXMLA.QN_PROPERTIES.getLocalPart().equals(element.getElementQName().getLocalPart())
-                        && Constants.MSXMLA.QN_PROPERTIES.getNamespaceURI().equals(element.getElementQName().getNamespaceURI())) {
+                if (properties == null && Constants.MSXMLA.QN_PROPERTIES.equals(element.getElementQName())) {
                     properties = PropertyConverter.propertiestoProperties(element);
                 }
-                if (parameters == null && Constants.MSXMLA.QN_PARAMETERS.getLocalPart().equals(element.getElementQName().getLocalPart())
-                        && Constants.MSXMLA.QN_PARAMETERS.getNamespaceURI().equals(element.getElementQName().getNamespaceURI())) {
+                if (parameters == null && Constants.MSXMLA.QN_PARAMETERS.equals(element.getElementQName())) {
                     parameters = parametersToParameters(element);
                 }
-                if (command == null && Constants.MSXMLA.QN_COMMAND.getLocalPart().equals(element.getElementQName().getLocalPart())
-                        && Constants.MSXMLA.QN_COMMAND.getNamespaceURI().equals(element.getElementQName().getNamespaceURI())) {
+                if (command == null && Constants.MSXMLA.QN_COMMAND.equals(element.getElementQName())) {
                     command = CommandConverter.commandToCommand(element);
                 }
             }
@@ -118,10 +115,11 @@ public class ExecuteDispatcher {
                 while (parameterList.hasNext()) {
                     Node n1 = parameterList.next();
                     if (n1 instanceof SOAPElement pElement) {
-                        if ("name".equalsIgnoreCase(pElement.getLocalName())) {
+                        String localName = pElement.getLocalName();
+                        if ("Name".equalsIgnoreCase(localName)) {
                             name = pElement.getTextContent();
                         }
-                        if ("value".equalsIgnoreCase(pElement.getLocalName())) {
+                        if ("Value".equalsIgnoreCase(localName)) {
                             value = pElement.getTextContent();
                         }
                     }

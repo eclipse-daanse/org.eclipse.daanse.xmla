@@ -26,8 +26,9 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NAME;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ORDINAL;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.REFRESH_INTERVAL;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TABLE_ID;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getStringList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getStringListByLocalName;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toDuration;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
@@ -222,7 +223,7 @@ public class BindingConverter {
         String expression = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (EXPRESSION.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, EXPRESSION)) {
                 expression = node.getTextContent();
             }
         }
@@ -237,7 +238,7 @@ public class BindingConverter {
         String measureName = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("MeasureName".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "MeasureName")) {
                 measureName = node.getTextContent();
             }
         }
@@ -270,43 +271,43 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("CalendarStartDate".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CalendarStartDate")) {
                     calendarStartDate = toInstant(node.getTextContent());
                 }
-                if ("CalendarEndDate".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CalendarEndDate")) {
                     calendarEndDate = toInstant(node.getTextContent());
                 }
-                if ("FirstDayOfWeek".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FirstDayOfWeek")) {
                     firstDayOfWeek = toInteger(node.getTextContent());
                 }
-                if ("CalendarLanguage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CalendarLanguage")) {
                     calendarLanguage = toBigInteger(node.getTextContent());
                 }
-                if ("FiscalFirstMonth".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FiscalFirstMonth")) {
                     fiscalFirstMonth = toInteger(node.getTextContent());
                 }
-                if ("FiscalFirstDayOfMonth".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FiscalFirstDayOfMonth")) {
                     fiscalFirstDayOfMonth = toInteger(node.getTextContent());
                 }
-                if ("FiscalYearName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FiscalYearName")) {
                     fiscalYearName = FiscalYearNameEnum.fromValue(node.getTextContent());
                 }
-                if ("ReportingFirstMonth".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReportingFirstMonth")) {
                     reportingFirstMonth = toInteger(node.getTextContent());
                 }
-                if ("ReportingFirstWeekOfMonth".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReportingFirstWeekOfMonth")) {
                     reportingFirstWeekOfMonth = node.getTextContent();
                 }
-                if ("ReportingWeekToMonthPattern".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReportingWeekToMonthPattern")) {
                     reportingWeekToMonthPattern = ReportingWeekToMonthPatternEnum.fromValue(node.getTextContent());
                 }
-                if ("ManufacturingFirstMonth".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ManufacturingFirstMonth")) {
                     manufacturingFirstMonth = toInteger(node.getTextContent());
                 }
-                if ("ManufacturingFirstWeekOfMonth".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ManufacturingFirstWeekOfMonth")) {
                     manufacturingFirstWeekOfMonth = toInteger(node.getTextContent());
                 }
-                if ("ManufacturingExtraMonthQuarter".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ManufacturingExtraMonthQuarter")) {
                     manufacturingExtraMonthQuarter = toInteger(node.getTextContent());
                 }
             }
@@ -324,7 +325,7 @@ public class BindingConverter {
         String cubeDimensionID = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (CUBE_DIMENSION_ID.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                 cubeDimensionID = node.getTextContent();
             }
         }
@@ -340,16 +341,16 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (DATA_SOURCE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DATA_SOURCE_ID)) {
                     dataSourceID = node.getTextContent();
                 }
-                if (CUBE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_ID)) {
                     cubeID = node.getTextContent();
                 }
-                if (CUBE_DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                     cubeDimensionID = node.getTextContent();
                 }
-                if (FILTER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FILTER)) {
                     filter = node.getTextContent();
                 }
             }
@@ -367,19 +368,19 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (DATA_SOURCE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DATA_SOURCE_ID)) {
                     dataSourceID = node.getTextContent();
                 }
-                if (DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSION_ID)) {
                     dimensionID = node.getTextContent();
                 }
-                if ("Persistence".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Persistence")) {
                     persistence = PersistenceEnum.fromValue(node.getTextContent());
                 }
-                if ("RefreshPolicy".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "RefreshPolicy")) {
                     refreshPolicy = RefreshPolicyEnum.fromValue(node.getTextContent());
                 }
-                if (REFRESH_INTERVAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, REFRESH_INTERVAL)) {
                     refreshInterval = toDuration(node.getTextContent());
                 }
             }
@@ -398,19 +399,19 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (CUBE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_ID)) {
                     cubeID = node.getTextContent();
                 }
-                if (CUBE_DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                     cubeDimensionID = node.getTextContent();
                 }
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = AttributeBindingTypeEnum.fromValue(node.getTextContent());
                 }
-                if (ORDINAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ORDINAL)) {
                     ordinal = getOrdinalList(node.getChildNodes());
                 }
             }
@@ -422,7 +423,7 @@ public class BindingConverter {
         List<BigInteger> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ORDINAL.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ORDINAL)) {
                 list.add(toBigInteger(node.getTextContent()));
             }
         }
@@ -433,7 +434,7 @@ public class BindingConverter {
         String measureID = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (MEASURE_ID.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, MEASURE_ID)) {
                 measureID = node.getTextContent();
             }
         }
@@ -447,10 +448,10 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if ("Groups".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Groups")) {
                     groups = getGroupList(node.getChildNodes());
                 }
             }
@@ -459,7 +460,7 @@ public class BindingConverter {
     }
 
     public static List<Group> getGroupList(NodeList nl) {
-        return getList(nl, "Group", BindingConverter::getGroup);
+        return getListByLocalName(nl, "Group", BindingConverter::getGroup);
     }
 
     public static Group getGroup(NodeList nl) {
@@ -469,10 +470,10 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if ("Members".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Members")) {
                     members = getMemberStringList(node.getChildNodes());
                 }
             }
@@ -481,7 +482,7 @@ public class BindingConverter {
     }
 
     public static List<String> getMemberStringList(NodeList nl) {
-        return getStringList(nl, "Member");
+        return getStringListByLocalName(nl, "Member");
     }
 
     public static Binding getAttributeBinding(NodeList nl) {
@@ -492,13 +493,13 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = AttributeBindingTypeEnum.fromValue(node.getTextContent());
                 }
-                if (ORDINAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ORDINAL)) {
                     ordinal = toInteger(node.getTextContent());
                 }
             }
@@ -510,7 +511,7 @@ public class BindingConverter {
         String tableID = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (TABLE_ID.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, TABLE_ID)) {
                 tableID = node.getTextContent();
             }
         }
@@ -521,7 +522,7 @@ public class BindingConverter {
         String dataSourceViewID = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("DataSourceViewID".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "DataSourceViewID")) {
                 dataSourceViewID = node.getTextContent();
             }
         }
@@ -550,13 +551,13 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (DATA_SOURCE_VIEW_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DATA_SOURCE_VIEW_ID)) {
                     dataSourceViewID = node.getTextContent();
                 }
-                if (TABLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TABLE_ID)) {
                     tableID = node.getTextContent();
                 }
-                if ("DataEmbeddingStyle".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataEmbeddingStyle")) {
                     dataEmbeddingStyle = node.getTextContent();
                 }
             }
@@ -572,10 +573,10 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (DATA_SOURCE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DATA_SOURCE_ID)) {
                     dataSourceID = node.getTextContent();
                 }
-                if ("QueryDefinition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "QueryDefinition")) {
                     queryDefinition = node.getTextContent();
                 }
             }
@@ -591,13 +592,13 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (DATA_SOURCE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DATA_SOURCE_ID)) {
                     dataSourceID = node.getTextContent();
                 }
-                if ("DbTableName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DbTableName")) {
                     dbTableName = node.getTextContent();
                 }
-                if ("DbSchemaName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DbSchemaName")) {
                     dbSchemaName = node.getTextContent();
                 }
             }
@@ -623,10 +624,10 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (REFRESH_INTERVAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, REFRESH_INTERVAL)) {
                     refreshInterval = toDuration(node.getTextContent());
                 }
-                if ("IncrementalProcessingNotifications".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IncrementalProcessingNotifications")) {
                     incrementalProcessingNotifications = getIncrementalProcessingNotificationList(node.getChildNodes());
                 }
             }
@@ -636,7 +637,8 @@ public class BindingConverter {
     }
 
     public static List<IncrementalProcessingNotification> getIncrementalProcessingNotificationList(NodeList nl) {
-        return getList(nl, "IncrementalProcessingNotification", BindingConverter::getIncrementalProcessingNotification);
+        return getListByLocalName(nl, "IncrementalProcessingNotification",
+                BindingConverter::getIncrementalProcessingNotification);
     }
 
     public static IncrementalProcessingNotification getIncrementalProcessingNotification(NodeList nl) {
@@ -646,10 +648,10 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (TABLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TABLE_ID)) {
                     tableID = node.getTextContent();
                 }
-                if ("ProcessingQuery".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ProcessingQuery")) {
                     processingQuery = node.getTextContent();
                 }
             }
@@ -667,10 +669,10 @@ public class BindingConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (TABLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TABLE_ID)) {
                     tableID = node.getTextContent();
                 }
-                if ("ColumnID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ColumnID")) {
                     columnID = node.getTextContent();
                 }
             }

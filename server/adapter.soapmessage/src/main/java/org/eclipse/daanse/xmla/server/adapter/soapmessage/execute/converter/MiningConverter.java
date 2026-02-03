@@ -37,9 +37,10 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANS
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATIONS;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VALUE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.WRITE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getNodeType;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getStringList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getStringListByLocalName;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
@@ -93,7 +94,7 @@ public class MiningConverter {
     }
 
     public static List<MiningStructure> getMiningStructureList(NodeList nl) {
-        return getList(nl, "MiningStructure", childNl -> getMiningStructure(childNl));
+        return getListByLocalName(nl, "MiningStructure", childNl -> getMiningStructure(childNl));
     }
 
     public static MiningStructure getMiningStructure(NodeList nl) {
@@ -122,49 +123,49 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if (LAST_PROCESSED.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_PROCESSED)) {
                     lastProcessed = toInstant(node.getTextContent());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = toBigInteger(node.getTextContent());
                 }
-                if (COLLATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLLATION)) {
                     collation = node.getTextContent();
                 }
-                if (ERROR_CONFIGURATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ERROR_CONFIGURATION)) {
                     errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
                 }
-                if ("CacheMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CacheMode")) {
                     cacheMode = node.getTextContent();
                 }
-                if ("HoldoutMaxPercent".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "HoldoutMaxPercent")) {
                     holdoutMaxPercent = toInteger(node.getTextContent());
                 }
-                if ("HoldoutMaxCases".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "HoldoutMaxCases")) {
                     holdoutMaxCases = toInteger(node.getTextContent());
                 }
-                if ("HoldoutSeed".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "HoldoutSeed")) {
                     holdoutSeed = toInteger(node.getTextContent());
                 }
-                if ("HoldoutActualSize".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "HoldoutActualSize")) {
                     holdoutSeed = toInteger(node.getTextContent());
                 }
-                if (COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLUMNS)) {
                     columns = getMiningStructureColumnList(node.getChildNodes());
                 }
-                if (STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STATE)) {
                     state = node.getTextContent();
                 }
-                if ("MiningStructurePermissions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MiningStructurePermissions")) {
                     miningStructurePermissions = getMiningStructurePermissionList(node.getChildNodes());
                 }
-                if ("MiningModels".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MiningModels")) {
                     miningModels = getMiningModelList(node.getChildNodes());
                 }
             }
@@ -181,11 +182,11 @@ public class MiningConverter {
     }
 
     public static List<MiningModel> getMiningModelList(NodeList nl) {
-        return getList(nl, "MiningModel", childNl -> getMiningModel(childNl));
+        return getListByLocalName(nl, "MiningModel", childNl -> getMiningModel(childNl));
     }
 
     private static List<MiningStructurePermission> getMiningStructurePermissionList(NodeList nl) {
-        return getList(nl, "MiningStructurePermission", childNl -> getMiningStructurePermission(childNl));
+        return getListByLocalName(nl, "MiningStructurePermission", childNl -> getMiningStructurePermission(childNl));
     }
 
     private static MiningStructurePermission getMiningStructurePermission(NodeList nl) {
@@ -205,40 +206,40 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ALLOW_DRILL_THROUGH.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ALLOW_DRILL_THROUGH)) {
                     allowDrillThrough = toBoolean(node.getTextContent());
                 }
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (ROLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE_ID)) {
                     roleID = node.getTextContent();
                 }
-                if (PROCESS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESS)) {
                     process = toBoolean(node.getTextContent());
                 }
-                if (READ_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, READ_DEFINITION)) {
                     readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
                 }
-                if ("Read".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Read")) {
                     read = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if (WRITE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, WRITE)) {
                     write = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
             }
@@ -254,7 +255,7 @@ public class MiningConverter {
         List<MiningStructureColumn> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("MiningStructurePermission".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "MiningStructurePermission")) {
                 list.add(getMiningStructureColumn(node.getChildNodes(), getNodeType(node)));
             }
         }
@@ -280,16 +281,16 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("ForeignKeyColumns".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ForeignKeyColumns")) {
                     foreignKeyColumns = CommonConverter.getDataItemList(node.getChildNodes(), "ForeignKeyColumn");
                 }
-                if ("SourceMeasureGroup".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SourceMeasureGroup")) {
                     sourceMeasureGroup = CubeConverter.getMeasureGroupBinding(node.getChildNodes());
                 }
-                if (COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLUMNS)) {
                     columns = getMiningStructureColumnList(node.getChildNodes());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
             }
@@ -320,52 +321,52 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("IsKey".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "IsKey")) {
                     isKey = toBoolean(node.getTextContent());
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if ("Distribution".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Distribution")) {
                     distribution = node.getTextContent();
                 }
-                if ("ModelingFlags".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ModelingFlags")) {
                     modelingFlags = getMiningModelingFlagList(node.getChildNodes());
                 }
-                if ("Content".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Content")) {
                     content = node.getTextContent();
                 }
-                if ("ClassifiedColumns".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ClassifiedColumns")) {
                     classifiedColumns = getClassifiedColumnList(node.getChildNodes());
                 }
-                if ("DiscretizationMethod".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DiscretizationMethod")) {
                     discretizationMethod = node.getTextContent();
                 }
-                if ("DiscretizationBucketCount".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DiscretizationBucketCount")) {
                     discretizationBucketCount = toBigInteger(node.getTextContent());
                 }
-                if (KEY_COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, KEY_COLUMNS)) {
                     keyColumns = CommonConverter.getDataItemList(node.getChildNodes(), KEY_COLUMN);
                 }
-                if ("NameColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NameColumn")) {
                     nameColumn = CommonConverter.getDataItem(node.getChildNodes());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
             }
@@ -379,7 +380,7 @@ public class MiningConverter {
     }
 
     private static List<String> getClassifiedColumnList(NodeList nl) {
-        return getStringList(nl, "ClassifiedColumn");
+        return getStringListByLocalName(nl, "ClassifiedColumn");
     }
 
     public static MiningModel getMiningModel(NodeList nl) {
@@ -405,40 +406,40 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("Algorithm".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Algorithm")) {
                     algorithm = node.getTextContent();
                 }
-                if (LAST_PROCESSED.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_PROCESSED)) {
                     lastProcessed = toInstant(node.getTextContent());
                 }
-                if ("AlgorithmParameters".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AlgorithmParameters")) {
                     algorithmParameters = getAlgorithmParameterList(node.getChildNodes());
                 }
-                if (ALLOW_DRILL_THROUGH.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ALLOW_DRILL_THROUGH)) {
                     allowDrillThrough = toBoolean(node.getTextContent());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getAttributeTranslationList(node.getChildNodes());
                 }
-                if (COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLUMNS)) {
                     columns = getMiningModelColumnList(node.getChildNodes());
                 }
-                if (STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STATE)) {
                     state = node.getTextContent();
                 }
-                if ("FoldingParameters".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FoldingParameters")) {
                     foldingParameters = getFoldingParameters(node.getChildNodes());
                 }
-                if (FILTER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FILTER)) {
                     filter = node.getTextContent();
                 }
-                if ("MiningModelPermissions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MiningModelPermissions")) {
                     miningModelPermissions = getMiningModelPermissionList(node.getChildNodes());
                 }
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = node.getTextContent();
                 }
-                if (COLLATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLLATION)) {
                     collation = node.getTextContent();
                 }
             }
@@ -454,7 +455,7 @@ public class MiningConverter {
     }
 
     private static List<MiningModelPermission> getMiningModelPermissionList(NodeList nl) {
-        return getList(nl, "MiningModelPermission", childNl -> getMiningModelPermission(childNl));
+        return getListByLocalName(nl, "MiningModelPermission", childNl -> getMiningModelPermission(childNl));
     }
 
     private static MiningModelPermission getMiningModelPermission(NodeList nl) {
@@ -475,25 +476,25 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ALLOW_DRILL_THROUGH.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ALLOW_DRILL_THROUGH)) {
                     allowDrillThrough = toBoolean(node.getTextContent());
                 }
-                if ("AllowBrowsing".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AllowBrowsing")) {
                     allowBrowsing = toBoolean(node.getTextContent());
                 }
-                if (ROLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE_ID)) {
                     roleID = node.getTextContent();
                 }
-                if (PROCESS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESS)) {
                     process = toBoolean(node.getTextContent());
                 }
-                if (READ_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, READ_DEFINITION)) {
                     readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
                 }
-                if ("Read".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Read")) {
                     read = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if (WRITE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, WRITE)) {
                     write = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
             }
@@ -514,16 +515,16 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("FoldIndex".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FoldIndex")) {
                     foldIndex = toInteger(node.getTextContent());
                 }
-                if ("FoldCount".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FoldCount")) {
                     foldCount = toInteger(node.getTextContent());
                 }
-                if ("FoldMaxCases".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FoldMaxCases")) {
                     foldMaxCases = toLong(node.getTextContent());
                 }
-                if ("FoldTargetAttribute".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "FoldTargetAttribute")) {
                     foldTargetAttribute = node.getTextContent();
                 }
             }
@@ -533,7 +534,7 @@ public class MiningConverter {
     }
 
     private static List<MiningModelColumn> getMiningModelColumnList(NodeList nl) {
-        return getList(nl, "MiningModelColumn", childNl -> getMiningModelColumn(childNl));
+        return getListByLocalName(nl, "MiningModelColumn", childNl -> getMiningModelColumn(childNl));
     }
 
     private static MiningModelColumn getMiningModelColumn(NodeList nl) {
@@ -551,34 +552,34 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if ("SourceColumnID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SourceColumnID")) {
                     sourceColumnID = node.getTextContent();
                 }
-                if ("Usage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Usage")) {
                     usage = node.getTextContent();
                 }
-                if (FILTER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FILTER)) {
                     filter = node.getTextContent();
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLUMNS)) {
                     columns = getMiningModelColumnList(node.getChildNodes());
                 }
-                if ("ModelingFlags".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ModelingFlags")) {
                     modelingFlags = getMiningModelingFlagList(node.getChildNodes());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -591,14 +592,14 @@ public class MiningConverter {
     }
 
     private static List<MiningModelingFlag> getMiningModelingFlagList(NodeList nl) {
-        return getList(nl, "ModelingFlag", MiningConverter::getMiningModelingFlag);
+        return getListByLocalName(nl, "ModelingFlag", MiningConverter::getMiningModelingFlag);
     }
 
     private static MiningModelingFlag getMiningModelingFlag(NodeList nl) {
         String modelingFlag = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("ModelingFlag".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "ModelingFlag")) {
                 modelingFlag = node.getTextContent();
                 break;
             }
@@ -610,7 +611,7 @@ public class MiningConverter {
         List<AlgorithmParameter> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("AlgorithmParameter".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "AlgorithmParameter")) {
                 list.add(getAlgorithmParameter(node.getChildNodes()));
             }
         }
@@ -623,10 +624,10 @@ public class MiningConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (VALUE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VALUE)) {
                     value = node.getTextContent();
                 }
             }

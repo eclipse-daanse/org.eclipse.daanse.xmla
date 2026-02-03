@@ -20,6 +20,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.DESCR
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ID;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.LAST_SCHEMA_UPDATE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NAME;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.nodeListToMap;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toDuration;
@@ -63,7 +64,7 @@ public class DataSourceConverter {
         List<DataSourceView> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("DataSourceView".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "DataSourceView")) {
                 list.add(getDataSourceView(node.getChildNodes()));
             }
         }
@@ -82,25 +83,25 @@ public class DataSourceConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (DATA_SOURCE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DATA_SOURCE_ID)) {
                     dataSourceID = node.getTextContent();
                 }
             }
@@ -113,7 +114,7 @@ public class DataSourceConverter {
         List<DataSource> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("DataSource".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "DataSource")) {
                 list.add(getDataSource(node.getChildNodes()));
             }
         }
@@ -141,52 +142,52 @@ public class DataSourceConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("ManagedProvider".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ManagedProvider")) {
                     managedProvider = node.getTextContent();
                 }
-                if ("ConnectionString".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ConnectionString")) {
                     connectionString = node.getTextContent();
                 }
-                if ("ConnectionStringSecurity".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ConnectionStringSecurity")) {
                     connectionStringSecurity = node.getTextContent();
                 }
-                if ("ImpersonationInfo".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImpersonationInfo")) {
                     impersonationInfo = getImpersonationInfo(node.getChildNodes());
                 }
-                if ("Isolation".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Isolation")) {
                     isolation = node.getTextContent();
                 }
-                if ("MaxActiveConnections".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MaxActiveConnections")) {
                     maxActiveConnections = toBigInteger(node.getTextContent());
                 }
-                if ("Timeout".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Timeout")) {
                     timeout = toDuration(node.getTextContent());
                 }
-                if ("DataSourcePermissions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSourcePermissions")) {
                     dataSourcePermissions = PermissionConverter.getDataSourcePermissionList(node.getChildNodes());
                 }
-                if ("QueryImpersonationInfo".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "QueryImpersonationInfo")) {
                     queryImpersonationInfo = getImpersonationInfo(node.getChildNodes());
                 }
-                if ("QueryHints".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "QueryHints")) {
                     queryHints = node.getTextContent();
                 }
             }
@@ -205,16 +206,16 @@ public class DataSourceConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("ImpersonationMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImpersonationMode")) {
                     impersonationMode = node.getTextContent();
                 }
-                if ("Account".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Account")) {
                     account = node.getTextContent();
                 }
-                if ("Password".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Password")) {
                     password = node.getTextContent();
                 }
-                if ("ImpersonationInfoSecurity".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImpersonationInfoSecurity")) {
                     impersonationInfoSecurity = node.getTextContent();
                 }
             }

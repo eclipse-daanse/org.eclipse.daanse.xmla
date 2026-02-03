@@ -23,6 +23,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.PROCE
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.READ_DEFINITION;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROLE_ID;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.WRITE;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
 
@@ -67,19 +68,19 @@ public class PermissionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ROLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE_ID)) {
                     roleID = node.getTextContent();
                 }
-                if (PROCESS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESS)) {
                     process = toBoolean(node.getTextContent());
                 }
-                if (READ_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, READ_DEFINITION)) {
                     readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
                 }
-                if ("Read".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Read")) {
                     read = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if (WRITE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, WRITE)) {
                     write = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
             }
@@ -94,7 +95,7 @@ public class PermissionConverter {
         List<DataSourcePermission> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("DataSourcePermission".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "DataSourcePermission")) {
                 list.add(getDataSourcePermission(node.getChildNodes()));
             }
         }
@@ -117,37 +118,37 @@ public class PermissionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (ROLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE_ID)) {
                     roleID = node.getTextContent();
                 }
-                if (PROCESS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESS)) {
                     process = toBoolean(node.getTextContent());
                 }
-                if (READ_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, READ_DEFINITION)) {
                     readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
                 }
-                if ("Read".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Read")) {
                     read = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if (WRITE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, WRITE)) {
                     write = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
             }
@@ -162,7 +163,7 @@ public class PermissionConverter {
         List<DatabasePermission> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("DatabasePermission".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "DatabasePermission")) {
                 list.add(getDatabasePermission(node.getChildNodes()));
             }
         }
@@ -186,40 +187,40 @@ public class PermissionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (ROLE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE_ID)) {
                     roleID = node.getTextContent();
                 }
-                if (PROCESS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESS)) {
                     process = toBoolean(node.getTextContent());
                 }
-                if (READ_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, READ_DEFINITION)) {
                     readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
                 }
-                if ("Read".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Read")) {
                     read = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if (WRITE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, WRITE)) {
                     write = ReadWritePermissionEnum.fromValue(node.getTextContent());
                 }
-                if ("Administer".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Administer")) {
                     administer = toBoolean(node.getTextContent());
                 }
             }

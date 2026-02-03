@@ -42,6 +42,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROLE_
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.SERVER_ID;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.STATEMENT;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRACE_ID;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.nodeListToMap;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
@@ -113,21 +114,16 @@ public class CommandParser {
     }
 
     static Command getCommand(org.w3c.dom.Node n, MajorObjectParser majorObjectParser) {
-        String nodeName = n.getNodeName();
-        int colonIndex = nodeName.indexOf(':');
-        if (colonIndex >= 0) {
-            nodeName = nodeName.substring(colonIndex + 1);
-        }
-        if (STATEMENT.equals(nodeName)) {
+        if (matchesLocalName(n, STATEMENT)) {
             return new StatementR(n.getTextContent());
         }
-        if (ALTER.equals(nodeName)) {
+        if (matchesLocalName(n, ALTER)) {
             return getAlterCommand(n.getChildNodes(), majorObjectParser);
         }
-        if (CLEAR_CACHE.equals(nodeName)) {
+        if (matchesLocalName(n, CLEAR_CACHE)) {
             return getClearCacheCommand(n.getChildNodes());
         }
-        if (CANCEL.equals(nodeName)) {
+        if (matchesLocalName(n, CANCEL)) {
             return getCancelCommand(n.getChildNodes());
         }
         return null;
@@ -147,7 +143,7 @@ public class CommandParser {
         ObjectReference object = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null && OBJECT_REFERENCE.equals(node.getNodeName())) {
+            if (matchesLocalName(node, OBJECT_REFERENCE)) {
                 object = getObjectReference(node.getChildNodes());
                 break;
             }
@@ -165,19 +161,19 @@ public class CommandParser {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (OBJECT_REFERENCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, OBJECT_REFERENCE)) {
                     object = getObjectReference(node.getChildNodes());
                 }
-                if (OBJECT_DEFINITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, OBJECT_DEFINITION)) {
                     objectDefinition = majorObjectParser.getMajorObject(node.getChildNodes());
                 }
-                if (COMMAND_SCOPE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COMMAND_SCOPE)) {
                     scope = Scope.fromValue(node.getTextContent());
                 }
-                if (ALLOW_CREATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ALLOW_CREATE)) {
                     allowCreate = toBoolean(node.getTextContent());
                 }
-                if (OBJECT_EXPANSION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, OBJECT_EXPANSION)) {
                     objectExpansion = ObjectExpansion.fromValue(node.getTextContent());
                 }
             }
