@@ -26,7 +26,8 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ESTIM
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ID;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.LAST_SCHEMA_UPDATE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NAME;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toLong;
@@ -84,35 +85,35 @@ public class AggregationConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = Optional.ofNullable(node.getTextContent());
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = Optional.ofNullable(toInstant(node.getTextContent()));
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = Optional.ofNullable(toInstant(node.getTextContent()));
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = Optional.ofNullable(node.getTextContent());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = Optional.ofNullable(annotationParser.getAnnotationList(node.getChildNodes()));
                 }
-                if (ESTIMATED_ROWS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ESTIMATED_ROWS)) {
                     estimatedRows = Optional.ofNullable(toLong(node.getTextContent()));
                 }
-                if (DIMENSIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSIONS)) {
                     dimensions = Optional
                             .ofNullable(getAggregationDesignDimensionList(node.getChildNodes(), annotationParser));
                 }
-                if ("Aggregations".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Aggregations")) {
                     aggregations = Optional.ofNullable(getAggregationList(node.getChildNodes(), annotationParser));
                 }
-                if ("EstimatedPerformanceGain".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "EstimatedPerformanceGain")) {
                     estimatedPerformanceGain = Optional.ofNullable(toInteger(node.getTextContent()));
                 }
             }
@@ -122,7 +123,7 @@ public class AggregationConverter {
     }
 
     public static List<Aggregation> getAggregationList(NodeList nl, AnnotationListParser annotationParser) {
-        return getList(nl, "Aggregation", childNl -> getAggregation(childNl, annotationParser));
+        return getListByLocalName(nl, "Aggregation", childNl -> getAggregation(childNl, annotationParser));
     }
 
     public static Aggregation getAggregation(NodeList nl, AnnotationListParser annotationParser) {
@@ -135,19 +136,19 @@ public class AggregationConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = Optional.ofNullable(node.getTextContent());
                 }
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = Optional.ofNullable(node.getTextContent());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = Optional.ofNullable(annotationParser.getAnnotationList(node.getChildNodes()));
                 }
-                if (DIMENSIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSIONS)) {
                     dimensions = Optional
                             .ofNullable(getAggregationDimensionList(node.getChildNodes(), annotationParser));
                 }
@@ -158,7 +159,7 @@ public class AggregationConverter {
 
     public static List<AggregationDimension> getAggregationDimensionList(NodeList nl,
             AnnotationListParser annotationParser) {
-        return getList(nl, DIMENSION, childNl -> getAggregationDimension(childNl, annotationParser));
+        return getListByLocalName(nl, DIMENSION, childNl -> getAggregationDimension(childNl, annotationParser));
     }
 
     public static AggregationDimension getAggregationDimension(NodeList nl, AnnotationListParser annotationParser) {
@@ -169,14 +170,14 @@ public class AggregationConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (CUBE_DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                     cubeDimensionID = node.getTextContent();
                 }
-                if (ATTRIBUTES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTES)) {
                     attributes = Optional
                             .ofNullable(getAggregationAttributeList(node.getChildNodes(), annotationParser));
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = Optional.ofNullable(annotationParser.getAnnotationList(node.getChildNodes()));
                 }
             }
@@ -186,7 +187,7 @@ public class AggregationConverter {
 
     public static List<AggregationAttribute> getAggregationAttributeList(NodeList nl,
             AnnotationListParser annotationParser) {
-        return getList(nl, ATTRIBUTE, childNl -> getAggregationAttribute(childNl, annotationParser));
+        return getListByLocalName(nl, ATTRIBUTE, childNl -> getAggregationAttribute(childNl, annotationParser));
     }
 
     public static AggregationAttribute getAggregationAttribute(NodeList nl, AnnotationListParser annotationParser) {
@@ -196,10 +197,10 @@ public class AggregationConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = annotationParser.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -209,7 +210,7 @@ public class AggregationConverter {
 
     public static List<AggregationDesignDimension> getAggregationDesignDimensionList(NodeList nl,
             AnnotationListParser annotationParser) {
-        return getList(nl, DIMENSION, childNl -> getAggregationDesignDimension(childNl, annotationParser));
+        return getListByLocalName(nl, DIMENSION, childNl -> getAggregationDesignDimension(childNl, annotationParser));
     }
 
     public static AggregationDesignDimension getAggregationDesignDimension(NodeList nl,
@@ -221,13 +222,13 @@ public class AggregationConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (CUBE_DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                     cubeDimensionID = node.getTextContent();
                 }
-                if (ATTRIBUTES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTES)) {
                     attributes = getAggregationDesignAttributeList(node.getChildNodes());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = annotationParser.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -237,7 +238,7 @@ public class AggregationConverter {
     }
 
     public static List<AggregationDesignAttribute> getAggregationDesignAttributeList(NodeList nl) {
-        return getList(nl, ATTRIBUTE, AggregationConverter::getAggregationDesignAttribute);
+        return getListByLocalName(nl, ATTRIBUTE, AggregationConverter::getAggregationDesignAttribute);
     }
 
     public static AggregationDesignAttribute getAggregationDesignAttribute(NodeList nl) {
@@ -247,10 +248,10 @@ public class AggregationConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if ("EstimatedCount".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "EstimatedCount")) {
                     estimatedCount = toLong(node.getTextContent());
                 }
             }

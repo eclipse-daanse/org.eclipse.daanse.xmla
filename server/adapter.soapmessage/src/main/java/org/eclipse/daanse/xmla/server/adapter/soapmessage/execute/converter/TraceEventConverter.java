@@ -24,7 +24,8 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NOT_E
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NOT_LIKE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VALUE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getAttribute;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
@@ -73,7 +74,7 @@ public class TraceEventConverter {
     }
 
     public static List<Trace> getTraceList(NodeList nl) {
-        return getList(nl, "Trace", TraceEventConverter::getTrace);
+        return getListByLocalName(nl, "Trace", TraceEventConverter::getTrace);
     }
 
     public static Trace getTrace(NodeList nl) {
@@ -96,31 +97,31 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("LogFileName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "LogFileName")) {
                     logFileName = node.getTextContent();
                 }
-                if ("LogFileAppend".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "LogFileAppend")) {
                     logFileAppend = toBoolean(node.getTextContent());
                 }
-                if ("LogFileSize".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "LogFileSize")) {
                     logFileSize = toLong(node.getTextContent());
                 }
-                if ("Audit".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Audit")) {
                     audit = toBoolean(node.getTextContent());
                 }
-                if ("LogFileRollover".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "LogFileRollover")) {
                     logFileRollover = toBoolean(node.getTextContent());
                 }
-                if ("AutoRestart".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AutoRestart")) {
                     autoRestart = toBoolean(node.getTextContent());
                 }
-                if ("StopTime".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "StopTime")) {
                     stopTime = toInstant(node.getTextContent());
                 }
-                if (FILTER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, FILTER)) {
                     filter = getTraceFilter(node.getChildNodes());
                 }
-                if ("EventType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "EventType")) {
                     eventType = getEventType(node.getChildNodes());
                 }
             }
@@ -136,10 +137,10 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("Events".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Events")) {
                     events = getEventList(node.getChildNodes());
                 }
-                if ("XEvent".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "XEvent")) {
                     xEvent = getXEvent(node.getChildNodes());
                 }
             }
@@ -152,7 +153,7 @@ public class TraceEventConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("event_session".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "event_session")) {
                 eventSession = getEventSession(node.getChildNodes());
             }
         }
@@ -176,19 +177,19 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("templateCategory".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "templateCategory")) {
                     templateCategory = node.getTextContent();
                 }
-                if ("templateName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "templateName")) {
                     templateName = node.getTextContent();
                 }
-                if ("templateDescription".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "templateDescription")) {
                     templateDescription = node.getTextContent();
                 }
-                if ("event".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "event")) {
                     event.add(node.getTextContent());
                 }
-                if ("target".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "target")) {
                     target.add(node.getTextContent());
                 }
                 NamedNodeMap nm = node.getAttributes();
@@ -206,7 +207,7 @@ public class TraceEventConverter {
     }
 
     public static List<Event> getEventList(NodeList nl) {
-        return getList(nl, "Event", TraceEventConverter::getEvent);
+        return getListByLocalName(nl, "Event", TraceEventConverter::getEvent);
     }
 
     public static Event getEvent(NodeList nl) {
@@ -216,10 +217,10 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (EVENT_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, EVENT_ID)) {
                     eventID = node.getTextContent();
                 }
-                if (COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLUMNS)) {
                     columns = getEventColumnID(node.getChildNodes());
                 }
             }
@@ -232,7 +233,7 @@ public class TraceEventConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (EVENT_ID.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, EVENT_ID)) {
                 columnID.add(node.getTextContent());
             }
         }
@@ -255,37 +256,37 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("Not".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Not")) {
                     not = getNotType(node.getChildNodes());
                 }
-                if ("Or".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Or")) {
                     or = getAndOrType(node.getChildNodes());
                 }
-                if ("And".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "And")) {
                     and = getAndOrType(node.getChildNodes());
                 }
-                if (EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, EQUAL)) {
                     isEqual = getBoolBinop(node.getChildNodes());
                 }
-                if (NOT_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NOT_EQUAL)) {
                     notEqual = getBoolBinop(node.getChildNodes());
                 }
-                if ("Less".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Less")) {
                     less = getBoolBinop(node.getChildNodes());
                 }
-                if (LESS_OR_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LESS_OR_EQUAL)) {
                     lessOrEqual = getBoolBinop(node.getChildNodes());
                 }
-                if (GREATER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, GREATER)) {
                     greater = getBoolBinop(node.getChildNodes());
                 }
-                if (GREATER_OR_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, GREATER_OR_EQUAL)) {
                     greaterOrEqual = getBoolBinop(node.getChildNodes());
                 }
-                if ("Like".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Like")) {
                     like = getBoolBinop(node.getChildNodes());
                 }
-                if (NOT_LIKE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NOT_LIKE)) {
                     notLike = getBoolBinop(node.getChildNodes());
                 }
             }
@@ -301,10 +302,10 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("ColumnID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ColumnID")) {
                     columnID = node.getTextContent();
                 }
-                if (VALUE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VALUE)) {
                     value = node.getTextContent();
                 }
             }
@@ -318,37 +319,37 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("Not".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Not")) {
                     notOrOrOrAnd.add(AndOrTypeEnum.Not);
                 }
-                if ("Or".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Or")) {
                     notOrOrOrAnd.add(AndOrTypeEnum.Or);
                 }
-                if ("And".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "And")) {
                     notOrOrOrAnd.add(AndOrTypeEnum.And);
                 }
-                if (EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, EQUAL)) {
                     notOrOrOrAnd.add(AndOrTypeEnum.Equal);
                 }
-                if (NOT_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NOT_EQUAL)) {
                     notOrOrOrAnd.add(AndOrTypeEnum.NotEqual);
                 }
-                if ("Less".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Less")) {
                     notOrOrOrAnd.add(AndOrTypeEnum.Less);
                 }
-                if (LESS_OR_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LESS_OR_EQUAL)) {
                     notOrOrOrAnd.add(AndOrTypeEnum.LessOrEqual);
                 }
-                if (GREATER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, GREATER)) {
                     notOrOrOrAnd.add(AndOrTypeEnum.Greater);
                 }
-                if (GREATER_OR_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, GREATER_OR_EQUAL)) {
                     notOrOrOrAnd.add(AndOrTypeEnum.GreaterOrEqual);
                 }
-                if ("Like".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Like")) {
                     notOrOrOrAnd.add(AndOrTypeEnum.Like);
                 }
-                if (NOT_LIKE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NOT_LIKE)) {
                     notOrOrOrAnd.add(AndOrTypeEnum.NotLike);
                 }
             }
@@ -372,37 +373,37 @@ public class TraceEventConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("Not".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Not")) {
                     not = getNotType(node.getChildNodes());
                 }
-                if ("Or".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Or")) {
                     or = getAndOrType(node.getChildNodes());
                 }
-                if ("And".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "And")) {
                     and = getAndOrType(node.getChildNodes());
                 }
-                if (EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, EQUAL)) {
                     isEqual = getBoolBinop(node.getChildNodes());
                 }
-                if (NOT_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NOT_EQUAL)) {
                     notEqual = getBoolBinop(node.getChildNodes());
                 }
-                if ("Less".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Less")) {
                     less = getBoolBinop(node.getChildNodes());
                 }
-                if (LESS_OR_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LESS_OR_EQUAL)) {
                     lessOrEqual = getBoolBinop(node.getChildNodes());
                 }
-                if (GREATER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, GREATER)) {
                     greater = getBoolBinop(node.getChildNodes());
                 }
-                if (GREATER_OR_EQUAL.equals(node.getNodeName())) {
+                if (matchesLocalName(node, GREATER_OR_EQUAL)) {
                     greaterOrEqual = getBoolBinop(node.getChildNodes());
                 }
-                if ("Like".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Like")) {
                     like = getBoolBinop(node.getChildNodes());
                 }
-                if (NOT_LIKE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NOT_LIKE)) {
                     notLike = getBoolBinop(node.getChildNodes());
                 }
             }

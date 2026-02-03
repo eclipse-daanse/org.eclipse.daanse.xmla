@@ -23,8 +23,9 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NAME;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.SOURCE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATION;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VALUE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getNodeType;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toDuration;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInteger;
@@ -65,7 +66,7 @@ public class CommonConverter {
     }
 
     public static List<Annotation> getAnnotationList(NodeList nl) {
-        return getList(nl, "Annotation", CommonConverter::getAnnotation);
+        return getListByLocalName(nl, "Annotation", CommonConverter::getAnnotation);
     }
 
     public static Annotation getAnnotation(NodeList nl) {
@@ -76,13 +77,13 @@ public class CommonConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if ("Visibility".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Visibility")) {
                     visibility = Optional.ofNullable(node.getTextContent());
                 }
-                if (VALUE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VALUE)) {
                     value = Optional.ofNullable(node.getTextContent());
                 }
             }
@@ -92,7 +93,7 @@ public class CommonConverter {
     }
 
     public static List<Translation> getTranslationList(NodeList nl, String nodeName) {
-        return getList(nl, nodeName, CommonConverter::getTranslation);
+        return getListByLocalName(nl, nodeName, CommonConverter::getTranslation);
     }
 
     public static Translation getTranslation(NodeList nl) {
@@ -104,19 +105,19 @@ public class CommonConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = toLong(node.getTextContent());
                 }
-                if (CAPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION)) {
                     caption = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (DISPLAY_FOLDER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DISPLAY_FOLDER)) {
                     displayFolder = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = getAnnotationList(node.getChildNodes());
                 }
             }
@@ -125,7 +126,7 @@ public class CommonConverter {
     }
 
     public static List<AttributeTranslation> getAttributeTranslationList(NodeList nl) {
-        return getList(nl, TRANSLATION, CommonConverter::getAttributeTranslation);
+        return getListByLocalName(nl, TRANSLATION, CommonConverter::getAttributeTranslation);
     }
 
     public static AttributeTranslation getAttributeTranslation(NodeList nl) {
@@ -139,25 +140,25 @@ public class CommonConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = toLong(node.getTextContent());
                 }
-                if (CAPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION)) {
                     caption = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (DISPLAY_FOLDER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DISPLAY_FOLDER)) {
                     displayFolder = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = getAnnotationList(node.getChildNodes());
                 }
-                if ("CaptionColumn".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CaptionColumn")) {
                     captionColumn = getDataItem(node.getChildNodes());
                 }
-                if ("MembersWithDataCaption".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MembersWithDataCaption")) {
                     membersWithDataCaption = node.getTextContent();
                 }
             }
@@ -168,7 +169,7 @@ public class CommonConverter {
     }
 
     public static List<DataItem> getDataItemList(NodeList nl, String nodeName) {
-        return getList(nl, nodeName, CommonConverter::getDataItem);
+        return getListByLocalName(nl, nodeName, CommonConverter::getDataItem);
     }
 
     public static DataItem getDataItem(NodeList nl) {
@@ -185,34 +186,34 @@ public class CommonConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("DataType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataType")) {
                     dataType = node.getTextContent();
                 }
-                if ("DataSize".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSize")) {
                     dataSize = toInteger(node.getTextContent());
                 }
-                if ("MimeType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MimeType")) {
                     mimeType = node.getTextContent();
                 }
-                if ("NullProcessing".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NullProcessing")) {
                     nullProcessing = NullProcessingEnum.fromValue(node.getTextContent());
                 }
-                if ("Trimming".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Trimming")) {
                     trimming = node.getTextContent();
                 }
-                if ("InvalidXmlCharacters".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "InvalidXmlCharacters")) {
                     invalidXmlCharacters = InvalidXmlCharacterEnum.fromValue(node.getTextContent());
                 }
-                if (COLLATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLLATION)) {
                     collation = node.getTextContent();
                 }
-                if ("Format".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Format")) {
                     format = DataItemFormatEnum.fromValue(node.getTextContent());
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = getAnnotationList(node.getChildNodes());
                 }
             }
@@ -236,31 +237,31 @@ public class CommonConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("KeyErrorLimit".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyErrorLimit")) {
                     keyErrorLimit = toLong(node.getTextContent());
                 }
-                if ("KeyErrorLogFile".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyErrorLogFile")) {
                     keyErrorLogFile = node.getTextContent();
                 }
-                if ("KeyErrorAction".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyErrorAction")) {
                     keyErrorAction = node.getTextContent();
                 }
-                if ("KeyErrorLimitAction".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyErrorLimitAction")) {
                     keyErrorLimitAction = node.getTextContent();
                 }
-                if ("KeyNotFound".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyNotFound")) {
                     keyNotFound = node.getTextContent();
                 }
-                if ("KeyDuplicate".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KeyDuplicate")) {
                     keyDuplicate = node.getTextContent();
                 }
-                if ("NullKeyConvertedToUnknown".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NullKeyConvertedToUnknown")) {
                     nullKeyConvertedToUnknown = node.getTextContent();
                 }
-                if ("NullKeyNotAllowed".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "NullKeyNotAllowed")) {
                     nullKeyNotAllowed = node.getTextContent();
                 }
-                if ("CalculationError".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CalculationError")) {
                     calculationError = node.getTextContent();
                 }
             }
@@ -284,28 +285,28 @@ public class CommonConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("OnlineMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "OnlineMode")) {
                     onlineMode = node.getTextContent();
                 }
-                if ("AggregationStorage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AggregationStorage")) {
                     aggregationStorage = node.getTextContent();
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getProactiveCachingBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if ("SilenceInterval".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SilenceInterval")) {
                     silenceInterval = toDuration(node.getTextContent());
                 }
-                if ("Latency".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Latency")) {
                     latency = toDuration(node.getTextContent());
                 }
-                if ("SilenceOverrideInterval".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SilenceOverrideInterval")) {
                     silenceOverrideInterval = toDuration(node.getTextContent());
                 }
-                if ("ForceRebuildInterval".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ForceRebuildInterval")) {
                     forceRebuildInterval = toDuration(node.getTextContent());
                 }
-                if ("Enabled".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Enabled")) {
                     enabled = toBoolean(node.getTextContent());
                 }
             }

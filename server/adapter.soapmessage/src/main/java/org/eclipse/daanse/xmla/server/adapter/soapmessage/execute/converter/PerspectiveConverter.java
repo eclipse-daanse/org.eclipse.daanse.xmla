@@ -37,6 +37,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.MEASU
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NAME;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATION;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATIONS;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
 
@@ -80,7 +81,7 @@ public class PerspectiveConverter {
         List<Perspective> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Perspective".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Perspective")) {
                 list.add(getPerspective(node.getChildNodes()));
             }
         }
@@ -105,43 +106,43 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if ("DefaultMeasure".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DefaultMeasure")) {
                     defaultMeasure = node.getTextContent();
                 }
-                if (DIMENSIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSIONS)) {
                     dimensions = getPerspectiveDimensionList(node.getChildNodes());
                 }
-                if ("MeasureGroups".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MeasureGroups")) {
                     measureGroups = getPerspectiveMeasureGroupList(node.getChildNodes());
                 }
-                if ("Calculations".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Calculations")) {
                     calculations = getPerspectiveCalculationList(node.getChildNodes());
                 }
-                if ("Kpis".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Kpis")) {
                     kpis = getPerspectiveKpiList(node.getChildNodes());
                 }
-                if ("Actions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Actions")) {
                     actions = getPerspectiveActionList(node.getChildNodes());
                 }
             }
@@ -154,7 +155,7 @@ public class PerspectiveConverter {
         List<PerspectiveAction> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ACTION.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ACTION)) {
                 list.add(getPerspectiveAction(node.getChildNodes()));
             }
         }
@@ -167,10 +168,10 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("ActionID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ActionID")) {
                     actionID = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -182,7 +183,7 @@ public class PerspectiveConverter {
         List<PerspectiveKpi> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Kpi".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Kpi")) {
                 list.add(getPerspectiveKpi(node.getChildNodes()));
             }
         }
@@ -195,10 +196,10 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("KpiID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "KpiID")) {
                     kpiID = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -210,7 +211,7 @@ public class PerspectiveConverter {
         List<PerspectiveCalculation> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Calculation".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Calculation")) {
                 list.add(getPerspectiveCalculation(node.getChildNodes()));
             }
         }
@@ -224,13 +225,13 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -242,7 +243,7 @@ public class PerspectiveConverter {
         List<PerspectiveMeasureGroup> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (MEASURE_GROUP.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, MEASURE_GROUP)) {
                 list.add(getPerspectiveMeasureGroup(node.getChildNodes()));
             }
         }
@@ -256,13 +257,13 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (MEASURE_GROUP_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MEASURE_GROUP_ID)) {
                     measureGroupID = node.getTextContent();
                 }
-                if (MEASURES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MEASURES)) {
                     measures = getPerspectiveMeasureList(node.getChildNodes());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -275,7 +276,7 @@ public class PerspectiveConverter {
         List<PerspectiveMeasure> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (MEASURE.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, MEASURE)) {
                 list.add(getPerspectiveMeasure(node.getChildNodes()));
             }
         }
@@ -288,10 +289,10 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (MEASURE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MEASURE_ID)) {
                     measureID = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -303,7 +304,7 @@ public class PerspectiveConverter {
         List<PerspectiveDimension> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (DIMENSION.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, DIMENSION)) {
                 list.add(getPerspectiveDimension(node.getChildNodes()));
             }
         }
@@ -318,16 +319,16 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (CUBE_DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                     cubeDimensionID = node.getTextContent();
                 }
-                if (ATTRIBUTES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTES)) {
                     attributes = getPerspectiveAttributeList(node.getChildNodes());
                 }
-                if (HIERARCHIES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, HIERARCHIES)) {
                     hierarchies = getPerspectiveHierarchyList(node.getChildNodes());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -340,7 +341,7 @@ public class PerspectiveConverter {
         List<PerspectiveHierarchy> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (HIERARCHY.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, HIERARCHY)) {
                 list.add(getPerspectiveHierarchy(node.getChildNodes()));
             }
         }
@@ -353,10 +354,10 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("HierarchyID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "HierarchyID")) {
                     hierarchyID = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -368,7 +369,7 @@ public class PerspectiveConverter {
         List<PerspectiveAttribute> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ATTRIBUTE.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ATTRIBUTE)) {
                 list.add(getPerspectiveAttribute(node.getChildNodes()));
             }
         }
@@ -383,16 +384,16 @@ public class PerspectiveConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if (ATTRIBUTE_HIERARCHY_VISIBLE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_HIERARCHY_VISIBLE)) {
                     attributeHierarchyVisible = toBoolean(node.getTextContent());
                 }
-                if (DEFAULT_MEMBER.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DEFAULT_MEMBER)) {
                     defaultMember = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }

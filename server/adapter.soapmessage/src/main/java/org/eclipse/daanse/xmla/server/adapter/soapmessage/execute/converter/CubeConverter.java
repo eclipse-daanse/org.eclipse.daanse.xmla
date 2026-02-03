@@ -65,8 +65,9 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VISIB
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VISUALIZATION_PROPERTIES;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.WRITE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getAttribute;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getListByLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getNodeType;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toDuration;
@@ -148,7 +149,7 @@ public class CubeConverter {
     }
 
     public static List<Cube> getCubeList(NodeList nl, Function<NodeList, Command> commandParser) {
-        return getList(nl, CUBE2, childNodes -> getCube(childNodes, commandParser));
+        return getListByLocalName(nl, CUBE2, childNodes -> getCube(childNodes, commandParser));
     }
 
     public static Cube getCube(NodeList nl, Function<NodeList, Command> commandParser) {
@@ -187,104 +188,101 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (NAME.equals(nodeName)) {
-                    name = node.getTextContent();
-                }
-                if (ID.equals(nodeName)) {
-                    id = node.getTextContent();
-                }
-                if (CREATED_TIMESTAMP.equals(nodeName)) {
-                    createdTimestamp = toInstant(node.getTextContent());
-                }
-                if (LAST_SCHEMA_UPDATE.equals(nodeName)) {
-                    lastSchemaUpdate = toInstant(node.getTextContent());
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (LANGUAGE.equals(nodeName)) {
-                    language = toBigInteger(node.getTextContent());
-                }
-                if (COLLATION.equals(nodeName)) {
-                    collation = node.getTextContent();
-                }
-                if (TRANSLATIONS.equals(nodeName)) {
-                    translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
-                }
-                if (DIMENSIONS.equals(nodeName)) {
-                    dimensions = getCubeDimensionList(node.getChildNodes());
-                }
-                if ("CubePermissions".equals(nodeName)) {
-                    cubePermissions = getCubePermissionList(node.getChildNodes());
-                }
-                if ("MdxScripts".equals(nodeName)) {
-                    mdxScripts = getMdxScriptList(node.getChildNodes(), commandParser);
-                }
-                if ("Perspectives".equals(nodeName)) {
-                    perspectives = PerspectiveConverter.getPerspectiveList(node.getChildNodes());
-                }
-                if (STATE.equals(nodeName)) {
-                    state = node.getTextContent();
-                }
-                if ("DefaultMeasure".equals(nodeName)) {
-                    defaultMeasure = node.getTextContent();
-                }
-                if (VISIBLE.equals(nodeName)) {
-                    visible = toBoolean(node.getTextContent());
-                }
-                if ("MeasureGroups".equals(nodeName)) {
-                    measureGroups = getMeasureGroupList(node.getChildNodes());
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = getDataSourceViewBinding(node.getChildNodes());
-                }
-                if (AGGREGATION_PREFIX.equals(nodeName)) {
-                    aggregationPrefix = node.getTextContent();
-                }
-                if (PROCESSING_PRIORITY.equals(nodeName)) {
-                    processingPriority = toBigInteger(node.getTextContent());
-                }
-                if (STORAGE_MODE.equals(nodeName)) {
-                    storageMode = getCubeStorageMode(node.getChildNodes());
-                }
-                if (PROCESSING_MODE.equals(nodeName)) {
-                    processingMode = node.getTextContent();
-                }
-                if ("ScriptCacheProcessingMode".equals(nodeName)) {
-                    scriptCacheProcessingMode = node.getTextContent();
-                }
-                if ("ScriptErrorHandlingMode".equals(nodeName)) {
-                    scriptErrorHandlingMode = node.getTextContent();
-                }
-                if ("DaxOptimizationMode".equals(nodeName)) {
-                    daxOptimizationMode = node.getTextContent();
-                }
-                if (PROACTIVE_CACHING.equals(nodeName)) {
-                    proactiveCaching = CommonConverter.getProactiveCaching(node.getChildNodes());
-                }
-                if ("Kpis".equals(nodeName)) {
-                    kpis = getKpiList(node.getChildNodes());
-                }
-                if (ERROR_CONFIGURATION.equals(nodeName)) {
-                    errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
-                }
-                if ("Actions".equals(nodeName)) {
-                    actions = ActionConverter.getActionList(node.getChildNodes());
-                }
-                if (STORAGE_LOCATION.equals(nodeName)) {
-                    storageLocation = node.getTextContent();
-                }
-                if (ESTIMATED_ROWS.equals(nodeName)) {
-                    estimatedRows = toLong(node.getTextContent());
-                }
-                if (LAST_PROCESSED.equals(nodeName)) {
-                    lastProcessed = toInstant(node.getTextContent());
-                }
+            if (matchesLocalName(node, NAME)) {
+                name = node.getTextContent();
+            }
+            if (matchesLocalName(node, ID)) {
+                id = node.getTextContent();
+            }
+            if (matchesLocalName(node, CREATED_TIMESTAMP)) {
+                createdTimestamp = toInstant(node.getTextContent());
+            }
+            if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
+                lastSchemaUpdate = toInstant(node.getTextContent());
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, LANGUAGE)) {
+                language = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, COLLATION)) {
+                collation = node.getTextContent();
+            }
+            if (matchesLocalName(node, TRANSLATIONS)) {
+                translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
+            }
+            if (matchesLocalName(node, DIMENSIONS)) {
+                dimensions = getCubeDimensionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "CubePermissions")) {
+                cubePermissions = getCubePermissionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "MdxScripts")) {
+                mdxScripts = getMdxScriptList(node.getChildNodes(), commandParser);
+            }
+            if (matchesLocalName(node, "Perspectives")) {
+                perspectives = PerspectiveConverter.getPerspectiveList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, STATE)) {
+                state = node.getTextContent();
+            }
+            if (matchesLocalName(node, "DefaultMeasure")) {
+                defaultMeasure = node.getTextContent();
+            }
+            if (matchesLocalName(node, VISIBLE)) {
+                visible = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "MeasureGroups")) {
+                measureGroups = getMeasureGroupList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = getDataSourceViewBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, AGGREGATION_PREFIX)) {
+                aggregationPrefix = node.getTextContent();
+            }
+            if (matchesLocalName(node, PROCESSING_PRIORITY)) {
+                processingPriority = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, STORAGE_MODE)) {
+                storageMode = getCubeStorageMode(node.getChildNodes());
+            }
+            if (matchesLocalName(node, PROCESSING_MODE)) {
+                processingMode = node.getTextContent();
+            }
+            if (matchesLocalName(node, "ScriptCacheProcessingMode")) {
+                scriptCacheProcessingMode = node.getTextContent();
+            }
+            if (matchesLocalName(node, "ScriptErrorHandlingMode")) {
+                scriptErrorHandlingMode = node.getTextContent();
+            }
+            if (matchesLocalName(node, "DaxOptimizationMode")) {
+                daxOptimizationMode = node.getTextContent();
+            }
+            if (matchesLocalName(node, PROACTIVE_CACHING)) {
+                proactiveCaching = CommonConverter.getProactiveCaching(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "Kpis")) {
+                kpis = getKpiList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, ERROR_CONFIGURATION)) {
+                errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "Actions")) {
+                actions = ActionConverter.getActionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, STORAGE_LOCATION)) {
+                storageLocation = node.getTextContent();
+            }
+            if (matchesLocalName(node, ESTIMATED_ROWS)) {
+                estimatedRows = toLong(node.getTextContent());
+            }
+            if (matchesLocalName(node, LAST_PROCESSED)) {
+                lastProcessed = toInstant(node.getTextContent());
             }
         }
         return new CubeR(name, id, createdTimestamp, lastSchemaUpdate, description, annotations, language, collation,
@@ -309,7 +307,7 @@ public class CubeConverter {
     }
 
     public static List<CubeDimension> getCubeDimensionList(NodeList nl) {
-        return getList(nl, "CubeDimension", childNodes -> getCubeDimension(childNodes));
+        return getListByLocalName(nl, "CubeDimension", childNodes -> getCubeDimension(childNodes));
     }
 
     public static CubeDimension getCubeDimension(NodeList nl) {
@@ -328,44 +326,41 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (ID.equals(nodeName)) {
-                    id = node.getTextContent();
-                }
-                if (NAME.equals(nodeName)) {
-                    name = node.getTextContent();
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if (TRANSLATIONS.equals(nodeName)) {
-                    translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
-                }
-                if (DIMENSION_ID.equals(nodeName)) {
-                    dimensionID = node.getTextContent();
-                }
-                if (VISIBLE.equals(nodeName)) {
-                    visible = toBoolean(node.getTextContent());
-                }
-                if ("AllMemberAggregationUsage".equals(nodeName)) {
-                    allMemberAggregationUsage = node.getTextContent();
-                }
-                if ("HierarchyUniqueNameStyle".equals(nodeName)) {
-                    hierarchyUniqueNameStyle = node.getTextContent();
-                }
-                if ("MemberUniqueNameStyle".equals(nodeName)) {
-                    memberUniqueNameStyle = node.getTextContent();
-                }
-                if (ATTRIBUTES.equals(nodeName)) {
-                    attributes = getCubeAttributeList(node.getChildNodes());
-                }
-                if (HIERARCHIES.equals(nodeName)) {
-                    hierarchies = getCubeHierarchyList(node.getChildNodes());
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, ID)) {
+                id = node.getTextContent();
+            }
+            if (matchesLocalName(node, NAME)) {
+                name = node.getTextContent();
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, TRANSLATIONS)) {
+                translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
+            }
+            if (matchesLocalName(node, DIMENSION_ID)) {
+                dimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, VISIBLE)) {
+                visible = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "AllMemberAggregationUsage")) {
+                allMemberAggregationUsage = node.getTextContent();
+            }
+            if (matchesLocalName(node, "HierarchyUniqueNameStyle")) {
+                hierarchyUniqueNameStyle = node.getTextContent();
+            }
+            if (matchesLocalName(node, "MemberUniqueNameStyle")) {
+                memberUniqueNameStyle = node.getTextContent();
+            }
+            if (matchesLocalName(node, ATTRIBUTES)) {
+                attributes = getCubeAttributeList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, HIERARCHIES)) {
+                hierarchies = getCubeHierarchyList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new CubeDimensionR(id, name, description, translations, dimensionID, visible, allMemberAggregationUsage,
@@ -373,7 +368,7 @@ public class CubeConverter {
     }
 
     public static List<CubeAttribute> getCubeAttributeList(NodeList nl) {
-        return getList(nl, ATTRIBUTE, childNodes -> getCubeAttribute(childNodes));
+        return getListByLocalName(nl, ATTRIBUTE, childNodes -> getCubeAttribute(childNodes));
     }
 
     public static CubeAttribute getCubeAttribute(NodeList nl) {
@@ -386,26 +381,23 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (ATTRIBUTE_ID.equals(nodeName)) {
-                    attributeID = node.getTextContent();
-                }
-                if ("AggregationUsage".equals(nodeName)) {
-                    aggregationUsage = node.getTextContent();
-                }
-                if ("AttributeHierarchyOptimizedState".equals(nodeName)) {
-                    attributeHierarchyOptimizedState = node.getTextContent();
-                }
-                if ("AttributeHierarchyEnabled".equals(nodeName)) {
-                    attributeHierarchyEnabled = toBoolean(node.getTextContent());
-                }
-                if (ATTRIBUTE_HIERARCHY_VISIBLE.equals(nodeName)) {
-                    attributeHierarchyVisible = toBoolean(node.getTextContent());
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, ATTRIBUTE_ID)) {
+                attributeID = node.getTextContent();
+            }
+            if (matchesLocalName(node, "AggregationUsage")) {
+                aggregationUsage = node.getTextContent();
+            }
+            if (matchesLocalName(node, "AttributeHierarchyOptimizedState")) {
+                attributeHierarchyOptimizedState = node.getTextContent();
+            }
+            if (matchesLocalName(node, "AttributeHierarchyEnabled")) {
+                attributeHierarchyEnabled = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, ATTRIBUTE_HIERARCHY_VISIBLE)) {
+                attributeHierarchyVisible = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new CubeAttributeR(attributeID, aggregationUsage, attributeHierarchyOptimizedState,
@@ -413,7 +405,7 @@ public class CubeConverter {
     }
 
     public static List<CubeHierarchy> getCubeHierarchyList(NodeList nl) {
-        return getList(nl, HIERARCHY, childNodes -> getCubeHierarchy(childNodes));
+        return getListByLocalName(nl, HIERARCHY, childNodes -> getCubeHierarchy(childNodes));
     }
 
     public static CubeHierarchy getCubeHierarchy(NodeList nl) {
@@ -425,30 +417,27 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if ("HierarchyID".equals(nodeName)) {
-                    hierarchyID = node.getTextContent();
-                }
-                if ("OptimizedState".equals(nodeName)) {
-                    optimizedState = node.getTextContent();
-                }
-                if (VISIBLE.equals(nodeName)) {
-                    visible = toBoolean(node.getTextContent());
-                }
-                if ("Enabled".equals(nodeName)) {
-                    enabled = toBoolean(node.getTextContent());
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, "HierarchyID")) {
+                hierarchyID = node.getTextContent();
+            }
+            if (matchesLocalName(node, "OptimizedState")) {
+                optimizedState = node.getTextContent();
+            }
+            if (matchesLocalName(node, VISIBLE)) {
+                visible = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "Enabled")) {
+                enabled = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new CubeHierarchyR(hierarchyID, optimizedState, visible, enabled, annotations);
     }
 
     public static List<CubePermission> getCubePermissionList(NodeList nl) {
-        return getList(nl, "CubePermission", childNodes -> getCubePermission(childNodes));
+        return getListByLocalName(nl, "CubePermission", childNodes -> getCubePermission(childNodes));
     }
 
     public static CubePermission getCubePermission(NodeList nl) {
@@ -469,50 +458,47 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (NAME.equals(nodeName)) {
-                    name = node.getTextContent();
-                }
-                if (ID.equals(nodeName)) {
-                    id = node.getTextContent();
-                }
-                if (CREATED_TIMESTAMP.equals(nodeName)) {
-                    createdTimestamp = toInstant(node.getTextContent());
-                }
-                if (LAST_SCHEMA_UPDATE.equals(nodeName)) {
-                    lastSchemaUpdate = toInstant(node.getTextContent());
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (ROLE_ID.equals(nodeName)) {
-                    roleID = node.getTextContent();
-                }
-                if (PROCESS.equals(nodeName)) {
-                    process = toBoolean(node.getTextContent());
-                }
-                if (READ_DEFINITION.equals(nodeName)) {
-                    readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
-                }
-                if ("Read".equals(nodeName)) {
-                    read = ReadWritePermissionEnum.fromValue(node.getTextContent());
-                }
-                if (WRITE.equals(nodeName)) {
-                    write = ReadWritePermissionEnum.fromValue(node.getTextContent());
-                }
-                if ("ReadSourceData".equals(nodeName)) {
-                    readSourceData = node.getTextContent();
-                }
-                if ("DimensionPermissions".equals(nodeName)) {
-                    dimensionPermissions = getCubeDimensionPermissionList(node.getChildNodes());
-                }
-                if ("CellPermissions".equals(nodeName)) {
-                    cellPermissions = getCellPermissionList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, NAME)) {
+                name = node.getTextContent();
+            }
+            if (matchesLocalName(node, ID)) {
+                id = node.getTextContent();
+            }
+            if (matchesLocalName(node, CREATED_TIMESTAMP)) {
+                createdTimestamp = toInstant(node.getTextContent());
+            }
+            if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
+                lastSchemaUpdate = toInstant(node.getTextContent());
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, ROLE_ID)) {
+                roleID = node.getTextContent();
+            }
+            if (matchesLocalName(node, PROCESS)) {
+                process = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, READ_DEFINITION)) {
+                readDefinition = ReadDefinitionEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, "Read")) {
+                read = ReadWritePermissionEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, WRITE)) {
+                write = ReadWritePermissionEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, "ReadSourceData")) {
+                readSourceData = node.getTextContent();
+            }
+            if (matchesLocalName(node, "DimensionPermissions")) {
+                dimensionPermissions = getCubeDimensionPermissionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "CellPermissions")) {
+                cellPermissions = getCellPermissionList(node.getChildNodes());
             }
         }
         return new CubePermissionR(Optional.ofNullable(readSourceData), Optional.ofNullable(dimensionPermissions),
@@ -524,7 +510,7 @@ public class CubeConverter {
     }
 
     public static List<CellPermission> getCellPermissionList(NodeList nl) {
-        return getList(nl, "CellPermission", childNodes -> getCellPermission(childNodes));
+        return getListByLocalName(nl, "CellPermission", childNodes -> getCellPermission(childNodes));
     }
 
     public static CellPermission getCellPermission(NodeList nl) {
@@ -535,20 +521,17 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if ("Access".equals(nodeName)) {
-                    access = AccessEnum.fromValue(node.getTextContent());
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if (EXPRESSION.equals(nodeName)) {
-                    expression = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, "Access")) {
+                access = AccessEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, EXPRESSION)) {
+                expression = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new CellPermissionR(Optional.ofNullable(access), Optional.ofNullable(description),
@@ -556,7 +539,7 @@ public class CubeConverter {
     }
 
     public static List<CubeDimensionPermission> getCubeDimensionPermissionList(NodeList nl) {
-        return getList(nl, "DimensionPermission", childNodes -> getCubeDimensionPermission(childNodes));
+        return getListByLocalName(nl, "DimensionPermission", childNodes -> getCubeDimensionPermission(childNodes));
     }
 
     public static CubeDimensionPermission getCubeDimensionPermission(NodeList nl) {
@@ -569,26 +552,23 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (CUBE_DIMENSION_ID.equals(nodeName)) {
-                    cubeDimensionID = node.getTextContent();
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if ("Read".equals(nodeName)) {
-                    read = ReadWritePermissionEnum.fromValue(node.getTextContent());
-                }
-                if (WRITE.equals(nodeName)) {
-                    write = ReadWritePermissionEnum.fromValue(node.getTextContent());
-                }
-                if ("AttributePermissions".equals(nodeName)) {
-                    attributePermissions = DimensionConverter.getAttributePermissionList(node.getChildNodes());
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
+                cubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Read")) {
+                read = ReadWritePermissionEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, WRITE)) {
+                write = ReadWritePermissionEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, "AttributePermissions")) {
+                attributePermissions = DimensionConverter.getAttributePermissionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new CubeDimensionPermissionR(cubeDimensionID, Optional.ofNullable(description),
@@ -597,7 +577,7 @@ public class CubeConverter {
     }
 
     public static List<Kpi> getKpiList(NodeList nl) {
-        return getList(nl, "Kpi", childNodes -> getKpi(childNodes));
+        return getListByLocalName(nl, "Kpi", childNodes -> getKpi(childNodes));
     }
 
     public static Kpi getKpi(NodeList nl) {
@@ -620,56 +600,53 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (NAME.equals(nodeName)) {
-                    name = node.getTextContent();
-                }
-                if (ID.equals(nodeName)) {
-                    id = node.getTextContent();
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if (TRANSLATIONS.equals(nodeName)) {
-                    translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
-                }
-                if (DISPLAY_FOLDER.equals(nodeName)) {
-                    displayFolder = node.getTextContent();
-                }
-                if ("AssociatedMeasureGroupID".equals(nodeName)) {
-                    associatedMeasureGroupID = node.getTextContent();
-                }
-                if (VALUE.equals(nodeName)) {
-                    value = node.getTextContent();
-                }
-                if ("Goal".equals(nodeName)) {
-                    goal = node.getTextContent();
-                }
-                if ("Status".equals(nodeName)) {
-                    status = node.getTextContent();
-                }
-                if ("Trend".equals(nodeName)) {
-                    trend = node.getTextContent();
-                }
-                if ("Weight".equals(nodeName)) {
-                    weight = node.getTextContent();
-                }
-                if ("TrendGraphic".equals(nodeName)) {
-                    trendGraphic = node.getTextContent();
-                }
-                if ("StatusGraphic".equals(nodeName)) {
-                    statusGraphic = node.getTextContent();
-                }
-                if ("CurrentTimeMember".equals(nodeName)) {
-                    currentTimeMember = node.getTextContent();
-                }
-                if ("ParentKpiID".equals(nodeName)) {
-                    parentKpiID = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, NAME)) {
+                name = node.getTextContent();
+            }
+            if (matchesLocalName(node, ID)) {
+                id = node.getTextContent();
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, TRANSLATIONS)) {
+                translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
+            }
+            if (matchesLocalName(node, DISPLAY_FOLDER)) {
+                displayFolder = node.getTextContent();
+            }
+            if (matchesLocalName(node, "AssociatedMeasureGroupID")) {
+                associatedMeasureGroupID = node.getTextContent();
+            }
+            if (matchesLocalName(node, VALUE)) {
+                value = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Goal")) {
+                goal = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Status")) {
+                status = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Trend")) {
+                trend = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Weight")) {
+                weight = node.getTextContent();
+            }
+            if (matchesLocalName(node, "TrendGraphic")) {
+                trendGraphic = node.getTextContent();
+            }
+            if (matchesLocalName(node, "StatusGraphic")) {
+                statusGraphic = node.getTextContent();
+            }
+            if (matchesLocalName(node, "CurrentTimeMember")) {
+                currentTimeMember = node.getTextContent();
+            }
+            if (matchesLocalName(node, "ParentKpiID")) {
+                parentKpiID = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new KpiR(name, id, description, translations, displayFolder, associatedMeasureGroupID, value, goal,
@@ -677,7 +654,7 @@ public class CubeConverter {
     }
 
     public static List<MeasureGroup> getMeasureGroupList(NodeList nl) {
-        return getList(nl, MEASURE_GROUP, childNodes -> getMeasureGroup(childNodes));
+        return getListByLocalName(nl, MEASURE_GROUP, childNodes -> getMeasureGroup(childNodes));
     }
 
     public static MeasureGroup getMeasureGroup(NodeList nl) {
@@ -710,68 +687,65 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (LAST_PROCESSED.equals(nodeName)) {
-                    lastProcessed = toInstant(node.getTextContent());
-                }
-                if (TRANSLATIONS.equals(nodeName)) {
-                    translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
-                }
-                if ("Type".equals(nodeName)) {
-                    type = node.getTextContent();
-                }
-                if (STATE.equals(nodeName)) {
-                    state = node.getTextContent();
-                }
-                if (MEASURES.equals(nodeName)) {
-                    measures = getMeasureList(node.getChildNodes());
-                }
-                if ("DataAggregation".equals(nodeName)) {
-                    dataAggregation = node.getTextContent();
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = getMeasureGroupBinding(node.getChildNodes());
-                }
-                if (STORAGE_MODE.equals(nodeName)) {
-                    storageMode = getMeasureGroupStorageMode(node.getChildNodes());
-                }
-                if (STORAGE_LOCATION.equals(nodeName)) {
-                    storageLocation = node.getTextContent();
-                }
-                if ("IgnoreUnrelatedDimensions".equals(nodeName)) {
-                    ignoreUnrelatedDimensions = toBoolean(node.getTextContent());
-                }
-                if (PROACTIVE_CACHING.equals(nodeName)) {
-                    proactiveCaching = CommonConverter.getProactiveCaching(node.getChildNodes());
-                }
-                if (ESTIMATED_ROWS.equals(nodeName)) {
-                    estimatedRows = toLong(node.getTextContent());
-                }
-                if (ERROR_CONFIGURATION.equals(nodeName)) {
-                    errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
-                }
-                if (ESTIMATED_SIZE.equals(nodeName)) {
-                    estimatedSize = toLong(node.getTextContent());
-                }
-                if (PROCESSING_MODE.equals(nodeName)) {
-                    processingMode = node.getTextContent();
-                }
-                if (DIMENSIONS.equals(nodeName)) {
-                    dimensions = getMeasureGroupDimensionList(node.getChildNodes());
-                }
-                if ("Partitions".equals(nodeName)) {
-                    partitions = PartitionConverter.getPartitionList(node.getChildNodes());
-                }
-                if (AGGREGATION_PREFIX.equals(nodeName)) {
-                    aggregationPrefix = node.getTextContent();
-                }
-                if (PROCESSING_PRIORITY.equals(nodeName)) {
-                    processingPriority = toBigInteger(node.getTextContent());
-                }
-                if ("AggregationDesigns".equals(nodeName)) {
-                    aggregationDesigns = getAggregationDesignList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, LAST_PROCESSED)) {
+                lastProcessed = toInstant(node.getTextContent());
+            }
+            if (matchesLocalName(node, TRANSLATIONS)) {
+                translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
+            }
+            if (matchesLocalName(node, "Type")) {
+                type = node.getTextContent();
+            }
+            if (matchesLocalName(node, STATE)) {
+                state = node.getTextContent();
+            }
+            if (matchesLocalName(node, MEASURES)) {
+                measures = getMeasureList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "DataAggregation")) {
+                dataAggregation = node.getTextContent();
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = getMeasureGroupBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, STORAGE_MODE)) {
+                storageMode = getMeasureGroupStorageMode(node.getChildNodes());
+            }
+            if (matchesLocalName(node, STORAGE_LOCATION)) {
+                storageLocation = node.getTextContent();
+            }
+            if (matchesLocalName(node, "IgnoreUnrelatedDimensions")) {
+                ignoreUnrelatedDimensions = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, PROACTIVE_CACHING)) {
+                proactiveCaching = CommonConverter.getProactiveCaching(node.getChildNodes());
+            }
+            if (matchesLocalName(node, ESTIMATED_ROWS)) {
+                estimatedRows = toLong(node.getTextContent());
+            }
+            if (matchesLocalName(node, ERROR_CONFIGURATION)) {
+                errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
+            }
+            if (matchesLocalName(node, ESTIMATED_SIZE)) {
+                estimatedSize = toLong(node.getTextContent());
+            }
+            if (matchesLocalName(node, PROCESSING_MODE)) {
+                processingMode = node.getTextContent();
+            }
+            if (matchesLocalName(node, DIMENSIONS)) {
+                dimensions = getMeasureGroupDimensionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "Partitions")) {
+                partitions = PartitionConverter.getPartitionList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, AGGREGATION_PREFIX)) {
+                aggregationPrefix = node.getTextContent();
+            }
+            if (matchesLocalName(node, PROCESSING_PRIORITY)) {
+                processingPriority = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, "AggregationDesigns")) {
+                aggregationDesigns = getAggregationDesignList(node.getChildNodes());
             }
         }
         return new MeasureGroupR(name, id, createdTimestamp, lastSchemaUpdate, description, annotations, lastProcessed,
@@ -805,29 +779,26 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (DATA_SOURCE_ID.equals(nodeName)) {
-                    dataSourceID = node.getTextContent();
-                }
-                if (CUBE_ID.equals(nodeName)) {
-                    cubeID = node.getTextContent();
-                }
-                if (MEASURE_GROUP_ID.equals(nodeName)) {
-                    measureGroupID = node.getTextContent();
-                }
-                if ("Persistence".equals(nodeName)) {
-                    persistence = PersistenceEnum.fromValue(node.getTextContent());
-                }
-                if ("RefreshPolicy".equals(nodeName)) {
-                    refreshPolicy = RefreshPolicyEnum.fromValue(node.getTextContent());
-                }
-                if ("RefreshInterval".equals(nodeName)) {
-                    refreshInterval = toDuration(node.getTextContent());
-                }
-                if ("Filter".equals(nodeName)) {
-                    filter = node.getTextContent();
-                }
+            if (matchesLocalName(node, DATA_SOURCE_ID)) {
+                dataSourceID = node.getTextContent();
+            }
+            if (matchesLocalName(node, CUBE_ID)) {
+                cubeID = node.getTextContent();
+            }
+            if (matchesLocalName(node, MEASURE_GROUP_ID)) {
+                measureGroupID = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Persistence")) {
+                persistence = PersistenceEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, "RefreshPolicy")) {
+                refreshPolicy = RefreshPolicyEnum.fromValue(node.getTextContent());
+            }
+            if (matchesLocalName(node, "RefreshInterval")) {
+                refreshInterval = toDuration(node.getTextContent());
+            }
+            if (matchesLocalName(node, "Filter")) {
+                filter = node.getTextContent();
             }
         }
         return new MeasureGroupBindingR(dataSourceID, cubeID, measureGroupID, Optional.ofNullable(persistence),
@@ -839,7 +810,7 @@ public class CubeConverter {
         List<org.eclipse.daanse.xmla.api.xmla.MeasureGroupDimension> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (DIMENSIONS.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, DIMENSIONS)) {
                 list.add(getMeasureGroupDimension(node.getChildNodes(), getNodeType(node)));
             }
         }
@@ -875,21 +846,18 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (CUBE_DIMENSION_ID.equals(nodeName)) {
-                    cubeDimensionID = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = (MeasureGroupDimensionBinding) BindingConverter
-                            .getMeasureGroupDimensionBinding(node.getChildNodes());
-                }
-                if ("CaseCubeDimensionID".equals(nodeName)) {
-                    caseCubeDimensionID = node.getTextContent();
-                }
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
+                cubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = (MeasureGroupDimensionBinding) BindingConverter
+                        .getMeasureGroupDimensionBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "CaseCubeDimensionID")) {
+                caseCubeDimensionID = node.getTextContent();
             }
         }
         return new DataMiningMeasureGroupDimensionR(cubeDimensionID, annotations, source, caseCubeDimensionID);
@@ -904,21 +872,18 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (CUBE_DIMENSION_ID.equals(nodeName)) {
-                    cubeDimensionID = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = (MeasureGroupDimensionBinding) BindingConverter
-                            .getMeasureGroupDimensionBinding(node.getChildNodes());
-                }
-                if ("ShareDimensionStorage".equals(nodeName)) {
-                    shareDimensionStorage = node.getTextContent();
-                }
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
+                cubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = (MeasureGroupDimensionBinding) BindingConverter
+                        .getMeasureGroupDimensionBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "ShareDimensionStorage")) {
+                shareDimensionStorage = node.getTextContent();
             }
         }
         return new DegenerateMeasureGroupDimensionR(cubeDimensionID, annotations, source, shareDimensionStorage);
@@ -936,30 +901,27 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (CUBE_DIMENSION_ID.equals(nodeName)) {
-                    cubeDimensionID = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = (MeasureGroupDimensionBinding) BindingConverter
-                            .getMeasureGroupDimensionBinding(node.getChildNodes());
-                }
-                if ("IntermediateCubeDimensionID".equals(nodeName)) {
-                    intermediateCubeDimensionID = node.getTextContent();
-                }
-                if ("IntermediateGranularityAttributeID".equals(nodeName)) {
-                    intermediateGranularityAttributeID = node.getTextContent();
-                }
-                if ("Materialization".equals(nodeName)) {
-                    materialization = node.getTextContent();
-                }
-                if ("ProcessingState".equals(nodeName)) {
-                    processingState = node.getTextContent();
-                }
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
+                cubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = (MeasureGroupDimensionBinding) BindingConverter
+                        .getMeasureGroupDimensionBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "IntermediateCubeDimensionID")) {
+                intermediateCubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, "IntermediateGranularityAttributeID")) {
+                intermediateGranularityAttributeID = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Materialization")) {
+                materialization = node.getTextContent();
+            }
+            if (matchesLocalName(node, "ProcessingState")) {
+                processingState = node.getTextContent();
             }
         }
         return new ReferenceMeasureGroupDimensionR(cubeDimensionID, annotations, source, intermediateCubeDimensionID,
@@ -975,31 +937,28 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (CUBE_DIMENSION_ID.equals(nodeName)) {
-                    cubeDimensionID = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = (MeasureGroupDimensionBinding) BindingConverter
-                            .getMeasureGroupDimensionBinding(node.getChildNodes());
-                }
-                if ("Cardinality".equals(nodeName)) {
-                    cardinality = node.getTextContent();
-                }
-                if (ATTRIBUTES.equals(nodeName)) {
-                    attributes = getMeasureGroupAttributeList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
+                cubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = (MeasureGroupDimensionBinding) BindingConverter
+                        .getMeasureGroupDimensionBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "Cardinality")) {
+                cardinality = node.getTextContent();
+            }
+            if (matchesLocalName(node, ATTRIBUTES)) {
+                attributes = getMeasureGroupAttributeList(node.getChildNodes());
             }
         }
         return new RegularMeasureGroupDimensionR(cubeDimensionID, annotations, source, cardinality, attributes);
     }
 
     public static List<MeasureGroupAttribute> getMeasureGroupAttributeList(NodeList nl) {
-        return getList(nl, ATTRIBUTE, childNodes -> getMeasureGroupAttribute(childNodes));
+        return getListByLocalName(nl, ATTRIBUTE, childNodes -> getMeasureGroupAttribute(childNodes));
     }
 
     public static MeasureGroupAttribute getMeasureGroupAttribute(NodeList nl) {
@@ -1010,20 +969,17 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (ATTRIBUTE_ID.equals(nodeName)) {
-                    attributeID = node.getTextContent();
-                }
-                if (KEY_COLUMNS.equals(nodeName)) {
-                    keyColumns = getKeyColumnList(node.getChildNodes());
-                }
-                if ("Type".equals(nodeName)) {
-                    type = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, ATTRIBUTE_ID)) {
+                attributeID = node.getTextContent();
+            }
+            if (matchesLocalName(node, KEY_COLUMNS)) {
+                keyColumns = getKeyColumnList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, "Type")) {
+                type = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new MeasureGroupAttributeR(attributeID, keyColumns, type, annotations);
@@ -1033,7 +989,7 @@ public class CubeConverter {
         List<DataItem> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (KEY_COLUMN.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, KEY_COLUMN)) {
                 list.add(CommonConverter.getDataItem(node.getChildNodes()));
             }
         }
@@ -1050,31 +1006,28 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (CUBE_DIMENSION_ID.equals(nodeName)) {
-                    cubeDimensionID = node.getTextContent();
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = (MeasureGroupDimensionBinding) BindingConverter
-                            .getMeasureGroupDimensionBinding(node.getChildNodes());
-                }
-                if (MEASURE_GROUP_ID.equals(nodeName)) {
-                    measureGroupID = node.getTextContent();
-                }
-                if ("DirectSlice".equals(nodeName)) {
-                    directSlice = node.getTextContent();
-                }
+            if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
+                cubeDimensionID = node.getTextContent();
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = (MeasureGroupDimensionBinding) BindingConverter
+                        .getMeasureGroupDimensionBinding(node.getChildNodes());
+            }
+            if (matchesLocalName(node, MEASURE_GROUP_ID)) {
+                measureGroupID = node.getTextContent();
+            }
+            if (matchesLocalName(node, "DirectSlice")) {
+                directSlice = node.getTextContent();
             }
         }
         return new ManyToManyMeasureGroupDimensionR(cubeDimensionID, annotations, source, measureGroupID, directSlice);
     }
 
     public static List<Measure> getMeasureList(NodeList nl) {
-        return getList(nl, MEASURE, childNodes -> getMeasure(childNodes));
+        return getListByLocalName(nl, MEASURE, childNodes -> getMeasure(childNodes));
     }
 
     public static Measure getMeasure(NodeList nl) {
@@ -1098,59 +1051,56 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if (NAME.equals(nodeName)) {
-                    name = node.getTextContent();
-                }
-                if (ID.equals(nodeName)) {
-                    id = node.getTextContent();
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if ("AggregateFunction".equals(nodeName)) {
-                    aggregateFunction = node.getTextContent();
-                }
-                if ("DataType".equals(nodeName)) {
-                    dataType = node.getTextContent();
-                }
-                if (SOURCE.equals(nodeName)) {
-                    source = CommonConverter.getDataItem(node.getChildNodes());
-                }
-                if (VISIBLE.equals(nodeName)) {
-                    visible = toBoolean(node.getTextContent());
-                }
-                if ("MeasureExpression".equals(nodeName)) {
-                    measureExpression = node.getTextContent();
-                }
-                if (DISPLAY_FOLDER.equals(nodeName)) {
-                    displayFolder = node.getTextContent();
-                }
-                if ("FormatString".equals(nodeName)) {
-                    formatString = node.getTextContent();
-                }
-                if ("BackColor".equals(nodeName)) {
-                    backColor = node.getTextContent();
-                }
-                if ("ForeColor".equals(nodeName)) {
-                    foreColor = node.getTextContent();
-                }
-                if ("FontName".equals(nodeName)) {
-                    fontName = node.getTextContent();
-                }
-                if ("FontSize".equals(nodeName)) {
-                    fontSize = node.getTextContent();
-                }
-                if ("FontFlags".equals(nodeName)) {
-                    fontFlags = node.getTextContent();
-                }
-                if (TRANSLATIONS.equals(nodeName)) {
-                    translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
-                }
-                if (ANNOTATIONS.equals(nodeName)) {
-                    annotations = CommonConverter.getAnnotationList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, NAME)) {
+                name = node.getTextContent();
+            }
+            if (matchesLocalName(node, ID)) {
+                id = node.getTextContent();
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, "AggregateFunction")) {
+                aggregateFunction = node.getTextContent();
+            }
+            if (matchesLocalName(node, "DataType")) {
+                dataType = node.getTextContent();
+            }
+            if (matchesLocalName(node, SOURCE)) {
+                source = CommonConverter.getDataItem(node.getChildNodes());
+            }
+            if (matchesLocalName(node, VISIBLE)) {
+                visible = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "MeasureExpression")) {
+                measureExpression = node.getTextContent();
+            }
+            if (matchesLocalName(node, DISPLAY_FOLDER)) {
+                displayFolder = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FormatString")) {
+                formatString = node.getTextContent();
+            }
+            if (matchesLocalName(node, "BackColor")) {
+                backColor = node.getTextContent();
+            }
+            if (matchesLocalName(node, "ForeColor")) {
+                foreColor = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FontName")) {
+                fontName = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FontSize")) {
+                fontSize = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FontFlags")) {
+                fontFlags = node.getTextContent();
+            }
+            if (matchesLocalName(node, TRANSLATIONS)) {
+                translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
+            }
+            if (matchesLocalName(node, ANNOTATIONS)) {
+                annotations = CommonConverter.getAnnotationList(node.getChildNodes());
             }
         }
         return new MeasureR(name, id, description, aggregateFunction, dataType, source, visible, measureExpression,
@@ -1159,7 +1109,7 @@ public class CubeConverter {
     }
 
     public static List<MdxScript> getMdxScriptList(NodeList nl, Function<NodeList, Command> commandParser) {
-        return getList(nl, "MdxScript", childNodes -> getMdxScript(childNodes, commandParser));
+        return getListByLocalName(nl, "MdxScript", childNodes -> getMdxScript(childNodes, commandParser));
     }
 
     public static MdxScript getMdxScript(NodeList nl, Function<NodeList, Command> commandParser) {
@@ -1175,17 +1125,14 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if ("Commands".equals(nodeName)) {
-                    commands = getCommandList(node.getChildNodes(), commandParser);
-                }
-                if ("DefaultScript".equals(nodeName)) {
-                    defaultScript = toBoolean(node.getTextContent());
-                }
-                if ("CalculationProperties".equals(nodeName)) {
-                    calculationProperties = getCalculationPropertyList(node.getChildNodes());
-                }
+            if (matchesLocalName(node, "Commands")) {
+                commands = getCommandList(node.getChildNodes(), commandParser);
+            }
+            if (matchesLocalName(node, "DefaultScript")) {
+                defaultScript = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "CalculationProperties")) {
+                calculationProperties = getCalculationPropertyList(node.getChildNodes());
             }
         }
         return new MdxScriptR(name, id, createdTimestamp, lastSchemaUpdate, description, annotations, commands,
@@ -1193,11 +1140,11 @@ public class CubeConverter {
     }
 
     public static List<Command> getCommandList(NodeList nl, Function<NodeList, Command> commandParser) {
-        return getList(nl, COMMAND, commandParser);
+        return getListByLocalName(nl, COMMAND, commandParser);
     }
 
     public static List<CalculationProperty> getCalculationPropertyList(NodeList nl) {
-        return getList(nl, "CalculationProperty", childNodes -> getCalculationProperty(childNodes));
+        return getListByLocalName(nl, "CalculationProperty", childNodes -> getCalculationProperty(childNodes));
     }
 
     public static CalculationProperty getCalculationProperty(NodeList nl) {
@@ -1221,59 +1168,56 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if ("CalculationReference".equals(nodeName)) {
-                    calculationReference = node.getTextContent();
-                }
-                if ("CalculationType".equals(nodeName)) {
-                    calculationType = node.getTextContent();
-                }
-                if (TRANSLATIONS.equals(nodeName)) {
-                    translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
-                }
-                if (DESCRIPTION.equals(nodeName)) {
-                    description = node.getTextContent();
-                }
-                if (VISIBLE.equals(nodeName)) {
-                    visible = toBoolean(node.getTextContent());
-                }
-                if ("SolveOrder".equals(nodeName)) {
-                    solveOrder = toBigInteger(node.getTextContent());
-                }
-                if ("FormatString".equals(nodeName)) {
-                    formatString = node.getTextContent();
-                }
-                if ("ForeColor".equals(nodeName)) {
-                    foreColor = node.getTextContent();
-                }
-                if ("BackColor".equals(nodeName)) {
-                    backColor = node.getTextContent();
-                }
-                if ("FontName".equals(nodeName)) {
-                    fontName = node.getTextContent();
-                }
-                if ("FontSize".equals(nodeName)) {
-                    fontSize = node.getTextContent();
-                }
-                if ("FontFlags".equals(nodeName)) {
-                    fontFlags = node.getTextContent();
-                }
-                if ("NonEmptyBehavior".equals(nodeName)) {
-                    nonEmptyBehavior = node.getTextContent();
-                }
-                if ("AssociatedMeasureGroupID".equals(nodeName)) {
-                    associatedMeasureGroupID = node.getTextContent();
-                }
-                if (DISPLAY_FOLDER.equals(nodeName)) {
-                    displayFolder = node.getTextContent();
-                }
-                if (LANGUAGE.equals(nodeName)) {
-                    language = toBigInteger(node.getTextContent());
-                }
-                if (VISUALIZATION_PROPERTIES.equals(nodeName)) {
-                    visualizationProperties = getCalculationPropertiesVisualizationProperties(node.getChildNodes());
-                }
+            if (matchesLocalName(node, "CalculationReference")) {
+                calculationReference = node.getTextContent();
+            }
+            if (matchesLocalName(node, "CalculationType")) {
+                calculationType = node.getTextContent();
+            }
+            if (matchesLocalName(node, TRANSLATIONS)) {
+                translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
+            }
+            if (matchesLocalName(node, DESCRIPTION)) {
+                description = node.getTextContent();
+            }
+            if (matchesLocalName(node, VISIBLE)) {
+                visible = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "SolveOrder")) {
+                solveOrder = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, "FormatString")) {
+                formatString = node.getTextContent();
+            }
+            if (matchesLocalName(node, "ForeColor")) {
+                foreColor = node.getTextContent();
+            }
+            if (matchesLocalName(node, "BackColor")) {
+                backColor = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FontName")) {
+                fontName = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FontSize")) {
+                fontSize = node.getTextContent();
+            }
+            if (matchesLocalName(node, "FontFlags")) {
+                fontFlags = node.getTextContent();
+            }
+            if (matchesLocalName(node, "NonEmptyBehavior")) {
+                nonEmptyBehavior = node.getTextContent();
+            }
+            if (matchesLocalName(node, "AssociatedMeasureGroupID")) {
+                associatedMeasureGroupID = node.getTextContent();
+            }
+            if (matchesLocalName(node, DISPLAY_FOLDER)) {
+                displayFolder = node.getTextContent();
+            }
+            if (matchesLocalName(node, LANGUAGE)) {
+                language = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, VISUALIZATION_PROPERTIES)) {
+                visualizationProperties = getCalculationPropertiesVisualizationProperties(node.getChildNodes());
             }
         }
         return new CalculationPropertyR(calculationReference, calculationType, translations, description, visible,
@@ -1298,44 +1242,41 @@ public class CubeConverter {
 
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                String nodeName = node.getNodeName();
-                if ("FolderPosition".equals(nodeName)) {
-                    folderPosition = toBigInteger(node.getTextContent());
-                }
-                if ("ContextualNameRule".equals(nodeName)) {
-                    contextualNameRule = node.getTextContent();
-                }
-                if ("Alignment".equals(nodeName)) {
-                    alignment = node.getTextContent();
-                }
-                if ("IsFolderDefault".equals(nodeName)) {
-                    isFolderDefault = toBoolean(node.getTextContent());
-                }
-                if ("IsRightToLeft".equals(nodeName)) {
-                    isRightToLeft = toBoolean(node.getTextContent());
-                }
-                if ("SortDirection".equals(nodeName)) {
-                    sortDirection = node.getTextContent();
-                }
-                if ("Units".equals(nodeName)) {
-                    units = node.getTextContent();
-                }
-                if ("Width".equals(nodeName)) {
-                    width = toBigInteger(node.getTextContent());
-                }
-                if ("IsDefaultMeasure".equals(nodeName)) {
-                    isDefaultMeasure = toBoolean(node.getTextContent());
-                }
-                if ("DefaultDetailsPosition".equals(nodeName)) {
-                    defaultDetailsPosition = toBigInteger(node.getTextContent());
-                }
-                if ("SortPropertiesPosition".equals(nodeName)) {
-                    sortPropertiesPosition = toBigInteger(node.getTextContent());
-                }
-                if ("IsSimpleMeasure".equals(nodeName)) {
-                    isSimpleMeasure = toBoolean(node.getTextContent());
-                }
+            if (matchesLocalName(node, "FolderPosition")) {
+                folderPosition = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, "ContextualNameRule")) {
+                contextualNameRule = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Alignment")) {
+                alignment = node.getTextContent();
+            }
+            if (matchesLocalName(node, "IsFolderDefault")) {
+                isFolderDefault = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "IsRightToLeft")) {
+                isRightToLeft = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "SortDirection")) {
+                sortDirection = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Units")) {
+                units = node.getTextContent();
+            }
+            if (matchesLocalName(node, "Width")) {
+                width = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, "IsDefaultMeasure")) {
+                isDefaultMeasure = toBoolean(node.getTextContent());
+            }
+            if (matchesLocalName(node, "DefaultDetailsPosition")) {
+                defaultDetailsPosition = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, "SortPropertiesPosition")) {
+                sortPropertiesPosition = toBigInteger(node.getTextContent());
+            }
+            if (matchesLocalName(node, "IsSimpleMeasure")) {
+                isSimpleMeasure = toBoolean(node.getTextContent());
             }
         }
         return new CalculationPropertiesVisualizationPropertiesR(folderPosition, contextualNameRule, alignment,
@@ -1347,10 +1288,8 @@ public class CubeConverter {
         String dataSourceViewID = null;
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null) {
-                if (DATA_SOURCE_VIEW_ID.equals(node.getNodeName())) {
-                    dataSourceViewID = node.getTextContent();
-                }
+            if (matchesLocalName(node, DATA_SOURCE_VIEW_ID)) {
+                dataSourceViewID = node.getTextContent();
             }
         }
         return new DataSourceViewBindingR(dataSourceViewID);
@@ -1360,7 +1299,7 @@ public class CubeConverter {
         List<AggregationDesign> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("AggregationDesigns".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "AggregationDesigns")) {
                 list.add(AggregationConverter.getAggregationDesign(node.getChildNodes(),
                         CommonConverter::getAnnotationList));
             }

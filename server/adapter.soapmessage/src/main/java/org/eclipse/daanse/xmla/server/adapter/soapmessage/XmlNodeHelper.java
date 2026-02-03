@@ -20,8 +20,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+
+import javax.xml.namespace.QName;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -50,7 +53,7 @@ public class XmlNodeHelper {
         List<T> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if (node != null && nodeName.equals(node.getNodeName())) {
+            if (matchesLocalName(node, nodeName)) {
                 list.add(factory.apply(node.getChildNodes()));
             }
         }
@@ -147,17 +150,22 @@ public class XmlNodeHelper {
 
     /**
      * Convert a NodeList to a Map of node names to text content values. Useful for
-     * parsing simple key-value style XML structures.
+     * parsing simple key-value style XML structures. Note: This method uses local
+     * names (without prefix) for namespace-safe behavior.
      *
      * @param nl The NodeList to convert
-     * @return Map of node names to text content values
+     * @return Map of local node names to text content values
      */
     public static Map<String, String> nodeListToMap(NodeList nl) {
         Map<String, String> map = new HashMap<>();
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
             if (node != null) {
-                map.put(node.getNodeName(), node.getTextContent());
+                String localName = node.getLocalName();
+                if (localName == null) {
+                    localName = extractLocalName(node.getNodeName());
+                }
+                map.put(localName, node.getTextContent());
             }
         }
         return map;
@@ -174,7 +182,7 @@ public class XmlNodeHelper {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
-            if (node != null && nodeName.equals(node.getNodeName())) {
+            if (matchesLocalName(node, nodeName)) {
                 list.add(node.getTextContent());
             }
         }
@@ -191,7 +199,7 @@ public class XmlNodeHelper {
     public static String findNodeValue(NodeList nl, String nodeName) {
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
-            if (node != null && nodeName.equals(node.getNodeName())) {
+            if (matchesLocalName(node, nodeName)) {
                 return node.getTextContent();
             }
         }
@@ -300,10 +308,185 @@ public class XmlNodeHelper {
     public static Node findNode(NodeList nl, String nodeName) {
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
-            if (node != null && nodeName.equals(node.getNodeName())) {
+            if (matchesLocalName(node, nodeName)) {
                 return node;
             }
         }
         return null;
+    }
+
+    // ========== QName-based namespace-aware methods ==========
+
+    /**
+     * Check if a DOM node matches a QName (namespace URI + local name). This method
+     * is namespace-aware and handles both prefixed and unprefixed elements.
+     *
+     * @param node  The node to check
+     * @param qname The QName to match against
+     * @return true if the node matches the QName
+     */
+    public static boolean matchesQName(Node node, QName qname) {
+        if (node == null || qname == null) {
+            return false;
+        }
+        String localName = node.getLocalName();
+        // Fallback for non-namespace-aware parsing
+        if (localName == null) {
+            localName = extractLocalName(node.getNodeName());
+        }
+        return Objects.equals(qname.getLocalPart(), localName)
+                && Objects.equals(qname.getNamespaceURI(), node.getNamespaceURI());
+    }
+
+    /**
+     * Check if a DOM node matches a local name (for elements without namespace
+     * validation). This method handles both prefixed and unprefixed element names.
+     *
+     * @param node      The node to check
+     * @param localName The local name to match
+     * @return true if the node's local name matches
+     */
+    public static boolean matchesLocalName(Node node, String localName) {
+        if (node == null || localName == null) {
+            return false;
+        }
+        String nodeLocalName = node.getLocalName();
+        if (nodeLocalName == null) {
+            nodeLocalName = extractLocalName(node.getNodeName());
+        }
+        return localName.equals(nodeLocalName);
+    }
+
+    /**
+     * Extract the local name from a potentially prefixed node name.
+     *
+     * @param nodeName The node name (may include prefix like "ns:localName")
+     * @return The local name without prefix
+     */
+    public static String extractLocalName(String nodeName) {
+        if (nodeName == null) {
+            return null;
+        }
+        int colonIndex = nodeName.indexOf(':');
+        return colonIndex >= 0 ? nodeName.substring(colonIndex + 1) : nodeName;
+    }
+
+    /**
+     * Generic method to parse a list of elements from a NodeList using QName
+     * matching.
+     *
+     * @param nl      NodeList to parse
+     * @param qname   QName of the nodes to match
+     * @param factory Function to convert NodeList to the target type
+     * @param <T>     The type of elements in the resulting list
+     * @return List of parsed elements
+     */
+    public static <T> List<T> getList(NodeList nl, QName qname, Function<NodeList, T> factory) {
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            if (matchesQName(node, qname)) {
+                list.add(factory.apply(node.getChildNodes()));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Find the first node matching the QName and return its text content.
+     *
+     * @param nl    NodeList to search
+     * @param qname QName of the node to find
+     * @return Text content of the first matching node, or null if not found
+     */
+    public static String findNodeValue(NodeList nl, QName qname) {
+        Node node = findNode(nl, qname);
+        return node != null ? node.getTextContent() : null;
+    }
+
+    /**
+     * Find the first node matching the QName.
+     *
+     * @param nl    NodeList to search
+     * @param qname QName of the node to find
+     * @return The first matching node, or null if not found
+     */
+    public static Node findNode(NodeList nl, QName qname) {
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            if (matchesQName(node, qname)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Generic method to parse a list of elements from a NodeList using local name
+     * matching. This is useful when namespace validation is not required.
+     *
+     * @param nl        NodeList to parse
+     * @param localName Local name of the nodes to match
+     * @param factory   Function to convert NodeList to the target type
+     * @param <T>       The type of elements in the resulting list
+     * @return List of parsed elements
+     */
+    public static <T> List<T> getListByLocalName(NodeList nl, String localName, Function<NodeList, T> factory) {
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            if (matchesLocalName(node, localName)) {
+                list.add(factory.apply(node.getChildNodes()));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Find the first node matching the local name and return its text content.
+     *
+     * @param nl        NodeList to search
+     * @param localName Local name of the node to find
+     * @return Text content of the first matching node, or null if not found
+     */
+    public static String findNodeValueByLocalName(NodeList nl, String localName) {
+        Node node = findNodeByLocalName(nl, localName);
+        return node != null ? node.getTextContent() : null;
+    }
+
+    /**
+     * Find the first node matching the local name.
+     *
+     * @param nl        NodeList to search
+     * @param localName Local name of the node to find
+     * @return The first matching node, or null if not found
+     */
+    public static Node findNodeByLocalName(NodeList nl, String localName) {
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            if (matchesLocalName(node, localName)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Generic method to parse a list of string values from a NodeList using local
+     * name matching.
+     *
+     * @param nl        NodeList to parse
+     * @param localName Local name of the nodes to match
+     * @return List of text content values
+     */
+    public static List<String> getStringListByLocalName(NodeList nl, String localName) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            if (matchesLocalName(node, localName)) {
+                list.add(node.getTextContent());
+            }
+        }
+        return list;
     }
 }

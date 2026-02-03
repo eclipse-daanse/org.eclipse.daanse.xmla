@@ -31,6 +31,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANS
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATIONS;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VALUE;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getNodeType;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInteger;
 
@@ -67,7 +68,7 @@ public class ActionConverter {
         List<Action> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ACTION.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ACTION)) {
                 list.add(getAction(node.getChildNodes(), getNodeType(node)));
             }
         }
@@ -106,46 +107,46 @@ public class ActionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CAPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION)) {
                     caption = node.getTextContent();
                 }
-                if (CAPTION_IS_MDX.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION_IS_MDX)) {
                     captionIsMdx = toBoolean(node.getTextContent());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (TARGET_TYPE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TARGET_TYPE)) {
                     targetType = TargetTypeEnum.fromValue(node.getTextContent());
                 }
-                if (TARGET.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TARGET)) {
                     target = node.getTextContent();
                 }
-                if (CONDITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CONDITION)) {
                     condition = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = TypeEnum.fromValue(node.getTextContent());
                 }
-                if (INVOCATION_LOW.equals(node.getNodeName())) {
+                if (matchesLocalName(node, INVOCATION_LOW)) {
                     invocation = node.getTextContent();
                 }
-                if (APPLICATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, APPLICATION)) {
                     application = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (EXPRESSION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, EXPRESSION)) {
                     expression = node.getTextContent();
                 }
             }
@@ -179,55 +180,55 @@ public class ActionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CAPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION)) {
                     caption = node.getTextContent();
                 }
-                if (CAPTION_IS_MDX.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION_IS_MDX)) {
                     captionIsMdx = toBoolean(node.getTextContent());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (TARGET_TYPE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TARGET_TYPE)) {
                     targetType = TargetTypeEnum.fromValue(node.getTextContent());
                 }
-                if (TARGET.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TARGET)) {
                     target = node.getTextContent();
                 }
-                if (CONDITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CONDITION)) {
                     condition = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = TypeEnum.fromValue(node.getTextContent());
                 }
-                if (INVOCATION_LOW.equals(node.getNodeName())) {
+                if (matchesLocalName(node, INVOCATION_LOW)) {
                     invocation = node.getTextContent();
                 }
-                if (APPLICATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, APPLICATION)) {
                     application = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("ReportServer".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReportServer")) {
                     reportServer = node.getTextContent();
                 }
-                if ("Path".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Path")) {
                     path = node.getTextContent();
                 }
-                if ("ReportParameters".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReportParameters")) {
                     reportParameters = getReportParameterList(node.getChildNodes());
                 }
-                if ("ReportFormatParameters".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReportFormatParameters")) {
                     reportFormatParameters = getReportFormatParametersList(node.getChildNodes());
                 }
             }
@@ -261,52 +262,52 @@ public class ActionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CAPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION)) {
                     caption = node.getTextContent();
                 }
-                if (CAPTION_IS_MDX.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CAPTION_IS_MDX)) {
                     captionIsMdx = toBoolean(node.getTextContent());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if (TARGET_TYPE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TARGET_TYPE)) {
                     targetType = TargetTypeEnum.fromValue(node.getTextContent());
                 }
-                if (TARGET.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TARGET)) {
                     target = node.getTextContent();
                 }
-                if (CONDITION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CONDITION)) {
                     condition = node.getTextContent();
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = TypeEnum.fromValue(node.getTextContent());
                 }
-                if (INVOCATION_LOW.equals(node.getNodeName())) {
+                if (matchesLocalName(node, INVOCATION_LOW)) {
                     invocation = node.getTextContent();
                 }
-                if (APPLICATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, APPLICATION)) {
                     application = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("Default".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Default")) {
                     defaultAction = toBoolean(node.getTextContent());
                 }
-                if (COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLUMNS)) {
                     columns = getBindingList(node.getChildNodes());
                 }
-                if ("MaximumRows".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MaximumRows")) {
                     maximumRows = toInteger(node.getTextContent());
                 }
             }
@@ -322,7 +323,7 @@ public class ActionConverter {
         List<Binding> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Column".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Column")) {
                 list.add(BindingConverter.getBinding(node.getChildNodes(), getNodeType(node)));
             }
         }
@@ -333,7 +334,7 @@ public class ActionConverter {
         List<ReportFormatParameter> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("ReportFormatParameter".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "ReportFormatParameter")) {
                 list.add(getReportFormatParameter(node.getChildNodes()));
             }
         }
@@ -346,10 +347,10 @@ public class ActionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (VALUE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VALUE)) {
                     value = node.getTextContent();
                 }
             }
@@ -361,7 +362,7 @@ public class ActionConverter {
         List<ReportParameter> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("ReportParameter".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "ReportParameter")) {
                 list.add(getReportParameter(node.getChildNodes()));
             }
         }
@@ -374,10 +375,10 @@ public class ActionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (VALUE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VALUE)) {
                     value = node.getTextContent();
                 }
             }

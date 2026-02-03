@@ -133,6 +133,6 @@ public class MdSchemaMeasuresHandler implements DiscoverHandler {
         r.defaultFormatString().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DEFAULT_FORMAT_STRING, v));
         r.cubeSource().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_CUBE_SOURCE, String.valueOf(v.getValue())));
         r.measureVisibility()
-        .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_VISIBILITY, String.valueOf(v.getValue())));
+                .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_MEASURE_VISIBILITY, String.valueOf(v.getValue())));
     }
 }

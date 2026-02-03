@@ -18,6 +18,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.CUBE2
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.DIMENSION;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.MEASURE_GROUP;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROLE2;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 
 import org.eclipse.daanse.xmla.api.xmla.AggregationDesign;
 import org.eclipse.daanse.xmla.api.xmla.Assembly;
@@ -92,59 +93,59 @@ public class CommandConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("AggregationDesign".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AggregationDesign")) {
                     aggregationDesign = AggregationConverter.getAggregationDesign(node.getChildNodes(),
                             CommonConverter::getAnnotationList);
                 }
-                if (ASSEMBLY2.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ASSEMBLY2)) {
                     assembly = AssemblyConverter.getAssembly(node.getChildNodes());
                 }
-                if (CUBE2.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE2)) {
                     cube = CubeConverter.getCube(node.getChildNodes(), CommandConverter::getCommandFromNodeList);
                 }
-                if ("Database".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Database")) {
                     database = DatabaseConverter.getDatabase(node.getChildNodes(),
                             CommandConverter::getCommandFromNodeList, AssemblyConverter::getAssemblyList);
                 }
-                if ("DataSource".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSource")) {
                     dataSource = DataSourceConverter.getDataSource(node.getChildNodes());
                 }
-                if ("DataSourceView".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSourceView")) {
                     dataSourceView = DataSourceConverter.getDataSourceView(node.getChildNodes());
                 }
-                if (DIMENSION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSION)) {
                     dimension = DimensionConverter.getDimension(node.getChildNodes());
                 }
-                if ("MdxScript".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MdxScript")) {
                     mdxScript = CubeConverter.getMdxScript(node.getChildNodes(),
                             CommandConverter::getCommandFromNodeList);
                 }
-                if (MEASURE_GROUP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MEASURE_GROUP)) {
                     measureGroup = CubeConverter.getMeasureGroup(node.getChildNodes());
                 }
-                if ("MiningModel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MiningModel")) {
                     miningModel = MiningConverter.getMiningModel(node.getChildNodes());
                 }
-                if ("MiningStructure".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MiningStructure")) {
                     miningStructure = MiningConverter.getMiningStructure(node.getChildNodes());
                 }
-                if ("Partition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Partition")) {
                     partition = PartitionConverter.getPartition(node.getChildNodes());
                 }
-                if ("Permission".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Permission")) {
                     permission = PermissionConverter.getPermission(node.getChildNodes());
                 }
-                if ("Perspective".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Perspective")) {
                     perspective = PerspectiveConverter.getPerspective(node.getChildNodes());
                 }
-                if (ROLE2.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ROLE2)) {
                     role = RoleConverter.getRole(node.getChildNodes());
                 }
-                if ("Server".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Server")) {
                     server = ServerConverter.getServer(node.getChildNodes(), CommandConverter::getCommandFromNodeList,
                             AssemblyConverter::getAssemblyList);
                 }
-                if ("Trace".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Trace")) {
                     trace = TraceEventConverter.getTrace(node.getChildNodes());
                 }
             }

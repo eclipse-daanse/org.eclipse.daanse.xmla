@@ -21,6 +21,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.LAST_
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.NAME;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.ROLE2;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VALUE;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toLong;
@@ -76,62 +77,62 @@ public class ServerConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("ProductName".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ProductName")) {
                     productName = node.getTextContent();
                 }
-                if ("Edition".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Edition")) {
                     edition = node.getTextContent();
                 }
-                if ("EditionID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "EditionID")) {
                     editionID = toLong(node.getTextContent());
                 }
-                if ("Version".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Version")) {
                     version = node.getTextContent();
                 }
-                if ("ServerMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ServerMode")) {
                     serverMode = node.getTextContent();
                 }
-                if ("ProductLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ProductLevel")) {
                     productLevel = node.getTextContent();
                 }
-                if ("DefaultCompatibilityLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DefaultCompatibilityLevel")) {
                     defaultCompatibilityLevel = toLong(node.getTextContent());
                 }
-                if ("SupportedCompatibilityLevels".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "SupportedCompatibilityLevels")) {
                     supportedCompatibilityLevels = node.getTextContent();
                 }
-                if ("Databases".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Databases")) {
                     databases = DatabaseConverter.getDatabaseList(node.getChildNodes(), commandParser,
                             assemblySupplier);
                 }
-                if ("Assemblies".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Assemblies")) {
                     assemblies = assemblySupplier.apply(node.getChildNodes());
                 }
-                if ("Traces".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Traces")) {
                     traces = TraceEventConverter.getTraceList(node.getChildNodes());
                 }
-                if ("Roles".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Roles")) {
                     roles = RoleConverter.getRoleList(node.getChildNodes(), ROLE2);
                 }
-                if ("ServerProperties".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ServerProperties")) {
                     serverProperties = getServerPropertyList(node.getChildNodes());
                 }
             }
@@ -145,7 +146,7 @@ public class ServerConverter {
         List<ServerProperty> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("ServerProperty".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "ServerProperty")) {
                 list.add(getServerProperty(node.getChildNodes()));
             }
         }
@@ -164,25 +165,25 @@ public class ServerConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (VALUE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VALUE)) {
                     value = node.getTextContent();
                 }
-                if ("RequiresRestart".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "RequiresRestart")) {
                     requiresRestart = toBoolean(node.getTextContent());
                 }
-                if ("PendingValue".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "PendingValue")) {
                     pendingValue = node.getTextContent();
                 }
-                if ("DefaultValue".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DefaultValue")) {
                     defaultValue = node.getTextContent();
                 }
-                if ("DisplayFlag".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DisplayFlag")) {
                     displayFlag = toBoolean(node.getTextContent());
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = node.getTextContent();
                 }
             }

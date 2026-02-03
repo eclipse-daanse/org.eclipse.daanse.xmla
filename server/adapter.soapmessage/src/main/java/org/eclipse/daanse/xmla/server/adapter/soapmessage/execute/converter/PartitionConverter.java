@@ -46,6 +46,7 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.STORA
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VALUENS;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getAttribute;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getNodeType;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInteger;
@@ -91,7 +92,7 @@ public class PartitionConverter {
         List<Partition> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Partition".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Partition")) {
                 list.add(getPartition(node.getChildNodes()));
             }
         }
@@ -131,88 +132,88 @@ public class PartitionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getTabularBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if (PROCESSING_PRIORITY.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_PRIORITY)) {
                     processingPriority = toBigInteger(node.getTextContent());
                 }
-                if (AGGREGATION_PREFIX.equals(node.getNodeName())) {
+                if (matchesLocalName(node, AGGREGATION_PREFIX)) {
                     aggregationPrefix = node.getTextContent();
                 }
-                if (STORAGE_MODE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STORAGE_MODE)) {
                     storageMode = getPartitionStorageMode(node.getChildNodes());
                 }
-                if (PROCESSING_MODE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_MODE)) {
                     processingMode = node.getTextContent();
                 }
-                if (ERROR_CONFIGURATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ERROR_CONFIGURATION)) {
                     errorConfiguration = CommonConverter.getErrorConfiguration(node.getChildNodes());
                 }
-                if (STORAGE_LOCATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STORAGE_LOCATION)) {
                     storageLocation = node.getTextContent();
                 }
-                if ("RemoteDatasourceID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "RemoteDatasourceID")) {
                     remoteDatasourceID = node.getTextContent();
                 }
-                if ("Slice".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Slice")) {
                     slice = node.getTextContent();
                 }
-                if (PROACTIVE_CACHING.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROACTIVE_CACHING)) {
                     proactiveCaching = CommonConverter.getProactiveCaching(node.getChildNodes());
                 }
-                if ("Type".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Type")) {
                     type = node.getTextContent();
                 }
-                if (ESTIMATED_SIZE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ESTIMATED_SIZE)) {
                     estimatedSize = toLong(node.getTextContent());
                 }
-                if (ESTIMATED_ROWS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ESTIMATED_ROWS)) {
                     estimatedRows = toLong(node.getTextContent());
                 }
-                if ("CurrentStorageMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CurrentStorageMode")) {
                     currentStorageMode = getPartitionCurrentStorageMode(node.getChildNodes());
                 }
-                if (AGGREGATION_DESIGN_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, AGGREGATION_DESIGN_ID)) {
                     aggregationDesignID = node.getTextContent();
                 }
-                if ("AggregationInstances".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AggregationInstances")) {
                     aggregationInstances = getAggregationInstanceList(node.getChildNodes());
                 }
-                if ("AggregationInstanceSource".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AggregationInstanceSource")) {
                     aggregationInstanceSource = DataSourceConverter.getDataSourceViewBinding(node.getChildNodes());
                 }
-                if (LAST_PROCESSED.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_PROCESSED)) {
                     lastProcessed = toInstant(node.getTextContent());
                 }
-                if (STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STATE)) {
                     state = node.getTextContent();
                 }
-                if ("StringStoresCompatibilityLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "StringStoresCompatibilityLevel")) {
                     stringStoresCompatibilityLevel = toInteger(node.getTextContent());
                 }
-                if ("CurrentStringStoresCompatibilityLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CurrentStringStoresCompatibilityLevel")) {
                     currentStringStoresCompatibilityLevel = toInteger(node.getTextContent());
                 }
-                if ("DirectQueryUsage".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DirectQueryUsage")) {
                     directQueryUsage = node.getTextContent();
                 }
             }
@@ -255,7 +256,7 @@ public class PartitionConverter {
         List<AggregationInstance> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("AggregationInstance".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "AggregationInstance")) {
                 list.add(getAggregationInstance(node.getChildNodes()));
             }
         }
@@ -274,28 +275,28 @@ public class PartitionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("AggregationType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AggregationType")) {
                     aggregationType = node.getTextContent();
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = BindingConverter.getTabularBinding(node.getChildNodes(), getNodeType(node));
                 }
-                if (DIMENSIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSIONS)) {
                     dimensions = getAggregationInstanceDimensionList(node.getChildNodes());
                 }
-                if (MEASURES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MEASURES)) {
                     measures = getAggregationInstanceMeasureList(node.getChildNodes());
                 }
             }
@@ -308,7 +309,7 @@ public class PartitionConverter {
         List<AggregationInstanceMeasure> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (MEASURE.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, MEASURE)) {
                 list.add(getAggregationInstanceMeasure(node.getChildNodes()));
             }
         }
@@ -321,10 +322,10 @@ public class PartitionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (MEASURE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, MEASURE_ID)) {
                     measureID = node.getTextContent();
                 }
-                if (SOURCE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, SOURCE)) {
                     source = (ColumnBinding) BindingConverter.getColumnBinding(node.getChildNodes());
                 }
             }
@@ -336,7 +337,7 @@ public class PartitionConverter {
         List<AggregationInstanceDimension> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (DIMENSION.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, DIMENSION)) {
                 list.add(getAggregationInstanceDimension(node.getChildNodes()));
             }
         }
@@ -349,10 +350,10 @@ public class PartitionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (CUBE_DIMENSION_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CUBE_DIMENSION_ID)) {
                     cubeDimensionID = node.getTextContent();
                 }
-                if (ATTRIBUTES.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTES)) {
                     attributes = getAggregationInstanceAttributeList(node.getChildNodes());
                 }
             }
@@ -364,7 +365,7 @@ public class PartitionConverter {
         List<AggregationInstanceAttribute> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && (ATTRIBUTE.equals(node.getNodeName()))) {
+            if (matchesLocalName(node, ATTRIBUTE)) {
                 list.add(getAggregationInstanceAttribute(node.getChildNodes()));
             }
         }
@@ -377,10 +378,10 @@ public class PartitionConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (ATTRIBUTE_ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ATTRIBUTE_ID)) {
                     attributeID = node.getTextContent();
                 }
-                if (KEY_COLUMNS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, KEY_COLUMNS)) {
                     keyColumns = CommonConverter.getDataItemList(node.getChildNodes(), KEY_COLUMN);
                 }
             }

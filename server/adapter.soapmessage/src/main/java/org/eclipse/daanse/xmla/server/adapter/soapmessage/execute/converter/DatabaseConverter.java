@@ -31,7 +31,8 @@ import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.STATE
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATION;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.TRANSLATIONS;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.VISIBLE;
-import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getStringList;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.getStringListByLocalName;
+import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.matchesLocalName;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBigInteger;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toBoolean;
 import static org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlNodeHelper.toInstant;
@@ -75,7 +76,7 @@ public class DatabaseConverter {
         List<Database> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Database".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Database")) {
                 list.add(getDatabase(node.getChildNodes(), commandParser, assemblySupplier));
             }
         }
@@ -125,115 +126,115 @@ public class DatabaseConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if (NAME.equals(node.getNodeName())) {
+                if (matchesLocalName(node, NAME)) {
                     name = node.getTextContent();
                 }
-                if (ID.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ID)) {
                     id = node.getTextContent();
                 }
-                if (CREATED_TIMESTAMP.equals(node.getNodeName())) {
+                if (matchesLocalName(node, CREATED_TIMESTAMP)) {
                     createdTimestamp = toInstant(node.getTextContent());
                 }
-                if (LAST_SCHEMA_UPDATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_SCHEMA_UPDATE)) {
                     lastSchemaUpdate = toInstant(node.getTextContent());
                 }
-                if (DESCRIPTION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DESCRIPTION)) {
                     description = node.getTextContent();
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
-                if ("LastUpdate".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "LastUpdate")) {
                     lastUpdate = toInstant(node.getTextContent());
                 }
-                if (STATE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, STATE)) {
                     state = node.getTextContent();
                 }
-                if ("ReadWriteMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ReadWriteMode")) {
                     readWriteMode = node.getTextContent();
                 }
-                if ("DbStorageLocation".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DbStorageLocation")) {
                     dbStorageLocation = node.getTextContent();
                 }
-                if (AGGREGATION_PREFIX.equals(node.getNodeName())) {
+                if (matchesLocalName(node, AGGREGATION_PREFIX)) {
                     aggregationPrefix = node.getTextContent();
                 }
-                if (PROCESSING_PRIORITY.equals(node.getNodeName())) {
+                if (matchesLocalName(node, PROCESSING_PRIORITY)) {
                     processingPriority = toBigInteger(node.getTextContent());
                 }
-                if (ESTIMATED_SIZE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ESTIMATED_SIZE)) {
                     estimatedSize = toLong(node.getTextContent());
                 }
-                if (LAST_PROCESSED.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LAST_PROCESSED)) {
                     lastProcessed = toInstant(node.getTextContent());
                 }
-                if (LANGUAGE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, LANGUAGE)) {
                     language = toBigInteger(node.getTextContent());
                 }
-                if (COLLATION.equals(node.getNodeName())) {
+                if (matchesLocalName(node, COLLATION)) {
                     collation = node.getTextContent();
                 }
-                if (VISIBLE.equals(node.getNodeName())) {
+                if (matchesLocalName(node, VISIBLE)) {
                     visible = toBoolean(node.getTextContent());
                 }
-                if ("MasterDataSourceID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MasterDataSourceID")) {
                     masterDataSourceID = node.getTextContent();
                 }
-                if ("DataSourceImpersonationInfo".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSourceImpersonationInfo")) {
                     dataSourceImpersonationInfo = DataSourceConverter.getImpersonationInfo(node.getChildNodes());
                 }
-                if ("Accounts".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Accounts")) {
                     accounts = getAccountList(node.getChildNodes());
                 }
-                if ("DataSources".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSources")) {
                     dataSources = DataSourceConverter.getDataSourceList(node.getChildNodes());
                 }
-                if ("DataSourceViews".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DataSourceViews")) {
                     dataSourceViews = DataSourceConverter.getDataSourceViewList(node.getChildNodes());
                 }
-                if (DIMENSIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, DIMENSIONS)) {
                     dimensions = DimensionConverter.getDimensionList(node.getChildNodes());
                 }
-                if ("Cubes".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Cubes")) {
                     cubes = CubeConverter.getCubeList(node.getChildNodes(), commandParser);
                 }
-                if ("MiningStructures".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "MiningStructures")) {
                     miningStructures = MiningConverter.getMiningStructureList(node.getChildNodes());
                 }
-                if ("Roles".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Roles")) {
                     roles = RoleConverter.getRoleList(node.getChildNodes(), ROLE2);
                 }
-                if ("Assemblies".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Assemblies")) {
                     assemblies = assemblySupplier.apply(node.getChildNodes());
                 }
-                if ("DatabasePermissions".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DatabasePermissions")) {
                     databasePermissions = PermissionConverter.getDatabasePermissionList(node.getChildNodes());
                 }
-                if (TRANSLATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, TRANSLATIONS)) {
                     translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
                 }
-                if ("StorageEngineUsed".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "StorageEngineUsed")) {
                     storageEngineUsed = node.getTextContent();
                 }
-                if ("ImagePath".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImagePath")) {
                     imagePath = node.getTextContent();
                 }
-                if ("ImageUrl".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImageUrl")) {
                     imageUrl = node.getTextContent();
                 }
-                if ("ImageUniqueID".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImageUniqueID")) {
                     imageUniqueID = node.getTextContent();
                 }
-                if ("ImageVersion".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "ImageVersion")) {
                     imageVersion = node.getTextContent();
                 }
-                if ("Token".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Token")) {
                     token = node.getTextContent();
                 }
-                if ("CompatibilityLevel".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "CompatibilityLevel")) {
                     compatibilityLevel = toBigInteger(node.getTextContent());
                 }
-                if ("DirectQueryMode".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "DirectQueryMode")) {
                     directQueryMode = node.getTextContent();
                 }
             }
@@ -250,7 +251,7 @@ public class DatabaseConverter {
         List<Account> list = new ArrayList<>();
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
-            if ((node != null) && ("Account".equals(node.getNodeName()))) {
+            if (matchesLocalName(node, "Account")) {
                 list.add(getAccount(node.getChildNodes()));
             }
         }
@@ -266,16 +267,16 @@ public class DatabaseConverter {
         for (int i = 0; i < nl.getLength(); i++) {
             org.w3c.dom.Node node = nl.item(i);
             if (node != null) {
-                if ("AccountType".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AccountType")) {
                     accountType = node.getTextContent();
                 }
-                if ("AggregationFunction".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "AggregationFunction")) {
                     aggregationFunction = node.getTextContent();
                 }
-                if ("Aliases".equals(node.getNodeName())) {
+                if (matchesLocalName(node, "Aliases")) {
                     aliases = getAliasList(node.getChildNodes());
                 }
-                if (ANNOTATIONS.equals(node.getNodeName())) {
+                if (matchesLocalName(node, ANNOTATIONS)) {
                     annotations = CommonConverter.getAnnotationList(node.getChildNodes());
                 }
             }
@@ -284,6 +285,6 @@ public class DatabaseConverter {
     }
 
     private static List<String> getAliasList(NodeList nl) {
-        return getStringList(nl, "Alias");
+        return getStringListByLocalName(nl, "Alias");
     }
 }
