@@ -22,11 +22,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.test.common.dictionary.Dictionaries;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(immediate = true)
 @RequireConfigurationAdmin
 public class SaajTestSetup {
-
+    private Logger LOGGER = LoggerFactory.getLogger(SaajTestSetup.class);
     @Reference
     ConfigurationAdmin ca;
 
@@ -36,6 +38,6 @@ public class SaajTestSetup {
 
         c.update(Dictionaries.dictionaryOf("osgi.http.whiteboard.servlet.name", "TestXmlaServlet",
                 "osgi.http.whiteboard.servlet.pattern", "/xmla"));
-        System.out.println("TestSetup activated and configuration created.");
+        LOGGER.debug("TestSetup activated and configuration created.");
     }
 }

@@ -40,6 +40,8 @@ import org.osgi.test.common.annotation.Property;
 import org.osgi.test.common.annotation.config.WithFactoryConfiguration;
 import org.osgi.test.common.dictionary.Dictionaries;
 import org.osgi.test.junit5.cm.ConfigurationExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import aQute.bnd.annotation.service.ServiceCapability;
 
@@ -63,7 +65,7 @@ import aQute.bnd.annotation.service.ServiceCapability;
 @RequireHttpWhiteboard
 @RequireServiceComponentRuntime
 class InitialisationTest {
-
+    private Logger LOGGER = LoggerFactory.getLogger(InitialisationTest.class);
     @InjectBundleContext
     BundleContext bc;
 
@@ -88,7 +90,7 @@ class InitialisationTest {
 
     void printScrInfo() {
 
-        System.out.println("============ Framework Components ==================");
+        LOGGER.debug("============ Framework Components ==================");
         Collection<ComponentDescriptionDTO> descriptionDTOs = componentRuntime.getComponentDescriptionDTOs();
         Comparator<ComponentConfigurationDTO> byComponentName = Comparator.comparing(dto -> dto.description.name,
                 String.CASE_INSENSITIVE_ORDER);
@@ -99,22 +101,22 @@ class InitialisationTest {
                 .sorted(byComponentState.thenComparing(byComponentName))
                 .forEachOrdered(dto -> {
                     if (dto.state == ComponentConfigurationDTO.FAILED_ACTIVATION) {
-                        System.out.println(
+                        LOGGER.debug(
                                 toComponentState(dto.state) + " | " + dto.description.name + " | " + dto.failure);
                     } else {
-                        System.out.println(toComponentState(dto.state) + " | " + dto.description.name);
+                        LOGGER.debug(toComponentState(dto.state) + " | " + dto.description.name);
                     }
                     for (int i = 0; i < dto.unsatisfiedReferences.length; i++) {
                         UnsatisfiedReferenceDTO ref = dto.unsatisfiedReferences[i];
-                        System.out.println("\t" + ref.name + " is missing");
+                        LOGGER.debug("\t" + ref.name + " is missing");
                     }
                     for (int i = 0; i < dto.satisfiedReferences.length; i++) {
                         SatisfiedReferenceDTO sat = dto.satisfiedReferences[i];
-                        System.out.println("\t" + sat.name + " (bound " + sat.boundServices.length + ")");
+                        LOGGER.debug("\t" + sat.name + " (bound " + sat.boundServices.length + ")");
                     }
-                    System.out.println("\tProperties:");
+                    LOGGER.debug("\tProperties:");
                     for (Entry<String, Object> entry : dto.properties.entrySet()) {
-                        System.out.println("\t\t" + entry.getKey() + ": " + entry.getValue());
+                        LOGGER.debug("\t\t" + entry.getKey() + ": " + entry.getValue());
                     }
                 });
     }

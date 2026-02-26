@@ -64,6 +64,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for CSDLBI Schema serialization based on MS-CSDLBI specification.
@@ -73,7 +75,7 @@ import org.junit.jupiter.api.Test;
  * Schema 1.1
  */
 public class CsdlBiSerializationTest {
-
+    protected static final Logger LOGGER = LoggerFactory.getLogger(CsdlBiSerializationTest.class);
     private ResourceSet resourceSet;
     private EdmFactory edmFactory;
     private BiFactory biFactory;
@@ -107,8 +109,8 @@ public class CsdlBiSerializationTest {
             biContainer.setCompareOptions(compareOptions);
 
             String xml = serializeToXml(biContainer);
-            System.out.println("=== TEntityContainer with CompareOptions (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityContainer with CompareOptions (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -119,8 +121,8 @@ public class CsdlBiSerializationTest {
                 biContainer.setDirectQueryMode(mode);
 
                 String xml = serializeToXml(biContainer);
-                System.out.println("=== TEntityContainer DirectQueryMode: " + mode.getLiteral() + " ===");
-                System.out.println(xml);
+                LOGGER.debug("=== TEntityContainer DirectQueryMode: " + mode.getLiteral() + " ===");
+                LOGGER.debug(xml);
             }
         }
     }
@@ -141,8 +143,8 @@ public class CsdlBiSerializationTest {
             biEntitySet.setShowAsVariationsOnly(true);
 
             String xml = serializeToXml(biEntitySet);
-            System.out.println("=== TEntitySet with all attributes (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntitySet with all attributes (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -157,8 +159,8 @@ public class CsdlBiSerializationTest {
             assocSet.setHidden(false);
 
             String xml = serializeToXml(assocSet);
-            System.out.println("=== TAssociationSet Active (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TAssociationSet Active (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -168,8 +170,8 @@ public class CsdlBiSerializationTest {
             assocSet.setHidden(true);
 
             String xml = serializeToXml(assocSet);
-            System.out.println("=== TAssociationSet Inactive (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TAssociationSet Inactive (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -189,8 +191,8 @@ public class CsdlBiSerializationTest {
             entityType.setDisplayKey(displayKey);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with DisplayKey (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with DisplayKey (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -208,8 +210,8 @@ public class CsdlBiSerializationTest {
             entityType.setDefaultDetails(defaultDetails);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with DefaultDetails (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with DefaultDetails (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -224,8 +226,8 @@ public class CsdlBiSerializationTest {
             entityType.setDefaultImage(defaultImage);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with DefaultImage (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with DefaultImage (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -240,8 +242,8 @@ public class CsdlBiSerializationTest {
             entityType.setDefaultMeasure(defaultMeasure);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with DefaultMeasure (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with DefaultMeasure (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -256,8 +258,8 @@ public class CsdlBiSerializationTest {
             entityType.setSortMembers(sortMembers);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with SortMembers (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with SortMembers (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -284,8 +286,8 @@ public class CsdlBiSerializationTest {
             entityType.setDisplayFolders(displayFolders);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with DisplayFolders (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with DisplayFolders (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -295,8 +297,8 @@ public class CsdlBiSerializationTest {
             entityType.setIsCalculationGroup(true);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType IsCalculationGroup (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType IsCalculationGroup (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -318,8 +320,8 @@ public class CsdlBiSerializationTest {
             biProperty.setOrderBy(orderBy);
 
             String xml = serializeToXml(biProperty);
-            System.out.println("=== TProperty with OrderBy (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TProperty with OrderBy (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -330,8 +332,8 @@ public class CsdlBiSerializationTest {
                 biProperty.setDefaultAggregateFunction(aggFunc);
 
                 String xml = serializeToXml(biProperty);
-                System.out.println("=== TProperty DefaultAggregateFunction: " + aggFunc.getLiteral() + " ===");
-                System.out.println(xml);
+                LOGGER.debug("=== TProperty DefaultAggregateFunction: " + aggFunc.getLiteral() + " ===");
+                LOGGER.debug(xml);
             }
         }
 
@@ -347,10 +349,10 @@ public class CsdlBiSerializationTest {
 
             String xml1 = serializeToXml(biProperty1);
             String xml2 = serializeToXml(biProperty2);
-            System.out.println("=== TProperty GroupingBehavior GroupOnValue ===");
-            System.out.println(xml1);
-            System.out.println("=== TProperty GroupingBehavior GroupOnEntityKey ===");
-            System.out.println(xml2);
+            LOGGER.debug("=== TProperty GroupingBehavior GroupOnValue ===");
+            LOGGER.debug(xml1);
+            LOGGER.debug("=== TProperty GroupingBehavior GroupOnEntityKey ===");
+            LOGGER.debug(xml2);
         }
 
         @Test
@@ -361,8 +363,8 @@ public class CsdlBiSerializationTest {
                 biProperty.setStability(stability);
 
                 String xml = serializeToXml(biProperty);
-                System.out.println("=== TProperty Stability: " + stability.getLiteral() + " ===");
-                System.out.println(xml);
+                LOGGER.debug("=== TProperty Stability: " + stability.getLiteral() + " ===");
+                LOGGER.debug(xml);
             }
         }
 
@@ -382,8 +384,8 @@ public class CsdlBiSerializationTest {
             biProperty.setIsError(false);
 
             String xml = serializeToXml(biProperty);
-            System.out.println("=== TProperty with all attributes (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TProperty with all attributes (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -409,8 +411,8 @@ public class CsdlBiSerializationTest {
             biMeasure.setDistributiveBy(distributiveBy);
 
             String xml = serializeToXml(biMeasure);
-            System.out.println("=== TMeasure with DistributiveBy (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TMeasure with DistributiveBy (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -427,8 +429,8 @@ public class CsdlBiSerializationTest {
                 biMeasure.setDistributiveBy(distributiveBy);
 
                 String xml = serializeToXml(biMeasure);
-                System.out.println("=== TMeasure AggregationKind: " + aggKind.getLiteral() + " ===");
-                System.out.println(xml);
+                LOGGER.debug("=== TMeasure AggregationKind: " + aggKind.getLiteral() + " ===");
+                LOGGER.debug(xml);
             }
         }
 
@@ -444,8 +446,8 @@ public class CsdlBiSerializationTest {
             biMeasure.setIsError(false);
 
             String xml = serializeToXml(biMeasure);
-            System.out.println("=== TMeasure with all attributes (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TMeasure with all attributes (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -462,8 +464,8 @@ public class CsdlBiSerializationTest {
             navProp.setReferenceName("ProductNavRef");
 
             String xml = serializeToXml(navProp);
-            System.out.println("=== TNavigationProperty (Schema 1.0) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TNavigationProperty (Schema 1.0) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -503,8 +505,8 @@ public class CsdlBiSerializationTest {
             hierarchy.getLevel().add(monthLevel);
 
             String xml = serializeToXml(hierarchy);
-            System.out.println("=== THierarchy with Levels (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== THierarchy with Levels (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -530,8 +532,8 @@ public class CsdlBiSerializationTest {
             hierarchy.getLevel().add(categoryLevel);
 
             String xml = serializeToXml(hierarchy);
-            System.out.println("=== THierarchy Level with Source (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== THierarchy Level with Source (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -561,8 +563,8 @@ public class CsdlBiSerializationTest {
             entityType.getHierarchy().add(dateHierarchy);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType with Hierarchy (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType with Hierarchy (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -588,8 +590,8 @@ public class CsdlBiSerializationTest {
             entityType.setDisplayFolders(displayFolders);
 
             String xml = serializeToXml(entityType);
-            System.out.println("=== TEntityType DisplayFolder with HierarchyRef (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TEntityType DisplayFolder with HierarchyRef (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -626,8 +628,8 @@ public class CsdlBiSerializationTest {
             biMeasure.setKpi(kpi);
 
             String xml = serializeToXml(biMeasure);
-            System.out.println("=== TMeasure with KPI (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TMeasure with KPI (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -656,8 +658,8 @@ public class CsdlBiSerializationTest {
             biMeasure.setDistributiveBy(distributiveBy);
 
             String xml = serializeToXml(biMeasure);
-            System.out.println("=== TMeasure with KPI and DistributiveBy (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== TMeasure with KPI and DistributiveBy (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
     }
 
@@ -676,8 +678,8 @@ public class CsdlBiSerializationTest {
             container.getEntitySet().add(entitySet);
 
             String xml = serializeToXml(container);
-            System.out.println("=== EDM EntityContainer (without BI) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== EDM EntityContainer (without BI) ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -709,8 +711,8 @@ public class CsdlBiSerializationTest {
             container.getEntitySet().add(entitySet);
 
             String xml = serializeToXml(container);
-            System.out.println("=== EDM EntityContainer with BI Annotations ===");
-            System.out.println(xml);
+            LOGGER.debug("=== EDM EntityContainer with BI Annotations ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -744,8 +746,8 @@ public class CsdlBiSerializationTest {
             productType.getProperty().add(nameProperty);
 
             String xml = serializeToXml(productType);
-            System.out.println("=== EDM EntityType with BI Annotations ===");
-            System.out.println(xml);
+            LOGGER.debug("=== EDM EntityType with BI Annotations ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -868,8 +870,8 @@ public class CsdlBiSerializationTest {
             schema.getEntityType().add(productType);
 
             String xml = serializeToXml(schema);
-            System.out.println("=== Complete CSDL Schema with BI Annotations ===");
-            System.out.println(xml);
+            LOGGER.debug("=== Complete CSDL Schema with BI Annotations ===");
+            LOGGER.debug(xml);
         }
 
         @Test
@@ -988,8 +990,8 @@ public class CsdlBiSerializationTest {
             schema.getEntityType().add(salesType);
 
             String xml = serializeToXml(schema);
-            System.out.println("=== CSDL Schema with Hierarchies and KPI (Schema 1.1) ===");
-            System.out.println(xml);
+            LOGGER.debug("=== CSDL Schema with Hierarchies and KPI (Schema 1.1) ===");
+            LOGGER.debug(xml);
         }
     }
 
