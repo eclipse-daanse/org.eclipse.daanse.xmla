@@ -18,14 +18,16 @@ import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla.DiscoverResponse;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla.Return;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_rowset.Rowset;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xmla_rowset.discover.DiscoverPropertiesResponseRowXml;
-import org.eclipse.daanse.xmla.server.jakarta.jws.SchemaUtil;
 import org.eclipse.daanse.xmla.model.jakarta.xml.bind.xsd.Schema;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 
 class SchemaUtilTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchemaUtilTest.class);
     @Test
     void testSchemaGen() throws Exception {
         DiscoverResponse response = new DiscoverResponse();
@@ -36,11 +38,11 @@ class SchemaUtilTest {
         props.setPropertyName("My Name");
         rowset.setRow(List.of(props));
         ret.setValue(rowset);
-        System.out.println("========[ GEN SCHEMA ]=============");
+        LOGGER.debug("========[ GEN SCHEMA ]=============");
         Schema generateSchema = SchemaUtil.generateSchema("urn:schemas-microsoft-com:xml-analysis:rowset",
                 DiscoverPropertiesResponseRowXml.class);
         rowset.setSchema(generateSchema);
-        System.out.println("=========[ DiscoverResponse ]============");
+        LOGGER.debug("=========[ DiscoverResponse ]============");
         JAXBContext context = JAXBContext.newInstance(DiscoverResponse.class, Return.class, Rowset.class,
                 DiscoverPropertiesResponseRowXml.class, Schema.class);
         Marshaller marshaller = context.createMarshaller();

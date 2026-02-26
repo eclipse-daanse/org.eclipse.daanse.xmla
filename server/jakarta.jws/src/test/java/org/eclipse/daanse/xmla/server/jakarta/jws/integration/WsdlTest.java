@@ -88,7 +88,7 @@ class WsdlTest {
             stream.transferTo(out);
             String wsdl = new String(out.toByteArray(), StandardCharsets.UTF_8).replaceAll("\\s", " ")
                     .replaceAll("\\s+", " ");
-            System.out.println("We got the WSDL: " + wsdl);
+            logger.debug("We got the WSDL: " + wsdl);
             assertThat(wsdl).matches(".*<definitions.*name=\"MsXmlAnalysisService\".*>.*")
                     .contains("<service name=\"MsXmlAnalysisService\">");
         }
@@ -97,7 +97,7 @@ class WsdlTest {
 
     void printScrInfo() {
 
-        System.out.println("============ Framework Components ==================");
+        logger.debug("============ Framework Components ==================");
         Collection<ComponentDescriptionDTO> descriptionDTOs = componentRuntime.getComponentDescriptionDTOs();
         Comparator<ComponentConfigurationDTO> byComponentName = Comparator.comparing(dto -> dto.description.name,
                 String.CASE_INSENSITIVE_ORDER);
@@ -105,22 +105,22 @@ class WsdlTest {
         descriptionDTOs.stream().flatMap(dto -> componentRuntime.getComponentConfigurationDTOs(dto).stream())
                 .sorted(byComponentState.thenComparing(byComponentName)).forEachOrdered(dto -> {
                     if (dto.state == ComponentConfigurationDTO.FAILED_ACTIVATION) {
-                        System.out.println(
+                        logger.debug(
                                 toComponentState(dto.state) + " | " + dto.description.name + " | " + dto.failure);
                     } else {
-                        System.out.println(toComponentState(dto.state) + " | " + dto.description.name);
+                        logger.debug(toComponentState(dto.state) + " | " + dto.description.name);
                     }
                     for (int i = 0; i < dto.unsatisfiedReferences.length; i++) {
                         UnsatisfiedReferenceDTO ref = dto.unsatisfiedReferences[i];
-                        System.out.println("\t" + ref.name + " is missing");
+                        logger.debug("\t" + ref.name + " is missing");
                     }
                     for (int i = 0; i < dto.satisfiedReferences.length; i++) {
                         SatisfiedReferenceDTO sat = dto.satisfiedReferences[i];
-                        System.out.println("\t" + sat.name + " (bound " + sat.boundServices.length + ")");
+                        logger.debug("\t" + sat.name + " (bound " + sat.boundServices.length + ")");
                     }
-                    System.out.println("\tProperties:");
+                    logger.debug("\tProperties:");
                     for (Entry<String, Object> entry : dto.properties.entrySet()) {
-                        System.out.println("\t\t" + entry.getKey() + ": " + entry.getValue());
+                        logger.debug("\t\t" + entry.getKey() + ": " + entry.getValue());
                     }
                 });
     }
