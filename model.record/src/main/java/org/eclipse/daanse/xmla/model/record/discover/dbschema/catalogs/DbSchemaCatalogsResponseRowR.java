@@ -24,6 +24,7 @@ public record DbSchemaCatalogsResponseRowR(Optional<String> catalogName, Optiona
         Optional<String> roles, Optional<LocalDateTime> dateModified, Optional<Integer> compatibilityLevel,
         Optional<TypeEnum> type, Optional<Integer> version, Optional<String> databaseId,
         Optional<LocalDateTime> dateQueried, Optional<Boolean> currentlyUsed, Optional<Double> popularity,
-        Optional<Double> weightedPopularity, Optional<ClientCacheRefreshPolicyEnum> clientCacheRefreshPolicy)
+        Optional<Double> weightedPopularity, Optional<ClientCacheRefreshPolicyEnum> clientCacheRefreshPolicy,
+        Optional<String> encryptionLevel, Optional<LocalDateTime> cryptoKeyUpdated)
         implements DbSchemaCatalogsResponseRow {
 }

@@ -11,7 +11,7 @@
  *   SmartCity Jena - initial
  *   Stefan Bischof (bipolis.org) - initial
  */
-package org.eclipse.daanse.xmla.api.discover.mdschema.demensions;
+package org.eclipse.daanse.xmla.api.discover.mdschema.dimensions;
 
 import static org.eclipse.daanse.xmla.api.common.properties.XsdType.XSD_STRING;
 

@@ -87,7 +87,7 @@ public class MdSchemaMembersResponseRowXml extends AbstractMdSchemaResponseRowXm
      * The GUID of the member.
      */
     @XmlElement(name = "MEMBER_GUID", required = false)
-    private Integer memberGuid;
+    private String memberGuid;
 
     /**
      * The caption of the member.
@@ -224,11 +224,11 @@ public class MdSchemaMembersResponseRowXml extends AbstractMdSchemaResponseRowXm
         this.memberType = memberType;
     }
 
-    public Integer getMemberGuid() {
+    public String getMemberGuid() {
         return memberGuid;
     }
 
-    public void setMemberGuid(Integer memberGuid) {
+    public void setMemberGuid(String memberGuid) {
         this.memberGuid = memberGuid;
     }
 

@@ -312,6 +312,11 @@ public class Constants {
     public static final String POPULARITY = "POPULARITY";
     public static final String WEIGHTEDPOPULARITY = "WEIGHTEDPOPULARITY";
     public static final String CLIENTCACHEREFRESHPOLICY = "CLIENTCACHEREFRESHPOLICY";
+    public static final String ENCRYPTION_LEVEL = "ENCRYPTION_LEVEL";
+    public static final String CRYPTOKEY_UPDATED = "CRYPTOKEY_UPDATED";
+    public static final String TABLE_OLAP_TYPE = "TABLE_OLAP_TYPE";
+    public static final String VISUAL_CALCULATIONS_INFO = "VISUAL_CALCULATIONS_INFO";
+    public static final String SKIPPABLE = "SKIPPABLE";
     public static final String TABLE_CATALOG = "TABLE_CATALOG";
     public static final String TABLE_SCHEMA = "TABLE_SCHEMA";
     public static final String TABLE_NAME = "TABLE_NAME";

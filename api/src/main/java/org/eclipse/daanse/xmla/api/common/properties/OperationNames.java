@@ -42,5 +42,6 @@ public class OperationNames {
     public static final String MDSCHEMA_SETS = "MDSCHEMA_SETS";
     public static final String MDSCHEMA_KPIS = "MDSCHEMA_KPIS";
     public static final String MDSCHEMA_MEASUREGROUPS = "MDSCHEMA_MEASUREGROUPS";
+    public static final String MDSCHEMA_INPUT_DATASOURCES = "MDSCHEMA_INPUT_DATASOURCES";
 
 }

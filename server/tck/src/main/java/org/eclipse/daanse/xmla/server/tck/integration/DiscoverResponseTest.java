@@ -66,6 +66,7 @@ import org.eclipse.daanse.xmla.api.common.enums.SearchableEnum;
 import org.eclipse.daanse.xmla.api.common.enums.SetEvaluationContextEnum;
 import org.eclipse.daanse.xmla.api.common.enums.StructureEnum;
 import org.eclipse.daanse.xmla.api.common.enums.StructureTypeEnum;
+import org.eclipse.daanse.xmla.api.common.enums.TableOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.TableTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.TypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
@@ -341,8 +342,8 @@ class DiscoverResponseTest {
         TransformerException {
 
         DiscoverLiteralsResponseRowR row = new DiscoverLiteralsResponseRowR("literalName",
-            "literalValue", "literalInvalidChars", "literalInvalidStartingChars",
-            10, LiteralNameEnumValueEnum.DBLITERAL_BINARY_LITERAL);
+            "literalValue", Optional.of("literalInvalidChars"), Optional.of("literalInvalidStartingChars"),
+            Optional.of(10), Optional.of(LiteralNameEnumValueEnum.DBLITERAL_BINARY_LITERAL));
 
         DiscoverService discoverService = xmlaService.discover();
         when(discoverService.discoverLiterals(any(), any())).thenReturn(List.of(row));
@@ -472,7 +473,9 @@ class DiscoverResponseTest {
             Optional.of(1), Optional.of(TypeEnum.MULTIDIMENSIONAL), Optional.of(2), Optional.of("databaseId"),
             Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)),
             Optional.of(true), Optional.of(1.1d), Optional.of(1.2d),
-            Optional.of(ClientCacheRefreshPolicyEnum.REFRESH_NEWER_DATA));
+            Optional.of(ClientCacheRefreshPolicyEnum.REFRESH_NEWER_DATA),
+            Optional.of("encryptionLevel"),
+            Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)));
 
         DiscoverService discoverService = xmlaService.discover();
         when(discoverService.dbSchemaCatalogs(any(), any())).thenReturn(List.of(row));
@@ -497,7 +500,10 @@ class DiscoverResponseTest {
             Map.entry("CURRENTLY_USED", "true"),
             Map.entry("POPULARITY", "1.1"),
             Map.entry("WEIGHTEDPOPULARITY", "1.2"),
-            Map.entry("CLIENTCACHEREFRESHPOLICY", "0")));
+            Map.entry("CLIENTCACHEREFRESHPOLICY", "0"),
+            Map.entry("ENCRYPTION_LEVEL", "encryptionLevel"),
+            Map.entry("CRYPTOKEY_UPDATED", DATE)));
+
         xmlAssert.valueByXPath("/SOAP:Envelope/SOAP:Body/msxmla:DiscoverResponse/msxmla:return/rowset:root/rowset:row/rowset:TYPE").asString()
         .has(new Condition<>(item -> TypeEnum.fromValue(item).equals(TypeEnum.MULTIDIMENSIONAL), "MULTIDIMENSIONAL"));
     }
@@ -511,7 +517,7 @@ class DiscoverResponseTest {
             Optional.of(TABLE_SCHEMA_LOW),
             Optional.of(TABLE_NAME_LOW),
             Optional.of("columnName"),
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of(2),
             Optional.of(3),
             Optional.of(true),
@@ -605,7 +611,7 @@ class DiscoverResponseTest {
             Optional.of("localTypeName"),
             Optional.of(2),
             Optional.of(3),
-            Optional.of(4),
+            Optional.of("4"),
             Optional.of("typeLib"),
             Optional.of("version"),
             Optional.of(false),
@@ -723,7 +729,8 @@ class DiscoverResponseTest {
             Optional.of(DESCRIPTION_LOW),
             Optional.of(1),
             Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)),
-            Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)));
+            Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)),
+            Optional.of(TableOlapTypeEnum.CUBE_DIMENSION));
 
         DiscoverService discoverService = xmlaService.discover();
         when(discoverService.dbSchemaTables(any(), any())).thenReturn(List.of(row));
@@ -747,7 +754,8 @@ class DiscoverResponseTest {
             Map.entry(DESCRIPTION, DESCRIPTION_LOW),
             Map.entry("TABLE_PROP_ID", "1"),
             Map.entry("DATE_CREATED", DATE),
-            Map.entry("DATE_MODIFIED", DATE)));
+            Map.entry("DATE_MODIFIED", DATE),
+            Map.entry("TABLE_OLAP_TYPE", "CUBE_DIMENSION")));
     }
 
     @Test
@@ -759,7 +767,7 @@ class DiscoverResponseTest {
             Optional.of(SCHEMA_NAME_LOW),
             TABLE_NAME_LOW,
             TABLE_TYPE_LOW,
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of(true),
             Optional.of(2),
             Optional.of(3),
@@ -858,7 +866,7 @@ class DiscoverResponseTest {
             Optional.of(SCHEMA_NAME_LOW),
             Optional.of(CUBE_NAME_LOW),
             Optional.of(CubeTypeEnum.CUBE),
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)),
             Optional.of(LocalDateTime.of(2023, 2, 16, 10, 10)),
             Optional.of("schemaUpdatedBy"),
@@ -924,7 +932,7 @@ class DiscoverResponseTest {
             Optional.of(CUBE_NAME_LOW),
             Optional.of("dimensionName"),
             Optional.of(DIMENSION_UNIQUE_NAME_LOW),
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of("dimensionCaption"),
             Optional.of(2),
             Optional.of(DimensionTypeEnum.UNKNOWN),
@@ -983,7 +991,7 @@ class DiscoverResponseTest {
             DESCRIPTION_LOW,
             true,
             false,
-            1));
+            1, true));
         MdSchemaFunctionsResponseRowR row = new MdSchemaFunctionsResponseRowR(
             Optional.of("functionalName"),
             Optional.of(DESCRIPTION_LOW),
@@ -998,7 +1006,8 @@ class DiscoverResponseTest {
             Optional.of("object"),
             Optional.of("caption"),
             Optional.of(parameterInfoList),
-            Optional.of(DirectQueryPushableEnum.MEASURE));
+            Optional.of(DirectQueryPushableEnum.MEASURE),
+            Optional.of(0x1));
 
         DiscoverService discoverService = xmlaService.discover();
         when(discoverService.mdSchemaFunctions(any(), any())).thenReturn(List.of(row));
@@ -1026,7 +1035,8 @@ class DiscoverResponseTest {
             Map.entry("HELP_CONTEXT", "helpContext"),
             Map.entry("OBJECT", "object"),
             Map.entry("CAPTION", "caption"),
-            Map.entry("PARAMETERINFO", "namedescriptiontruefalse1")
+            Map.entry("PARAMETERINFO", "namedescriptiontruefalse1true"),
+            Map.entry("VISUAL_CALCULATIONS_INFO", "1")
         ));
         xmlAssert.valueByXPath(
             "/SOAP:Envelope/SOAP:Body/msxmla:DiscoverResponse/msxmla:return/rowset:root/rowset:row/rowset:ORIGIN"
@@ -1047,7 +1057,7 @@ class DiscoverResponseTest {
             Optional.of(DIMENSION_UNIQUE_NAME_LOW),
             Optional.of("hierarchyName"),
             Optional.of(HIERARCHY_UNIQUE_NAME_LOW),
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of("hierarchyCaption"),
             Optional.of(DimensionTypeEnum.UNKNOWN),
             Optional.of(2),
@@ -1192,7 +1202,7 @@ class DiscoverResponseTest {
             Optional.of(HIERARCHY_UNIQUE_NAME_LOW),
             Optional.of("levelName"),
             Optional.of(LEVEL_UNIQUE_NAME_LOW),
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of("levelCaption"),
             Optional.of(2),
             Optional.of(3),
@@ -1358,7 +1368,7 @@ class DiscoverResponseTest {
             Optional.of("measureName"),
             Optional.of("measureUniqueName"),
             Optional.of(MEASURE_CAPTION),
-            Optional.of(1),
+            Optional.of("1"),
             Optional.of(MeasureAggregatorEnum.MDMEASURE_AGGR_UNKNOWN),
             Optional.of(LevelDbTypeEnum.DBTYPE_EMPTY),
             Optional.of(2),
@@ -1432,7 +1442,7 @@ class DiscoverResponseTest {
             Optional.of("memberName"),
             Optional.of(MEMBER_UNIQUE_NAME),
             Optional.of(MemberTypeEnum.UNKNOWN),
-            Optional.of(3),
+            Optional.of("3"),
             Optional.of(MEASURE_CAPTION),
             Optional.of(4),
             Optional.of(5),

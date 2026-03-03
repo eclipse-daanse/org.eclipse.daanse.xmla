@@ -22,7 +22,7 @@ import org.eclipse.daanse.xmla.api.common.enums.PreferredQueryPatternsEnum;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesResponseRow;
 
 public record MdSchemaCubesResponseRowR(String catalogName, Optional<String> schemaName, Optional<String> cubeName,
-        Optional<CubeTypeEnum> cubeType, Optional<Integer> cubeGuid, Optional<LocalDateTime> createdOn,
+        Optional<CubeTypeEnum> cubeType, Optional<String> cubeGuid, Optional<LocalDateTime> createdOn,
         Optional<LocalDateTime> lastSchemaUpdate, Optional<String> schemaUpdatedBy,
         Optional<LocalDateTime> lastDataUpdate, Optional<String> dataUpdateDBy, Optional<String> description,
         Optional<Boolean> isDrillThroughEnabled, Optional<Boolean> isLinkable, Optional<Boolean> isWriteEnabled,

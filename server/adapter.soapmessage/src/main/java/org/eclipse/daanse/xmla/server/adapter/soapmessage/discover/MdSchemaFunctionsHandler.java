@@ -86,7 +86,7 @@ public class MdSchemaFunctionsHandler implements DiscoverHandler {
     @SuppressWarnings("deprecation")
     private void addResponseRow(SOAPElement root, MdSchemaFunctionsResponseRow r) throws SOAPException {
         SOAPElement row = root.addChildElement(ROWSET.QN_ROW);
-        r.functionalName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_FUNCTION_NAME, v));
+        r.functionName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_FUNCTION_NAME, v));
         r.description().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DESCRIPTION, v));
         SoapUtil.addChildElement(row, ROW.QN_PARAMETER_LIST, r.parameterList());
         r.returnType().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_RETURN_TYPE, String.valueOf(v)));
@@ -101,6 +101,8 @@ public class MdSchemaFunctionsHandler implements DiscoverHandler {
         r.parameterInfo().ifPresent(v -> addParameterInfoList(row, v));
         r.directQueryPushable().ifPresent(
                 v -> SoapUtil.addChildElement(row, ROW.QN_DIRECTQUERY_PUSHABLE, String.valueOf(v.getValue())));
+        r.visualCalculationsInfo().ifPresent(
+                v -> SoapUtil.addChildElement(row, ROW.QN_VISUAL_CALCULATIONS_INFO, String.valueOf(v)));
     }
 
     private void addParameterInfoList(SOAPElement root, List<ParameterInfo> list) {
@@ -116,5 +118,6 @@ public class MdSchemaFunctionsHandler implements DiscoverHandler {
         SoapUtil.addChildElement(el, ROW.QN_OPTIONAL, String.valueOf(it.optional()));
         SoapUtil.addChildElement(el, ROW.QN_REPEATABLE, String.valueOf(it.repeatable()));
         SoapUtil.addChildElement(el, ROW.QN_REPEATGROUP, String.valueOf(it.repeatGroup()));
+        SoapUtil.addChildElement(el, ROW.QN_SKIPPABLE, String.valueOf(it.skippable()));
     }
 }

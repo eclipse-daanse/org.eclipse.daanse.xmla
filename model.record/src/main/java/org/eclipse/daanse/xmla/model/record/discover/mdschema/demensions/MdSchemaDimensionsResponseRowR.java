@@ -17,11 +17,11 @@ import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.common.enums.DimensionTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.DimensionUniqueSettingEnum;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsResponseRow;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsResponseRow;
 
 public record MdSchemaDimensionsResponseRowR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> dimensionName, Optional<String> dimensionUniqueName,
-        Optional<Integer> dimensionGuid, Optional<String> dimensionCaption, Optional<Integer> dimensionOptional,
+        Optional<String> dimensionGuid, Optional<String> dimensionCaption, Optional<Integer> dimensionOrdinal,
         Optional<DimensionTypeEnum> dimensionType, Optional<Integer> dimensionCardinality,
         Optional<String> defaultHierarchy, Optional<String> description, Optional<Boolean> isVirtual,
         Optional<Boolean> isReadWrite, Optional<DimensionUniqueSettingEnum> dimensionUniqueSetting,

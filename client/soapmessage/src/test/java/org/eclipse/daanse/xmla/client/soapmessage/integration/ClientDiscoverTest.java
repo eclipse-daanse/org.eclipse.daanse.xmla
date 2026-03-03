@@ -121,8 +121,8 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsRequ
 import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesResponseRow;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRequest;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsResponseRow;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRequest;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.ParameterInfo;
@@ -798,7 +798,7 @@ class ClientDiscoverTest {
         assertThat(r.tableSchema()).isPresent().contains("TableSchema");
         assertThat(r.tableName()).isPresent().contains("TableName");
         assertThat(r.columnName()).isPresent().contains("ColumnName");
-        assertThat(r.columnGuid()).isPresent().contains(10);
+        assertThat(r.columnGuid()).isPresent().contains("10");
         assertThat(r.columnPropId()).isPresent().contains(11);
         assertThat(r.ordinalPosition()).isPresent().contains(12);
         assertThat(r.columnHasDefault()).isPresent().contains(true);
@@ -901,7 +901,7 @@ class ClientDiscoverTest {
         assertThat(r.localTypeName()).isPresent().contains("LocalTypeName");
         assertThat(r.minimumScale()).isPresent().contains(10);
         assertThat(r.maximumScale()).isPresent().contains(11);
-        assertThat(r.guid()).isPresent().contains(12);
+        assertThat(r.guid()).isPresent().contains("12");
         assertThat(r.typeLib()).isPresent().contains("TypeLib");
         assertThat(r.version()).isPresent().contains("Version");
         assertThat(r.isLong()).isPresent().contains(true);
@@ -1158,7 +1158,7 @@ class ClientDiscoverTest {
         assertThat(r.schemaName()).isPresent().contains("SchemaName");
         assertThat(r.tableName()).isEqualTo("TableName");
         assertThat(r.tableType()).isEqualTo("TableType");
-        assertThat(r.tableGuid()).isPresent().contains(10);
+        assertThat(r.tableGuid()).isPresent().contains("10");
         assertThat(r.bookmarks()).isPresent().contains(true);
         assertThat(r.bookmarkType()).isPresent().contains(10);
         assertThat(r.bookmarkDataType()).isPresent().contains(11);
@@ -1321,7 +1321,7 @@ class ClientDiscoverTest {
         assertThat(r.schemaName()).isPresent().contains("SchemaName");
         assertThat(r.cubeName()).isPresent().contains("CubeName");
         assertThat(r.cubeType()).isPresent().contains(CubeTypeEnum.CUBE);
-        assertThat(r.cubeGuid()).isPresent().contains(10);
+        assertThat(r.cubeGuid()).isPresent().contains("10");
         assertThat(r.createdOn()).isPresent().contains(LocalDateTime.of(2023, Month.JANUARY, 10, 10, 45));
         assertThat(r.lastSchemaUpdate()).isPresent().contains(LocalDateTime.of(2024, Month.JANUARY, 10, 10, 45));
         assertThat(r.schemaUpdatedBy()).isPresent().contains("SchemaUpdatedBy");
@@ -1407,9 +1407,9 @@ class ClientDiscoverTest {
         assertThat(r.cubeName()).isPresent().contains("CubeName");
         assertThat(r.dimensionName()).isPresent().contains("DimensionName");
         assertThat(r.dimensionUniqueName()).isPresent().contains("DimensionUniqueName");
-        assertThat(r.dimensionGuid()).isPresent().contains(10);
+        assertThat(r.dimensionGuid()).isPresent().contains("10");
         assertThat(r.dimensionCaption()).isPresent().contains("DimensionCaption");
-        assertThat(r.dimensionOptional()).isPresent().contains(11);
+        assertThat(r.dimensionOrdinal()).isPresent().contains(11);
         assertThat(r.dimensionType()).isPresent().contains(DimensionTypeEnum.UNKNOWN);
         assertThat(r.dimensionCardinality()).isPresent().contains(12);
         assertThat(r.defaultHierarchy()).isPresent().contains("DefaultHierarchy");
@@ -1490,7 +1490,7 @@ class ClientDiscoverTest {
         assertThat(rows.get(0)).isNotNull();
         MdSchemaFunctionsResponseRow r = rows.get(0);
 
-        assertThat(r.functionalName()).isPresent().contains("FunctionalName");
+        assertThat(r.functionName()).isPresent().contains("FunctionalName");
         assertThat(r.description()).isPresent().contains("Description");
         assertThat(r.parameterList()).isEqualTo("ParameterList");
         assertThat(r.returnType()).isPresent().contains(10);
@@ -1578,7 +1578,7 @@ class ClientDiscoverTest {
         assertThat(r.dimensionUniqueName()).isPresent().contains("DimensionUniqueName");
         assertThat(r.hierarchyName()).isPresent().contains("HierarchyName");
         assertThat(r.hierarchyUniqueName()).isPresent().contains("HierarchyUniqueName");
-        assertThat(r.hierarchyGuid()).isPresent().contains(10);
+        assertThat(r.hierarchyGuid()).isPresent().contains("10");
         assertThat(r.hierarchyCaption()).isPresent().contains("HierarchyCaption");
         assertThat(r.dimensionType()).isPresent().contains(DimensionTypeEnum.UNKNOWN);
         assertThat(r.hierarchyCardinality()).isPresent().contains(11);
@@ -1688,7 +1688,7 @@ class ClientDiscoverTest {
         assertThat(r.kpiTrend()).isPresent().contains("KpiTrend");
         assertThat(r.kpiStatusGraphic()).isPresent().contains("KpiStatusGraphic");
         assertThat(r.kpiTrendGraphic()).isPresent().contains("KpiTrendGraphic");
-        assertThat(r.kpiWight()).isPresent().contains("KpiWight");
+        assertThat(r.kpiWeight()).isPresent().contains("KpiWight");
         assertThat(r.kpiCurrentTimeMember()).isPresent().contains("KpiCurrentTimeMember");
         assertThat(r.kpiParentKpiName()).isPresent().contains("KpiParentKpiName");
         assertThat(r.annotation()).isPresent().contains("Annotation");
@@ -1766,7 +1766,7 @@ class ClientDiscoverTest {
         assertThat(r.hierarchyUniqueName()).isPresent().contains("HierarchyUniqueName");
         assertThat(r.levelName()).isPresent().contains("LevelName");
         assertThat(r.levelUniqueName()).isPresent().contains("LevelUniqueName");
-        assertThat(r.levelGuid()).isPresent().contains(10);
+        assertThat(r.levelGuid()).isPresent().contains("10");
         assertThat(r.levelCaption()).isPresent().contains("LevelCaption");
         assertThat(r.levelNumber()).isPresent().contains(11);
         assertThat(r.levelCardinality()).isPresent().contains(12);
@@ -2003,8 +2003,7 @@ class ClientDiscoverTest {
         properties.addProperty(PropertyListElementDefinition.CONTENT, "SchemaData");
         MdSchemaMeasuresRestrictionsR restrictions = new MdSchemaMeasuresRestrictionsR(Optional.of("CatalogName"),
                 Optional.of("SchemaName"), Optional.of("CubeName"), Optional.of("MeasureName"),
-                Optional.of("MeasureUniqueName"), Optional.of("MeasureGroupName"), Optional.of(CubeSourceEnum.CUBE),
-                Optional.of(VisibilityEnum.VISIBLE));
+                Optional.of("MeasureUniqueName"), Optional.of("MeasureGroupName"));
 
         RequestMetaData requestMetaData = null;
 
@@ -2023,7 +2022,7 @@ class ClientDiscoverTest {
         assertThat(r.measureName()).isPresent().contains("MeasureName");
         assertThat(r.measureUniqueName()).isPresent().contains("MeasureUniqueName");
         assertThat(r.measureCaption()).isPresent().contains("MeasureCaption");
-        assertThat(r.measureGuid()).isPresent().contains(10);
+        assertThat(r.measureGuid()).isPresent().contains("10");
         assertThat(r.measureAggregator()).isPresent().contains(MeasureAggregatorEnum.MDMEASURE_AGGR_SUM);
         assertThat(r.dataType()).isPresent().contains(LevelDbTypeEnum.DBTYPE_EMPTY);
         assertThat(r.numericPrecision()).isPresent().contains(11);
@@ -2124,7 +2123,7 @@ class ClientDiscoverTest {
         assertThat(r.memberName()).isPresent().contains("MemberName");
         assertThat(r.memberUniqueName()).isPresent().contains("MemberUniqueName");
         assertThat(r.memberType()).isPresent().contains(MemberTypeEnum.REGULAR_MEMBER);
-        assertThat(r.memberGuid()).isPresent().contains(12);
+        assertThat(r.memberGuid()).isPresent().contains("12");
         assertThat(r.memberCaption()).isPresent().contains("MemberCaption");
         assertThat(r.childrenCardinality()).isPresent().contains(14);
         assertThat(r.parentLevel()).isPresent().contains(15);

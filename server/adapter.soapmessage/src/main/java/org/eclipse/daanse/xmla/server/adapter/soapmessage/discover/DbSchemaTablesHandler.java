@@ -145,5 +145,6 @@ public class DbSchemaTablesHandler implements DiscoverHandler {
         r.tablePropId().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_TABLE_PROP_ID, String.valueOf(v)));
         r.dateCreated().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DATE_CREATED, v.format(formatter)));
         r.dateModified().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DATE_MODIFIED, v.format(formatter)));
+        r.tableOlapType().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_TABLE_OLAP_TYPE, v.getValue()));
     }
 }

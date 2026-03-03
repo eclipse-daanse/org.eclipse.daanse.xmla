@@ -205,7 +205,7 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
      *         library. Otherwise, it is NULL.
      */
     @XmlElement(name = "GUID", required = false)
-    private Integer guid;
+    private String guid;
 
     /**
      * The type library that contains the description of the type, if the type is described in a
@@ -375,11 +375,11 @@ public class DbSchemaProviderTypesResponseRowXml extends Row implements Serializ
         this.maximumScale = maximumScale;
     }
 
-    public Integer getGuid() {
+    public String getGuid() {
         return guid;
     }
 
-    public void setGuid(Integer guid) {
+    public void setGuid(String guid) {
         this.guid = guid;
     }
 

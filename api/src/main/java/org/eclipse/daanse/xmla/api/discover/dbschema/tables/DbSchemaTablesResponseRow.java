@@ -16,6 +16,8 @@ package org.eclipse.daanse.xmla.api.discover.dbschema.tables;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.eclipse.daanse.xmla.api.common.enums.TableOlapTypeEnum;
+
 /**
  * This schema rowset returns dimensions, measure groups, or schema rowsets exposed as tables.
  */
@@ -66,4 +68,18 @@ public interface DbSchemaTablesResponseRow {
      * @return The date the table was last modified.
      */
     Optional<LocalDateTime> dateModified();
+
+    /**
+     *
+     * @return The OLAP type of the object:
+     *     CUBE_DIMENSION indicates that the object is
+     *     a cube dimension.
+     *
+     *     MEASURE_GROUP indicates that the object is a
+     *     measure group.
+     *
+     *     SCHEMA indicates that the object is a schema
+     *     rowset table.
+     */
+    Optional<TableOlapTypeEnum> tableOlapType();
 }

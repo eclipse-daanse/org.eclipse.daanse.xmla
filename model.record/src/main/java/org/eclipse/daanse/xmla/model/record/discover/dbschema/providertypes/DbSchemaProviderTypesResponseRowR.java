@@ -24,7 +24,7 @@ public record DbSchemaProviderTypesResponseRowR(Optional<String> typeName, Optio
         Optional<String> createParams, Optional<Boolean> isNullable, Optional<Boolean> caseSensitive,
         Optional<SearchableEnum> searchable, Optional<Boolean> unsignedAttribute, Optional<Boolean> fixedPrecScale,
         Optional<Boolean> autoUniqueValue, Optional<String> localTypeName, Optional<Integer> minimumScale,
-        Optional<Integer> maximumScale, Optional<Integer> guid, Optional<String> typeLib, Optional<String> version,
+        Optional<Integer> maximumScale, Optional<String> guid, Optional<String> typeLib, Optional<String> version,
         Optional<Boolean> isLong, Optional<Boolean> bestMatch, Optional<Boolean> isFixedLength)
         implements DbSchemaProviderTypesResponseRow {
 

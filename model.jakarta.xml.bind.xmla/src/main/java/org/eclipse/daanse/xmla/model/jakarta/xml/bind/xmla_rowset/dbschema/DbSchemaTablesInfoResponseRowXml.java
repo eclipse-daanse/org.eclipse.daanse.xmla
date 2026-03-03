@@ -62,7 +62,7 @@ public class DbSchemaTablesInfoResponseRowXml extends Row implements Serializabl
      *         tables should return NULL in this column.
      */
     @XmlElement(name = "TABLE_GUID", required = false)
-    private Integer tableGuid;
+    private String tableGuid;
 
     /**
      * Whether this table supports bookmarks. Allways is false.
@@ -151,11 +151,11 @@ public class DbSchemaTablesInfoResponseRowXml extends Row implements Serializabl
         this.tableType = tableType;
     }
 
-    public Integer getTableGuid() {
+    public String getTableGuid() {
         return tableGuid;
     }
 
-    public void setTableGuid(Integer tableGuid) {
+    public void setTableGuid(String tableGuid) {
         this.tableGuid = tableGuid;
     }
 

@@ -15,6 +15,8 @@ package org.eclipse.daanse.xmla.server.adapter.soapmessage.discover;
 
 import javax.xml.namespace.QName;
 
+import org.eclipse.daanse.xmla.server.adapter.soapmessage.discover.DiscoverConstants.ROW;
+
 /**
  * Constants for XMLA Discover operations. Contains ROWSET namespace and row
  * property QNames used by discover handlers.
@@ -453,6 +455,12 @@ public interface DiscoverConstants {
         String CLIENTCACHEREFRESHPOLICY = "CLIENTCACHEREFRESHPOLICY";
         QName QN_CLIENTCACHEREFRESHPOLICY = new QName(NS_URN, CLIENTCACHEREFRESHPOLICY, PREFIX);
 
+        String ENCRYPTION_LEVEL = "ENCRYPTION_LEVEL";
+        QName QN_ENCRYPTION_LEVEL = new QName(NS_URN, ENCRYPTION_LEVEL, PREFIX);
+
+        String CRYPTOKEY_UPDATED = "CRYPTOKEY_UPDATED";
+        QName QN_CRYPTOKEY_UPDATED = new QName(NS_URN, CRYPTOKEY_UPDATED, PREFIX);
+
         // DB Schema - Table
         String TABLE_CATALOG = "TABLE_CATALOG";
         QName QN_TABLE_CATALOG = new QName(NS_URN, TABLE_CATALOG, PREFIX);
@@ -712,6 +720,9 @@ public interface DiscoverConstants {
         String REPEATGROUP = "RepeatGroup";
         QName QN_REPEATGROUP = new QName(NS_URN, REPEATGROUP, PREFIX);
 
+        String SKIPPABLE = "SKIPPABLE";
+        QName QN_SKIPPABLE = new QName(NS_URN, SKIPPABLE, PREFIX);
+
         // Function
         String FUNCTION_NAME = "FUNCTION_NAME";
         QName QN_FUNCTION_NAME = new QName(NS_URN, FUNCTION_NAME, PREFIX);
@@ -748,6 +759,9 @@ public interface DiscoverConstants {
 
         String DIRECTQUERY_PUSHABLE = "DIRECTQUERY_PUSHABLE";
         QName QN_DIRECTQUERY_PUSHABLE = new QName(NS_URN, DIRECTQUERY_PUSHABLE, PREFIX);
+
+        String VISUAL_CALCULATIONS_INFO = "VISUAL_CALCULATIONS_INFO";
+        QName QN_VISUAL_CALCULATIONS_INFO = new QName(NS_URN, VISUAL_CALCULATIONS_INFO, PREFIX);
 
         String PARAMETERINFO = "PARAMETERINFO";
         QName QN_PARAMETERINFO = new QName(NS_URN, PARAMETERINFO, PREFIX);

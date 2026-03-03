@@ -64,7 +64,7 @@ public class DbSchemaColumnsResponseRowXml extends Row implements Serializable {
     /**
      * @return The GUID of the column.
      */
-    private Integer columnGuid;
+    private String columnGuid;
 
     @XmlElement(name = "COLUMN_PROPID", required = false)
     /**
@@ -279,11 +279,11 @@ public class DbSchemaColumnsResponseRowXml extends Row implements Serializable {
         this.columnName = columnName;
     }
 
-    public Integer getColumnGuid() {
+    public String getColumnGuid() {
         return columnGuid;
     }
 
-    public void setColumnGuid(Integer columnGuid) {
+    public void setColumnGuid(String columnGuid) {
         this.columnGuid = columnGuid;
     }
 

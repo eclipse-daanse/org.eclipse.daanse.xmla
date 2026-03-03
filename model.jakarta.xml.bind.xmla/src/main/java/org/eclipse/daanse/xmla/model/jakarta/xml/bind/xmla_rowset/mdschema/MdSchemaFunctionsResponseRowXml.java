@@ -43,7 +43,7 @@ public class MdSchemaFunctionsResponseRowXml extends Row implements Serializable
      * The name of the function.
      */
     @XmlElement(name = "FUNCTION_NAME", required = false)
-    private String functionalName;
+    private String functionName;
 
     /**
      * A description of the function.
@@ -129,12 +129,12 @@ public class MdSchemaFunctionsResponseRowXml extends Row implements Serializable
     @XmlElement(name = "DIRECTQUERY_PUSHABLE", required = false)
     private DirectQueryPushableEnum directQueryPushable;
 
-    public String getFunctionalName() {
-        return functionalName;
+    public String getFunctionName() {
+        return functionName;
     }
 
-    public void setFunctionalName(String functionalName) {
-        this.functionalName = functionalName;
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
     }
 
     public String getDescription() {

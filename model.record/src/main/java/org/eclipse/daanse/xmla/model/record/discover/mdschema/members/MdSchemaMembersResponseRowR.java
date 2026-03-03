@@ -23,7 +23,7 @@ public record MdSchemaMembersResponseRowR(Optional<String> catalogName, Optional
         Optional<String> cubeName, Optional<String> dimensionUniqueName, Optional<String> hierarchyUniqueName,
         Optional<String> levelUniqueName, Optional<Integer> levelNumber, Optional<Integer> memberOrdinal,
         Optional<String> memberName, Optional<String> memberUniqueName, Optional<MemberTypeEnum> memberType,
-        Optional<Integer> memberGuid, Optional<String> memberCaption, Optional<Integer> childrenCardinality,
+        Optional<String> memberGuid, Optional<String> memberCaption, Optional<Integer> childrenCardinality,
         Optional<Integer> parentLevel, Optional<String> parentUniqueName, Optional<Integer> parentCount,
         Optional<String> description, Optional<String> expression, Optional<String> memberKey,
         Optional<Boolean> isPlaceHolderMember, Optional<Boolean> isDataMember, Optional<ScopeEnum> scope)

@@ -62,7 +62,7 @@ public class MdSchemaHierarchiesResponseRowXml extends AbstractMdSchemaResponseR
      * The GUID of the hierarchy.
      */
     @XmlElement(name = "HIERARCHY_GUID", required = false)
-    private Integer hierarchyGuid;
+    private String hierarchyGuid;
 
     /**
      * The caption of the hierarchy.
@@ -222,11 +222,11 @@ public class MdSchemaHierarchiesResponseRowXml extends AbstractMdSchemaResponseR
         this.hierarchyUniqueName = hierarchyUniqueName;
     }
 
-    public Integer getHierarchyGuid() {
+    public String getHierarchyGuid() {
         return hierarchyGuid;
     }
 
-    public void setHierarchyGuid(Integer hierarchyGuid) {
+    public void setHierarchyGuid(String hierarchyGuid) {
         this.hierarchyGuid = hierarchyGuid;
     }
 

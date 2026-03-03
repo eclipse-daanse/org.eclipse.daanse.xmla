@@ -51,8 +51,8 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsRequ
 import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsRestrictions;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRestrictions;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRequest;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRestrictions;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRequest;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRestrictions;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsRestrictions;
 import org.eclipse.daanse.xmla.api.discover.mdschema.hierarchies.MdSchemaHierarchiesRequest;
@@ -204,7 +204,7 @@ import static org.eclipse.daanse.xmla.client.soapmessage.SoapUtil.addChildElemen
 public class DiscoverConsumers {
 
     private static final String VALUE = "Value";
-	private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverConsumers.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverConsumers.class);
     private static final String NS_URI = "urn:schemas-microsoft-com:xml-analysis";
 
     private DiscoverConsumers() {
@@ -431,10 +431,6 @@ public class DiscoverConsumers {
                         .ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_MEASURE_UNIQUE_NAME, v));
                 dr.measureGroupName()
                         .ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_MEASUREGROUP_NAME, v));
-                dr.cubeSource().ifPresent(
-                        v -> addChildElement(restrictionList, RESTRICTIONS_CUBE_SOURCE, String.valueOf(v.getValue())));
-                dr.cubeSource().ifPresent(v -> addChildElement(restrictionList, RESTRICTIONS_MEASURE_VISIBILITY,
-                        String.valueOf(v.getValue())));
 
                 SOAPElement propertyList = discover.addChildElement(PROPERTIES).addChildElement(PROPERTY_LIST);
                 addChildElementPropertyList(propertyList, properties);

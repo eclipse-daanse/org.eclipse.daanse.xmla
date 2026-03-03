@@ -64,7 +64,7 @@ public interface MdSchemaLevelsResponseRow {
     /**
      * @return The GUID of the level.
      */
-    Optional<Integer> levelGuid();
+    Optional<String> levelGuid();
 
     /**
      * @return The caption of the hierarchy.

@@ -11,7 +11,7 @@
  *   SmartCity Jena - initial
  *   Stefan Bischof (bipolis.org) - initial
  */
-package org.eclipse.daanse.xmla.api.discover.mdschema.demensions;
+package org.eclipse.daanse.xmla.api.discover.mdschema.dimensions;
 
 import java.util.Optional;
 
@@ -51,7 +51,7 @@ public interface MdSchemaDimensionsResponseRow {
     /**
      * @return The GUID of the dimension.
      */
-    Optional<Integer> dimensionGuid();
+    Optional<String> dimensionGuid();
 
     /**
      * @return The caption of the dimension.
@@ -61,7 +61,7 @@ public interface MdSchemaDimensionsResponseRow {
     /**
      * @return The position of the dimension within the cube.
      */
-    Optional<Integer> dimensionOptional();
+    Optional<Integer> dimensionOrdinal();
 
     /**
      * @return The type of the dimension. Valid values are: 0 - UNKNOWN 1 - TIME 2 - MEASURE 3 - OTHER 5

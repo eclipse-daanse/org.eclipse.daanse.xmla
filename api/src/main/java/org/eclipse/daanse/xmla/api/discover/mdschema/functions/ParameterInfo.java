@@ -39,4 +39,16 @@ public interface ParameterInfo {
      */
     Integer repeatGroup();
 
+    /**
+     * @return A Boolean that, when true, indicates that the parameter can be
+     *         fully skipped. That is, when using the respective function, the user
+     *         can omit not only the parameter but also the separator comma.
+     *         For example, the Axis parameter of the FIRST visual calculation
+     *         function is optional and skippable, so the following usages are all
+     *         valid and equivalent:
+     *         FIRST([Sales], ROWS, DEFAULT)
+     *         FIRST([Sales], , DEFAULT)
+     *         FIRST([Sales], DEFAULT)
+     */
+    Boolean skippable();
 }

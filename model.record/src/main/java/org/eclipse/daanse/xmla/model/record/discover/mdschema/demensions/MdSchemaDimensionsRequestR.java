@@ -13,7 +13,7 @@
 */
 package org.eclipse.daanse.xmla.model.record.discover.mdschema.demensions;
 
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRequest;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRequest;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 
 public record MdSchemaDimensionsRequestR(PropertiesR properties, MdSchemaDimensionsRestrictionsR restrictions)

@@ -16,11 +16,12 @@ package org.eclipse.daanse.xmla.model.record.discover.dbschema.tables;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.eclipse.daanse.xmla.api.common.enums.TableOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tables.DbSchemaTablesResponseRow;
 
 public record DbSchemaTablesResponseRowR(Optional<String> tableCatalog, Optional<String> tableSchema,
         Optional<String> tableName, Optional<String> tableType, Optional<String> tableGuid,
         Optional<String> description, Optional<Integer> tablePropId, Optional<LocalDateTime> dateCreated,
-        Optional<LocalDateTime> dateModified) implements DbSchemaTablesResponseRow {
+        Optional<LocalDateTime> dateModified, Optional<TableOlapTypeEnum> tableOlapType) implements DbSchemaTablesResponseRow {
 
 }

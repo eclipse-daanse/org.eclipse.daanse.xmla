@@ -95,7 +95,7 @@ public interface MdSchemaKpisResponseRow {
     /**
      * @return The unique name of the member in the measures dimension for the KPI weight.
      */
-    Optional<String> kpiWight();
+    Optional<String> kpiWeight();
 
     /**
      * @return The unique name of the member in the time dimension that defines the temporal context of

@@ -56,7 +56,7 @@ public class MdSchemaMeasuresResponseRowXml extends AbstractMdSchemaResponseRowX
      * The GUID of the measure.
      */
     @XmlElement(name = "MEASURE_GUID", required = false)
-    private Integer measureGuid;
+    private String measureGuid;
 
     /**
      * An enumeration that identifies how a measure was derived. This enumeration can be one of the
@@ -182,11 +182,11 @@ public class MdSchemaMeasuresResponseRowXml extends AbstractMdSchemaResponseRowX
         this.measureCaption = measureCaption;
     }
 
-    public Integer getMeasureGuid() {
+    public String getMeasureGuid() {
         return measureGuid;
     }
 
-    public void setMeasureGuid(Integer measureGuid) {
+    public void setMeasureGuid(String measureGuid) {
         this.measureGuid = measureGuid;
     }
 

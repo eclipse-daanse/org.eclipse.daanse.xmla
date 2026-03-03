@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
-import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
-import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.mdschema.measures.MdSchemaMeasuresRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.measures.MdSchemaMeasuresResponseRow;
@@ -35,9 +33,6 @@ import jakarta.xml.soap.SOAPElement;
 import jakarta.xml.soap.SOAPException;
 
 public class MdSchemaMeasuresHandler implements DiscoverHandler {
-
-    private static final String CUBE_SOURCE = "CUBE_SOURCE";
-    private static final String MEASURE_VISIBILITY = "MEASURE_VISIBILITY";
 
     private final DiscoverService discoverService;
 
@@ -59,9 +54,7 @@ public class MdSchemaMeasuresHandler implements DiscoverHandler {
         return new MdSchemaMeasuresRestrictionsR(Optional.ofNullable(m.get(ROW.CATALOG_NAME)),
                 Optional.ofNullable(m.get(ROW.SCHEMA_NAME)), Optional.ofNullable(m.get(ROW.CUBE_NAME)),
                 Optional.ofNullable(m.get(ROW.MEASURE_NAME)), Optional.ofNullable(m.get(ROW.MEASURE_UNIQUE_NAME)),
-                Optional.ofNullable(m.get(ROW.MEASUREGROUP_NAME)),
-                Optional.ofNullable(CubeSourceEnum.fromValue(m.get(CUBE_SOURCE))),
-                Optional.ofNullable(VisibilityEnum.fromValue(m.get(MEASURE_VISIBILITY))));
+                Optional.ofNullable(m.get(ROW.MEASUREGROUP_NAME)));
     }
 
     private void writeResponse(List<MdSchemaMeasuresResponseRow> rows, SOAPBody body) throws SOAPException {

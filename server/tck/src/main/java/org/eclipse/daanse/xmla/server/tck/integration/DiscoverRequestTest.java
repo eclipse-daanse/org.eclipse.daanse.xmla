@@ -44,7 +44,7 @@ import org.eclipse.daanse.xmla.api.discover.discover.schemarowsets.DiscoverSchem
 import org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata.DiscoverXmlMetaDataRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRequest;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRequest;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.hierarchies.MdSchemaHierarchiesRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.kpis.MdSchemaKpisRequest;
@@ -1134,8 +1134,6 @@ class DiscoverRequestTest {
                                                 <MEASURE_NAME>measureName</MEASURE_NAME>
                                                 <MEASURE_UNIQUE_NAME>measureUniqueName</MEASURE_UNIQUE_NAME>
                                                 <MEASUREGROUP_NAME>measureGroupName</MEASUREGROUP_NAME>
-                                                <CUBE_SOURCE>0x01</CUBE_SOURCE>
-                                                <MEASURE_VISIBILITY>0x01</MEASURE_VISIBILITY>
                                             </RestrictionList>
                                         </Restrictions>
                                         <Properties>
@@ -1167,8 +1165,6 @@ class DiscoverRequestTest {
                         assertThat(r.measureName()).isNotNull().isPresent().contains("measureName");
                         assertThat(r.measureUniqueName()).isNotNull().isPresent().contains("measureUniqueName");
                         assertThat(r.measureGroupName()).isNotNull().isPresent().contains(MEASURE_GROUP_NAME);
-                        assertThat(r.cubeSource()).isNotNull().isPresent().contains(CubeSourceEnum.CUBE);
-                        assertThat(r.measureVisibility()).isNotNull().isPresent().contains(VisibilityEnum.VISIBLE);
                     });
                     // getProperties
                     assertThat(d.properties()).isNotNull().satisfies(p -> {

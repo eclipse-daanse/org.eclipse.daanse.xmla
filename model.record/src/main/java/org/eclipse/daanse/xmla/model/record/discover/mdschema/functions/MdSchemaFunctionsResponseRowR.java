@@ -22,11 +22,12 @@ import org.eclipse.daanse.xmla.api.common.enums.OriginEnum;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.ParameterInfo;
 
-public record MdSchemaFunctionsResponseRowR(Optional<String> functionalName, Optional<String> description,
+public record MdSchemaFunctionsResponseRowR(Optional<String> functionName, Optional<String> description,
         String parameterList, Optional<Integer> returnType, Optional<OriginEnum> origin,
         Optional<InterfaceNameEnum> interfaceName, Optional<String> libraryName, Optional<String> dllName,
         Optional<String> helpFile, Optional<String> helpContext, Optional<String> object, Optional<String> caption,
-        Optional<List<ParameterInfo>> parameterInfo, Optional<DirectQueryPushableEnum> directQueryPushable)
+        Optional<List<ParameterInfo>> parameterInfo, Optional<DirectQueryPushableEnum> directQueryPushable,
+        Optional<Integer> visualCalculationsInfo)
         implements MdSchemaFunctionsResponseRow {
 
 }

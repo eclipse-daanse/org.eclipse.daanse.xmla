@@ -49,7 +49,7 @@ public interface MdSchemaCubesResponseRow {
     /**
      * @return The GUID of the cube.
      */
-    Optional<Integer> cubeGuid();
+    Optional<String> cubeGuid();
 
     /**
      * @return TimeThe date and time the cube was created.

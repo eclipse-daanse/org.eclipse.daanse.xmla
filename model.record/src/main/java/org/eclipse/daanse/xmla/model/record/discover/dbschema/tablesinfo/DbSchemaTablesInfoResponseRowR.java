@@ -18,7 +18,7 @@ import java.util.Optional;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoResponseRow;
 
 public record DbSchemaTablesInfoResponseRowR(Optional<String> catalogName, Optional<String> schemaName,
-        String tableName, String tableType, Optional<Integer> tableGuid, Optional<Boolean> bookmarks,
+        String tableName, String tableType, Optional<String> tableGuid, Optional<Boolean> bookmarks,
         Optional<Integer> bookmarkType, Optional<Integer> bookmarkDataType, Optional<Integer> bookmarkMaximumLength,
         Optional<Integer> bookmarkInformation, Optional<Long> tableVersion, Optional<Long> cardinality,
         Optional<String> description, Optional<Integer> tablePropId) implements DbSchemaTablesInfoResponseRow {

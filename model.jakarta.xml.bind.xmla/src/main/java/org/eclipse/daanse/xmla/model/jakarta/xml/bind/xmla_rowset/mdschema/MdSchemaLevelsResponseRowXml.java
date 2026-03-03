@@ -65,7 +65,7 @@ public class MdSchemaLevelsResponseRowXml extends AbstractMdSchemaResponseRowXml
      * The GUID of the level.
      */
     @XmlElement(name = "LEVEL_GUID", required = false)
-    private Integer levelGuid;
+    private String levelGuid;
 
     /**
      * The caption of the hierarchy.
@@ -245,11 +245,11 @@ public class MdSchemaLevelsResponseRowXml extends AbstractMdSchemaResponseRowXml
         this.levelUniqueName = levelUniqueName;
     }
 
-    public Integer getLevelGuid() {
+    public String getLevelGuid() {
         return levelGuid;
     }
 
-    public void setLevelGuid(Integer levelGuid) {
+    public void setLevelGuid(String levelGuid) {
         this.levelGuid = levelGuid;
     }
 

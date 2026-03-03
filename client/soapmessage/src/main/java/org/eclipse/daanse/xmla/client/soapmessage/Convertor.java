@@ -53,6 +53,7 @@ import org.eclipse.daanse.xmla.api.common.enums.SearchableEnum;
 import org.eclipse.daanse.xmla.api.common.enums.SetEvaluationContextEnum;
 import org.eclipse.daanse.xmla.api.common.enums.StructureEnum;
 import org.eclipse.daanse.xmla.api.common.enums.StructureTypeEnum;
+import org.eclipse.daanse.xmla.api.common.enums.TableOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.TableTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.TypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
@@ -73,7 +74,7 @@ import org.eclipse.daanse.xmla.api.discover.discover.schemarowsets.DiscoverSchem
 import org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata.DiscoverXmlMetaDataResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesResponseRow;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsResponseRow;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.ParameterInfo;
 import org.eclipse.daanse.xmla.api.discover.mdschema.hierarchies.MdSchemaHierarchiesResponseRow;
@@ -207,6 +208,8 @@ import static org.eclipse.daanse.xmla.client.soapmessage.Constants.CHARACTER_SET
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.CHARACTER_SET_SCHEMA;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.CHILDREN_CARDINALITY;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.CLIENTCACHEREFRESHPOLICY;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.ENCRYPTION_LEVEL;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.CRYPTOKEY_UPDATED;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.COLLATION_CATALOG;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.COLLATION_NAME;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.COLLATION_SCHEMA;
@@ -432,6 +435,9 @@ import static org.eclipse.daanse.xmla.client.soapmessage.Constants.TYPE_NAME;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.UNSIGNED_ATTRIBUTE;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.VERSION;
 import static org.eclipse.daanse.xmla.client.soapmessage.Constants.WEIGHTEDPOPULARITY;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.TABLE_OLAP_TYPE;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.VISUAL_CALCULATIONS_INFO;
+import static org.eclipse.daanse.xmla.client.soapmessage.Constants.SKIPPABLE;
 
 class Convertor {
 
@@ -444,7 +450,7 @@ class Convertor {
         return l.stream()
                 .map(m -> (DbSchemaTablesInfoResponseRow) new DbSchemaTablesInfoResponseRowR(
                         Optional.ofNullable(m.get(TABLE_CATALOG)), Optional.ofNullable(m.get(TABLE_SCHEMA)),
-                        m.get(TABLE_NAME), m.get(TABLE_TYPE), Optional.ofNullable(getInt(m.get(TABLE_GUID))),
+                        m.get(TABLE_NAME), m.get(TABLE_TYPE), Optional.ofNullable(m.get(TABLE_GUID)),
                         Optional.ofNullable(getBoolean(m.get(BOOKMARKS))),
                         Optional.ofNullable(getInt(m.get(BOOKMARK_TYPE))),
                         Optional.ofNullable(getInt(m.get(BOOKMARK_DATA_TYPE))),
@@ -544,7 +550,7 @@ class Convertor {
                 Optional.ofNullable(getInt(m.get(LEVEL_NUMBER))), Optional.ofNullable(getInt(m.get(MEMBER_ORDINAL))),
                 Optional.ofNullable(m.get(MEMBER_NAME)), Optional.ofNullable(m.get(MEMBER_UNIQUE_NAME)),
                 Optional.ofNullable(MemberTypeEnum.fromValue(m.get(MEMBER_TYPE))),
-                Optional.ofNullable(getInt(m.get(MEMBER_GUID))), Optional.ofNullable(m.get(MEMBER_CAPTION)),
+                Optional.ofNullable(m.get(MEMBER_GUID)), Optional.ofNullable(m.get(MEMBER_CAPTION)),
                 Optional.ofNullable(getInt(m.get(CHILDREN_CARDINALITY))),
                 Optional.ofNullable(getInt(m.get(PARENT_LEVEL))), Optional.ofNullable(m.get(PARENT_UNIQUE_NAME)),
                 Optional.ofNullable(getInt(m.get(PARENT_COUNT))), Optional.ofNullable(m.get(DESCRIPTION_UC)),
@@ -560,7 +566,7 @@ class Convertor {
                 Optional.ofNullable(m.get(CATALOG_NAME)), Optional.ofNullable(m.get(SCHEMA_NAME)),
                 Optional.ofNullable(m.get(CUBE_NAME)), Optional.ofNullable(m.get(MEASURE_NAME)),
                 Optional.ofNullable(m.get(MEASURE_UNIQUE_NAME)), Optional.ofNullable(m.get(MEASURE_CAPTION)),
-                Optional.ofNullable(getInt(m.get(MEASURE_GUID))),
+                Optional.ofNullable(m.get(MEASURE_GUID)),
                 Optional.ofNullable(MeasureAggregatorEnum.fromValue(m.get(MEASURE_AGGREGATOR))),
                 Optional.ofNullable(LevelDbTypeEnum.fromValue(m.get(DATA_TYPE))),
                 Optional.ofNullable(getInt(m.get(NUMERIC_PRECISION))),
@@ -604,7 +610,7 @@ class Convertor {
                         Optional.ofNullable(m.get(CATALOG_NAME)), Optional.ofNullable(m.get(SCHEMA_NAME)),
                         Optional.ofNullable(m.get(CUBE_NAME)), Optional.ofNullable(m.get(DIMENSION_UNIQUE_NAME)),
                         Optional.ofNullable(m.get(HIERARCHY_UNIQUE_NAME)), Optional.ofNullable(m.get(LEVEL_NAME)),
-                        Optional.ofNullable(m.get(LEVEL_UNIQUE_NAME)), Optional.ofNullable(getInt(m.get(LEVEL_GUID))),
+                        Optional.ofNullable(m.get(LEVEL_UNIQUE_NAME)), Optional.ofNullable(m.get(LEVEL_GUID)),
                         Optional.ofNullable(m.get(LEVEL_CAPTION)), Optional.ofNullable(getInt(m.get(LEVEL_NUMBER))),
                         Optional.ofNullable(getInt(m.get(LEVEL_CARDINALITY))),
                         Optional.ofNullable(LevelTypeEnum.fromValue(m.get(LEVEL_TYPE))),
@@ -643,7 +649,7 @@ class Convertor {
                 Optional.ofNullable(getBoolean(m.get(FIXED_PREC_SCALE))),
                 Optional.ofNullable(getBoolean(m.get(AUTO_UNIQUE_VALUE))), Optional.ofNullable(m.get(LOCAL_TYPE_NAME)),
                 Optional.ofNullable(getInt(m.get(MINIMUM_SCALE))), Optional.ofNullable(getInt(m.get(MAXIMUM_SCALE))),
-                Optional.ofNullable(getInt(m.get(GUID))), Optional.ofNullable(m.get(TYPE_LIB)),
+                Optional.ofNullable(m.get(GUID)), Optional.ofNullable(m.get(TYPE_LIB)),
                 Optional.ofNullable(m.get(VERSION)), Optional.ofNullable(getBoolean(m.get(IS_LONG))),
                 Optional.ofNullable(getBoolean(m.get(BEST_MATCH))),
                 Optional.ofNullable(getBoolean(m.get(IS_FIXEDLENGTH))))).toList();
@@ -654,7 +660,7 @@ class Convertor {
         return l.stream().map(m -> (DbSchemaColumnsResponseRow) new DbSchemaColumnsResponseRowR(
                 Optional.ofNullable(m.get(TABLE_CATALOG)), Optional.ofNullable(m.get(TABLE_SCHEMA)),
                 Optional.ofNullable(m.get(TABLE_NAME)), Optional.ofNullable(m.get(COLUMN_NAME)),
-                Optional.ofNullable(getInt(m.get(COLUMN_GUID))), Optional.ofNullable(getInt(m.get(COLUMN_PROPID))),
+                Optional.ofNullable(m.get(COLUMN_GUID)), Optional.ofNullable(getInt(m.get(COLUMN_PROPID))),
                 Optional.ofNullable(getInt(m.get(ORDINAL_POSITION))),
                 Optional.ofNullable(getBoolean(m.get(COLUMN_HAS_DEFAULT))), Optional.ofNullable(m.get(COLUMN_DEFAULT)),
                 Optional.ofNullable(ColumnFlagsEnum.fromValue(m.get(COLUMN_FLAG))),
@@ -707,7 +713,8 @@ class Convertor {
                         Optional.ofNullable(m.get(TABLE_GUID)), Optional.ofNullable(m.get(DESCRIPTION_UC)),
                         Optional.ofNullable(getInt(m.get(TABLE_PROP_ID))),
                         Optional.ofNullable(getLocalDateTime(m.get(DATE_CREATED))),
-                        Optional.ofNullable(getLocalDateTime(m.get(DATE_MODIFIED)))))
+                        Optional.ofNullable(getLocalDateTime(m.get(DATE_MODIFIED))),
+                        Optional.ofNullable(TableOlapTypeEnum.fromValue((m.get(TABLE_OLAP_TYPE))))))
                 .toList();
     }
 
@@ -751,9 +758,9 @@ class Convertor {
         List<Map<String, String>> l = getMapValuesList(b);
         return l.stream()
                 .map(m -> (DiscoverLiteralsResponseRow) new DiscoverLiteralsResponseRowR(m.get(LITERAL_NAME),
-                        m.get(LITERAL_VALUE), m.get(LITERAL_INVALID_CHARS), m.get(LITERAL_INVALID_STARTING_CHARS),
-                        getInt(m.get(LITERAL_MAX_LENGTH)),
-                        LiteralNameEnumValueEnum.fromValue(getInt(m.get(LITERAL_NAME_VALUE)))))
+                        m.get(LITERAL_VALUE), Optional.ofNullable(m.get(LITERAL_INVALID_CHARS)), Optional.ofNullable(m.get(LITERAL_INVALID_STARTING_CHARS)),
+                        Optional.ofNullable(getInt(m.get(LITERAL_MAX_LENGTH))),
+                        Optional.ofNullable(LiteralNameEnumValueEnum.fromValue(getInt(m.get(LITERAL_NAME_VALUE))))))
                 .toList();
     }
 
@@ -770,7 +777,7 @@ class Convertor {
                         Optional.ofNullable(m.get(CATALOG_NAME)), Optional.ofNullable(m.get(SCHEMA_NAME)),
                         Optional.ofNullable(m.get(CUBE_NAME)), Optional.ofNullable(m.get(DIMENSION_UNIQUE_NAME)),
                         Optional.ofNullable(m.get(HIERARCHY_NAME)), Optional.ofNullable(m.get(HIERARCHY_UNIQUE_NAME)),
-                        Optional.ofNullable(getInt(m.get(HIERARCHY_GUID))),
+                        Optional.ofNullable(m.get(HIERARCHY_GUID)),
                         Optional.ofNullable(m.get(HIERARCHY_CAPTION)),
                         Optional.ofNullable(DimensionTypeEnum.fromValue(getInt(m.get(DIMENSION_TYPE)))),
                         Optional.ofNullable(getInt(m.get(HIERARCHY_CARDINALITY))),
@@ -809,7 +816,8 @@ class Convertor {
                         Optional.ofNullable(m.get(HELP_FILE)), Optional.ofNullable(m.get(HELP_CONTEXT)),
                         Optional.ofNullable(m.get(OBJECT)), Optional.ofNullable(m.get(CAPTION_UC)),
                         Optional.ofNullable(convertToParameterInfoList(nodeList.item(i))),
-                        Optional.ofNullable(DirectQueryPushableEnum.fromValue(m.get(DIRECTQUERY_PUSHABLE)))));
+                        Optional.ofNullable(DirectQueryPushableEnum.fromValue(m.get(DIRECTQUERY_PUSHABLE))),
+                        Optional.ofNullable(getInt(m.get(VISUAL_CALCULATIONS_INFO)))));
             }
         }
         return result;
@@ -820,7 +828,7 @@ class Convertor {
         return l.stream().map(m -> (MdSchemaDimensionsResponseRow) new MdSchemaDimensionsResponseRowR(
                 Optional.ofNullable(m.get(CATALOG_NAME)), Optional.ofNullable(m.get(SCHEMA_NAME)),
                 Optional.ofNullable(m.get(CUBE_NAME)), Optional.ofNullable(m.get(DIMENSION_NAME)),
-                Optional.ofNullable(m.get(DIMENSION_UNIQUE_NAME)), Optional.ofNullable(getInt(m.get(DIMENSION_GUID))),
+                Optional.ofNullable(m.get(DIMENSION_UNIQUE_NAME)), Optional.ofNullable(m.get(DIMENSION_GUID)),
                 Optional.ofNullable(m.get(DIMENSION_CAPTION)), Optional.ofNullable(getInt(m.get(DIMENSION_ORDINAL))),
                 Optional.ofNullable(DimensionTypeEnum.fromValue(getInt(m.get(DIMENSION_TYPE)))),
                 Optional.ofNullable(getInt(m.get(DIMENSION_CARDINALITY))),
@@ -852,7 +860,7 @@ class Convertor {
         return l.stream().map(m -> (MdSchemaCubesResponseRow) new MdSchemaCubesResponseRowR(m.get(CATALOG_NAME),
                 Optional.ofNullable(m.get(SCHEMA_NAME)), Optional.ofNullable(m.get(CUBE_NAME)),
                 Optional.ofNullable(CubeTypeEnum.fromValue(m.get(CUBE_TYPE))),
-                Optional.ofNullable(getInt(m.get(CUBE_GUID))), Optional.ofNullable(getLocalDateTime(m.get(CREATED_ON))),
+                Optional.ofNullable(m.get(CUBE_GUID)), Optional.ofNullable(getLocalDateTime(m.get(CREATED_ON))),
                 Optional.ofNullable(getLocalDateTime(m.get(LAST_SCHEMA_UPDATE_UC))),
                 Optional.ofNullable(m.get(SCHEMA_UPDATED_BY)),
                 Optional.ofNullable(getLocalDateTime(m.get(LAST_DATA_UPDATE))),
@@ -880,7 +888,9 @@ class Convertor {
                         Optional.ofNullable(getBoolean(m.get(CURRENTLY_USED))),
                         Optional.ofNullable(getDouble(m.get(POPULARITY))),
                         Optional.ofNullable(getDouble(m.get(WEIGHTEDPOPULARITY))),
-                        Optional.ofNullable(ClientCacheRefreshPolicyEnum.fromValue(m.get(CLIENTCACHEREFRESHPOLICY)))))
+                        Optional.ofNullable(ClientCacheRefreshPolicyEnum.fromValue(m.get(CLIENTCACHEREFRESHPOLICY))),
+                        Optional.ofNullable(m.get(ENCRYPTION_LEVEL)),
+                        Optional.ofNullable(getLocalDateTime(m.get(CRYPTOKEY_UPDATED)))))
                 .toList();
     }
 
@@ -1405,7 +1415,7 @@ class Convertor {
                 if (PARAMETERINFO.equals(n.getNodeName())) {
                     Map<String, String> m = getMapValues(n.getChildNodes());
                     result.add(new ParameterInfoR(m.get(NAME), m.get(DESCRIPTION_UC), getBoolean(m.get(OPTIONAL)),
-                            getBoolean(m.get(REPEATABLE)), getInt(m.get(REPEATGROUP))));
+                            getBoolean(m.get(REPEATABLE)), getInt(m.get(REPEATGROUP)), getBoolean(m.get(SKIPPABLE))));
                 }
             }
         }

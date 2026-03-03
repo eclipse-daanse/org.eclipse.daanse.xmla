@@ -95,9 +95,9 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsRest
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRestrictions;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRequest;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsResponseRow;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRestrictions;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRequest;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsResponseRow;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRestrictions;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsResponseRow;
 import org.eclipse.daanse.xmla.api.discover.mdschema.functions.MdSchemaFunctionsRestrictions;
@@ -616,11 +616,12 @@ public class Convert {
         // Mandatory
         row.setLiteralName(apiRow.literalName());
         row.setLiteralValue(apiRow.literalValue());
-        row.setLiteralInvalidChars(apiRow.literalInvalidChars());
-        row.setLiteralInvalidStartingChars(apiRow.literalInvalidStartingChars());
-        row.setLiteralMaxLength(apiRow.literalMaxLength());
-        row.setLiteralNameValue(org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.LiteralNameEnumValueEnum.fromValue(apiRow.literalNameEnumValue().getValue()));
-
+        apiRow.literalInvalidChars().ifPresent(row::setLiteralInvalidChars);
+        apiRow.literalInvalidStartingChars().ifPresent(row::setLiteralInvalidStartingChars);
+        apiRow.literalMaxLength().ifPresent(row::setLiteralMaxLength);
+        apiRow.literalNameEnumValue()
+        .ifPresent(i -> row.setLiteralNameValue(
+            org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.LiteralNameEnumValueEnum.fromValue(i.getValue())));
         return row;
     }
 
@@ -890,7 +891,7 @@ public class Convert {
             .ifPresent(row::setDimensionGuid);
         apiRow.dimensionCaption()
             .ifPresent(row::setDimensionCaption);
-        apiRow.dimensionOptional()
+        apiRow.dimensionOrdinal()
             .ifPresent(row::setDimensionOptional);
         apiRow.dimensionType()
             .ifPresent(i -> row.setDimensionType(
@@ -956,8 +957,8 @@ public class Convert {
         row.setParameterList(apiRow.parameterList());
 
         // Optional
-        apiRow.functionalName()
-            .ifPresent(row::setFunctionalName);
+        apiRow.functionName()
+            .ifPresent(row::setFunctionName);
         apiRow.description()
             .ifPresent(row::setDescription);
         apiRow.returnType()
@@ -1674,8 +1675,6 @@ public class Convert {
             String measureName = map.get(MdSchemaMeasuresRestrictions.RESTRICTIONS_MEASURE_NAME);
             String measureUniqueName = map.get(MdSchemaMeasuresRestrictions.RESTRICTIONS_MEASURE_UNIQUE_NAME);
             String measureGroupName = map.get(MdSchemaMeasuresRestrictions.RESTRICTIONS_MEASUREGROUP_NAME);
-            String cubeSource = map.get(MdSchemaMeasuresRestrictions.RESTRICTIONS_CUBE_SOURCE);
-            String measureVisibility = map.get(MdSchemaMeasuresRestrictions.RESTRICTIONS_MEASURE_VISIBILITY);
 
         return new MdSchemaMeasuresRestrictionsR(
                 Optional.ofNullable(catalogName),
@@ -1683,9 +1682,7 @@ public class Convert {
                 Optional.ofNullable(cubeName),
                 Optional.ofNullable(measureName),
                 Optional.ofNullable(measureUniqueName),
-                Optional.ofNullable(measureGroupName),
-                Optional.ofNullable(CubeSourceEnum.fromValue(cubeSource)),
-                Optional.ofNullable(VisibilityEnum.fromValue(measureVisibility)));
+                Optional.ofNullable(measureGroupName));
     }
 
     public static DiscoverResponse toDiscoverMdSchemaMeasures(List<MdSchemaMeasuresResponseRow> responseApi)
@@ -2113,7 +2110,7 @@ public class Convert {
             .ifPresent(row::setKpiStatusGraphic);
         apiRow.kpiTrendGraphic()
             .ifPresent(row::setKpiTrendGraphic);
-        apiRow.kpiWight()
+        apiRow.kpiWeight()
             .ifPresent(row::setKpiWight);
         apiRow.kpiCurrentTimeMember()
             .ifPresent(row::setKpiCurrentTimeMember);

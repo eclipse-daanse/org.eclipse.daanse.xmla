@@ -47,7 +47,7 @@ public interface DbSchemaColumnsResponseRow {
     /**
      * @return The GUID of the column.
      */
-    Optional<Integer> columnGuid();
+    Optional<String> columnGuid();
 
     /**
      * @return The property ID of the column.

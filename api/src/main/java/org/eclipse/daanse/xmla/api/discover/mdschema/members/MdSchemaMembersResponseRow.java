@@ -82,7 +82,7 @@ public interface MdSchemaMembersResponseRow {
     /**
      * @return The GUID of the member.
      */
-    Optional<Integer> memberGuid();
+    Optional<String> memberGuid();
 
     /**
      * @return The caption of the member.

@@ -20,7 +20,7 @@ import org.eclipse.daanse.xmla.api.common.enums.ColumnOlapTypeEnum;
 import org.eclipse.daanse.xmla.api.discover.dbschema.columns.DbSchemaColumnsResponseRow;
 
 public record DbSchemaColumnsResponseRowR(Optional<String> tableCatalog, Optional<String> tableSchema,
-        Optional<String> tableName, Optional<String> columnName, Optional<Integer> columnGuid,
+        Optional<String> tableName, Optional<String> columnName, Optional<String> columnGuid,
         Optional<Integer> columnPropId, Optional<Integer> ordinalPosition, Optional<Boolean> columnHasDefault,
         Optional<String> columnDefault, Optional<ColumnFlagsEnum> columnFlags, Optional<Boolean> isNullable,
         Optional<Integer> dataType, Optional<Integer> typeGuid, Optional<Integer> characterMaximum,

@@ -24,7 +24,7 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.levels.MdSchemaLevelsRespon
 
 public record MdSchemaLevelsResponseRowR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> dimensionUniqueName, Optional<String> hierarchyUniqueName,
-        Optional<String> levelName, Optional<String> levelUniqueName, Optional<Integer> levelGuid,
+        Optional<String> levelName, Optional<String> levelUniqueName, Optional<String> levelGuid,
         Optional<String> levelCaption, Optional<Integer> levelNumber, Optional<Integer> levelCardinality,
         Optional<LevelTypeEnum> levelType, Optional<String> description,
         Optional<CustomRollupSettingEnum> customRollupSetting, Optional<LevelUniqueSettingsEnum> levelUniqueSettings,

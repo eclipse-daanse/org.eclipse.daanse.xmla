@@ -62,7 +62,7 @@ public interface MdSchemaHierarchiesResponseRow {
     /**
      * @return The GUID of the hierarchy.
      */
-    Optional<Integer> hierarchyGuid();
+    Optional<String> hierarchyGuid();
 
     /**
      * @return The caption of the hierarchy.

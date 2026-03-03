@@ -13,12 +13,15 @@
 */
 package org.eclipse.daanse.xmla.api.discover.discover.literals;
 
+import java.util.Optional;
+
 import org.eclipse.daanse.xmla.api.common.enums.LiteralNameEnumValueEnum;
 
 /**
  * This schema rowset returns information about literals supported by the server.
  */
 public interface DiscoverLiteralsResponseRow {
+
 
     /**
      * @return The name of the literal.
@@ -33,18 +36,18 @@ public interface DiscoverLiteralsResponseRow {
     /**
      * @return The characters that are not valid in the literal.
      */
-    String literalInvalidChars();
+    Optional<String> literalInvalidChars();
 
     /**
      * @return The characters that are not valid as the first character of the literal.
      */
-    String literalInvalidStartingChars();
+    Optional<String> literalInvalidStartingChars();
 
     /**
      * @return The maximum number of characters in the literal. If there is no maximum or the maximum is
      *         unknown, the value is -1.
      */
-    Integer literalMaxLength();
+    Optional<Integer> literalMaxLength();
 
     /**
      * @return The value is one of the following: DBLITERAL_INVALID = 0 DBLITERAL_BINARY_LITERAL = 1
@@ -55,6 +58,6 @@ public interface DiscoverLiteralsResponseRow {
      *         DBLITERAL_PROCEDURE_NAME = 14 DBLITERAL_QUOTE_PREFIX = 15 DBLITERAL_SCHEMA_NAME = 16
      *         DBLITERAL_TABLE_NAME = 17 DBLITERAL_TEXT_COMMAND = 18 DBLITERAL_USER_NAME = 19
      */
-    LiteralNameEnumValueEnum literalNameEnumValue();
+    Optional<LiteralNameEnumValueEnum> literalNameEnumValue();
 
 }

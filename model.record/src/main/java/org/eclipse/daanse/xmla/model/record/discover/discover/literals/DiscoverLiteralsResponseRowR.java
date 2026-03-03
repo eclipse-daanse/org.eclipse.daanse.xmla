@@ -13,11 +13,14 @@
  */
 package org.eclipse.daanse.xmla.model.record.discover.discover.literals;
 
+import java.util.Optional;
+
 import org.eclipse.daanse.xmla.api.common.enums.LiteralNameEnumValueEnum;
 import org.eclipse.daanse.xmla.api.discover.discover.literals.DiscoverLiteralsResponseRow;
 
-public record DiscoverLiteralsResponseRowR(String literalName, String literalValue, String literalInvalidChars,
-        String literalInvalidStartingChars, Integer literalMaxLength, LiteralNameEnumValueEnum literalNameEnumValue)
+public record DiscoverLiteralsResponseRowR(String literalName, String literalValue, Optional<String> literalInvalidChars,
+        Optional<String> literalInvalidStartingChars, Optional<Integer> literalMaxLength,
+        Optional<LiteralNameEnumValueEnum> literalNameEnumValue)
         implements DiscoverLiteralsResponseRow {
 
 }

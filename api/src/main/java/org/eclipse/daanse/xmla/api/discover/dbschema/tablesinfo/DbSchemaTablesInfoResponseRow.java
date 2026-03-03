@@ -44,7 +44,7 @@ public interface DbSchemaTablesInfoResponseRow {
      * @return GUID that uniquely identifies the table. Providers that do not use GUIDs to identify
      *         tables should return NULL in this column.
      */
-    Optional<Integer> tableGuid();
+    Optional<String> tableGuid();
 
     /**
      * @return Whether this table supports bookmarks. Allways is false.

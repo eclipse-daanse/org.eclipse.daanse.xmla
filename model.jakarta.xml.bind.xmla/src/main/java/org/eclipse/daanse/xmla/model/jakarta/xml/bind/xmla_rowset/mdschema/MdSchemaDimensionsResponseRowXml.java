@@ -50,7 +50,7 @@ public class MdSchemaDimensionsResponseRowXml extends AbstractMdSchemaResponseRo
      * The GUID of the dimension.
      */
     @XmlElement(name = "DIMENSION_GUID", required = false)
-    private Integer dimensionGuid;
+    private String dimensionGuid;
 
     /**
      * The caption of the dimension.
@@ -137,11 +137,11 @@ public class MdSchemaDimensionsResponseRowXml extends AbstractMdSchemaResponseRo
         this.dimensionUniqueName = dimensionUniqueName;
     }
 
-    public Integer getDimensionGuid() {
+    public String getDimensionGuid() {
         return dimensionGuid;
     }
 
-    public void setDimensionGuid(Integer dimensionGuid) {
+    public void setDimensionGuid(String dimensionGuid) {
         this.dimensionGuid = dimensionGuid;
     }
 

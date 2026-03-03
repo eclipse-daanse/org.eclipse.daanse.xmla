@@ -21,6 +21,5 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.measures.MdSchemaMeasuresRe
 
 public record MdSchemaMeasuresRestrictionsR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> measureName, Optional<String> measureUniqueName,
-        Optional<String> measureGroupName, Optional<CubeSourceEnum> cubeSource,
-        Optional<VisibilityEnum> measureVisibility) implements MdSchemaMeasuresRestrictions {
+        Optional<String> measureGroupName) implements MdSchemaMeasuresRestrictions {
 }

@@ -23,7 +23,7 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.measures.MdSchemaMeasuresRe
 
 public record MdSchemaMeasuresResponseRowR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> measureName, Optional<String> measureUniqueName,
-        Optional<String> measureCaption, Optional<Integer> measureGuid,
+        Optional<String> measureCaption, Optional<String> measureGuid,
         Optional<MeasureAggregatorEnum> measureAggregator, Optional<LevelDbTypeEnum> dataType,
         Optional<Integer> numericPrecision, Optional<Integer> numericScale, Optional<String> measureUnits,
         Optional<String> description, Optional<String> expression, Optional<Boolean> measureIsVisible,

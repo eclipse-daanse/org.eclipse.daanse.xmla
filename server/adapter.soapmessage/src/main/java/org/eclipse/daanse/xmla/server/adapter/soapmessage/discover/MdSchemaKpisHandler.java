@@ -111,7 +111,7 @@ public class MdSchemaKpisHandler implements DiscoverHandler {
         r.kpiTrend().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_TREND, v));
         r.kpiStatusGraphic().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_STATUS_GRAPHIC, v));
         r.kpiTrendGraphic().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_TREND_GRAPHIC, v));
-        r.kpiWight().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_WEIGHT, v));
+        r.kpiWeight().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_WEIGHT, v));
         r.kpiCurrentTimeMember().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_CURRENT_TIME_MEMBER, v));
         r.kpiParentKpiName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_KPI_PARENT_KPI_NAME, v));
         r.scope().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_SCOPE, String.valueOf(v.getValue())));

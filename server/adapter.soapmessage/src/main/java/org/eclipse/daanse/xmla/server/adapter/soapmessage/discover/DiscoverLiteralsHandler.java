@@ -109,10 +109,9 @@ public class DiscoverLiteralsHandler implements DiscoverHandler {
         SOAPElement row = root.addChildElement(ROWSET.QN_ROW);
         SoapUtil.addChildElement(row, ROW.QN_LITERAL_NAME, r.literalName());
         SoapUtil.addChildElement(row, ROW.QN_LITERAL_VALUE, r.literalValue());
-        SoapUtil.addChildElement(row, ROW.QN_LITERAL_INVALID_CHARS, r.literalInvalidChars());
-        SoapUtil.addChildElement(row, ROW.QN_LITERAL_INVALID_STARTING_CHARS, r.literalInvalidStartingChars());
-        SoapUtil.addChildElement(row, ROW.QN_LITERAL_MAX_LENGTH, String.valueOf(r.literalMaxLength()));
-        SoapUtil.addChildElement(row, ROW.QN_LITERAL_NAME_ENUM_VALUE,
-                String.valueOf(r.literalNameEnumValue().getValue()));
+        r.literalInvalidChars().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_LITERAL_INVALID_CHARS, v));
+        r.literalInvalidStartingChars().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_LITERAL_INVALID_STARTING_CHARS, v));
+        r.literalMaxLength().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_LITERAL_MAX_LENGTH, String.valueOf(v)));
+        r.literalNameEnumValue().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_LITERAL_NAME_ENUM_VALUE, String.valueOf(v.getValue())));
     }
 }

@@ -29,7 +29,7 @@ public interface MdSchemaFunctionsResponseRow {
     /**
      * @return The name of the function.
      */
-    Optional<String> functionalName();
+    Optional<String> functionName();
 
     /**
      * @return A description of the function.
@@ -106,4 +106,12 @@ public interface MdSchemaFunctionsResponseRow {
      */
     Optional<DirectQueryPushableEnum> directQueryPushable();
 
+    /**
+     *
+     * @return A bitmask with information regarding the use of
+     *         this function in relation to visual calculations.
+     *         Currently only the first bit is used. A value of
+     *         (0x1) indicates that the function can only be
+     */
+    Optional<Integer> visualCalculationsInfo();
 }

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRestrictions;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRestrictions;
 
 public record MdSchemaDimensionsRestrictionsR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> dimensionName, Optional<String> dimensionUniqueName,

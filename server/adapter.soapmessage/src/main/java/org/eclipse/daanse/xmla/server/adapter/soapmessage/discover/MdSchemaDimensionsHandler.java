@@ -21,8 +21,8 @@ import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsRequest;
-import org.eclipse.daanse.xmla.api.discover.mdschema.demensions.MdSchemaDimensionsResponseRow;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsRequest;
+import org.eclipse.daanse.xmla.api.discover.mdschema.dimensions.MdSchemaDimensionsResponseRow;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.demensions.MdSchemaDimensionsRequestR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.demensions.MdSchemaDimensionsRestrictionsR;
@@ -102,7 +102,7 @@ public class MdSchemaDimensionsHandler implements DiscoverHandler {
         r.dimensionUniqueName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DIMENSION_UNIQUE_NAME, v));
         r.dimensionGuid().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DIMENSION_GUID, String.valueOf(v)));
         r.dimensionCaption().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DIMENSION_CAPTION, v));
-        r.dimensionOptional()
+        r.dimensionOrdinal()
                 .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DIMENSION_ORDINAL, String.valueOf(v)));
         r.dimensionType()
                 .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DIMENSION_TYPE, String.valueOf(v.getValue())));

@@ -22,7 +22,7 @@ public record MdSchemaKpisResponseRowR(Optional<String> catalogName, Optional<St
         Optional<String> cubeName, Optional<String> measureGroupName, Optional<String> kpiName,
         Optional<String> kpiCaption, Optional<String> kpiDescription, Optional<String> kpiDisplayFolder,
         Optional<String> kpiValue, Optional<String> kpiGoal, Optional<String> kpiStatus, Optional<String> kpiTrend,
-        Optional<String> kpiStatusGraphic, Optional<String> kpiTrendGraphic, Optional<String> kpiWight,
+        Optional<String> kpiStatusGraphic, Optional<String> kpiTrendGraphic, Optional<String> kpiWeight,
         Optional<String> kpiCurrentTimeMember, Optional<String> kpiParentKpiName, Optional<String> annotation,
         Optional<ScopeEnum> scope) implements MdSchemaKpisResponseRow {
 

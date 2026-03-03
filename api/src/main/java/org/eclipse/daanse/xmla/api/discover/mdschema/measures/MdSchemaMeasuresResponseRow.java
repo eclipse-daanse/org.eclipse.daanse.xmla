@@ -58,7 +58,7 @@ public interface MdSchemaMeasuresResponseRow {
     /**
      * @return The GUID of the measure.
      */
-    Optional<Integer> measureGuid();
+    Optional<String> measureGuid();
 
     /**
      * @return An enumeration that identifies how a measure was derived. This enumeration can be one of

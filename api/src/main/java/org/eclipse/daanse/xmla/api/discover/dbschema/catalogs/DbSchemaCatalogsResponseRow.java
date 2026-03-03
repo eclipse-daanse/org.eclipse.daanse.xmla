@@ -99,4 +99,20 @@ public interface DbSchemaCatalogsResponseRow {
      *         allow all background cache refreshes.
      */
     Optional<ClientCacheRefreshPolicyEnum> clientCacheRefreshPolicy();
+
+    /**
+     * @return The encryption schema used for this
+     *         database’s secrets. The possible values are as
+     *         follows:
+     *         "Analysis Services 2019"
+     *         "Analysis Services 2022"
+     *         "Analysis Services 2022 CU"
+     */
+    Optional<String> encryptionLevel();
+
+    /**
+     * @return The date that the database encryption key
+     *         was created or regenerated.
+     */
+    Optional<LocalDateTime> cryptoKeyUpdated();
 }

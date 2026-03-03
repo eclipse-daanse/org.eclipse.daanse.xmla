@@ -49,7 +49,7 @@ public class MdSchemaCubesResponseRowXml extends AbstractMdSchemaResponseRowXml 
      * The GUID of the cube.
      */
     @XmlElement(name = "CUBE_GUID")
-    private Integer cubeGuid;
+    private String cubeGuid;
 
     /**
      * TimeThe date and time the cube was created.
@@ -155,11 +155,11 @@ public class MdSchemaCubesResponseRowXml extends AbstractMdSchemaResponseRowXml 
         this.cubeType = cubeType;
     }
 
-    public Integer getCubeGuid() {
+    public String getCubeGuid() {
         return cubeGuid;
     }
 
-    public void setCubeGuid(Integer cubeGuid) {
+    public void setCubeGuid(String cubeGuid) {
         this.cubeGuid = cubeGuid;
     }
 

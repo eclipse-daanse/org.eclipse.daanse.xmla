@@ -26,7 +26,7 @@ import org.eclipse.daanse.xmla.api.discover.mdschema.hierarchies.MdSchemaHierarc
 
 public record MdSchemaHierarchiesResponseRowR(Optional<String> catalogName, Optional<String> schemaName,
         Optional<String> cubeName, Optional<String> dimensionUniqueName, Optional<String> hierarchyName,
-        Optional<String> hierarchyUniqueName, Optional<Integer> hierarchyGuid, Optional<String> hierarchyCaption,
+        Optional<String> hierarchyUniqueName, Optional<String> hierarchyGuid, Optional<String> hierarchyCaption,
         Optional<DimensionTypeEnum> dimensionType, Optional<Integer> hierarchyCardinality,
         Optional<String> defaultMember, Optional<String> allMember, Optional<String> description,
         Optional<StructureEnum> structure, Optional<Boolean> isVirtual, Optional<Boolean> isReadWrite,

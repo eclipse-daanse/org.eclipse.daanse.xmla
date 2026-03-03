@@ -119,5 +119,9 @@ public class DbSchemaCatalogsHandler implements DiscoverHandler {
                 .ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_WEIGHTEDPOPULARITY, String.valueOf(v)));
         r.clientCacheRefreshPolicy().ifPresent(
                 v -> SoapUtil.addChildElement(row, ROW.QN_CLIENTCACHEREFRESHPOLICY, String.valueOf(v.getValue())));
+        r.encryptionLevel().ifPresent(
+                v -> SoapUtil.addChildElement(row, ROW.QN_ENCRYPTION_LEVEL, v));
+        r.cryptoKeyUpdated().ifPresent(
+                v -> SoapUtil.addChildElement(row, ROW.QN_CRYPTOKEY_UPDATED, v.format(formatter)));
     }
 }

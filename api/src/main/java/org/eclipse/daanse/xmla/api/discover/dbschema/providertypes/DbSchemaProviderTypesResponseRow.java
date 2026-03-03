@@ -177,7 +177,7 @@ public interface DbSchemaProviderTypesResponseRow {
      * @return (Reserved for future use.) The GUID of the type, if the type is described in a type
      *         library. Otherwise, it is NULL.
      */
-    Optional<Integer> guid();
+    Optional<String> guid();
 
     /**
      * @return The type library that contains the description of the type, if the type is described in a
