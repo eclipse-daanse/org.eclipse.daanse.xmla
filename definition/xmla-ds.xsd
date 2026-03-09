@@ -25,6 +25,7 @@
 
   <xsd:complexType name="mddataset">
     <xsd:sequence>
+      <xsd:element ref="xsd:schema" minOccurs="0" />
       <xsd:element name="OlapInfo" minOccurs="0"
         type="OlapInfo" />
       <xsd:element name="Axes" minOccurs="0" type="Axes" />
@@ -108,7 +109,10 @@
   </xsd:complexType>
 
   <xsd:complexType name="Axis">
-    <xsd:group ref="SetType" minOccurs="0" maxOccurs="unbounded" />
+    <xsd:sequence>
+      <xsd:group ref="SetType" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:group ref="NormType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
     <xsd:attribute name="name" type="xs:string" />
   </xsd:complexType>
 
@@ -191,6 +195,87 @@
 
   <xsd:complexType name="CellSetType">
     <xsd:sequence>
+      <xsd:element name="Data" type="xsd:base64Binary"
+        minOccurs="1" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="Members" type="TupleType" />
+
+  <xsd:group name="NormType">
+    <xsd:sequence>
+      <xsd:element name="MetadataSet" type="MetadatasType"
+        minOccurs="1" />
+      <xsd:element name="TupleSet" type="TuplesNormType"
+        minOccurs="1" />
+      <xsd:element name="KeySet" type="KeysNormType"
+        minOccurs="1" />
+      <xsd:element name="MeasureFormatStringSet"
+        type="MeasureFormatStringsNormType" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:group>
+
+  <xsd:complexType name="MetadatasType">
+    <xsd:sequence>
+      <xsd:element name="Metadata" type="MetadataType"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="MetadataType">
+    <xsd:sequence>
+      <xsd:element name="HierUName" type="xsd:string"
+        minOccurs="1" maxOccurs="1" />
+      <xsd:element name="HierFlags" type="xsd:int"
+        minOccurs="1" maxOccurs="1" />
+      <xsd:element name="AllMemberName" type="xsd:string"
+        minOccurs="1" maxOccurs="1" />
+      <xsd:element name="L#UName" type="xsd:string"
+        minOccurs="1" maxOccurs="2" />
+      <xsd:element name="MemberFormatString" type="xsd:string"
+        minOccurs="0" maxOccurs="1" />
+      <xsd:element name="DLValType" type="xsd:int"
+        minOccurs="1" maxOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="TuplesNormType">
+    <xsd:sequence>
+      <xsd:element name="TupleCount" type="xsd:integer"
+        minOccurs="1" maxOccurs="1" />
+      <xsd:element name="Data" type="xsd:base64Binary"
+        minOccurs="1" maxOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="KeysNormType">
+    <xsd:sequence>
+      <xsd:element name="KeySet" type="KeyNormType"
+        minOccurs="1" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="KeyNormType">
+    <xsd:sequence>
+      <xsd:element name="DistinctCountMember" type="xsd:string"
+        minOccurs="1" maxOccurs="1" />
+      <xsd:element name="Data" type="xsd:base64Binary"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="MeasureFormatStringsNormType">
+    <xsd:sequence>
+      <xsd:element name="MeasureFormatStringSet"
+        type="MeasureFormatStringNormType"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="MeasureFormatStringNormType">
+    <xsd:sequence>
+      <xsd:element name="DistinctMemberCount" type="xsd:integer"
+        minOccurs="1" maxOccurs="1" />
       <xsd:element name="Data" type="xsd:base64Binary"
         minOccurs="1" maxOccurs="unbounded" />
     </xsd:sequence>

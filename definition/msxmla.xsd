@@ -19,7 +19,7 @@
           maxOccurs="1">
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="Members" type="ana-ds:TupleType"
+              <xsd:element ref="ana-ds:Members"
                 minOccurs="1" maxOccurs="unbounded" />
             </xsd:sequence>
           </xsd:complexType>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_KPIS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-kpis-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASUREGROUP_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_DISPLAY_FOLDER" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_VALUE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_GOAL" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_STATUS" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_TREND" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_STATUS_GRAPHIC" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_TREND_GRAPHIC" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_WEIGHT" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_CURRENT_TIME_MEMBER" type="xsd:string" minOccurs="0" />
+      <xsd:element name="KPI_PARENT_KPI_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ANNOTATIONS" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCOPE" type="xsd:int" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

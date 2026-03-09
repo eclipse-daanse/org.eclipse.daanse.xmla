@@ -12,6 +12,12 @@
   xmlns:eng400="http://schemas.microsoft.com/analysisservices/2012/engine/400"
   xmlns:eng600="http://schemas.microsoft.com/analysisservices/2013/engine/600"
   xmlns:eng800="http://schemas.microsoft.com/analysisservices/2013/engine/800"
+  xmlns:eng920="http://schemas.microsoft.com/analysisservices/2022/engine/920"
+  xmlns:eng921="http://schemas.microsoft.com/analysisservices/2022/engine/921"
+  xmlns:eng922="http://schemas.microsoft.com/analysisservices/2022/engine/922"
+  xmlns:eng923="http://schemas.microsoft.com/analysisservices/2025/engine/923"
+  xmlns:eng924_924="http://schemas.microsoft.com/analysisservices/2025/engine/924/924"
+  xmlns:eng925="http://schemas.microsoft.com/analysisservices/2025/engine/925"
   xmlns:ana-ds="urn:schemas-microsoft-com:xml-analysis:mddataset"
   xmlns:ana-rs="urn:schemas-microsoft-com:xml-analysis:rowset"
   xmlns:ana-e="urn:schemas-microsoft-com:xml-analysis:empty"
@@ -64,6 +70,24 @@
   <xsd:import
     namespace="http://schemas.microsoft.com/analysisservices/2013/engine/800"
     schemaLocation="eng800.xsd" />
+  <xsd:import
+    namespace="http://schemas.microsoft.com/analysisservices/2022/engine/920"
+    schemaLocation="eng920.xsd" />
+  <xsd:import
+    namespace="http://schemas.microsoft.com/analysisservices/2022/engine/921"
+    schemaLocation="eng921.xsd" />
+  <xsd:import
+    namespace="http://schemas.microsoft.com/analysisservices/2022/engine/922"
+    schemaLocation="eng922.xsd" />
+  <xsd:import
+    namespace="http://schemas.microsoft.com/analysisservices/2025/engine/923"
+    schemaLocation="eng923.xsd" />
+  <xsd:import
+    namespace="http://schemas.microsoft.com/analysisservices/2025/engine/924/924"
+    schemaLocation="eng924_924.xsd" />
+  <xsd:import
+    namespace="http://schemas.microsoft.com/analysisservices/2025/engine/925"
+    schemaLocation="eng925.xsd" />
 
   <xsd:complexType name="Properties">
     <xsd:sequence>
@@ -626,6 +650,8 @@
       <xsd:element name="SetAuthContext" type="SetAuthContext"
         minOccurs="0" />
       <xsd:element name="DBCC" type="DBCC" minOccurs="0" />
+      <xsd:element name="RemoveDiscontinuedFeatures"
+        type="eng922:RemoveDiscontinuedFeatures" minOccurs="0" />
     </xsd:choice>
   </xsd:complexType>
 
@@ -2638,6 +2664,47 @@
       <xsd:element name="Value" type="xsd:anyType"
         minOccurs="0" />
     </xsd:all>
+  </xsd:complexType>
+
+  <xsd:complexType name="LinguisticSchemas">
+    <xsd:sequence>
+      <xsd:element name="LinguisticSchema" type="LinguisticSchema"
+        minOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="LinguisticSchema">
+    <xsd:sequence>
+      <xsd:element name="Entities" type="EntitiesType"
+        minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+    <xsd:attribute name="Language" type="xsd:language"
+      use="required" />
+  </xsd:complexType>
+
+  <xsd:complexType name="EntitiesType">
+    <xsd:sequence>
+      <xsd:element name="Entity" type="EntityType"
+        minOccurs="1" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="EntityType">
+    <xsd:sequence>
+      <xsd:element name="Words" type="WordsType"
+        minOccurs="0" maxOccurs="1" />
+    </xsd:sequence>
+    <xsd:attribute name="Name" type="xsd:string" use="required" />
+    <xsd:attribute name="EdmEntitySet" type="xsd:string"
+      use="required" />
+    <xsd:attribute name="EdmProperty" type="xsd:string"
+      use="optional" />
+  </xsd:complexType>
+
+  <xsd:complexType name="WordsType">
+    <xsd:sequence>
+      <xsd:element name="Word" type="xsd:token" minOccurs="1" />
+    </xsd:sequence>
   </xsd:complexType>
 
   <xsd:complexType name="DataSource" abstract="true">

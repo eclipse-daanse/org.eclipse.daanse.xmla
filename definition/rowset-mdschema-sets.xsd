@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_SETS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-sets-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SET_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCOPE" type="xsd:int" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="EXPRESSION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DIMENSIONS" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SET_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SET_DISPLAY_FOLDER" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SET_EVALUATION_CONTEXT" type="xsd:int" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

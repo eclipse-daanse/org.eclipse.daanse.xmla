@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- UUID simple type -->
+  <xsd:simpleType name="uuid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- DBSCHEMA_PROVIDER_TYPES row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="dbschema-provider-types-row">
+    <xsd:sequence>
+      <xsd:element name="TYPE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DATA_TYPE" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="COLUMN_SIZE" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="LITERAL_PREFIX" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LITERAL_SUFFIX" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CREATE_PARAMS" type="xsd:string" minOccurs="0" />
+      <xsd:element name="IS_NULLABLE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="CASE_SENSITIVE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="SEARCHABLE" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="UNSIGNED_ATTRIBUTE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="FIXED_PREC_SCALE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="AUTO_UNIQUE_VALUE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="LOCAL_TYPE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MINIMUM_SCALE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="MAXIMUM_SCALE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="GUID" type="uuid" minOccurs="0" />
+      <xsd:element name="TYPELIB" type="xsd:string" minOccurs="0" />
+      <xsd:element name="VERSION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="IS_LONG" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="BEST_MATCH" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="IS_FIXEDLENGTH" type="xsd:boolean" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

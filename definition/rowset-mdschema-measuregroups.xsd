@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_MEASUREGROUPS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-measuregroups-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASUREGROUP_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="IS_WRITE_ENABLED" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="MEASUREGROUP_CAPTION" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

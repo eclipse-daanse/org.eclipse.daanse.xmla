@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- DBSCHEMA_CATALOGS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="dbschema-catalogs-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ROLES" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DATE_MODIFIED" type="xsd:dateTime" minOccurs="0" />
+      <xsd:element name="COMPATIBILITY_LEVEL" type="xsd:integer" minOccurs="0" />
+      <xsd:element name="TYPE" type="xsd:integer" minOccurs="0" />
+      <xsd:element name="VERSION" type="xsd:integer" minOccurs="0" />
+      <xsd:element name="DATABASE_ID" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DATE_QUERIED" type="xsd:dateTime" minOccurs="0" />
+      <xsd:element name="CURRENTLY_USED" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="POPULARITY" type="xsd:float" minOccurs="0" />
+      <xsd:element name="WEIGHTEDPOPULARITY" type="xsd:double" minOccurs="0" />
+      <xsd:element name="CLIENTCACHEREFRESHPOLICY" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="ENCRYPTION_LEVEL" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CRYPTOKEY_UPDATED" type="xsd:dateTime" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

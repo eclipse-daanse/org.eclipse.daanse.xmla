@@ -97,11 +97,11 @@ public class MdSchemaActionsHandler implements DiscoverHandler {
 
         r.catalogName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_CATALOG_NAME, v));
         r.schemaName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_SCHEMA_NAME, v));
-        SoapUtil.addChildElement(row, ROW.QN_CUBE_NAME, r.cubeName());
+        r.cubeName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_CUBE_NAME, v));
         r.actionName().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_ACTION_NAME, v));
         r.actionType().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_ACTION_TYPE, String.valueOf(v.getValue())));
-        SoapUtil.addChildElement(row, ROW.QN_COORDINATE, r.coordinate());
-        SoapUtil.addChildElement(row, ROW.QN_COORDINATE_TYPE, String.valueOf(r.coordinateType().getValue()));
+        r.coordinate().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_COORDINATE, v));
+        r.coordinateType().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_COORDINATE_TYPE, String.valueOf(v.getValue())));
         r.actionCaption().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_ACTION_CAPTION, v));
         r.description().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_DESCRIPTION, v));
         r.content().ifPresent(v -> SoapUtil.addChildElement(row, ROW.QN_CONTENT, v));

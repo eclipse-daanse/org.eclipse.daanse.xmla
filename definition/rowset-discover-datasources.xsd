@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- DISCOVER_DATASOURCES row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="discover-datasources-row">
+    <xsd:sequence>
+      <xsd:element name="DataSourceName" type="xsd:string" />
+      <xsd:element name="DataSourceDescription" type="xsd:string" minOccurs="0" />
+      <xsd:element name="URL" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DataSourceInfo" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ProviderName" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ProviderType" type="xsd:string" minOccurs="0" />
+      <xsd:element name="AuthenticationMode" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

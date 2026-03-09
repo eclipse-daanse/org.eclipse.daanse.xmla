@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- UUID simple type -->
+  <xsd:simpleType name="uuid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- MDSCHEMA_MEASURES row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-measures-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_GUID" type="uuid" minOccurs="0" />
+      <xsd:element name="MEASURE_AGGREGATOR" type="xsd:int" minOccurs="0" />
+      <xsd:element name="DATA_TYPE" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="NUMERIC_PRECISION" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="NUMERIC_SCALE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="MEASURE_UNITS" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="EXPRESSION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_IS_VISIBLE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="LEVELS_LIST" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_NAME_SQL_COLUMN_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_UNQUALIFIED_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASUREGROUP_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASURE_DISPLAY_FOLDER" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DEFAULT_FORMAT_STRING" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

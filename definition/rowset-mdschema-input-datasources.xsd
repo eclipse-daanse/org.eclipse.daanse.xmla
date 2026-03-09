@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_INPUT_DATASOURCES row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-input-datasources-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DATASOURCE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DATASOURCE_TYPE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CREATED_ON" type="xsd:dateTime" minOccurs="0" />
+      <xsd:element name="LAST_SCHEMA_UPDATE" type="xsd:dateTime" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TIMEOUT" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="DBMS_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DBMS_VERSION" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

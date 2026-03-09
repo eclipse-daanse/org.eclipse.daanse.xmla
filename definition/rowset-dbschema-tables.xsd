@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- UUID simple type -->
+  <xsd:simpleType name="uuid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- DBSCHEMA_TABLES row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="dbschema-tables-row">
+    <xsd:sequence>
+      <xsd:element name="TABLE_CATALOG" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_SCHEMA" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_TYPE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_GUID" type="uuid" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_PROPID" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="DATE_CREATED" type="xsd:dateTime" minOccurs="0" />
+      <xsd:element name="DATE_MODIFIED" type="xsd:dateTime" minOccurs="0" />
+      <xsd:element name="TABLE_OLAP_TYPE" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

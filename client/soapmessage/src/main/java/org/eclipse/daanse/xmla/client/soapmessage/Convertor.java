@@ -845,9 +845,9 @@ class Convertor {
         return l.stream()
                 .map(m -> (MdSchemaActionsResponseRow) new MdSchemaActionsResponseRowR(
                         Optional.ofNullable(m.get(CATALOG_NAME)), Optional.ofNullable(m.get(SCHEMA_NAME)),
-                        m.get(CUBE_NAME), Optional.ofNullable(m.get(ACTION_NAME)),
-                        Optional.ofNullable(ActionTypeEnum.fromValue(m.get(ACTION_TYPE))), m.get(COORDINATE),
-                        CoordinateTypeEnum.fromValue(m.get(COORDINATE_TYPE)),
+                        Optional.ofNullable(m.get(CUBE_NAME)), Optional.ofNullable(m.get(ACTION_NAME)),
+                        Optional.ofNullable(ActionTypeEnum.fromValue(m.get(ACTION_TYPE))), Optional.ofNullable(m.get(COORDINATE)),
+                        Optional.ofNullable(CoordinateTypeEnum.fromValue(m.get(COORDINATE_TYPE))),
                         Optional.ofNullable(m.get(ACTION_CAPTION)), Optional.ofNullable(m.get(DESCRIPTION_UC)),
                         Optional.ofNullable(m.get(CONTENT_UC)), Optional.ofNullable(m.get(APPLICATION)),
                         Optional.ofNullable(InvocationEnum.fromValue(m.get(INVOCATION)))))

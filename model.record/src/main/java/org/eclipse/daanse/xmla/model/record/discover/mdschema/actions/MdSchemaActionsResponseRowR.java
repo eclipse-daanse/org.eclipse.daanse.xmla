@@ -20,9 +20,9 @@ import org.eclipse.daanse.xmla.api.common.enums.CoordinateTypeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.InvocationEnum;
 import org.eclipse.daanse.xmla.api.discover.mdschema.actions.MdSchemaActionsResponseRow;
 
-public record MdSchemaActionsResponseRowR(Optional<String> catalogName, Optional<String> schemaName, String cubeName,
-        Optional<String> actionName, Optional<ActionTypeEnum> actionType, String coordinate,
-        CoordinateTypeEnum coordinateType, Optional<String> actionCaption, Optional<String> description,
+public record MdSchemaActionsResponseRowR(Optional<String> catalogName, Optional<String> schemaName, Optional<String> cubeName,
+        Optional<String> actionName, Optional<ActionTypeEnum> actionType, Optional<String> coordinate,
+        Optional<CoordinateTypeEnum> coordinateType, Optional<String> actionCaption, Optional<String> description,
         Optional<String> content, Optional<String> application, Optional<InvocationEnum> invocation)
         implements MdSchemaActionsResponseRow {
 

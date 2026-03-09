@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- xmlDocument complex type for embedding arbitrary XML -->
+  <xsd:complexType name="xmlDocument">
+    <xsd:sequence>
+      <xsd:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="skip" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DISCOVER_XML_METADATA row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="discover-xml-metadata-row">
+    <xsd:sequence>
+      <xsd:element name="METADATA" type="xmlDocument" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_FUNCTIONS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-functions-row">
+    <xsd:sequence>
+      <xsd:element name="FUNCTION_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PARAMETER_LIST" type="xsd:string" minOccurs="0" />
+      <xsd:element name="RETURN_TYPE" type="xsd:int" minOccurs="0" />
+      <xsd:element name="ORIGIN" type="xsd:int" minOccurs="0" />
+      <xsd:element name="INTERFACE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LIBRARY_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DLL_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="HELP_FILE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="HELP_CONTEXT" type="xsd:int" minOccurs="0" />
+      <xsd:element name="OBJECT" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PARAMETERINFO" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="NAME" type="xsd:string" minOccurs="0" />
+            <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+            <xsd:element name="OPTIONAL" type="xsd:boolean" minOccurs="0" />
+            <xsd:element name="REPEATABLE" type="xsd:boolean" minOccurs="0" />
+            <xsd:element name="REPEATGROUP" type="xsd:int" minOccurs="0" />
+            <xsd:element name="SKIPPABLE" type="xsd:boolean" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DIRECTQUERY_PUSHABLE" type="xsd:int" minOccurs="0" />
+      <xsd:element name="VISUAL_CALCULATIONS_INFO" type="xsd:int" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

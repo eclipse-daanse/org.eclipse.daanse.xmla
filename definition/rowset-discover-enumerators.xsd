@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- DISCOVER_ENUMERATORS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="discover-enumerators-row">
+    <xsd:sequence>
+      <xsd:element name="EnumName" type="xsd:string" />
+      <xsd:element name="EnumDescription" type="xsd:string" minOccurs="0" />
+      <xsd:element name="EnumType" type="xsd:string" />
+      <xsd:element name="ElementName" type="xsd:string"  />
+      <xsd:element name="ElementDescription" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ElementValue" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

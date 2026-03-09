@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- UUID simple type -->
+  <xsd:simpleType name="uuid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- DBSCHEMA_COLUMNS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="dbschema-columns-row">
+    <xsd:sequence>
+      <xsd:element name="TABLE_CATALOG" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_SCHEMA" type="xsd:string" minOccurs="0" />
+      <xsd:element name="TABLE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLUMN_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLUMN_GUID" type="uuid" minOccurs="0" />
+      <xsd:element name="COLUMN_PROPID" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="ORDINAL_POSITION" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="COLUMN_HAS_DEFAULT" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="COLUMN_DEFAULT" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLUMN_FLAGS" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="IS_NULLABLE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="DATA_TYPE" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="TYPE_GUID" type="uuid" minOccurs="0" />
+      <xsd:element name="CHARACTER_MAXIMUM_LENGTH" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="CHARACTER_OCTET_LENGTH" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="NUMERIC_PRECISION" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="NUMERIC_SCALE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="DATETIME_PRECISION" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="CHARACTER_SET_CATALOG" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CHARACTER_SET_SCHEMA" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CHARACTER_SET_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLLATION_CATALOG" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLLATION_SCHEMA" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLLATION_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DOMAIN_CATALOG" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DOMAIN_SCHEMA" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DOMAIN_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COLUMN_OLAP_TYPE" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

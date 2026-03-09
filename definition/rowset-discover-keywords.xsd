@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- DISCOVER_KEYWORDS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="discover-keywords-row">
+    <xsd:sequence>
+      <xsd:element name="Keyword" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

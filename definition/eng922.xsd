@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  version="1.0"
+  xmlns="http://schemas.microsoft.com/analysisservices/2022/engine/922"
+  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0"
+  targetNamespace="http://schemas.microsoft.com/analysisservices/2022/engine/922">
+
+  <xsd:element name="EnsureProperEncryption" type="xsd:boolean" />
+
+  <xsd:complexType name="RemoveDiscontinuedFeatures">
+    <xsd:all>
+      <xsd:element name="DatabaseID" type="xsd:string" minOccurs="1" />
+      <xsd:element name="RemoveDataMining" type="xsd:boolean" minOccurs="0" />
+    </xsd:all>
+  </xsd:complexType>
+</xsd:schema>

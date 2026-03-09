@@ -723,14 +723,14 @@ public class Convert {
     private static Row convertDiscoverMdSchemaActionsResponseRow(MdSchemaActionsResponseRow apiRow) {
         MdSchemaActionsResponseRowXml row = new MdSchemaActionsResponseRowXml();
 
-        // Mandatory
-        row.setCubeName(apiRow.cubeName());
-        row.setCoordinate(apiRow.coordinate());
-        row.setCoordinateType(
-            org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.CoordinateTypeEnum
-                .fromValue(apiRow.coordinateType().getValue()));
-
         // Optional
+        apiRow.cubeName()
+        .ifPresent(row::setCubeName);
+        apiRow.coordinate()
+        .ifPresent(row::setCoordinate);
+        apiRow.coordinateType()
+        .ifPresent(i -> row.setCoordinateType(
+            org.eclipse.daanse.xmla.model.jakarta.xml.bind.enums.CoordinateTypeEnum.fromValue(i.getValue())));
         apiRow.catalogName()
             .ifPresent(row::setCatalogName);
         apiRow.schemaName()

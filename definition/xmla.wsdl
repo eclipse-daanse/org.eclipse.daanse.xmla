@@ -17,8 +17,29 @@
   xmlns:eng300="http://schemas.microsoft.com/analysisservices/2011/engine/300"
   xmlns:eng300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300"
   xmlns:eng400="http://schemas.microsoft.com/analysisservices/2012/engine/400"
+  xmlns:eng400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400"
+  xmlns:eng500="http://schemas.microsoft.com/analysisservices/2013/engine/500"
+  xmlns:eng500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500"
   xmlns:eng600="http://schemas.microsoft.com/analysisservices/2013/engine/600"
+  xmlns:eng600_600="http://schemas.microsoft.com/analysisservices/2013/engine/600/600"
   xmlns:eng800="http://schemas.microsoft.com/analysisservices/2013/engine/800"
+  xmlns:eng800_800="http://schemas.microsoft.com/analysisservices/2013/engine/800/800"
+  xmlns:eng900="http://schemas.microsoft.com/analysisservices/2022/engine/900"
+  xmlns:eng900_900="http://schemas.microsoft.com/analysisservices/2022/engine/900/900"
+  xmlns:eng910="http://schemas.microsoft.com/analysisservices/2022/engine/910"
+  xmlns:eng910_910="http://schemas.microsoft.com/analysisservices/2022/engine/910/910"
+  xmlns:eng920="http://schemas.microsoft.com/analysisservices/2022/engine/920"
+  xmlns:eng920_920="http://schemas.microsoft.com/analysisservices/2022/engine/920/920"
+  xmlns:eng921="http://schemas.microsoft.com/analysisservices/2022/engine/921"
+  xmlns:eng921_921="http://schemas.microsoft.com/analysisservices/2022/engine/921/921"
+  xmlns:eng922="http://schemas.microsoft.com/analysisservices/2022/engine/922"
+  xmlns:eng922_922="http://schemas.microsoft.com/analysisservices/2022/engine/922/922"
+  xmlns:eng923="http://schemas.microsoft.com/analysisservices/2025/engine/923"
+  xmlns:eng923_923="http://schemas.microsoft.com/analysisservices/2025/engine/923/923"
+  xmlns:eng924="http://schemas.microsoft.com/analysisservices/2025/engine/924"
+  xmlns:eng924_924="http://schemas.microsoft.com/analysisservices/2025/engine/924/924"
+  xmlns:eng925="http://schemas.microsoft.com/analysisservices/2025/engine/925"
+  xmlns:eng925_925="http://schemas.microsoft.com/analysisservices/2025/engine/925/925"
   xmlns:ana-ds="urn:schemas-microsoft-com:xml-analysis:mddataset"
   xmlns:ana-e="urn:schemas-microsoft-com:xml-analysis:empty"
   xmlns:ana-m="http://schemas.microsoft.com/analysisservices/2003/xmla-multipleresults"
@@ -133,6 +154,111 @@
       <xsd:import
         namespace="http://schemas.microsoft.com/analysisservices/2013/engine/800"
         schemaLocation="eng800.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2012/engine/400/400"
+        schemaLocation="eng400_400.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2013/engine/500"
+        schemaLocation="eng500.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2013/engine/500/500"
+        schemaLocation="eng500_500.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2013/engine/600/600"
+        schemaLocation="eng600_600.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2013/engine/800/800"
+        schemaLocation="eng800_800.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/900"
+        schemaLocation="eng900.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/900/900"
+        schemaLocation="eng900_900.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/910"
+        schemaLocation="eng910.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/910/910"
+        schemaLocation="eng910_910.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/920"
+        schemaLocation="eng920.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/920/920"
+        schemaLocation="eng920_920.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/921"
+        schemaLocation="eng921.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/921/921"
+        schemaLocation="eng921_921.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/922"
+        schemaLocation="eng922.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2022/engine/922/922"
+        schemaLocation="eng922_922.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2025/engine/923"
+        schemaLocation="eng923.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2025/engine/923/923"
+        schemaLocation="eng923_923.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2025/engine/924"
+        schemaLocation="eng924.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2025/engine/924/924"
+        schemaLocation="eng924_924.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2025/engine/925"
+        schemaLocation="eng925.xsd" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import
+        namespace="http://schemas.microsoft.com/analysisservices/2025/engine/925/925"
+        schemaLocation="eng925_925.xsd" />
     </xsd:schema>
   </wsdl:types>
 

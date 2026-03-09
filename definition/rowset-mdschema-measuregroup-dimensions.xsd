@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_MEASUREGROUP_DIMENSIONS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-measuregroup-dimensions-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASUREGROUP_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEASUREGROUP_CARDINALITY" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DIMENSION_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DIMENSION_CARDINALITY" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DIMENSION_IS_VISIBLE" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="DIMENSION_IS_FACT_DIMENSION" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="DIMENSION_PATH" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="MeasureGroupDimension" type="xsd:string" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DIMENSION_GRANULARITY" type="xsd:string" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

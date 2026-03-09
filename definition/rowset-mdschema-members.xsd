@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- UUID simple type -->
+  <xsd:simpleType name="uuid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- MDSCHEMA_MEMBERS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-members-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DIMENSION_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="HIERARCHY_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LEVEL_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LEVEL_NUMBER" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="MEMBER_ORDINAL" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="MEMBER_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEMBER_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEMBER_TYPE" type="xsd:int" minOccurs="0" />
+      <xsd:element name="MEMBER_GUID" type="uuid" minOccurs="0" />
+      <xsd:element name="MEMBER_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CHILDREN_CARDINALITY" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="PARENT_LEVEL" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="PARENT_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PARENT_COUNT" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="EXPRESSION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEMBER_KEY" type="xsd:string" minOccurs="0" />
+      <xsd:element name="IS_PLACEHOLDERMEMBER" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="IS_DATAMEMBER" type="xsd:boolean" minOccurs="0" />
+      <xsd:element name="SCOPE" type="xsd:int" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

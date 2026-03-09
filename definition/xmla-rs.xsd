@@ -5,6 +5,7 @@
   xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0"
   targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset">
 
+  <xsd:import namespace="http://www.w3.org/2001/XMLSchema" />
   <xsd:import
     namespace="urn:schemas-microsoft-com:xml-analysis:exception"
     schemaLocation="xmla-x.xsd" />
@@ -13,6 +14,7 @@
 
   <xsd:complexType name="rowset">
     <xsd:sequence>
+      <xsd:element ref="xsd:schema" minOccurs="0" />
       <xsd:element name="row" minOccurs="0"
         maxOccurs="unbounded" type="row" />
       <xsd:element name="Exception" minOccurs="0"

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_PROPERTIES row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-properties-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DIMENSION_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="HIERARCHY_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LEVEL_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MEMBER_UNIQUE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PROPERTY_TYPE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="PROPERTY_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PROPERTY_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DATA_TYPE" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="CHARACTER_MAXIMUM_LENGTH" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="CHARACTER_OCTET_LENGTH" type="xsd:unsignedInt" minOccurs="0" />
+      <xsd:element name="NUMERIC_PRECISION" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="NUMERIC_SCALE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PROPERTY_CONTENT_TYPE" type="xsd:short" minOccurs="0" />
+      <xsd:element name="SQL_COLUMN_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LANGUAGE" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="PROPERTY_ORIGIN" type="xsd:unsignedShort" minOccurs="0" />
+      <xsd:element name="PROPERTY_ATTRIBUTE_HIERARCHY_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PROPERTY_CARDINALITY" type="xsd:string" minOccurs="0" />
+      <xsd:element name="MIME_TYPE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="PROPERTY_IS_VISIBLE" type="xsd:boolean" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

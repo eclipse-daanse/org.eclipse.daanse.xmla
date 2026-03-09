@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- DISCOVER_LITERALS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="discover-literals-row">
+    <xsd:sequence>
+      <xsd:element name="LiteralName" type="xsd:string" />
+      <xsd:element name="LiteralValue" type="xsd:string" />
+      <xsd:element name="LiteralInvalidChars" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LiteralInvalidStartingChars" type="xsd:string" minOccurs="0" />
+      <xsd:element name="LiteralMaxLength" type="xsd:int" minOccurs="0" />
+      <xsd:element name="LiteralNameEnumValue" type="xsd:int" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

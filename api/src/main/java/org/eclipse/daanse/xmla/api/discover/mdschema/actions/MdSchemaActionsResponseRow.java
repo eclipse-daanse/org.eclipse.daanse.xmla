@@ -37,7 +37,7 @@ public interface MdSchemaActionsResponseRow {
     /**
      * @return The name of the cube.
      */
-    String cubeName();
+    Optional<String> cubeName();
 
     /**
      * @return The name of this action.
@@ -58,7 +58,7 @@ public interface MdSchemaActionsResponseRow {
      *         in which the action is performed. The COORDINATE MUST resolve to the object specified in
      *         COORDINATE_TYPE.
      */
-    String coordinate();
+    Optional<String> coordinate();
 
     /**
      * @return An enumeration that specifies how the COORDINATE restriction column is interpreted. The
@@ -67,7 +67,7 @@ public interface MdSchemaActionsResponseRow {
      *         coordinate refers to a member. 5 - Action coordinate refers to a set. 6 - Action
      *         coordinate refers to a cell.
      */
-    CoordinateTypeEnum coordinateType();
+    Optional<CoordinateTypeEnum> coordinateType();
 
     /**
      * @return The caption for the action. The action name is used if no caption was specified and no

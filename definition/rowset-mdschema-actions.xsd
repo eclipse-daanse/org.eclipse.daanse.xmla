@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:xml-analysis:rowset"
+  xmlns:sql="urn:schemas-microsoft-com:xml-sql"
+  targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset"
+  elementFormDefault="qualified">
+
+  <!-- MDSCHEMA_ACTIONS row definition (MS-SSAS v20251031) -->
+  <xsd:complexType name="mdschema-actions-row">
+    <xsd:sequence>
+      <xsd:element name="CATALOG_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="SCHEMA_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CUBE_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ACTION_NAME" type="xsd:string" minOccurs="0" />
+      <xsd:element name="ACTION_TYPE" type="xsd:int" minOccurs="0" />
+      <xsd:element name="COORDINATE" type="xsd:string" minOccurs="0" />
+      <xsd:element name="COORDINATE_TYPE" type="xsd:int" minOccurs="0" />
+      <xsd:element name="ACTION_CAPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="CONTENT" type="xsd:string" minOccurs="0" />
+      <xsd:element name="APPLICATION" type="xsd:string" minOccurs="0" />
+      <xsd:element name="INVOCATION" type="xsd:int" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
