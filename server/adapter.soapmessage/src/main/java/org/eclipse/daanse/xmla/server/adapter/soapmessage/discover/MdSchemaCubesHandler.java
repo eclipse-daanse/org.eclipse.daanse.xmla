@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.eclipse.daanse.xmla.api.RequestMetaData;
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
 import org.eclipse.daanse.xmla.api.common.enums.CubeTypeEnum;
+import org.eclipse.daanse.xmla.api.common.properties.Content;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.cubes.MdSchemaCubesResponseRow;
@@ -52,7 +53,12 @@ public class MdSchemaCubesHandler implements DiscoverHandler {
         MdSchemaCubesRestrictionsR restrictions = parseRestrictions(restrictionElement);
         MdSchemaCubesRequest request = new MdSchemaCubesRequestR(properties, restrictions);
         List<MdSchemaCubesResponseRow> rows = discoverService.mdSchemaCubes(request, metaData);
-        writeResponse(rows, responseBody);
+        Optional<Content> oContent = properties.content();
+        boolean withSchema = true;
+        if (oContent.isPresent() && oContent.get().equals(Content.DATA)) {
+            withSchema = false;
+        }
+        writeResponse(rows, responseBody, withSchema);
     }
 
     private MdSchemaCubesRestrictionsR parseRestrictions(SOAPElement restriction) {
@@ -61,18 +67,19 @@ public class MdSchemaCubesHandler implements DiscoverHandler {
                 Optional.ofNullable(m.get(ROW.CUBE_NAME)),
                 Optional.ofNullable(CubeTypeEnum.fromValue(m.get(ROW.CUBE_TYPE))),
                 Optional.ofNullable(m.get(ROW.BASE_CUBE_NAME)),
-                Optional.ofNullable(CubeSourceEnum.fromValue(m.get(ROW.CUBE_SOURCE))));
+                Optional.ofNullable(m.get(ROW.CUBE_SOURCE) != null ? CubeSourceEnum.fromValue(m.get(ROW.CUBE_SOURCE)) : null));
     }
 
-    private void writeResponse(List<MdSchemaCubesResponseRow> rows, SOAPBody body) throws SOAPException {
-        SOAPElement root = addRoot(body);
+    private void writeResponse(List<MdSchemaCubesResponseRow> rows, SOAPBody body, boolean withSchema) throws SOAPException {
+        SOAPElement root = addRoot(body, withSchema);
         for (MdSchemaCubesResponseRow row : rows) {
             addResponseRow(root, row);
         }
     }
 
-    private SOAPElement addRoot(SOAPBody body) throws SOAPException {
+    private SOAPElement addRoot(SOAPBody body, boolean withSchema) throws SOAPException {
         SOAPElement seRoot = SoapUtil.prepareRootElement(body);
+        if (withSchema) {
         SOAPElement schema = SoapUtil.fillRoot(seRoot);
 
         SOAPElement s = SoapUtil.prepareSequenceElement(schema);
@@ -81,7 +88,7 @@ public class MdSchemaCubesHandler implements DiscoverHandler {
         se1.setAttribute("sql:field", "CATALOG_NAME");
         se1.setAttribute("name", "CATALOG_NAME");
         se1.setAttribute("type", "xsd:string");
-        se1.setAttribute("minOccurs", "0");
+        //se1.setAttribute("minOccurs", "0");
 
         SOAPElement se2 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se2.setAttribute("sql:field", "SCHEMA_NAME");
@@ -93,11 +100,13 @@ public class MdSchemaCubesHandler implements DiscoverHandler {
         se3.setAttribute("sql:field", "CUBE_NAME");
         se3.setAttribute("name", "CUBE_NAME");
         se3.setAttribute("type", "xsd:string");
+        se3.setAttribute("minOccurs", "0");
 
         SOAPElement se4 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se4.setAttribute("sql:field", "CUBE_TYPE");
         se4.setAttribute("name", "CUBE_TYPE");
         se4.setAttribute("type", "xsd:string");
+        se4.setAttribute("minOccurs", "0");
 
         SOAPElement se5 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se5.setAttribute("sql:field", "CUBE_GUID");
@@ -145,21 +154,25 @@ public class MdSchemaCubesHandler implements DiscoverHandler {
         se12.setAttribute("sql:field", "IS_DRILLTHROUGH_ENABLED");
         se12.setAttribute("name", "IS_DRILLTHROUGH_ENABLED");
         se12.setAttribute("type", "xsd:boolean");
+        se12.setAttribute("minOccurs", "0");
 
         SOAPElement se13 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se13.setAttribute("sql:field", "IS_LINKABLE");
         se13.setAttribute("name", "IS_LINKABLE");
         se13.setAttribute("type", "xsd:boolean");
+        se13.setAttribute("minOccurs", "0");
 
         SOAPElement se14 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se14.setAttribute("sql:field", "IS_WRITE_ENABLED");
         se14.setAttribute("name", "IS_WRITE_ENABLED");
         se14.setAttribute("type", "xsd:boolean");
+        se14.setAttribute("minOccurs", "0");
 
         SOAPElement se15 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se15.setAttribute("sql:field", "IS_SQL_ENABLED");
         se15.setAttribute("name", "IS_SQL_ENABLED");
         se15.setAttribute("type", "xsd:boolean");
+        se15.setAttribute("minOccurs", "0");
 
         SOAPElement se16 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se16.setAttribute("sql:field", "CUBE_CAPTION");
@@ -172,28 +185,18 @@ public class MdSchemaCubesHandler implements DiscoverHandler {
         se17.setAttribute("name", "BASE_CUBE_NAME");
         se17.setAttribute("type", "xsd:string");
         se17.setAttribute("minOccurs", "0");
-
-        SOAPElement se18 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
-        se18.setAttribute("sql:field", "DIMENSIONS");
-        se18.setAttribute("name", "DIMENSIONS");
-        se18.setAttribute("minOccurs", "0");
-
-        SOAPElement se19 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
-        se19.setAttribute("sql:field", "SETS");
-        se19.setAttribute("name", "SETS");
-        se19.setAttribute("minOccurs", "0");
-
-        SOAPElement se20 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
-        se20.setAttribute("sql:field", "MEASURES");
-        se20.setAttribute("name", "MEASURES");
-        se20.setAttribute("minOccurs", "0");
-
         SOAPElement se21 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
         se21.setAttribute("sql:field", "CUBE_SOURCE");
         se21.setAttribute("name", "CUBE_SOURCE");
-        se21.setAttribute("type", "xsd:int");
+        se21.setAttribute("type", "xsd:unsignedShort");
         se21.setAttribute("minOccurs", "0");
 
+        SOAPElement se22 = SoapUtil.addChildElement(s, Constants.XSD.QN_ELEMENT);
+        se22.setAttribute("sql:field", "PREFERRED_QUERY_PATTERNS");
+        se22.setAttribute("name", "PREFERRED_QUERY_PATTERNS");
+        se22.setAttribute("type", "xsd:unsignedShort");
+        se22.setAttribute("minOccurs", "0");
+        }
         return seRoot;
     }
 
