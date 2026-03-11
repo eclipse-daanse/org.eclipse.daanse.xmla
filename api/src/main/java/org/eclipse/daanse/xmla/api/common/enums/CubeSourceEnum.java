@@ -19,7 +19,9 @@ public enum CubeSourceEnum {
 
     CUBE(0x01),
 
-    DIMENSION(0x02);
+    DIMENSION(0x02),
+
+    CUBE_DIMENSION(0x03);
 
     private final int value;
 
