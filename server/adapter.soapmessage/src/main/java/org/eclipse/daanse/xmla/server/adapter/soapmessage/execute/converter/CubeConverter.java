@@ -1046,6 +1046,7 @@ public class CubeConverter {
         String fontName = null;
         String fontSize = null;
         String fontFlags = null;
+        String updateable = null;
         List<Translation> translations = null;
         List<Annotation> annotations = null;
 
@@ -1096,6 +1097,9 @@ public class CubeConverter {
             if (matchesLocalName(node, "FontFlags")) {
                 fontFlags = node.getTextContent();
             }
+            if (matchesLocalName(node, "Updateable")) {
+                updateable = node.getTextContent();
+            }
             if (matchesLocalName(node, TRANSLATIONS)) {
                 translations = CommonConverter.getTranslationList(node.getChildNodes(), TRANSLATION);
             }
@@ -1104,7 +1108,7 @@ public class CubeConverter {
             }
         }
         return new MeasureR(name, id, description, aggregateFunction, dataType, source, visible, measureExpression,
-                displayFolder, formatString, backColor, foreColor, fontName, fontSize, fontFlags, translations,
+                displayFolder, formatString, backColor, foreColor, fontName, fontSize, fontFlags, updateable, translations,
                 annotations);
     }
 

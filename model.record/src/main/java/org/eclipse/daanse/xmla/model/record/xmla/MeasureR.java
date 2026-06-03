@@ -22,7 +22,7 @@ import org.eclipse.daanse.xmla.api.xmla.Translation;
 
 public record MeasureR(String name, String id, String description, String aggregateFunction, String dataType,
         DataItem source, Boolean visible, String measureExpression, String displayFolder, String formatString,
-        String backColor, String foreColor, String fontName, String fontSize, String fontFlags,
+        String backColor, String foreColor, String fontName, String fontSize, String fontFlags, String updateable,
         List<Translation> translations, List<Annotation> annotations) implements Measure {
 
 }

@@ -379,7 +379,7 @@ public class CubeConvertor {
                     measure.getAggregateFunction(), measure.getDataType(), convertDataItem(measure.getSource()),
                     measure.isVisible(), measure.getMeasureExpression(), measure.getDisplayFolder(),
                     measure.getFormatString(), measure.getBackColor(), measure.getForeColor(), measure.getFontName(),
-                    measure.getFontSize(), measure.getFontFlags(),
+                    measure.getFontSize(), measure.getFontFlags(), measure.getUpdateable(),
                     convertTranslationList(measure.getTranslations()), convertAnnotationList(
                             measure.getAnnotations()));
         }

@@ -57,6 +57,8 @@ public class Measure {
     protected String fontSize;
     @XmlElement(name = "FontFlags")
     protected String fontFlags;
+    @XmlElement(name = "Updateable")
+    protected String updateable;
     @XmlElement(name = "Translation")
     @XmlElementWrapper(name = "Translations")
     protected List<Translation> translations;
@@ -200,4 +202,11 @@ public class Measure {
         this.annotations = value;
     }
 
+    public String getUpdateable() {
+        return updateable;
+    }
+
+    public void setUpdateable(String updateable) {
+        this.updateable = updateable;
+    }
 }

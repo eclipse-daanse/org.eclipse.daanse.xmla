@@ -47,6 +47,8 @@ public interface Measure {
 
     String fontFlags();
 
+    String updateable();
+
     List<Translation> translations();
 
     List<Annotation> annotations();

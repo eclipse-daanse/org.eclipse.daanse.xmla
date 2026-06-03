@@ -26,7 +26,7 @@
     <module>cg</module>
     <module>an</module>
     <module>bi</module>
-    <module>edm</module>
+    <!--module>edm</module-->
   </modules>
 
   <properties>
