@@ -28,6 +28,7 @@ import org.osgi.service.servlet.whiteboard.propertytypes.HttpWhiteboardServletPa
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -45,6 +46,7 @@ import java.util.stream.StreamSupport;
 public class XmlaServlet extends AbstractSoapServlet {
 
     private static final long serialVersionUID = 1L;
+    private static final TransformerFactory TF = createTransformerFactory();
     private static Logger LOGGER = LoggerFactory.getLogger(XmlaServlet.class);
     private XmlaApiAdapter xmlaAdapter;
 
@@ -81,7 +83,7 @@ public class XmlaServlet extends AbstractSoapServlet {
     private static ByteArrayOutputStream prettyPrint(SOAPMessage msg) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Transformer transformer = TF.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(msg.getSOAPPart().getContent(), new StreamResult(baos));
         } catch (Exception e) {
@@ -96,4 +98,9 @@ public class XmlaServlet extends AbstractSoapServlet {
         }
         return baos;
     }
+
+    private static TransformerFactory createTransformerFactory() {
+    	return TransformerFactory.newInstance();
+    }
+
 }

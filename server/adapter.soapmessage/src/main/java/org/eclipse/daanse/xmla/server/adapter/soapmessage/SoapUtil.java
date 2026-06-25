@@ -40,7 +40,7 @@ public class SoapUtil {
 
     private static final String UUID_VALUE = "[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}";
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapUtil.class);
-
+    private static final DocumentBuilderFactory DBF = createHardenedDbf();
     private SoapUtil() {
         // utility class
     }
@@ -101,13 +101,7 @@ public class SoapUtil {
 
     public static SOAPElement xmlStringToSoapElement(String xmlFragment, SOAPElement context)
             throws SAXException, IOException, ParserConfigurationException, SOAPException {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
-        // XXE prevention
-        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-        Document doc = dbf.newDocumentBuilder().parse(new InputSource(new StringReader(xmlFragment)));
+        Document doc = DBF.newDocumentBuilder().parse(new InputSource(new StringReader(xmlFragment)));
 
         Element root = doc.getDocumentElement();
 
@@ -155,4 +149,20 @@ public class SoapUtil {
             throw new XmlaSoapException("addChildElement error", e);
         }
     }
+
+    private static DocumentBuilderFactory createHardenedDbf() {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setNamespaceAware(true);
+            // XXE prevention
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            return dbf;
+        }
+        catch (ParserConfigurationException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
 }

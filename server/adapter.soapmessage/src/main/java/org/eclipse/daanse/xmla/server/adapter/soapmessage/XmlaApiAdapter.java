@@ -45,6 +45,7 @@ import jakarta.xml.soap.SOAPPart;
  */
 public class XmlaApiAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlaApiAdapter.class);
+    private static final MessageFactory MESSAGE_FACTORY = newMessageFactory();
 
     private final SessionDispatcher sessionDispatcher;
     private final DiscoverDispatcher discoverDispatcher;
@@ -59,7 +60,7 @@ public class XmlaApiAdapter {
     public SOAPMessage handleRequest(SOAPMessage messageRequest, Map<String, Object> headers, Principal principal,
             Function<String, Boolean> isUserInRoleFunction, String url) {
         try {
-            SOAPMessage messageResponse = MessageFactory.newInstance().createMessage();
+            SOAPMessage messageResponse = MESSAGE_FACTORY.createMessage();
             messageResponse.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
             SOAPPart soapPartResponse = messageResponse.getSOAPPart();
             SOAPEnvelope envelopeResponse = soapPartResponse.getEnvelope();
@@ -121,11 +122,21 @@ public class XmlaApiAdapter {
         }
 
         if (node != null && Constants.MSXMLA.QN_DISCOVER.equals(node.getElementQName())) {
-            discoverDispatcher.dispatch(node, responseBody, metaData);
+            discoverDispatcher.dispatch(node, responseBody, metaData, userPrincipal);
         }
 
         if (node != null && Constants.MSXMLA.QN_EXECUTE.equals(node.getElementQName())) {
             executeDispatcher.dispatch(node, responseBody, metaData, userPrincipal);
         }
     }
+
+    private static MessageFactory newMessageFactory() {
+        try {
+            return MessageFactory.newInstance();
+        }
+        catch (SOAPException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
 }
