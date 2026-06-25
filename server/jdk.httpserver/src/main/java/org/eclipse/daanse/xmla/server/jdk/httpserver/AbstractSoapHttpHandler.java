@@ -97,13 +97,10 @@ public abstract class AbstractSoapHttpHandler implements HttpHandler {
 
         setMimeHeadersToExchange(exchange, responseMessage.getMimeHeaders());
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        responseMessage.writeTo(baos);
-        byte[] payload = baos.toByteArray();
 
-        exchange.sendResponseHeaders(200, payload.length);
+        exchange.sendResponseHeaders(200, 0);
         try (OutputStream os = exchange.getResponseBody()) {
-            os.write(payload);
+            responseMessage.writeTo(os);
         }
 
         if (LOGGER.isDebugEnabled()) {
