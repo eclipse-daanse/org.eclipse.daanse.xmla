@@ -112,16 +112,10 @@ public abstract class AbstractSoapHttpHandler implements HttpHandler {
     }
 
     private static MimeHeaders getMimeHeadersFromExchange(HttpExchange exchange) {
-        Headers reqHeaders = exchange.getRequestHeaders();
         MimeHeaders mimeHeaders = new MimeHeaders();
-
-        for (Map.Entry<String, List<String>> entry : reqHeaders.entrySet()) {
-            String headerName = entry.getKey();
-            for (String rawValue : entry.getValue()) {
-                StringTokenizer tokenizer = new StringTokenizer(rawValue, HEADER_DELIMITER);
-                while (tokenizer.hasMoreTokens()) {
-                    mimeHeaders.addHeader(headerName, tokenizer.nextToken().trim());
-                }
+        for (Map.Entry<String, List<String>> entry : exchange.getRequestHeaders().entrySet()) {
+            for (String value : entry.getValue()) {
+                mimeHeaders.addHeader(entry.getKey(), value);
             }
         }
         return mimeHeaders;
