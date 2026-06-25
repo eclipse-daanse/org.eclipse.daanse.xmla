@@ -38,15 +38,14 @@ import java.util.StringTokenizer;
 public abstract class AbstractSoapHttpHandler implements HttpHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSoapHttpHandler.class);
+    private static final MessageFactory MF = createMessageFactory();
     private static final String HEADER_DELIMITER = ",";
 
-    protected final MessageFactory messageFactory;
     protected final SOAPConnection soapConnection;
 
     public AbstractSoapHttpHandler() throws SOAPException {
-        this.messageFactory = MessageFactory.newInstance();
         this.soapConnection = SOAPConnectionFactory.newInstance().createConnection();
-        LOGGER.debug("MessageFactory: {} – SOAPConnection: {}", messageFactory, soapConnection);
+        LOGGER.debug("MessageFactory: {} – SOAPConnection: {}", MF, soapConnection);
     }
 
     protected abstract SOAPMessage onMessage(SOAPMessage soapRequestMessage);
@@ -84,7 +83,7 @@ public abstract class AbstractSoapHttpHandler implements HttpHandler {
     private SOAPMessage createSoapRequest(HttpExchange exchange) throws IOException, SOAPException {
         MimeHeaders mimeHeaders = getMimeHeadersFromExchange(exchange);
         try (InputStream requestStream = exchange.getRequestBody()) {
-            return messageFactory.createMessage(mimeHeaders, requestStream);
+            return MF.createMessage(mimeHeaders, requestStream);
         }
     }
 
@@ -153,4 +152,13 @@ public abstract class AbstractSoapHttpHandler implements HttpHandler {
             return "<unable to serialise SOAPMessage>";
         }
     }
+
+    private static MessageFactory createMessageFactory() {
+        try {
+            return MessageFactory.newInstance();
+        } catch (SOAPException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
 }
