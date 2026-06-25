@@ -78,10 +78,13 @@ public class XmlaApiAdapter {
             SOAPBody bodyResponse = envelopeResponse.getBody();
             handleBody(messageRequest.getSOAPBody(), bodyResponse, metaData, userPrincipal);
             return messageResponse;
-        } catch (SOAPException e) {
-            LOGGER.error("handleRequest error", e);
+        } catch (XmlaParseException e) {
+            LOGGER.warn("XMLA parse error", e);
+            return SoapFaultFactory.senderFault(e.getMessage(), "XMLA_PARSE", e);
+        } catch (SOAPException | XmlaSoapException e) {
+            LOGGER.error("XMLA processing error", e);
+            return SoapFaultFactory.receiverFault("Internal server error", e);
         }
-        return null;
     }
 
     private UserRolePrincipal createUserPrincipal(Principal principal, Function<String, Boolean> isUserInRoleFunction) {
