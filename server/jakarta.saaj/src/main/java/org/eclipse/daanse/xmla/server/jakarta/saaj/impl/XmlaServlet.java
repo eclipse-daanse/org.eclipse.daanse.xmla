@@ -60,7 +60,7 @@ public class XmlaServlet extends AbstractSoapServlet {
     public SOAPMessage onMessage(SOAPMessage soapMessage,Principal principal, Function<String, Boolean> isUserInRoleFunction, String url) {
         try {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("SoapMessage in:", prettyPrint(soapMessage).toString());
+                LOGGER.debug("SoapMessage in:\n{}", prettyPrint(soapMessage).toString());
             }
             Iterable<MimeHeader> iterable = () -> soapMessage.getMimeHeaders().getAllHeaders();
             Map<String, Object> map = StreamSupport.stream(iterable.spliterator(), true).collect(
@@ -68,7 +68,7 @@ public class XmlaServlet extends AbstractSoapServlet {
 
             SOAPMessage returnMessage = xmlaAdapter.handleRequest(soapMessage, map, principal,  isUserInRoleFunction, url);
 
-            LOGGER.debug("SoapMessage out:", prettyPrint(returnMessage).toString());
+            LOGGER.debug("SoapMessage out:\n{}", prettyPrint(returnMessage).toString());
 
             return returnMessage;
 
