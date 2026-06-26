@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.discover.properties.DiscoverPropertiesRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.properties.DiscoverPropertiesResponseRow;
@@ -48,10 +49,10 @@ public class DiscoverPropertiesHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverPropertiesRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverPropertiesRequest request = new DiscoverPropertiesRequestR(properties, restrictions);
-        List<DiscoverPropertiesResponseRow> rows = discoverService.discoverProperties(request, metaData);
+        List<DiscoverPropertiesResponseRow> rows = discoverService.discoverProperties(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

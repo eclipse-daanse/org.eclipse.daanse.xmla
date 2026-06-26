@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.mdschema.measuregroups.MdSchemaMeasureGroupsRequest;
 import org.eclipse.daanse.xmla.api.discover.mdschema.measuregroups.MdSchemaMeasureGroupsResponseRow;
@@ -42,10 +43,10 @@ public class MdSchemaMeasureGroupsHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         MdSchemaMeasureGroupsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         MdSchemaMeasureGroupsRequest request = new MdSchemaMeasureGroupsRequestR(properties, restrictions);
-        List<MdSchemaMeasureGroupsResponseRow> rows = discoverService.mdSchemaMeasureGroups(request, metaData);
+        List<MdSchemaMeasureGroupsResponseRow> rows = discoverService.mdSchemaMeasureGroups(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

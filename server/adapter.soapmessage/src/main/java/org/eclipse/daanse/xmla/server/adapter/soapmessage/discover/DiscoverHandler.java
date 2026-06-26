@@ -14,6 +14,7 @@
 package org.eclipse.daanse.xmla.server.adapter.soapmessage.discover;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 
 import jakarta.xml.soap.SOAPBody;
@@ -23,6 +24,6 @@ import jakarta.xml.soap.SOAPException;
 @FunctionalInterface
 public interface DiscoverHandler {
 
-    void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement, SOAPBody responseBody)
+    void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement, UserRolePrincipal userPrincipal, SOAPBody responseBody)
             throws SOAPException;
 }

@@ -21,6 +21,7 @@ import java.util.Optional;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.csdlmetadata.DiscoverCsdlMetaDataResponseRow;
@@ -48,10 +49,10 @@ public class DiscoverCsdlMetaDataHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverCsdlMetaDataRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverCsdlMetaDataRequest request = new DiscoverCsdlMetaDataRequestR(properties, restrictions);
-        List<DiscoverCsdlMetaDataResponseRow> rows = discoverService.csdlMetaData(request, metaData);
+        List<DiscoverCsdlMetaDataResponseRow> rows = discoverService.csdlMetaData(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

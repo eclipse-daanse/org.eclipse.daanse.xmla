@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.InterfaceNameEnum;
 import org.eclipse.daanse.xmla.api.common.enums.OriginEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
@@ -45,10 +46,10 @@ public class MdSchemaFunctionsHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         MdSchemaFunctionsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         MdSchemaFunctionsRequest request = new MdSchemaFunctionsRequestR(properties, restrictions);
-        List<MdSchemaFunctionsResponseRow> rows = discoverService.mdSchemaFunctions(request, metaData);
+        List<MdSchemaFunctionsResponseRow> rows = discoverService.mdSchemaFunctions(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

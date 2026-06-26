@@ -95,7 +95,7 @@ class MsClientTest {
 
         DiscoverService discoverService = xmlaService.discover();
 
-        when(discoverService.discoverProperties(any(), any())).thenReturn(result);
+        when(discoverService.discoverProperties(any(), any(), any())).thenReturn(result);
 
         // call test
 

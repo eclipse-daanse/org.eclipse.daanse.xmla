@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.enumerators.DiscoverEnumeratorsResponseRow;
@@ -45,10 +46,10 @@ public class DiscoverEnumeratorsHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverEnumeratorsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverEnumeratorsRequest request = new DiscoverEnumeratorsRequestR(properties, restrictions);
-        List<DiscoverEnumeratorsResponseRow> rows = discoverService.discoverEnumerators(request, metaData);
+        List<DiscoverEnumeratorsResponseRow> rows = discoverService.discoverEnumerators(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

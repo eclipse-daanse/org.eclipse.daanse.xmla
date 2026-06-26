@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.CubeSourceEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.mdschema.kpis.MdSchemaKpisRequest;
@@ -45,10 +46,10 @@ public class MdSchemaKpisHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         MdSchemaKpisRestrictionsR restrictions = parseRestrictions(restrictionElement);
         MdSchemaKpisRequest request = new MdSchemaKpisRequestR(properties, restrictions);
-        List<MdSchemaKpisResponseRow> rows = discoverService.mdSchemaKpis(request, metaData);
+        List<MdSchemaKpisResponseRow> rows = discoverService.mdSchemaKpis(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

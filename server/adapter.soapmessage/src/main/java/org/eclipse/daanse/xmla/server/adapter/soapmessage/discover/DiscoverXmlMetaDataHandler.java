@@ -21,6 +21,7 @@ import java.util.Optional;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.ObjectExpansionEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.discover.xmlmetadata.DiscoverXmlMetaDataRequest;
@@ -73,10 +74,10 @@ public class DiscoverXmlMetaDataHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverXmlMetaDataRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverXmlMetaDataRequest request = new DiscoverXmlMetaDataRequestR(properties, restrictions);
-        List<DiscoverXmlMetaDataResponseRow> rows = discoverService.xmlMetaData(request, metaData);
+        List<DiscoverXmlMetaDataResponseRow> rows = discoverService.xmlMetaData(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 
