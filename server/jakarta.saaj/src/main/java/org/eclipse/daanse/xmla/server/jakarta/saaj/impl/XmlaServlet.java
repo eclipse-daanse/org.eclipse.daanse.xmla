@@ -28,9 +28,10 @@ import org.osgi.service.servlet.whiteboard.propertytypes.HttpWhiteboardServletPa
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.XMLConstants;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
@@ -100,7 +101,15 @@ public class XmlaServlet extends AbstractSoapServlet {
     }
 
     private static TransformerFactory createTransformerFactory() {
-    	return TransformerFactory.newInstance();
+        TransformerFactory tf = TransformerFactory.newInstance();
+        try {
+            tf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+            return tf;
+        } catch (TransformerConfigurationException e) {
+            throw new ExceptionInInitializerError(e);
+        }
     }
 
 }

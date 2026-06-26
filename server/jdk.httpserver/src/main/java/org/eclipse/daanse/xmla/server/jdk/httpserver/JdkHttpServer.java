@@ -15,8 +15,6 @@ package org.eclipse.daanse.xmla.server.jdk.httpserver;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +56,7 @@ public class JdkHttpServer {
 
     @Activate
     public void activate(Config config) throws SOAPException, IOException {
-    	LOGGER.debug("Starting JDK HTTP server");
+        LOGGER.debug("Starting JDK HTTP server");
         wsAdapter = new XmlaApiAdapter(xmlaService);
         server = HttpServer.create(new InetSocketAddress(config.port()), config.backlog());
         server.createContext(config.contextPath(), new XmlaSoapHttpHandler(wsAdapter));
