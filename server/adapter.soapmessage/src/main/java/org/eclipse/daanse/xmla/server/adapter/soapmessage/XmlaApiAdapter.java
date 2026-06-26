@@ -85,7 +85,11 @@ public class XmlaApiAdapter {
         } catch (SOAPException | XmlaSoapException e) {
             LOGGER.error("XMLA processing error", e);
             return SoapFaultFactory.receiverFault("Internal server error", e);
+        } catch (RuntimeException e) {
+            LOGGER.error("XMLA processing error", e);
+            return SoapFaultFactory.receiverFault("Internal server error", e);
         }
+
     }
 
     private UserRolePrincipal createUserPrincipal(Principal principal, Function<String, Boolean> isUserInRoleFunction) {
