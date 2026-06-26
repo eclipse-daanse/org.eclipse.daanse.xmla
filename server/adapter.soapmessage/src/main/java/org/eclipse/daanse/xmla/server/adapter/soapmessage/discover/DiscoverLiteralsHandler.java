@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.discover.literals.DiscoverLiteralsRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.literals.DiscoverLiteralsResponseRow;
@@ -43,10 +44,10 @@ public class DiscoverLiteralsHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverLiteralsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverLiteralsRequest request = new DiscoverLiteralsRequestR(properties, restrictions);
-        List<DiscoverLiteralsResponseRow> rows = discoverService.discoverLiterals(request, metaData);
+        List<DiscoverLiteralsResponseRow> rows = discoverService.discoverLiterals(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

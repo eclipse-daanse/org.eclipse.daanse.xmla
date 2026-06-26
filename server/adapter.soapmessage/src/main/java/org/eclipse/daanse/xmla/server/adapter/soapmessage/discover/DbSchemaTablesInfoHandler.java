@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.TableTypeEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.dbschema.tablesinfo.DbSchemaTablesInfoRequest;
@@ -43,10 +44,10 @@ public class DbSchemaTablesInfoHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DbSchemaTablesInfoRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DbSchemaTablesInfoRequest request = new DbSchemaTablesInfoRequestR(properties, restrictions);
-        List<DbSchemaTablesInfoResponseRow> rows = discoverService.dbSchemaTablesInfo(request, metaData);
+        List<DbSchemaTablesInfoResponseRow> rows = discoverService.dbSchemaTablesInfo(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

@@ -14,6 +14,7 @@
 package org.eclipse.daanse.xmla.server.tck.integration;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ColumnOlapTypeEnum;
@@ -129,6 +130,7 @@ class DiscoverRequestTest {
     void testDiscoverPropertiesLocaleIdentifier(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverPropertiesRequest> captor = ArgumentCaptor.forClass(DiscoverPropertiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
 
         final String sRequest = """
@@ -150,7 +152,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).discoverProperties(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).discoverProperties(captor.capture(), rm.capture(), up.capture());
 
         DiscoverPropertiesRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -169,6 +171,7 @@ class DiscoverRequestTest {
     void testDiscoverPropertiesRestricted(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverPropertiesRequest> captor = ArgumentCaptor.forClass(DiscoverPropertiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
 
         final String sRequest = """
@@ -194,7 +197,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).discoverProperties(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).discoverProperties(captor.capture(), rm.capture(), up.capture());
 
         DiscoverPropertiesRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -214,6 +217,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<DiscoverSchemaRowsetsRequest> captor = ArgumentCaptor
                 .forClass(DiscoverSchemaRowsetsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -237,7 +241,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).discoverSchemaRowsets(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).discoverSchemaRowsets(captor.capture(), rm.capture(), up.capture());
 
         DiscoverSchemaRowsetsRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -259,6 +263,7 @@ class DiscoverRequestTest {
     void testDiscoverEnumerators(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverEnumeratorsRequest> captor = ArgumentCaptor.forClass(DiscoverEnumeratorsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
 
         final String sRequest = """
@@ -282,7 +287,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).discoverEnumerators(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).discoverEnumerators(captor.capture(), rm.capture(), up.capture());
 
         DiscoverEnumeratorsRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -303,6 +308,7 @@ class DiscoverRequestTest {
     void testDiscoverKeywords(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverKeywordsRequest> captor = ArgumentCaptor.forClass(DiscoverKeywordsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -325,7 +331,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).discoverKeywords(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).discoverKeywords(captor.capture(), rm.capture(), up.capture());
 
         DiscoverKeywordsRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -346,6 +352,7 @@ class DiscoverRequestTest {
     void testDiscoverLiterals(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DiscoverLiteralsRequest> captor = ArgumentCaptor.forClass(DiscoverLiteralsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -368,7 +375,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).discoverLiterals(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).discoverLiterals(captor.capture(), rm.capture(), up.capture());
 
         DiscoverLiteralsRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -389,6 +396,7 @@ class DiscoverRequestTest {
     void testDbSchemaTables(@InjectService XmlaService xmlaService) {
         ArgumentCaptor<DbSchemaTablesRequest> captor = ArgumentCaptor.forClass(DbSchemaTablesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -413,7 +421,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dbSchemaTables(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dbSchemaTables(captor.capture(), rm.capture(), up.capture());
 
         DbSchemaTablesRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -439,6 +447,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaActionsRequest> captor = ArgumentCaptor.forClass(MdSchemaActionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -470,7 +479,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaActions(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaActions(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaActionsRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -504,6 +513,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaCubesRequest> captor = ArgumentCaptor.forClass(MdSchemaCubesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -531,7 +541,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaCubes(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaCubes(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaCubesRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -558,6 +568,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaDimensionsRequest> captor = ArgumentCaptor.forClass(MdSchemaDimensionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -588,7 +599,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaDimensions(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaDimensions(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaDimensionsRequest request = captor.getValue();
         assertThat(request).isNotNull().satisfies(d -> {
@@ -618,6 +629,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaFunctionsRequest> captor = ArgumentCaptor.forClass(MdSchemaFunctionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -640,7 +652,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaFunctions(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaFunctions(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaFunctionsRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -665,6 +677,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaHierarchiesRequest> captor = ArgumentCaptor.forClass(MdSchemaHierarchiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -695,7 +708,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaHierarchies(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaHierarchies(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaHierarchiesRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -729,6 +742,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DiscoverDataSourcesRequest> captor = ArgumentCaptor.forClass(DiscoverDataSourcesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -757,7 +771,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dataSources(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dataSources(captor.capture(), rm.capture(), up.capture());
 
         DiscoverDataSourcesRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -791,6 +805,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DiscoverXmlMetaDataRequest> captor = ArgumentCaptor.forClass(DiscoverXmlMetaDataRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -834,7 +849,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).xmlMetaData(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).xmlMetaData(captor.capture(), rm.capture(), up.capture());
 
         DiscoverXmlMetaDataRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -886,6 +901,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaColumnsRequest> captor = ArgumentCaptor.forClass(DbSchemaColumnsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -912,7 +928,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dbSchemaColumns(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dbSchemaColumns(captor.capture(), rm.capture(), up.capture());
 
         DbSchemaColumnsRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -943,6 +959,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<DbSchemaProviderTypesRequest> captor = ArgumentCaptor
                 .forClass(DbSchemaProviderTypesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                         <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -966,7 +983,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dbSchemaProviderTypes(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dbSchemaProviderTypes(captor.capture(), rm.capture(), up.capture());
 
         DbSchemaProviderTypesRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -993,6 +1010,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaLevelsRequest> captor = ArgumentCaptor.forClass(MdSchemaLevelsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1025,7 +1043,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaLevels(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaLevels(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaLevelsRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1062,6 +1080,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<MdSchemaMeasureGroupDimensionsRequest> captor = ArgumentCaptor
                 .forClass(MdSchemaMeasureGroupDimensionsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1091,7 +1110,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaMeasureGroupDimensions(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaMeasureGroupDimensions(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaMeasureGroupDimensionsRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1122,6 +1141,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaMeasuresRequest> captor = ArgumentCaptor.forClass(MdSchemaMeasuresRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1151,7 +1171,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaMeasures(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaMeasures(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaMeasuresRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1182,6 +1202,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaMembersRequest> captor = ArgumentCaptor.forClass(MdSchemaMembersRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
 
         final String sRequest = """
@@ -1219,7 +1240,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaMembers(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaMembers(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaMembersRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1257,6 +1278,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaPropertiesRequest> captor = ArgumentCaptor.forClass(MdSchemaPropertiesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1292,7 +1314,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaProperties(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaProperties(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaPropertiesRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1330,6 +1352,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaSetsRequest> captor = ArgumentCaptor.forClass(MdSchemaSetsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1360,7 +1383,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaSets(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaSets(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaSetsRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1392,6 +1415,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<MdSchemaKpisRequest> captor = ArgumentCaptor.forClass(MdSchemaKpisRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1420,7 +1444,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaKpis(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaKpis(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaKpisRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1451,6 +1475,7 @@ class DiscoverRequestTest {
         ArgumentCaptor<MdSchemaMeasureGroupsRequest> captor = ArgumentCaptor
                 .forClass(MdSchemaMeasureGroupsRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1478,7 +1503,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).mdSchemaMeasureGroups(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).mdSchemaMeasureGroups(captor.capture(), rm.capture(), up.capture());
 
         MdSchemaMeasureGroupsRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1507,6 +1532,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaTablesInfoRequest> captor = ArgumentCaptor.forClass(DbSchemaTablesInfoRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1534,7 +1560,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dbSchemaTablesInfo(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dbSchemaTablesInfo(captor.capture(), rm.capture(), up.capture());
 
         DbSchemaTablesInfoRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1563,6 +1589,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaSourceTablesRequest> captor = ArgumentCaptor.forClass(DbSchemaSourceTablesRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1590,7 +1617,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dbSchemaSourceTables(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dbSchemaSourceTables(captor.capture(), rm.capture(), up.capture());
 
         DbSchemaSourceTablesRequest request = captor.getValue();
         assertThat(request).isNotNull()
@@ -1619,6 +1646,7 @@ class DiscoverRequestTest {
 
         ArgumentCaptor<DbSchemaSchemataRequest> captor = ArgumentCaptor.forClass(DbSchemaSchemataRequest.class);
         ArgumentCaptor<RequestMetaData> rm = ArgumentCaptor.forClass(RequestMetaData.class);
+        ArgumentCaptor<UserRolePrincipal> up = ArgumentCaptor.forClass(UserRolePrincipal.class);
 
         final String sRequest = """
                 <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">
@@ -1645,7 +1673,7 @@ class DiscoverRequestTest {
                 SOAPUtil.envelop(sRequest));
 
         DiscoverService discoverService = xmlaService.discover();
-        verify(discoverService, (times(1))).dbSchemaSchemata(captor.capture(), rm.capture());
+        verify(discoverService, (times(1))).dbSchemaSchemata(captor.capture(), rm.capture(), up.capture());
 
         DbSchemaSchemataRequest request = captor.getValue();
         assertThat(request).isNotNull()

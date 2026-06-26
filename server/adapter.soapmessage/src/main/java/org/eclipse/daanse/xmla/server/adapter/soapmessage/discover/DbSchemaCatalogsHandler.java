@@ -13,6 +13,7 @@
  */
 package org.eclipse.daanse.xmla.server.adapter.soapmessage.discover;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.catalogs.DbSchemaCatalogsResponseRow;
@@ -49,11 +51,11 @@ public class DbSchemaCatalogsHandler implements DiscoverHandler {
     }
 
     @Override
-    public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
+    public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement, UserRolePrincipal userPrincipal,
             SOAPBody responseBody) throws SOAPException {
         DbSchemaCatalogsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DbSchemaCatalogsRequest request = new DbSchemaCatalogsRequestR(properties, restrictions);
-        List<DbSchemaCatalogsResponseRow> rows = discoverService.dbSchemaCatalogs(request, metaData);
+        List<DbSchemaCatalogsResponseRow> rows = discoverService.dbSchemaCatalogs(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.AuthenticationModeEnum;
 import org.eclipse.daanse.xmla.api.common.enums.ProviderTypeEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
@@ -44,10 +45,10 @@ public class DiscoverDataSourcesHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverDataSourcesRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverDataSourcesRequest request = new DiscoverDataSourcesRequestR(properties, restrictions);
-        List<DiscoverDataSourcesResponseRow> rows = discoverService.dataSources(request, metaData);
+        List<DiscoverDataSourcesResponseRow> rows = discoverService.dataSources(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.model.record.discover.PropertiesR;
 import org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants;
@@ -79,7 +80,7 @@ public class DiscoverDispatcher {
      * @param metaData        request metadata
      * @throws SOAPException if SOAP processing fails
      */
-    public void dispatch(SOAPElement discoverElement, SOAPBody responseBody, RequestMetaData metaData)
+    public void dispatch(SOAPElement discoverElement, SOAPBody responseBody, RequestMetaData metaData, UserRolePrincipal userPrincipal)
             throws SOAPException {
 
         String requestType = null;
@@ -108,7 +109,7 @@ public class DiscoverDispatcher {
         if (handler == null) {
             throw new XmlaParseException("Unknown request type: " + requestType);
         }
-        handler.handle(metaData, properties, restrictions, responseBody);
+        handler.handle(metaData, properties, restrictions, userPrincipal, responseBody);
     }
 
     private Map<String, DiscoverHandler> initHandlers(DiscoverService ds) {

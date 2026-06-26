@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.LevelDbTypeEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.dbschema.providertypes.DbSchemaProviderTypesRequest;
@@ -46,10 +47,10 @@ public class DbSchemaProviderTypesHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DbSchemaProviderTypesRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DbSchemaProviderTypesRequest request = new DbSchemaProviderTypesRequestR(properties, restrictions);
-        List<DbSchemaProviderTypesResponseRow> rows = discoverService.dbSchemaProviderTypes(request, metaData);
+        List<DbSchemaProviderTypesResponseRow> rows = discoverService.dbSchemaProviderTypes(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

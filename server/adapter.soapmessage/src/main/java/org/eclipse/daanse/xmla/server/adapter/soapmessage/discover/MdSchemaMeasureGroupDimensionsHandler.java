@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.common.enums.VisibilityEnum;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.mdschema.measuregroupdimensions.MdSchemaMeasureGroupDimensionsRequest;
@@ -44,12 +45,12 @@ public class MdSchemaMeasureGroupDimensionsHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         MdSchemaMeasureGroupDimensionsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         MdSchemaMeasureGroupDimensionsRequest request = new MdSchemaMeasureGroupDimensionsRequestR(properties,
                 restrictions);
         List<MdSchemaMeasureGroupDimensionsResponseRow> rows = discoverService.mdSchemaMeasureGroupDimensions(request,
-                metaData);
+                metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

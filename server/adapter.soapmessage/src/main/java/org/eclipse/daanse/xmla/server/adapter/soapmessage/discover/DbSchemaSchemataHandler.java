@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.dbschema.schemata.DbSchemaSchemataRequest;
 import org.eclipse.daanse.xmla.api.discover.dbschema.schemata.DbSchemaSchemataResponseRow;
@@ -41,10 +42,10 @@ public class DbSchemaSchemataHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DbSchemaSchemataRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DbSchemaSchemataRequest request = new DbSchemaSchemataRequestR(properties, restrictions);
-        List<DbSchemaSchemataResponseRow> rows = discoverService.dbSchemaSchemata(request, metaData);
+        List<DbSchemaSchemataResponseRow> rows = discoverService.dbSchemaSchemata(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 

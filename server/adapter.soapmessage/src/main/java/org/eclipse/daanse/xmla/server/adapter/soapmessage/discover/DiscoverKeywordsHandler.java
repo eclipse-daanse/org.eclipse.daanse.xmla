@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.daanse.xmla.api.RequestMetaData;
+import org.eclipse.daanse.xmla.api.UserRolePrincipal;
 import org.eclipse.daanse.xmla.api.discover.DiscoverService;
 import org.eclipse.daanse.xmla.api.discover.discover.keywords.DiscoverKeywordsRequest;
 import org.eclipse.daanse.xmla.api.discover.discover.keywords.DiscoverKeywordsResponseRow;
@@ -45,10 +46,10 @@ public class DiscoverKeywordsHandler implements DiscoverHandler {
 
     @Override
     public void handle(RequestMetaData metaData, PropertiesR properties, SOAPElement restrictionElement,
-            SOAPBody responseBody) throws SOAPException {
+            UserRolePrincipal userPrincipal, SOAPBody responseBody) throws SOAPException {
         DiscoverKeywordsRestrictionsR restrictions = parseRestrictions(restrictionElement);
         DiscoverKeywordsRequest request = new DiscoverKeywordsRequestR(properties, restrictions);
-        List<DiscoverKeywordsResponseRow> rows = discoverService.discoverKeywords(request, metaData);
+        List<DiscoverKeywordsResponseRow> rows = discoverService.discoverKeywords(request, metaData, userPrincipal);
         writeResponse(rows, responseBody);
     }
 
