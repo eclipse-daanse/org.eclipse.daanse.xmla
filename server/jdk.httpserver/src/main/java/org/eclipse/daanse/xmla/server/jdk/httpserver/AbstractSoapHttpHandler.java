@@ -19,8 +19,6 @@ import com.sun.net.httpserver.HttpHandler;
 import jakarta.xml.soap.MessageFactory;
 import jakarta.xml.soap.MimeHeader;
 import jakarta.xml.soap.MimeHeaders;
-import jakarta.xml.soap.SOAPConnection;
-import jakarta.xml.soap.SOAPConnectionFactory;
 import jakarta.xml.soap.SOAPException;
 import jakarta.xml.soap.SOAPMessage;
 import org.slf4j.Logger;
@@ -33,7 +31,6 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 public abstract class AbstractSoapHttpHandler implements HttpHandler {
 
@@ -41,11 +38,8 @@ public abstract class AbstractSoapHttpHandler implements HttpHandler {
     private static final MessageFactory MF = createMessageFactory();
     private static final String HEADER_DELIMITER = ",";
 
-    protected final SOAPConnection soapConnection;
 
     public AbstractSoapHttpHandler() throws SOAPException {
-        this.soapConnection = SOAPConnectionFactory.newInstance().createConnection();
-        LOGGER.debug("MessageFactory: {} – SOAPConnection: {}", MF, soapConnection);
     }
 
     protected abstract SOAPMessage onMessage(SOAPMessage soapRequestMessage);
