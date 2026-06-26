@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.daanse.xmla.api.XmlaService;
 import org.eclipse.daanse.xmla.server.adapter.soapmessage.XmlaApiAdapter;
@@ -26,6 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,24 +47,35 @@ public class JdkHttpServer {
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     private XmlaService xmlaService;
 
-    @Activate
-    public void activate(Map<String, Object> map) throws SOAPException, IOException {
-        LOGGER.debug("Starting JDK HTTP server");
-        wsAdapter = new XmlaApiAdapter(xmlaService);
-        XmlaSoapHttpHandler xmlaHandler = new XmlaSoapHttpHandler(wsAdapter);
-        // Register the handler with the HTTP server
+    @ObjectClassDefinition
+    @interface Config {
+        int port() default 8090;
+        String contextPath() default "/xmla";
+        int backlog() default 0;
+        int maxThreads() default 50;
+        int stopDelaySeconds() default 5;
+    }
 
-        server = HttpServer.create(new InetSocketAddress(8090), 0);
-        server.createContext("/xmla", xmlaHandler);
-        server.setExecutor(Executors.newCachedThreadPool());
+    @Activate
+    public void activate(Config config) throws SOAPException, IOException {
+    	LOGGER.debug("Starting JDK HTTP server");
+        wsAdapter = new XmlaApiAdapter(xmlaService);
+        server = HttpServer.create(new InetSocketAddress(config.port()), config.backlog());
+        server.createContext(config.contextPath(), new XmlaSoapHttpHandler(wsAdapter));
+        server.setExecutor(new ThreadPoolExecutor(
+                0, config.maxThreads(), 60L, TimeUnit.SECONDS,
+                new SynchronousQueue<>()));
         server.start();
-        LOGGER.debug("JDK HTTP server started on port 8090");
+        LOGGER.debug("JDK HTTP server started on port {}", config.port());
     }
 
     @Deactivate
-    public void deativate() {
+    public void deactivate(Config config) {
         LOGGER.debug("Stopping JDK HTTP server");
-        server.stop(0);
+        if (server != null) {
+            server.stop(config.stopDelaySeconds());
+            server = null;
+        }
         LOGGER.debug("JDK HTTP server stopped");
     }
 
