@@ -80,8 +80,35 @@ public class MdSchemaFunctionsHandler implements DiscoverHandler {
         SoapUtil.addElement(s, "ORIGIN", "xsd:int", null);
         SoapUtil.addElement(s, "INTERFACE_NAME", "xsd:string", null);
         SoapUtil.addElement(s, "LIBRARY_NAME", "xsd:string", "0");
+        SoapUtil.addElement(s, "DLL_NAME", "xsd:string", "0");
+        SoapUtil.addElement(s, "HELP_FILE", "xsd:string", "0");
+        SoapUtil.addElement(s, "HELP_CONTEXT", "xsd:int", "0");
+        SoapUtil.addElement(s, "OBJECT", "xsd:string", "0");
         SoapUtil.addElement(s, "CAPTION", "xsd:string", "0");
+        addParameterInfoElement(s);
+        SoapUtil.addElement(s, "DIRECTQUERY_PUSHABLE", "xsd:int", "0");
+        SoapUtil.addElement(s, "VISUAL_CALCULATIONS_INFO", "xsd:int", "0");
         return seRoot;
+    }
+
+    /** Nested PARAMETERINFO rowset declaration per [MS-SSAS] MDSCHEMA_FUNCTIONS. */
+    private void addParameterInfoElement(SOAPElement sequence) throws SOAPException {
+        SOAPElement el = SoapUtil.addChildElement(sequence,
+                org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.XSD.QN_ELEMENT);
+        el.setAttribute("sql:field", "PARAMETERINFO");
+        el.setAttribute("name", "PARAMETERINFO");
+        el.setAttribute("minOccurs", "0");
+        el.setAttribute("maxOccurs", "unbounded");
+        SOAPElement ct = SoapUtil.addChildElement(el,
+                org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.XSD.QN_COMPLEX_TYPE);
+        SOAPElement seq = SoapUtil.addChildElement(ct,
+                org.eclipse.daanse.xmla.server.adapter.soapmessage.Constants.XSD.QN_SEQUENCE);
+        SoapUtil.addElement(seq, "NAME", "xsd:string", "0");
+        SoapUtil.addElement(seq, "DESCRIPTION", "xsd:string", "0");
+        SoapUtil.addElement(seq, "OPTIONAL", "xsd:boolean", "0");
+        SoapUtil.addElement(seq, "REPEATABLE", "xsd:boolean", "0");
+        SoapUtil.addElement(seq, "REPEATGROUP", "xsd:int", "0");
+        SoapUtil.addElement(seq, "SKIPPABLE", "xsd:boolean", "0");
     }
 
     @SuppressWarnings("deprecation")

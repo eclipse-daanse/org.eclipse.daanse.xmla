@@ -30,14 +30,68 @@ public enum InterfaceNameEnum {
     LOGICAL,
 
     @XmlEnumValue("FILTER")
-    FILTER;
+    FILTER,
 
+    @XmlEnumValue("NAVIGATION")
+    NAVIGATION,
+
+    @XmlEnumValue("STATISTICAL")
+    STATISTICAL,
+
+    @XmlEnumValue("STRING")
+    STRING,
+
+    @XmlEnumValue("NUMERIC")
+    NUMERIC,
+
+    @XmlEnumValue("SET")
+    SET,
+
+    @XmlEnumValue("TUPLE")
+    TUPLE,
+
+    @XmlEnumValue("MEMBER")
+    MEMBER,
+
+    @XmlEnumValue("LEVEL")
+    LEVEL,
+
+    @XmlEnumValue("HIERARCHY")
+    HIERARCHY,
+
+    @XmlEnumValue("DIMENSION")
+    DIMENSION,
+
+    @XmlEnumValue("ARRAY")
+    ARRAY,
+
+    @XmlEnumValue("SUBCUBE")
+    SUBCUBE,
+
+    @XmlEnumValue("METADATA")
+    METADATA,
+
+    @XmlEnumValue("KPI")
+    KPI,
+
+    @XmlEnumValue("UDF")
+    UDF,
+
+    @XmlEnumValue("VALUE")
+    VALUE,
+
+    @XmlEnumValue("OTHER")
+    OTHER;
+
+    /**
+     * Lenient: unknown values map to {@link #OTHER} so that client-supplied
+     * restrictions never fail the whole discover request.
+     */
     public static InterfaceNameEnum fromValue(String v) {
         if (v == null) {
             return null;
         }
-        return Stream.of(InterfaceNameEnum.values()).filter(e -> (e.name().equals(v))).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        new StringBuilder("InterfaceNameEnum Illegal argument ").append(v).toString()));
+        return Stream.of(InterfaceNameEnum.values()).filter(e -> (e.name().equalsIgnoreCase(v))).findFirst()
+                .orElse(OTHER);
     }
 }
