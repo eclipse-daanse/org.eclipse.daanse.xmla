@@ -17,14 +17,18 @@ import java.util.stream.Stream;
 
 public enum InterfaceNameEnum {
 
-    DATETIME, LOGICAL, FILTER;
+    DATETIME, LOGICAL, FILTER, NAVIGATION, STATISTICAL, STRING, NUMERIC, SET, TUPLE, MEMBER, LEVEL, HIERARCHY,
+    DIMENSION, ARRAY, SUBCUBE, METADATA, KPI, UDF, VALUE, OTHER;
 
+    /**
+     * Lenient: unknown values map to {@link #OTHER} so that client-supplied
+     * restrictions never fail the whole discover request.
+     */
     public static InterfaceNameEnum fromValue(String v) {
         if (v == null) {
             return null;
         }
-        return Stream.of(InterfaceNameEnum.values()).filter(e -> (e.name().equals(v))).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        new StringBuilder("InterfaceNameEnum Illegal argument ").append(v).toString()));
+        return Stream.of(InterfaceNameEnum.values()).filter(e -> (e.name().equalsIgnoreCase(v))).findFirst()
+                .orElse(OTHER);
     }
 }
