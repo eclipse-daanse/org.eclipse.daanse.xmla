@@ -38,6 +38,9 @@ public enum GroupingBehaviorEnum {
     }
 
     public static GroupingBehaviorEnum fromValue(String v) {
+        if (v == null) {
+            return null;
+        }
         int vi = Integer.parseInt(v);
         return Stream.of(GroupingBehaviorEnum.values()).filter(e -> (e.value == vi)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(

@@ -48,6 +48,9 @@ public enum InstanceSelectionEnum {
     }
 
     public static InstanceSelectionEnum fromValue(String v) {
+        if (v == null) {
+            return null;
+        }
         int vi = Integer.parseInt(v);
         return Stream.of(InstanceSelectionEnum.values()).filter(e -> (e.value == vi)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(

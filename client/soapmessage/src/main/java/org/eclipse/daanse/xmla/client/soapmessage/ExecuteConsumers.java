@@ -44,6 +44,8 @@ import static org.eclipse.daanse.xmla.client.soapmessage.SoapUtil.addChildElemen
 
 public class ExecuteConsumers {
 
+    private static final String NS_URI = "urn:schemas-microsoft-com:xml-analysis";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecuteConsumers.class);
 
     private ExecuteConsumers() {
@@ -56,7 +58,7 @@ public class ExecuteConsumers {
                 Statement statement = requestApi.command();
                 Properties properties = requestApi.properties();
 
-                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE);
+                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE, null, NS_URI);
                 execute.addChildElement(COMMAND).addChildElement("Statement").setTextContent(statement.statement());
 
                 SOAPElement propertyList = execute.addChildElement(PROPERTIES).addChildElement(PROPERTY_LIST);
@@ -75,7 +77,7 @@ public class ExecuteConsumers {
                 Properties properties = requestApi.properties();
                 List<ExecuteParameter> executeParameterList = requestApi.parameters();
 
-                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE);
+                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE, null, NS_URI);
                 SOAPElement commandElement = execute.addChildElement(COMMAND);
 
                 addChildElementCancel(commandElement, cancel);
@@ -97,7 +99,7 @@ public class ExecuteConsumers {
                 Properties properties = requestApi.properties();
                 List<ExecuteParameter> executeParameterList = requestApi.parameters();
 
-                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE);
+                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE, null, NS_URI);
                 SOAPElement commandElement = execute.addChildElement(COMMAND);
                 addChildElementClearCache(commandElement, clearCache);
 
@@ -118,7 +120,7 @@ public class ExecuteConsumers {
                 Properties properties = requestApi.properties();
                 List<ExecuteParameter> executeParameterList = requestApi.parameters();
 
-                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE);
+                SOAPElement execute = message.getSOAPBody().addChildElement(EXECUTE, null, NS_URI);
                 SOAPElement commandElement = execute.addChildElement(COMMAND);
                 addChildElementAlter(commandElement, alter);
 

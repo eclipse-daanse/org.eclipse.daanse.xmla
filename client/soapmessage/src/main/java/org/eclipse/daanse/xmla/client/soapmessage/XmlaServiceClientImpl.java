@@ -22,11 +22,27 @@ public class XmlaServiceClientImpl implements XmlaService {
 
     private DiscoverServiceImpl ds;
     private ExecuteServiceImpl es;
+    private SoapClient client;
 
     public XmlaServiceClientImpl(String endPointurl) {
-        SoapClient client = new SoapClient(endPointurl);
+        client = new SoapClient(endPointurl);
         ds = new DiscoverServiceImpl(client);
         es = new ExecuteServiceImpl(client);
+    }
+
+    /** Requests an XMLA session (BeginSession header) with the next call. */
+    public void beginSession() {
+        client.requestBeginSession();
+    }
+
+    /** Ends the XMLA session (EndSession header) with the next call. */
+    public void endSession() {
+        client.requestEndSession();
+    }
+
+    /** The server-assigned XMLA session id, or null when sessionless. */
+    public String sessionId() {
+        return client.sessionId();
     }
 
     @Override

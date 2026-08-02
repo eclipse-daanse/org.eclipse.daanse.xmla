@@ -48,6 +48,9 @@ public enum StructureEnum {
     }
 
     public static StructureEnum fromValue(String v) {
+        if (v == null) {
+            return null;
+        }
         int vi = Integer.parseInt(v);
         return Stream.of(StructureEnum.values()).filter(e -> (e.value == vi)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(

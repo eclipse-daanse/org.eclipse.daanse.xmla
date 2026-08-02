@@ -58,6 +58,9 @@ public enum CoordinateTypeEnum {
     }
 
     public static CoordinateTypeEnum fromValue(String v) {
+        if (v == null) {
+            return null;
+        }
         int vi = Integer.parseInt(v);
         return Stream.of(CoordinateTypeEnum.values()).filter(e -> (e.value == vi)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(

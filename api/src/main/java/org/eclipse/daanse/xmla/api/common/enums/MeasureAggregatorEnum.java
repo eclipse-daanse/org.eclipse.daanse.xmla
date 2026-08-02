@@ -122,6 +122,9 @@ public enum MeasureAggregatorEnum {
     }
 
     public static MeasureAggregatorEnum fromValue(String v) {
+        if (v == null) {
+            return null;
+        }
         int vi = Integer.parseInt(v);
         return Stream.of(MeasureAggregatorEnum.values()).filter(e -> (e.value == vi)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
