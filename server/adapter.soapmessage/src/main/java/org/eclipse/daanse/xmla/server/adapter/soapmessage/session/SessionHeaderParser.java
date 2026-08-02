@@ -41,6 +41,9 @@ public class SessionHeaderParser {
     }
 
     public static Optional<Session> getSession(SOAPElement soapHeader) {
+        if (soapHeader == null) {
+            return Optional.empty();
+        }
         NodeList nl = soapHeader.getElementsByTagNameNS(XMLA_NS, "Session");
         if (nl != null && nl.getLength() > 0) {
             NamedNodeMap nnm = nl.item(0).getAttributes();
@@ -60,6 +63,9 @@ public class SessionHeaderParser {
     }
 
     public static Optional<EndSession> getEndSession(SOAPElement soapHeader) {
+        if (soapHeader == null) {
+            return Optional.empty();
+        }
         NodeList nl = soapHeader.getElementsByTagNameNS(XMLA_NS, "EndSession");
         if (nl != null && nl.getLength() > 0) {
             NamedNodeMap nnm = nl.item(0).getAttributes();
@@ -79,6 +85,9 @@ public class SessionHeaderParser {
     }
 
     public static Optional<BeginSession> getBeginSession(SOAPElement soapHeader) {
+        if (soapHeader == null) {
+            return Optional.empty();
+        }
         NodeList nl = soapHeader.getElementsByTagNameNS(XMLA_NS, "BeginSession");
         if (nl != null && nl.getLength() > 0) {
             NamedNodeMap nnm = nl.item(0).getAttributes();

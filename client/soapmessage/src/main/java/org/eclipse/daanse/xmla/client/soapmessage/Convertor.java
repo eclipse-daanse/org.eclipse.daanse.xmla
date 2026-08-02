@@ -98,6 +98,7 @@ import org.eclipse.daanse.xmla.api.mddataset.CellType;
 import org.eclipse.daanse.xmla.api.mddataset.CellTypeError;
 import org.eclipse.daanse.xmla.api.mddataset.HierarchyInfo;
 import org.eclipse.daanse.xmla.api.mddataset.MemberType;
+import org.eclipse.daanse.xmla.api.mddataset.TupleType;
 import org.eclipse.daanse.xmla.api.mddataset.OlapInfoCube;
 import org.eclipse.daanse.xmla.api.mddataset.RowSetRow;
 import org.eclipse.daanse.xmla.api.mddataset.RowSetRowItem;
@@ -123,7 +124,7 @@ import org.eclipse.daanse.xmla.model.record.discover.discover.schemarowsets.Disc
 import org.eclipse.daanse.xmla.model.record.discover.discover.xmlmetadata.DiscoverXmlMetaDataResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.actions.MdSchemaActionsResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.cubes.MdSchemaCubesResponseRowR;
-import org.eclipse.daanse.xmla.model.record.discover.mdschema.demensions.MdSchemaDimensionsResponseRowR;
+import org.eclipse.daanse.xmla.model.record.discover.mdschema.dimensions.MdSchemaDimensionsResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.functions.MdSchemaFunctionsResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.hierarchies.MdSchemaHierarchiesResponseRowR;
 import org.eclipse.daanse.xmla.model.record.discover.mdschema.kpis.MdSchemaKpisResponseRowR;
@@ -161,6 +162,8 @@ import org.eclipse.daanse.xmla.model.record.mddataset.CubeInfoR;
 import org.eclipse.daanse.xmla.model.record.mddataset.HierarchyInfoR;
 import org.eclipse.daanse.xmla.model.record.mddataset.MddatasetR;
 import org.eclipse.daanse.xmla.model.record.mddataset.MemberTypeR;
+import org.eclipse.daanse.xmla.model.record.mddataset.TupleTypeR;
+import org.eclipse.daanse.xmla.model.record.mddataset.TuplesTypeR;
 import org.eclipse.daanse.xmla.model.record.mddataset.MembersTypeR;
 import org.eclipse.daanse.xmla.model.record.mddataset.OlapInfoCubeR;
 import org.eclipse.daanse.xmla.model.record.mddataset.OlapInfoR;
@@ -1220,9 +1223,21 @@ class Convertor {
             List<Axis> list = new ArrayList<>();
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
-                if (node != null && "Axis".equals(node.getNodeName())) {
+                if (node == null) {
+                    continue;
+                }
+                if ("Axis".equals(node.getNodeName())) {
                     list.add(new AxisR(getMembersList(node.getChildNodes()),
                             getAttribute(node.getAttributes(), "name")));
+                } else if ("Axes".equals(node.getNodeName())) {
+                    NodeList axisNodes = node.getChildNodes();
+                    for (int j = 0; j < axisNodes.getLength(); j++) {
+                        Node axisNode = axisNodes.item(j);
+                        if (axisNode != null && "Axis".equals(axisNode.getNodeName())) {
+                            list.add(new AxisR(getMembersList(axisNode.getChildNodes()),
+                                    getAttribute(axisNode.getAttributes(), "name")));
+                        }
+                    }
                 }
             }
             return new AxesR(list);
@@ -1236,14 +1251,32 @@ class Convertor {
             List<Type> list = new ArrayList<>();
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
-                if (node != null && "Members".equals(node.getNodeName())) {
+                if (node == null) {
+                    continue;
+                }
+                if ("Members".equals(node.getNodeName())) {
                     list.add(new MembersTypeR(getMemberList(node.getChildNodes()),
                             getAttribute(node.getAttributes(), "Hierarchy")));
+                } else if ("Tuples".equals(node.getNodeName())) {
+                    list.add(new TuplesTypeR(getTupleList(node.getChildNodes())));
                 }
             }
             return list;
         }
         return null;
+    }
+
+    private static List<TupleType> getTupleList(NodeList nl) {
+        List<TupleType> list = new ArrayList<>();
+        if (nl != null) {
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node node = nl.item(i);
+                if (node != null && "Tuple".equals(node.getNodeName())) {
+                    list.add(new TupleTypeR(getMemberList(node.getChildNodes())));
+                }
+            }
+        }
+        return list;
     }
 
     private static List<MemberType> getMemberList(NodeList nl) {
@@ -1252,7 +1285,7 @@ class Convertor {
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
                 if (node != null && "Member".equals(node.getNodeName())) {
-                    list.add(new MemberTypeR(getCellInfoItem(node.getChildNodes()),
+                    list.add(new MemberTypeR(getMemberInfoItems(node.getChildNodes()),
                             getAttribute(node.getAttributes(), "Hierarchy")));
                 }
             }
@@ -1326,6 +1359,27 @@ class Convertor {
                     NamedNodeMap namedNodeMap = node.getAttributes();
                     String name = getAttribute(namedNodeMap, "name");
                     list.add(new HierarchyInfoR(getCellInfoItem(node.getChildNodes()), name));
+                }
+            }
+            return list;
+        }
+        return null;
+    }
+
+
+    /**
+     * Member child elements (UName, Caption, LName, ...) carry their value as
+     * text content, unlike CellInfo items whose value is a name attribute.
+     */
+    private static List<CellInfoItem> getMemberInfoItems(NodeList nl) {
+        if (nl != null) {
+            List<CellInfoItem> list = new ArrayList<>();
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node node = nl.item(i);
+                if (node != null && !node.getNodeName().equals("#text")) {
+                    String type = getAttribute(node.getAttributes(), "type");
+                    list.add(new CellInfoItemR(node.getNodeName(), node.getTextContent(),
+                            Optional.ofNullable(type)));
                 }
             }
             return list;
@@ -1483,7 +1537,12 @@ class Convertor {
 
     private static Instant getInstant(String value) {
         if (value != null) {
-            return Instant.parse(value);
+            try {
+                return Instant.parse(value);
+            } catch (java.time.format.DateTimeParseException e) {
+                // xsd:dateTime without zone offset, e.g. 2026-07-20T11:03:27
+                return LocalDateTime.parse(value).atZone(java.time.ZoneOffset.UTC).toInstant();
+            }
         }
         return null;
     }

@@ -14,4 +14,4 @@
 
 @org.osgi.annotation.bundle.Export
 @org.osgi.annotation.versioning.Version("0.0.1")
-package org.eclipse.daanse.xmla.model.record.discover.mdschema.demensions;
+package org.eclipse.daanse.xmla.model.record.discover.mdschema.dimensions;
