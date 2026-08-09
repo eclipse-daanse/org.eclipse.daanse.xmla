@@ -75,12 +75,10 @@
 
   <modules>
     <module>api</module>
-    <module>model.record</module>
-    <module>model.jakarta.xml.bind.xsd</module>
-    <module>model.jakarta.xml.bind.xmla</module>
+    <module>model</module>
+    <module>spi</module>
     <module>client</module>
     <module>server</module>
-    <module>csdl</module>
   </modules>
 
 
