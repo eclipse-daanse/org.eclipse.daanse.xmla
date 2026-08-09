@@ -23,29 +23,53 @@
   <name>Daanse XMLA Server JDK HTTP Server Implementation</name>
   <description>XMLA server implementation using the built-in JDK HTTP server (com.sun.net.httpserver). This module provides a lightweight, standalone XMLA server without requiring external servlet containers or application servers.</description>
   <dependencies>
-
-
-    <dependency>
-      <groupId>jakarta.xml.soap</groupId>
-      <artifactId>jakarta.xml.soap-api</artifactId>
-      <version>3.0.1</version>
-    </dependency>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.server.tck</artifactId>
+      <artifactId>org.eclipse.daanse.xmla.spi</artifactId>
       <version>${revision}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>
-        org.eclipse.daanse.xmla.server.adapter.soapmessage
-      </artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <artifactId>org.eclipse.daanse.xmla.server.adapter.emf</artifactId>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.service.metatype.annotations</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.xmla.client.jdk.httpclient</artifactId>
+      <version>${revision}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.25.3</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- The .integration package is what the build's Test-Cases header selects for
+               bnd-testing, so those classes run inside a framework. Surefire would only fail
+               them for lack of a BundleContext. -->
+          <excludes>
+            <exclude>**/integration/*.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
