@@ -74,7 +74,6 @@
   </repositories>
 
   <modules>
-    <module>api</module>
     <module>model</module>
     <module>spi</module>
     <module>client</module>
