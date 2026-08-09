@@ -24,11 +24,7 @@
   <description>Parent module for XMLA server implementations and related components. This aggregates various XMLA server technologies including Jakarta EE servlets, JDK HTTP server, and authentication mechanisms.</description>
   <packaging>pom</packaging>
   <modules>
-    <module>tck</module>
-    <module>jakarta.jws</module>
-    <module>adapter.soapmessage</module>
-    <module>jakarta.xml.ws.provider.soapmessage</module>
-    <module>jakarta.saaj</module>
+    <module>adapter.emf</module>
     <module>jdk.httpserver</module>
   </modules>
 </project>
