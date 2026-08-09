@@ -21,10 +21,10 @@
  * EObjects the model will write back. No records, no converters, no second
  * transcription that could drift from the first.
  * <p>
- * {@link org.eclipse.daanse.xmla.spi.XmlaConnector} is the core; sessions and
+ * {@link org.eclipse.daanse.xmla.api.XmlaConnector} is the core; sessions and
  * authentication are separate, optional contracts, because a backend that has
  * no state and no users should not have to say so in thirty methods.
  */
 @org.osgi.annotation.bundle.Export
 @org.osgi.annotation.versioning.Version("1.0.0")
-package org.eclipse.daanse.xmla.spi;
+package org.eclipse.daanse.xmla.api;

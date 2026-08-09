@@ -14,9 +14,9 @@
 /**
  * Pluggable authentication, on both sides of the SOAP boundary.
  * <p>
- * {@link org.eclipse.daanse.xmla.spi.auth.XmlaAuthenticator} is the HTTP side —
+ * {@link org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator} is the HTTP side —
  * Basic, SPNEGO, Bearer, or a trusted proxy header.
- * {@link org.eclipse.daanse.xmla.spi.auth.InbandAuthenticator} is the
+ * {@link org.eclipse.daanse.xmla.api.auth.InbandAuthenticator} is the
  * specification's own {@code Authenticate} handshake inside the SOAP body.
  * Neither is required: with nothing registered the endpoint runs fully
  * anonymous, and whether anonymous is enough for a given rowset is the
@@ -24,4 +24,4 @@
  */
 @org.osgi.annotation.bundle.Export
 @org.osgi.annotation.versioning.Version("1.0.0")
-package org.eclipse.daanse.xmla.spi.auth;
+package org.eclipse.daanse.xmla.api.auth;

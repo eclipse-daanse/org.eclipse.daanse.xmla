@@ -49,11 +49,11 @@ import org.eclipse.daanse.xmla.model.soap.SoapFactory;
 import org.eclipse.daanse.xmla.model.soap.UnknownHeader;
 import org.eclipse.daanse.xmla.model.xmla.Discover;
 import org.eclipse.daanse.xmla.model.xmla.Execute;
-import org.eclipse.daanse.xmla.spi.AuthenticationRequiredException;
-import org.eclipse.daanse.xmla.spi.XmlaConnector;
-import org.eclipse.daanse.xmla.spi.XmlaRequest;
-import org.eclipse.daanse.xmla.spi.XmlaSessionHandler;
-import org.eclipse.daanse.xmla.spi.auth.InbandAuthenticator;
+import org.eclipse.daanse.xmla.api.AuthenticationRequiredException;
+import org.eclipse.daanse.xmla.api.XmlaConnector;
+import org.eclipse.daanse.xmla.api.XmlaRequest;
+import org.eclipse.daanse.xmla.api.XmlaSessionHandler;
+import org.eclipse.daanse.xmla.api.auth.InbandAuthenticator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.slf4j.Logger;
@@ -278,7 +278,7 @@ public class EmfXmlaAdapter {
         List<EObject> rows;
         try {
             rows = connector.discover(discover, request);
-        } catch (org.eclipse.daanse.xmla.spi.XmlaRefusedException refused) {
+        } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
             writeFault(target, faultKindOf(refused), refused.getMessage(), null);
             return false;
         }
@@ -317,7 +317,7 @@ public class EmfXmlaAdapter {
         EObject result;
         try {
             result = connector.execute(execute, request);
-        } catch (org.eclipse.daanse.xmla.spi.XmlaRefusedException refused) {
+        } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
             writeFault(target, faultKindOf(refused), refused.getMessage(), null);
             return false;
         }
@@ -326,8 +326,8 @@ public class EmfXmlaAdapter {
     }
 
     /** A connector's deliberate refusal becomes the SOAP fault it means. */
-    private static SoapFaultWriter.Kind faultKindOf(org.eclipse.daanse.xmla.spi.XmlaRefusedException refused) {
-        return refused.side() == org.eclipse.daanse.xmla.spi.XmlaRefusedException.Side.SERVER
+    private static SoapFaultWriter.Kind faultKindOf(org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
+        return refused.side() == org.eclipse.daanse.xmla.api.XmlaRefusedException.Side.SERVER
                 ? SoapFaultWriter.Kind.SERVER
                 : SoapFaultWriter.Kind.CLIENT;
     }

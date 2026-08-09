@@ -16,9 +16,9 @@ package org.eclipse.daanse.xmla.server.jdk.httpserver;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import org.eclipse.daanse.xmla.spi.XmlaRequest;
-import org.eclipse.daanse.xmla.spi.auth.XmlaAuthenticator;
-import org.eclipse.daanse.xmla.spi.auth.XmlaCredentialValidator;
+import org.eclipse.daanse.xmla.api.XmlaRequest;
+import org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator;
+import org.eclipse.daanse.xmla.api.auth.XmlaCredentialValidator;
 
 /**
  * HTTP BASIC over an {@link XmlaCredentialValidator}.

@@ -19,8 +19,8 @@
     <artifactId>org.eclipse.daanse.xmla</artifactId>
     <version>${revision}</version>
   </parent>
-  <artifactId>org.eclipse.daanse.xmla.spi</artifactId>
-  <name>Daanse XMLA SPI</name>
+  <artifactId>org.eclipse.daanse.xmla.api</artifactId>
+  <name>Daanse XMLA API</name>
   <description>The contract between an XMLA transport and whatever answers it. A request arrives as the Ecore model describes it - a Discover or an Execute - and the answer goes back the same way: EObjects in, EObjects out, no other transcription of the protocol in between. Includes the pluggable authentication and session contracts.</description>
   <dependencies>
     <dependency>

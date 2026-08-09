@@ -25,11 +25,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.daanse.xmla.server.adapter.emf.AccessPolicy;
 import org.eclipse.daanse.xmla.server.adapter.emf.EmfXmlaAdapter;
-import org.eclipse.daanse.xmla.spi.XmlaConnector;
-import org.eclipse.daanse.xmla.spi.XmlaSessionHandler;
-import org.eclipse.daanse.xmla.spi.auth.InbandAuthenticator;
-import org.eclipse.daanse.xmla.spi.auth.XmlaCredentialValidator;
-import org.eclipse.daanse.xmla.spi.auth.XmlaAuthenticator;
+import org.eclipse.daanse.xmla.api.XmlaConnector;
+import org.eclipse.daanse.xmla.api.XmlaSessionHandler;
+import org.eclipse.daanse.xmla.api.auth.InbandAuthenticator;
+import org.eclipse.daanse.xmla.api.auth.XmlaCredentialValidator;
+import org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;

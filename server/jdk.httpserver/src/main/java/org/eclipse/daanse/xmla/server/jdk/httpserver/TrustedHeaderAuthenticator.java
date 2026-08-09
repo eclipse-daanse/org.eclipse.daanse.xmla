@@ -16,8 +16,8 @@ package org.eclipse.daanse.xmla.server.jdk.httpserver;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.daanse.xmla.spi.XmlaRequest;
-import org.eclipse.daanse.xmla.spi.auth.XmlaAuthenticator;
+import org.eclipse.daanse.xmla.api.XmlaRequest;
+import org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator;
 
 /**
  * Identity forwarded by a trusted front — a reverse proxy that already
