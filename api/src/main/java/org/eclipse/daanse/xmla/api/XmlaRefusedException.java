@@ -11,7 +11,7 @@
  *   SmartCity Jena - initial
  *   Stefan Bischof (bipolis.org) - initial
  */
-package org.eclipse.daanse.xmla.spi;
+package org.eclipse.daanse.xmla.api;
 
 /**
  * A connector refusing a request on purpose, with the words the client should

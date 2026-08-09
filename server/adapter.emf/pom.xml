@@ -25,7 +25,7 @@
   <dependencies>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.spi</artifactId>
+      <artifactId>org.eclipse.daanse.xmla.api</artifactId>
       <version>${revision}</version>
     </dependency>
     <dependency>
@@ -53,15 +53,6 @@
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.xmla.model.soap</artifactId>
       <version>${revision}</version>
-    </dependency>
-    <!-- Test only. Nothing in main code touches the api: the two comparison tests hold the
-         api's transcription of the protocol against the model's, which is the only reason
-         the two are ever in one place. -->
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.api</artifactId>
-      <version>${revision}</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>

@@ -25,7 +25,7 @@
   <dependencies>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.spi</artifactId>
+      <artifactId>org.eclipse.daanse.xmla.api</artifactId>
       <version>${revision}</version>
     </dependency>
     <dependency>

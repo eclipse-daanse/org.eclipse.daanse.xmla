@@ -11,12 +11,12 @@
  *   SmartCity Jena - initial
  *   Stefan Bischof (bipolis.org) - initial
  */
-package org.eclipse.daanse.xmla.spi.auth;
+package org.eclipse.daanse.xmla.api.auth;
 
 import java.security.Principal;
 import java.util.Set;
 
-import org.eclipse.daanse.xmla.spi.XmlaRequest;
+import org.eclipse.daanse.xmla.api.XmlaRequest;
 
 /**
  * The in-band {@code Authenticate} handshake of the specification.

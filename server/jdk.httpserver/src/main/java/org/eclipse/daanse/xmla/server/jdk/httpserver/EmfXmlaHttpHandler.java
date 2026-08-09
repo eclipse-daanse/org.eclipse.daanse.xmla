@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.daanse.xmla.server.adapter.emf.EmfXmlaAdapter;
-import org.eclipse.daanse.xmla.spi.AuthenticationRequiredException;
-import org.eclipse.daanse.xmla.spi.XmlaRequest;
-import org.eclipse.daanse.xmla.spi.auth.XmlaAuthenticator;
+import org.eclipse.daanse.xmla.api.AuthenticationRequiredException;
+import org.eclipse.daanse.xmla.api.XmlaRequest;
+import org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
