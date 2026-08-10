@@ -18,32 +18,23 @@ import java.util.Set;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Translates the names an identity provider uses into the roles a catalog
- * defines.
+ * Translates the names an identity provider uses into the roles a catalog defines — a
+ * token's {@code bi-admin} or a directory's
+ * {@code CN=BI Admins,OU=Groups,DC=example,DC=org} into the catalog's {@code Admin}.
  * <p>
- * The names rarely match: a token says {@code bi-admin}, a directory says
- * {@code CN=BI Admins,OU=Groups,DC=example,DC=org}, and the catalog knows a
- * role called {@code Admin}. Without a translation step every deployment would
- * have to name its catalog roles after its directory, which is backwards.
- * <p>
- * A mapping that does not recognise a name drops it. Dropping is right: a
- * catalog refuses a role it does not define, so passing an unmapped name
- * through would turn an unknown group into a failed request rather than into no
- * extra access.
+ * An unrecognised name is dropped, not passed through: a catalog refuses a role it does
+ * not define, so passing it on would turn an unknown group into a failed request rather
+ * than into no extra access.
  */
 @ConsumerType
 public interface RoleMapping {
 
     /**
-     * The catalog roles these external names stand for.
-     * <p>
-     * The whole set arrives at once, so a rule may depend on a combination - "holds
-     * A and B, therefore Admin" - which is impossible if the caller's names are
-     * mapped in pieces.
+     * The catalog roles these external names stand for. The whole set arrives at once,
+     * so a rule may depend on a combination — "holds A and B, therefore Admin".
      *
      * @param external group or claim values as the identity provider spells them
-     * @return never {@code null}; an empty set means none of them stands for a
-     *         catalog role
+     * @return never {@code null}; empty means none of them stands for a catalog role
      */
     Set<String> map(Set<String> external);
 

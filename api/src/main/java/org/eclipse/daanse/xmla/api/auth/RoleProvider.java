@@ -19,17 +19,12 @@ import java.util.Set;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Looks up what a caller may do, once a mechanism established who they are.
+ * Looks up what a caller may do, once a mechanism established who they are. Split from
+ * {@link XmlaCredentials} so the source of the roles is independent of the mechanism
+ * that authenticated.
  * <p>
- * The second half of authorization, split from {@link XmlaCredentials} so that
- * the source of the roles is independent of the mechanism that authenticated: a
- * caller who arrived with a Bearer token may still have their roles read from a
- * directory, and a caller who arrived over Kerberos may have them read from an
- * internal table.
- * <p>
- * Several providers may be registered; the roles they answer are the union. A
- * provider that knows nothing about a caller answers the empty set rather than
- * failing - not knowing is not the same as refusing, and the refusal belongs to
+ * Several may be registered and their answers are unioned. One that knows nothing about
+ * a caller answers the empty set: not knowing is not refusing, and refusing belongs to
  * the access policy.
  */
 @ConsumerType
