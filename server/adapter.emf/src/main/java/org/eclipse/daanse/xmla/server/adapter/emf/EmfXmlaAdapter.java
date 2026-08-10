@@ -53,6 +53,7 @@ import org.eclipse.daanse.xmla.api.AuthenticationRequiredException;
 import org.eclipse.daanse.xmla.api.XmlaConnector;
 import org.eclipse.daanse.xmla.api.XmlaRequest;
 import org.eclipse.daanse.xmla.api.XmlaSessionHandler;
+import org.eclipse.daanse.xmla.api.auth.AuthenticatedIdentity;
 import org.eclipse.daanse.xmla.api.auth.InbandAuthenticator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -120,6 +121,7 @@ public class EmfXmlaAdapter {
     private final InbandAuthenticator inband;
     private final AccessPolicy policy;
 
+
     /**
      * @param sessions {@code null} for a stateless endpoint: no session is ever
      *                 opened and no session header echoed, which the specification
@@ -153,9 +155,10 @@ public class EmfXmlaAdapter {
      *                                         answers the challenge, not this class
      */
     public void handle(InputStream source, OutputStream target, XmlaRequest context) {
+        Exchange exchange = new Exchange(context);
         boolean started = false;
         try {
-            started = serve(source, target, context);
+            started = serve(source, target, exchange);
         } catch (XMLStreamException | RuntimeException e) {
             if (e instanceof AuthenticationRequiredException refused) {
                 // Flies before the first byte by construction; the transport owns the 401.
@@ -170,6 +173,23 @@ public class EmfXmlaAdapter {
             LOGGER.debug("answering with a SOAP fault", e);
             String message = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
             writeFault(target, SoapFaultWriter.Kind.SERVER, message, null);
+        } finally {
+            if (!started && exchange.minted != null && sessions != null) {
+                // The response never went out, so the client was never told this id and could
+                // never end it.
+                sessions.endSession(exchange.minted, context);
+            }
+        }
+    }
+
+    /** What one message did that must be undone if it never reaches the client. */
+    private static final class Exchange {
+
+        private final XmlaRequest incoming;
+        private String minted;
+
+        private Exchange(XmlaRequest incoming) {
+            this.incoming = incoming;
         }
     }
 
@@ -177,17 +197,24 @@ public class EmfXmlaAdapter {
      * @return whether the response has begun, so the caller knows a fault is still
      *         possible
      */
-    private boolean serve(InputStream source, OutputStream target, XmlaRequest context) throws XMLStreamException {
+    private boolean serve(InputStream source, OutputStream target, Exchange exchange) throws XMLStreamException {
         SoapEnvelopeReader.Envelope envelope = SoapEnvelopeReader.read(source);
-        XmlaRequest request = applySessionHeaders(envelope.headers(), context);
 
         // SOAP 1.1: a header block carrying mustUnderstand="1" that the receiver does
-        // not
-        // understand must be refused, not ignored.
+        // not understand must be refused and the message not processed further - so this
+        // decides before any session is opened, honoured or ended.
         String notUnderstood = firstNotUnderstood(envelope.headers());
         if (notUnderstood != null) {
             writeFault(target, SoapFaultWriter.Kind.MUST_UNDERSTAND, "the header " + notUnderstood
                     + " carries mustUnderstand but this " + "server does not implement it", null);
+            return false;
+        }
+
+        XmlaRequest request;
+        try {
+            request = restoreIdentity(applySessionHeaders(envelope.headers(), exchange));
+        } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
+            writeFault(target, faultKindOf(refused), refused.getMessage(), null);
             return false;
         }
 
@@ -197,7 +224,7 @@ public class EmfXmlaAdapter {
             return false;
         }
         if (EXT.equals(body.getNamespaceURI()) && "Authenticate".equals(body.getLocalPart())) {
-            return authenticate(envelope, target, request);
+            return authenticate(envelope, target, request, exchange);
         }
         if (!XmlaNamespaces.XMLA.equals(body.getNamespaceURI())) {
             writeFault(target, SoapFaultWriter.Kind.CLIENT, "the body element " + body + " is not an XMLA request",
@@ -253,7 +280,7 @@ public class EmfXmlaAdapter {
         }
 
         String requestType = discover.getRequestType().getLiteral();
-        if (!policy.allowsDiscover(requestType, request.isAnonymous())) {
+        if (!policy.allowsDiscover(requestType, !request.isAuthenticated())) {
             throw new AuthenticationRequiredException("the rowset " + requestType + " is not served anonymously");
         }
         // Every restriction validated against the model's metadata before dispatch. The
@@ -310,7 +337,7 @@ public class EmfXmlaAdapter {
             return false;
         }
 
-        if (!policy.allowsExecute(request.isAnonymous())) {
+        if (!policy.allowsExecute(!request.isAuthenticated())) {
             throw new AuthenticationRequiredException("commands are not run anonymously");
         }
 
@@ -335,34 +362,58 @@ public class EmfXmlaAdapter {
     // --- the in-band Authenticate handshake ---
 
     /**
-     * One round of the specification's SSPI handshake.
+     * One round of the specification's security-token handshake.
      * <p>
-     * The client's blob goes to the {@link InbandAuthenticator}; the answer is
-     * either another blob ({@code AuthenticateResponse}, handshake continues), the
-     * final blob with the peer established (the authenticator remembers the session
-     * it authenticated), or the specification's own error for an authentication
-     * this server cannot perform — which is also the answer when no authenticator
-     * is registered at all. Credentials in the body are exactly as trustworthy as
-     * the session id they ride on, which is why the result binds to the session,
-     * not the connection.
+     * The client's token goes to the {@link InbandAuthenticator}; the answer is
+     * either another token ({@code AuthenticateResponse}, handshake continues), the
+     * final token with the peer established, or the error for an authentication
+     * this server cannot perform - which is also the answer when no authenticator
+     * is registered.
+     * <p>
+     * The established identity is bound to the session, because over HTTP there is
+     * no connection to bind it to. A client that has not opened one gets a session
+     * here, minted before the first round so that a multi-round handshake has a
+     * stable key, and carried back in the {@code <Session>} header. Without a
+     * session handler there is nothing to bind to, and the handshake is refused
+     * rather than silently forgotten.
      */
-    private boolean authenticate(SoapEnvelopeReader.Envelope envelope, OutputStream target, XmlaRequest request)
-            throws XMLStreamException {
-        if (inband == null) {
+    private boolean authenticate(SoapEnvelopeReader.Envelope envelope, OutputStream target, XmlaRequest incoming,
+            Exchange exchange) throws XMLStreamException {
+        if (inband == null || sessions == null) {
             writeFault(target, SoapFaultWriter.Kind.SERVER,
                     "the authentication method is not supported by this endpoint", ERROR_AUTHENTICATION_UNSUPPORTED);
             return false;
         }
+        XmlaRequest request = incoming;
+        if (request.sessionId() == null) {
+            Optional<String> opened = sessions.beginSession(request);
+            opened.ifPresent(sessionId -> exchange.minted = sessionId);
+            request = opened.map(request::withSession).orElse(request);
+        }
+        if (request.sessionId() == null) {
+            writeFault(target, SoapFaultWriter.Kind.SERVER,
+                    "the authentication method is not supported by this endpoint", ERROR_AUTHENTICATION_UNSUPPORTED);
+            return false;
+        }
+
         Authenticate handshake = (Authenticate) new EcoreXmlReader(EcoreXmlReader.Unknown.SKIP).read(envelope.cursor(),
                 ExtPackage.eINSTANCE.getAuthenticate());
-        byte[] blob = handshake.getSspiHandshake();
+        byte[] token = handshake.getSspiHandshake();
 
-        InbandAuthenticator.Result outcome = inband.authenticate(blob == null ? new byte[0] : blob, request);
+        InbandAuthenticator.Result outcome = inband.authenticate(token == null ? new byte[0] : token, request);
         byte[] answer;
         if (outcome instanceof InbandAuthenticator.Result.Continue next) {
-            answer = next.sspiBlob();
+            answer = next.token();
         } else if (outcome instanceof InbandAuthenticator.Result.Done done) {
-            answer = done.sspiBlob();
+            try {
+                sessions.bindIdentity(request.sessionId(), done.identity());
+            } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
+                // A caller running the handshake against a session that is gone or is
+                // somebody else's.
+                writeFault(target, faultKindOf(refused), refused.getMessage(), ERROR_AUTHENTICATION_UNSUPPORTED);
+                return false;
+            }
+            answer = done.token();
         } else {
             String reason = ((InbandAuthenticator.Result.Refused) outcome).reason();
             writeFault(target, SoapFaultWriter.Kind.CLIENT, reason, ERROR_AUTHENTICATION_UNSUPPORTED);
@@ -380,6 +431,31 @@ public class EmfXmlaAdapter {
         return true;
     }
 
+    /**
+     * Ties this request and its session together in whichever direction is missing.
+     * <p>
+     * A caller who proved who they are owns the session they are using: the identity
+     * is bound to it, so a later caller who merely knows the id cannot step into it.
+     * That matters because a session is not just a name - a backend keeps per-session
+     * state under it, opened with the roles of whoever opened it.
+     * <p>
+     * The other direction is what the in-band handshake needs. Over HTTP there is no
+     * connection to hold what it established, so the session holds it and it is put
+     * back here. A stand-in identity does not count as having proved anything, so a
+     * session carrying a real one still wins over it.
+     */
+    private XmlaRequest restoreIdentity(XmlaRequest request) {
+        if (sessions == null || request.sessionId() == null) {
+            return request;
+        }
+        if (request.isAuthenticated()) {
+            sessions.bindIdentity(request.sessionId(),
+                    new AuthenticatedIdentity(request.principal(), request.roles(), request.claims()));
+            return request;
+        }
+        return sessions.identityOf(request.sessionId()).map(request::withIdentity).orElse(request);
+    }
+
     private void writeFault(OutputStream target, SoapFaultWriter.Kind kind, String message, Long errorCode) {
         try {
             SoapFaultWriter.write(target, kind, message, errorCode, message, ERROR_SOURCE);
@@ -391,34 +467,49 @@ public class EmfXmlaAdapter {
     // --- sessions ---
 
     /**
-     * Applies whichever session header the client sent, as the specification
+     * Applies whichever session headers the client sent, as the specification
      * describes.
      * <p>
-     * {@code BeginSession} asks the handler for a new id; {@code Session} is
-     * honoured only if the handler still recognises the id — a rejected one is
-     * treated as no session rather than echoed back, because the echo would tell
-     * the client its expired session is still good; {@code EndSession} closes it.
-     * Without a handler the endpoint is stateless and every request stands alone.
+     * [MS-SSAS] 3.1.3.1 gives one rule here and it is a MUST: a {@code Session} or
+     * {@code EndSession} id the handler does not honour is a SOAP fault. Handing
+     * such a request through as if it had no session would let a client keep
+     * working under an identity its session no longer carries.
+     * <p>
+     * {@code BeginSession} is weaker - "the server <em>is to</em> respond by
+     * constructing a new session" - so it yields to a valid {@code Session} in the
+     * same message rather than minting a second id the one response header could
+     * not carry. Without a handler the endpoint is stateless and every request
+     * stands alone.
      */
-    private XmlaRequest applySessionHeaders(List<EObject> headers, XmlaRequest request) {
+    private XmlaRequest applySessionHeaders(List<EObject> headers, Exchange exchange) {
+        XmlaRequest request = exchange.incoming;
         if (sessions == null) {
             return request;
         }
+        boolean beginRequested = false;
         for (EObject header : headers) {
             if (header instanceof SessionHeader sessionHeader) {
                 String sessionId = sessionHeader.getSessionId();
-                if (sessions.checkSession(sessionId, request)) {
-                    return request.withSession(sessionId);
+                if (!sessions.checkSession(sessionId, request)) {
+                    throw org.eclipse.daanse.xmla.api.XmlaRefusedException.invalidSession(sessionId);
                 }
-                return request;
+                request = request.withSession(sessionId);
+            } else if (header instanceof EndSessionHeader endSessionHeader) {
+                String sessionId = endSessionHeader.getSessionId();
+                if (!sessions.checkSession(sessionId, request)) {
+                    throw org.eclipse.daanse.xmla.api.XmlaRefusedException.invalidSession(sessionId);
+                }
+                sessions.endSession(sessionId, request);
+                request = request.withSession(null);
+            } else if (header instanceof BeginSessionHeader) {
+                beginRequested = true;
             }
-            if (header instanceof BeginSessionHeader) {
-                return sessions.beginSession(request).map(request::withSession).orElse(request);
-            }
-            if (header instanceof EndSessionHeader endSessionHeader) {
-                sessions.endSession(endSessionHeader.getSessionId(), request);
-                return request;
-            }
+        }
+        if (beginRequested && request.sessionId() == null) {
+            String opened = sessions.beginSession(request)
+                    .orElseThrow(org.eclipse.daanse.xmla.api.XmlaRefusedException::sessionNotOpened);
+            exchange.minted = opened;
+            request = request.withSession(opened);
         }
         return request;
     }

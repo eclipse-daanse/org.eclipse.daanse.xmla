@@ -26,8 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The body is a callback rather than an object so that a response can be
  * streamed: a Discover over {@code MDSCHEMA_MEMBERS} may run to hundreds of
- * thousands of rows, and materialising them all before writing the first byte
- * is the largest allocation this server would ever make.
+ * thousands of rows.
  */
 public final class SoapEnvelopeWriter {
 
@@ -75,9 +74,8 @@ public final class SoapEnvelopeWriter {
      * Read off the annotation rather than through
      * {@code ExtendedMetaData.getNamespace(EClassifier)}, which falls back to the
      * EPackage's own nsURI. That fallback is wrong here: the soap package's nsURI
-     * is the SOAP envelope namespace, so {@code <Session>} — which belongs to the
-     * XMLA namespace — would be written as {@code <soap:Session>} and no client
-     * would recognise it.
+     * is the SOAP envelope namespace, so {@code <Session>}, which belongs to the
+     * XMLA namespace, would be written as {@code <soap:Session>}.
      */
     private static String namespaceOf(EObject header) {
         EAnnotation annotation = header.eClass()

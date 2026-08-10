@@ -31,9 +31,8 @@ import javax.xml.stream.XMLStreamWriter;
  * in no namespace, unlike every other element of the envelope;</li>
  * <li>the detail carries {@code <Error>} with its data in
  * <strong>attributes</strong>, not child elements — {@code ErrorCode},
- * {@code Description}, {@code Source}, {@code HelpFile}. That is what a
- * Microsoft client parses; a different shape reaches the user as a blank error.
- * </li>
+ * {@code Description}, {@code Source}, {@code HelpFile}, which is the shape a
+ * Microsoft client parses.</li>
  * </ul>
  */
 public final class SoapFaultWriter {

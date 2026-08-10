@@ -84,9 +84,9 @@ public final class EcoreXmlReader {
     public EObject read(XMLStreamReader in, EClass target) throws XMLStreamException {
         EObject object = target.getEPackage().getEFactoryInstance().create(target);
         readAttributes(in, target, object);
-        // A type with simple content keeps the element's own text -
-        // <FmtValue>$1,234.00</FmtValue>
-        // and <Value xsi:type="xsd:int">42</Value> both hold their value that way.
+        // A type with simple content keeps the element's own text, as
+        // <FmtValue>$1,234.00</FmtValue> and <Value xsi:type="xsd:int">42</Value>
+        // both do.
         EStructuralFeature simple = simpleContentOf(target);
         StringBuilder text = simple == null ? null : new StringBuilder();
 
@@ -140,29 +140,25 @@ public final class EcoreXmlReader {
     private void readChild(XMLStreamReader in, EClass target, EObject object) throws XMLStreamException {
         String name = in.getLocalName();
         if (XmlaNamespaces.XSD.equals(in.getNamespaceURI())) {
-            // The inline <xsd:schema> a response carries describes the payload; it is
-            // metadata
-            // written into the data, never a feature of anything. Skipping it by namespace
-            // rather than by policy keeps FAIL meaning what it says for everything else.
+            // The inline <xsd:schema> describes the payload and is never a feature of
+            // anything. Skipping it by namespace rather than by policy keeps FAIL
+            // meaning what it says for everything else.
             skipSubtree(in);
             return;
         }
         EStructuralFeature feature = elementsOf(target).get(name);
         if (feature == null) {
             // ASSL wraps its collections - <Annotations> around the <Annotation>s. The
-            // wrapper
-            // holds no value of its own, which is why the model flattens it to a list, but
-            // it is
-            // on the wire and has to be stepped through rather than treated as unknown.
+            // wrapper holds no value of its own and the model flattens it to a list, so
+            // it is stepped through rather than treated as unknown.
             EStructuralFeature wrapped = wrappedBy(target, name);
             if (wrapped != null) {
                 readWrapped(in, target, object);
                 return;
             }
-            // Two shapes the element name does not match a feature name, and both are real
-            // content rather than something to skip: a polymorphic containment, where the
-            // name
-            // is the concrete subtype's, and a data-named one, where the name is a value.
+            // Two shapes where the element name is not a feature name, both real
+            // content: a polymorphic containment, where the name is the concrete
+            // subtype's, and a data-named one, where the name is a value.
             EReference polymorphic = polymorphicFor(target, name);
             if (polymorphic != null) {
                 readInto(in, object, polymorphic, subtypeFor(polymorphic, name));
@@ -185,12 +181,9 @@ public final class EcoreXmlReader {
         if (feature instanceof EReference reference) {
             readInto(in, object, reference, (EClass) reference.getEType());
         } else if (isXmlDocument(feature)) {
-            // An xmlDocument column carries a document, not text - DISCOVER_XML_METADATA
-            // answers
-            // with a whole <Server> definition inside one column. getElementText() throws
-            // on
-            // element content, so the subtree is captured as XML and kept as the column's
-            // value.
+            // An xmlDocument column carries a document, not text, and
+            // getElementText() throws on element content - so the subtree is captured as
+            // XML and kept as the column's value.
             set(object, feature, XmlFragment.read(in), in);
         } else {
             set(object, feature, in.getElementText(), in);

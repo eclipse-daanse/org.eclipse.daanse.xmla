@@ -80,8 +80,7 @@ public final class XmlaMessageCodec {
 
     /**
      * Reads an Execute response: the MDDataset of a statement or the tabular RowSet
-     * of a DMV query, decided by the namespace of {@code <root>} - which is the
-     * only thing that distinguishes them.
+     * of a DMV query, told apart by the namespace of {@code <root>}.
      *
      * @return the payload, or {@code null} for the empty result every other command
      *         answers
@@ -112,8 +111,8 @@ public final class XmlaMessageCodec {
     /**
      * As {@link #readExecuteResponse}, keeping what the server reported in band.
      * <p>
-     * A command answers the empty result whether it worked or not, so the payload
-     * alone cannot say; the {@code <Messages>} is the only difference.
+     * A command answers the empty result whether it worked or not; the
+     * {@code <Messages>} is the only difference.
      */
     public static ExecuteResult readExecuteResult(InputStream source) throws XMLStreamException {
         SoapEnvelopeReader.Envelope envelope = SoapEnvelopeReader.read(source);
@@ -156,12 +155,10 @@ public final class XmlaMessageCodec {
     /**
      * As above, and reporting an error inside a successful response.
      * <p>
-     * XMLA has two ways to say something went wrong, and only one of them is a SOAP
-     * fault. The other is this: HTTP 200, a well-formed {@code <root>} with the
-     * inline schema in it, and then an empty {@code <Exception/>} followed by
-     * {@code <Messages>} carrying the reason. Unlike a fault it is not an either/or
-     * - a response may carry rows and a message about what it could not render, so
-     * the messages accompany the rows rather than replacing them.
+     * The second of XMLA's two ways to say something went wrong: HTTP 200, a
+     * well-formed {@code <root>} with the inline schema in it, then an empty
+     * {@code <Exception/>} followed by {@code <Messages>}. Unlike a fault it is not
+     * an either/or - a response may carry rows and a message together.
      *
      * @param messages a {@code Messages} EObject, or {@code null} when nothing went
      *                 wrong
@@ -222,10 +219,9 @@ public final class XmlaMessageCodec {
     /**
      * Writes an Execute response.
      * <p>
-     * Unlike a Discover response there is no inline schema: the shape of an
-     * MDDataset is fixed by the specification, so the client already has it. What
-     * varies is which of the two forms comes back - an {@code MDDataset} or a
-     * {@code RowSet} - and that is decided by the object handed in, not by a flag.
+     * There is no inline schema: the shape of an MDDataset is fixed by the
+     * specification. Which of the two forms comes back - an {@code MDDataset} or a
+     * {@code RowSet} - follows from the object handed in, not from a flag.
      *
      * @param result an MdDataset or a RowSet; {@code null} for a command that
      *               returns nothing, which is answered with the empty result the
@@ -237,11 +233,8 @@ public final class XmlaMessageCodec {
     }
 
     /**
-     * As above, and reporting in band.
-     * <p>
-     * The same mechanism a Discover response uses: HTTP 200, a well-formed body,
-     * the reason inside it. Without the messages a warned-about command is
-     * indistinguishable from one that did what was asked.
+     * As above, and reporting in band - the same mechanism a Discover response
+     * uses.
      *
      * @param messages a {@code Messages} EObject, or {@code null} when nothing was
      *                 reported
@@ -281,11 +274,8 @@ public final class XmlaMessageCodec {
     }
 
     /**
-     * What a command that produces no data answers with.
-     * <p>
-     * An empty {@code <root>} in the empty namespace, not an absent one: a client
-     * distinguishes "the command succeeded and produced nothing" from "something
-     * went wrong" by finding it.
+     * What a command that produces no data answers with: an empty {@code <root>} in
+     * the empty namespace, not an absent one.
      */
     private static void writeEmptyResult(XMLStreamWriter out, EObject messages) throws XMLStreamException {
         out.setDefaultNamespace(XmlaNamespaces.EMPTY);
@@ -371,17 +361,14 @@ public final class XmlaMessageCodec {
      * A Discover response: the header blocks that were recognised, and the rows.
      *
      * @param headers the response headers - a {@code <Session>} here is how the
-     *                server tells a client the id to carry forward, so dropping
-     *                them would make sessions unusable from this codec
+     *                server tells a client the id to carry forward
      */
     public record Response(List<EObject> headers, List<EObject> rows, EObject messages) {
 
         /**
          * Whether the server reported an error inside this otherwise successful
-         * response.
-         * <p>
-         * A caller that only looks at {@link #rows()} cannot tell "there is nothing to
-         * report" from "I will not tell you, and here is why" - both are an empty list.
+         * response. {@link #rows()} alone cannot say: a refusal and nothing to report
+         * are both an empty list.
          */
         public boolean hasMessages() {
             return messages != null;

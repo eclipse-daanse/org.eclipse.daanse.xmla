@@ -44,8 +44,7 @@ public final class ExecuteRequestWriter {
         out.writeStartElement(XmlaNamespaces.XMLA, "Command");
         if (command != null) {
             // The element is the command's own name - <Statement>, <Alter> - not the
-            // feature's,
-            // which is what the model says and what a server dispatches on.
+            // feature's, which is what a server dispatches on.
             new EcoreXmlWriter(XmlaNamespaces.XMLA).write(out, command,
                     ExtendedMetaData.INSTANCE.getName(command.eClass()));
         }
@@ -54,8 +53,7 @@ public final class ExecuteRequestWriter {
         out.writeStartElement(XmlaNamespaces.XMLA, "Properties");
         if (properties == null) {
             // <PropertyList/> is required even when empty; leaving it out makes msmdsrv
-            // reject
-            // the request.
+            // reject the request.
             out.writeEmptyElement(XmlaNamespaces.XMLA, "PropertyList");
         } else {
             new EcoreXmlWriter(XmlaNamespaces.XMLA).write(out, properties, "PropertyList");

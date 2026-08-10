@@ -418,6 +418,8 @@
     <eLiterals name="DBSCHEMA_VIEWS" value="100" literal="DBSCHEMA_VIEWS"/>
     <eLiterals name="DBSCHEMA_VIEW_COLUMN_USAGE" value="101" literal="DBSCHEMA_VIEW_COLUMN_USAGE"/>
     <eLiterals name="DBSCHEMA_VIEW_TABLE_USAGE" value="102" literal="DBSCHEMA_VIEW_TABLE_USAGE"/>
+    <eLiterals name="DISCOVER_MODEL_SECURITY" value="103" literal="DISCOVER_MODEL_SECURITY"/>
+    <eLiterals name="DISCOVER_RESOURCE_POOLS" value="104" literal="DISCOVER_RESOURCE_POOLS"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="FormatEnum">
     <eLiterals name="Tabular" literal="Tabular"/>

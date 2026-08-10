@@ -36,10 +36,8 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
  * description in the GenModel documentation. This class only reads.
  * <p>
  * A feature without the annotation carries no specification facts and is not a
- * catalog entry: the request reader still accepts it, but a server cannot
- * describe what the document does not describe. Features marked
- * {@code extension} are vendor properties beyond the document, carried
- * knowingly.
+ * catalog entry, though the request reader still accepts it. Features marked
+ * {@code extension} are vendor properties beyond the document.
  */
 public final class PropertyCatalog {
 
