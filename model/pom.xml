@@ -37,7 +37,11 @@
     <module>msxmla</module>
     <module>multipleresults</module>
     <module>ext</module>
-    <module>rowset</module>
+    <module>rowset.core</module>
+    <module>rowset.relational</module>
+    <module>rowset.multidimensional</module>
+    <module>rowset.mining</module>
+    <module>rowset.server</module>
     <module>xmla</module>
     <module>io</module>
     <module>csdl</module>

@@ -14,17 +14,15 @@
 package org.eclipse.daanse.xmla.api.auth;
 
 /**
- * The claim vocabulary the shipped mechanisms and providers share.
+ * The claim vocabulary the shipped mechanisms and providers share. In the API rather
+ * than in the bundles so a deployment's own {@link RoleMapping} or {@link RoleProvider}
+ * can speak it without depending on an implementation.
  * <p>
- * Every claim is written under the namespace of the mechanism that learned it,
- * and a provider reads only its own. The rule matters because the values are
- * attacker-influenceable: without it a token claim named {@code dn} would be
- * indistinguishable from the distinguished name a directory bind established,
- * and could steer a group lookup at any entry the caller names.
- * <p>
- * The constants live in the API rather than in the bundles so that a deployment
- * writing its own {@link RoleMapping} or {@link RoleProvider} can speak the
- * same vocabulary without depending on an implementation bundle.
+ * Every claim is written under the namespace of the mechanism that learned it, and a
+ * provider reads only its own. That is a security rule, not tidiness: claim values are
+ * attacker-influenceable, and without it a token claim named {@code dn} would be
+ * indistinguishable from a distinguished name a directory bind established, and could
+ * steer a group lookup at any entry the caller names.
  */
 public final class AuthClaims {
 
