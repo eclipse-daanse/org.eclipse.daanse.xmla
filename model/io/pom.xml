@@ -26,6 +26,11 @@
     client can use it.</description>
 
   <dependencies>
+     <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.xmla.model.rowset.core</artifactId>
+      <version>${revision}</version>
+    </dependency>
     <dependency>
       <!-- Pinned, not discovered: the JDK writer loses \r and \n to XML normalisation on the
            next parse; Woodstox writes them as character references. See HardenedXml.output(). -->
@@ -48,11 +53,6 @@
 
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.model.rowset</artifactId>
-      <version>${revision}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.xmla.model.soap</artifactId>
       <version>${revision}</version>
     </dependency>
@@ -65,16 +65,6 @@
       <groupId>org.eclipse.daanse</groupId>
       <artifactId>org.eclipse.daanse.dmv.model.api</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.model.csdl.v2.edm</artifactId>
-      <version>${revision}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.daanse</groupId>
-      <artifactId>org.eclipse.daanse.xmla.model.csdl.v2.bi</artifactId>
-      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.daanse</groupId>
@@ -102,6 +92,27 @@
       <version>${revision}</version>
     </dependency>
 
+    <!-- The rowsets themselves: RowsetCatalog names them, one package per kind. -->
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.xmla.model.rowset.relational</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.xmla.model.rowset.multidimensional</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.xmla.model.rowset.mining</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.daanse</groupId>
+      <artifactId>org.eclipse.daanse.xmla.model.rowset.server</artifactId>
+      <version>${revision}</version>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>

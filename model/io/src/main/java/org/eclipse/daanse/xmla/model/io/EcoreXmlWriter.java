@@ -37,24 +37,20 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
  * special-cased:
  * <ul>
  * <li>a feature that is not set produces <em>no element at all</em>, which is
- * how a NULL column is represented — a live server omits it entirely;</li>
+ * how a NULL column is written;</li>
  * <li>a feature set to the empty string produces an empty element,
- * {@code <DESCRIPTION/>}, which is a different thing from NULL and clients do
- * distinguish them.</li>
+ * {@code <DESCRIPTION/>}, which clients distinguish from NULL.</li>
  * </ul>
  */
 public final class EcoreXmlWriter {
 
     /**
-     * XMLA writes timestamps without a zone offset, and with whatever sub-second
-     * precision the value carries — a real server sends
-     * {@code 2024-05-13T12:24:33.956667}.
+     * XMLA writes timestamps without a zone offset and with whatever sub-second
+     * precision the value carries, as in {@code 2024-05-13T12:24:33.956667}.
      * <p>
-     * Both halves are stated explicitly because both have a failure mode.
-     * {@code LocalDateTime.toString()} omits the seconds when they are zero, which
-     * some clients reject; a fixed {@code HH:mm:ss} pattern truncates the fraction,
-     * which silently rounds every timestamp the server reports down to the whole
-     * second.
+     * Both halves are stated explicitly: {@code LocalDateTime.toString()} omits
+     * seconds that are zero, which some clients reject, and a fixed
+     * {@code HH:mm:ss} pattern truncates the fraction.
      */
     private static final DateTimeFormatter XMLA_DATE_TIME = new DateTimeFormatterBuilder()
             .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
@@ -225,9 +221,9 @@ public final class EcoreXmlWriter {
      * holds a SetType, and what goes on the wire is {@code <Members>},
      * {@code <Tuples>}, {@code <CrossProduct>} or {@code <Union>};</li>
      * <li>the model says {@code elementNameFrom}, meaning the name is a value the
-     * object carries rather than anything the schema fixes. A CellInfoItem is
-     * {@code <FORMATTED_VALUE>}: the client asked for that property by name, so the
-     * name is data. XSD writes these as {@code xsd:any} and cannot say more.</li>
+     * object carries rather than anything the schema fixes - a CellInfoItem is
+     * {@code <FORMATTED_VALUE>} because that is the property the client asked
+     * for.</li>
      * </ul>
      */
     private static String elementNameOf(EStructuralFeature feature, EObject value, String declared) {
@@ -278,10 +274,9 @@ public final class EcoreXmlWriter {
     /**
      * Whether this feature <em>is</em> the element's name.
      * <p>
-     * A CellProperty is written as {@code <FmtValue>} because its tagName says so.
-     * Writing that same value again as an attribute would put
-     * {@code tagName="FmtValue"} on the wire, which no server sends and no client
-     * expects - the name is already there, as the name.
+     * A CellProperty is written as {@code <FmtValue>} because its tagName says so;
+     * writing that value again as an attribute would put {@code tagName="FmtValue"}
+     * on the wire.
      */
     private static boolean isElementName(EStructuralFeature feature) {
         EAnnotation daanse = feature.getEContainingClass().getEAnnotation(DAANSE_XMLA);

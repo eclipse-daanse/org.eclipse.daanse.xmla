@@ -20,6 +20,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.daanse.xmla.model.rowset.core.RowsetCorePackage;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EReference;
@@ -31,9 +32,8 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
  * response, from the EClass that models the row.
  * <p>
  * This is metadata-as-data: the schema describes the shape of the rows that
- * follow, and a client uses it to type the values. Deriving it from the model
- * rather than hand-writing it per handler is what keeps the declaration and the
- * rows in step.
+ * follow, and a client uses it to type the values. It is derived from the
+ * model, so the declaration and the rows stay in step.
  * <p>
  * The type of a column is resolved in a fixed order, and <strong>there is no
  * fallback</strong>: a feature whose type cannot be determined fails loudly,
@@ -115,6 +115,7 @@ public final class RowsetSchemaWriter {
      * that is what a live Analysis Services instance does, and a client that
      * pre-parses the schema can rely on their presence.
      */
+
     public static void write(XMLStreamWriter out, EClass rowEClass) throws XMLStreamException {
         out.writeStartElement(XmlaNamespaces.XSD_PREFIX, "schema", XmlaNamespaces.XSD);
         out.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
@@ -163,7 +164,7 @@ public final class RowsetSchemaWriter {
      * The pattern as the model states it, so it is defined in exactly one place.
      */
     private static String uuidPattern() {
-        EClassifier uuid = org.eclipse.daanse.xmla.model.rowset.RowsetPackage.eINSTANCE.getEClassifier("Uuid");
+        EClassifier uuid = RowsetCorePackage.eINSTANCE.getEClassifier("Uuid");
         String pattern = uuid == null ? null : detail(uuid.getEAnnotation(ExtendedMetaData.ANNOTATION_URI), "pattern");
         if (pattern == null) {
             throw new IllegalStateException("the rowset model no longer defines the Uuid pattern; the schema writer "
@@ -268,9 +269,10 @@ public final class RowsetSchemaWriter {
      * one.
      * <p>
      * An element declared with no {@code type} is {@code xsd:anyType}, and that is
-     * how SSAS declares {@code ATTRIBUTE_VALUE} — the one such column in all 103
-     * rowsets. Each value then carries its own {@code xsi:type}. Naming a type here
-     * would make the advertised schema contradict the values written under it.
+     * how SSAS declares {@code ATTRIBUTE_VALUE} — the one such column in every
+     * rowset the model describes. Each value then carries its own {@code xsi:type}.
+     * Naming a type here would make the advertised schema contradict the values
+     * written under it.
      */
     public static boolean isVariantColumn(EStructuralFeature feature) {
         return feature instanceof EReference reference && ExtendedMetaData.INSTANCE

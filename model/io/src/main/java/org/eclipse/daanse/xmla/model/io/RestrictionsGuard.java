@@ -30,9 +30,9 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
  * anything is dispatched.
  * <p>
  * The restrictions classes state per request type which restrictions exist,
- * what type each one has, and which are required - so one guard covers all 103
- * rowsets with no code per rowset. The refusals are the live servers' own,
- * word for word:
+ * what type each one has, and which are required - so one guard covers every
+ * rowset with no code per rowset. The refusals are the live servers' own, word
+ * for word:
  * <ul>
  * <li>an unknown restriction answers <em>"XML for Analysis parser: The
  * restriction, X, is not recognized by the server."</em> as a client fault —

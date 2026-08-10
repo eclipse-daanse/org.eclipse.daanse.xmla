@@ -15,6 +15,7 @@ package org.eclipse.daanse.xmla.model.io;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,19 +23,29 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.eclipse.daanse.xmla.model.rowset.RowsetPackage;
-import org.eclipse.daanse.xmla.model.rowset.restrictions.RestrictionsPackage;
+import org.eclipse.daanse.xmla.model.rowset.core.RowsetCorePackage;
+import org.eclipse.daanse.xmla.model.rowset.relational.RowsetRelationalPackage;
+import org.eclipse.daanse.xmla.model.rowset.multidimensional.RowsetMultidimensionalPackage;
+import org.eclipse.daanse.xmla.model.rowset.mining.RowsetMiningPackage;
+import org.eclipse.daanse.xmla.model.rowset.server.RowsetServerPackage;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * Maps a Discover request type to the EClass that models its row, and back.
  * <p>
- * Built by scanning {@link RowsetPackage} for the {@code requestType}
- * annotation, so it cannot fall behind the model.
+ * Built by reading the {@code requestType} annotation off the rowset packages,
+ * so it cannot fall behind the model.
+ * <p>
+ * The packages are named in {@link #MODELS}, rather than discovered: EMF's
+ * global registry cannot be enumerated. {@link #use(Collection)} overrides that
+ * list.
  */
 public final class RowsetCatalog {
 
@@ -44,53 +55,111 @@ public final class RowsetCatalog {
      */
     public static final String ANNOTATION = "https://www.daanse.org/spec/xmla/rowset/1.0";
 
-    private static final Map<String, EClass> BY_REQUEST_TYPE;
-    private static final Map<EClass, String> BY_ECLASS;
-    private static final Map<String, EClass> RESTRICTIONS_BY_REQUEST_TYPE;
+    /**
+     * One package per kind of rowset. Each holds its rowsets and the classes saying
+     * what may restrict them; the annotation tells those apart, not the package.
+     */
+    private static final List<EPackage> MODELS = List.of(RowsetCorePackage.eINSTANCE, RowsetRelationalPackage.eINSTANCE,
+            RowsetMultidimensionalPackage.eINSTANCE, RowsetMiningPackage.eINSTANCE, RowsetServerPackage.eINSTANCE);
 
-    static {
-        Map<String, EClass> byRequestType = new LinkedHashMap<>();
-        Map<EClass, String> byEClass = new LinkedHashMap<>();
-        for (EClassifier classifier : RowsetPackage.eINSTANCE.getEClassifiers()) {
-            if (!(classifier instanceof EClass eClass)) {
-                continue;
-            }
-            String requestType = detail(eClass, "requestType");
-            if (requestType != null) {
-                byRequestType.put(requestType, eClass);
-                byEClass.put(eClass, requestType);
-            }
-        }
-        Map<String, EClass> restrictionsByRequestType = new LinkedHashMap<>();
-        for (EClassifier classifier : RestrictionsPackage.eINSTANCE.getEClassifiers()) {
-            if (!(classifier instanceof EClass eClass)) {
-                continue;
-            }
-            String requestType = detail(eClass, "requestType");
-            if (requestType != null && "restrictions".equals(detail(eClass, "role"))) {
-                restrictionsByRequestType.put(requestType, eClass);
-            }
-        }
-        BY_REQUEST_TYPE = Collections.unmodifiableMap(byRequestType);
-        BY_ECLASS = Collections.unmodifiableMap(byEClass);
-        RESTRICTIONS_BY_REQUEST_TYPE = Collections.unmodifiableMap(restrictionsByRequestType);
-    }
+    private static volatile Map<String, EClass> BY_REQUEST_TYPE = null;
+
+    private static volatile Map<EClass, String> BY_ECLASS = null;
+    private static volatile Map<String, EClass> RESTRICTIONS_BY_REQUEST_TYPE = null;
+    private static volatile List<EEnum> ENUMERATORS = null;
 
     private RowsetCatalog() {
         // static access only
     }
 
+    /**
+     * Takes the packages describing rowsets, and describes what they say.
+     * <p>
+     * Every class is read and the annotations decide: {@code requestType} makes it
+     * a row, {@code role="restrictions"} beside it makes it what may restrict one.
+     * A package holding neither contributes nothing rather than being an error.
+     *
+     * @throws IllegalArgumentException if no package describes a request type at
+     *                                  all, which is a wiring mistake rather than
+     *                                  an empty model
+     */
+    public static void use(Collection<EPackage> packages) {
+        Map<String, EClass> byRequestType = new LinkedHashMap<>();
+        Map<EClass, String> byEClass = new LinkedHashMap<>();
+        Map<String, EClass> restrictionsByRequestType = new LinkedHashMap<>();
+        List<EEnum> enumerators = new ArrayList<>();
+        for (EPackage ePackage : packages) {
+            for (EClassifier classifier : ePackage.getEClassifiers()) {
+                if (classifier instanceof EEnum eEnum && "enumerator".equals(detail(eEnum, "role"))) {
+                    enumerators.add(eEnum);
+                    continue;
+                }
+                if (!(classifier instanceof EClass eClass)) {
+                    continue;
+                }
+                String requestType = detail(eClass, "requestType");
+                if (requestType == null) {
+                    continue;
+                }
+                if ("restrictions".equals(detail(eClass, "role"))) {
+                    restrictionsByRequestType.put(requestType, eClass);
+                } else {
+                    byRequestType.put(requestType, eClass);
+                    byEClass.put(eClass, requestType);
+                }
+            }
+        }
+        if (byRequestType.isEmpty()) {
+            throw new IllegalArgumentException("none of the " + packages.size()
+                    + " package(s) describes a rowset: a catalogue that knows no request type would "
+                    + "answer 'no such rowset' to everything, which is not the same as an empty model");
+        }
+        // BY_REQUEST_TYPE last: rowsets() gates on it without the lock, so a
+        // thread that sees it set must already see the other three.
+        BY_ECLASS = Collections.unmodifiableMap(byEClass);
+        RESTRICTIONS_BY_REQUEST_TYPE = Collections.unmodifiableMap(restrictionsByRequestType);
+        ENUMERATORS = List.copyOf(enumerators);
+        BY_REQUEST_TYPE = Collections.unmodifiableMap(byRequestType);
+    }
+
+    /**
+     * The enumerations {@code DISCOVER_ENUMERATORS} reports, in model order. Found
+     * by the {@code role="enumerator"} annotation, like everything else here.
+     */
+    public static List<EEnum> enumerators() {
+        rowsets();
+        return ENUMERATORS;
+    }
+
+    /**
+     * The rowsets, reading {@link #MODELS} the first time anybody asks. A host that
+     * wants other packages calls {@link #use(Collection)} before the first read.
+     */
+    private static Map<String, EClass> rowsets() {
+        Map<String, EClass> known = BY_REQUEST_TYPE;
+        if (known == null) {
+            synchronized (RowsetCatalog.class) {
+                if (BY_REQUEST_TYPE == null) {
+                    use(MODELS);
+                }
+                known = BY_REQUEST_TYPE;
+            }
+        }
+        return known;
+    }
+
     public static Optional<EClass> forRequestType(String requestType) {
-        return Optional.ofNullable(BY_REQUEST_TYPE.get(requestType));
+        return Optional.ofNullable(rowsets().get(requestType));
     }
 
     public static Optional<String> requestTypeOf(EClass eClass) {
+        rowsets();
         return Optional.ofNullable(BY_ECLASS.get(eClass));
     }
 
     /** Every request type the model describes, in model order. */
     public static Set<String> requestTypes() {
-        return BY_REQUEST_TYPE.keySet();
+        return rowsets().keySet();
     }
 
     /**
@@ -103,15 +172,15 @@ public final class RowsetCatalog {
 
     /**
      * Where this rowset's column list comes from: {@code MS-SSAS-251031},
-     * {@code OLEDB-APPENDIX-B}, {@code INFERRED} or {@code PROPRIETARY}.
+     * {@code MS-SSAS-T-20210406}, {@code OLEDB-APPENDIX-B}, {@code INFERRED},
+     * {@code PROPRIETARY} or {@code OBSERVED}.
+     * <p>
+     * {@code OBSERVED} is the weakest: no specification describes the rowset, and
+     * the columns are those a real server answered with. The {@code observedFrom}
+     * detail beside it names the recorded answer.
      */
     public static Optional<String> sourceOf(EClass eClass) {
         return Optional.ofNullable(detail(eClass, "source"));
-    }
-
-    /** Whether a {@code DiscoverService} method exists for this rowset. */
-    public static boolean isServed(EClass eClass) {
-        return Boolean.parseBoolean(detail(eClass, "served"));
     }
 
     /**
@@ -120,6 +189,7 @@ public final class RowsetCatalog {
      * server advertises restrictions for.
      */
     public static Optional<EClass> restrictionsClassFor(String requestType) {
+        rowsets();
         return Optional.ofNullable(RESTRICTIONS_BY_REQUEST_TYPE.get(requestType));
     }
 
@@ -132,6 +202,7 @@ public final class RowsetCatalog {
      * on the restrictions feature under the project annotation.
      */
     public static List<String> requiredRestrictionsOf(String requestType) {
+        rowsets();
         EClass restrictions = RESTRICTIONS_BY_REQUEST_TYPE.get(requestType);
         if (restrictions == null) {
             return List.of();
@@ -151,17 +222,15 @@ public final class RowsetCatalog {
      * The restrictions this rowset accepts, in the order their ordinal gives them.
      * <p>
      * The order is not presentation: {@code RestrictionsMask} in
-     * {@code DISCOVER_SCHEMA_ROWSETS} is a bitmask over exactly these positions, so
-     * a client reading the mask and a server writing it have to be counting the
-     * same list. That list is the feature order of the rowset's restrictions
-     * EClass; the wire name is each feature's {@code ExtendedMetaData} name and the
-     * XSD type follows from its datatype - the class is the single statement of all
-     * three. The order is the one the live servers state in the very rowset that
-     * carries the mask, not the specification's prose table, whose column order is
-     * a reading convenience; the two differ for ten rowsets including
-     * MDSCHEMA_CUBES and MDSCHEMA_MEMBERS.
+     * {@code DISCOVER_SCHEMA_ROWSETS} is a bitmask over exactly these positions.
+     * The list is the feature order of the rowset's restrictions EClass; the wire
+     * name is each feature's {@code ExtendedMetaData} name and the XSD type follows
+     * from its datatype. It is the order the live servers state in the rowset that
+     * carries the mask, not the specification's prose table; the two differ for ten
+     * rowsets including MDSCHEMA_CUBES and MDSCHEMA_MEMBERS.
      */
     public static List<Restriction> restrictionsOf(EClass eClass) {
+        rowsets();
         String requestType = BY_ECLASS.get(eClass);
         if (requestType == null) {
             return List.of();
@@ -183,9 +252,9 @@ public final class RowsetCatalog {
      * The {@code RestrictionsMask} for a rowset: bit <em>n</em> set for restriction
      * <em>n</em>.
      * <p>
-     * {@code unsignedLong} on the wire, so a {@code BigInteger} — a rowset with
-     * more than sixty-three restrictions is not hypothetical, DISCOVER_XML_METADATA
-     * has twenty-seven and the mask is defined over all of them.
+     * {@code unsignedLong} on the wire, so a {@code BigInteger}: the mask is
+     * defined over every restriction a rowset has, and that count is not bounded by
+     * sixty-three.
      */
     public static BigInteger restrictionsMaskOf(EClass eClass) {
         BigInteger mask = BigInteger.ZERO;
@@ -204,36 +273,38 @@ public final class RowsetCatalog {
      * the model - which is why it can be derived rather than kept.
      */
     public static List<EObject> schemaRowsets() {
-        return schemaRowsets(BY_REQUEST_TYPE.keySet());
+        return schemaRowsets(rowsets().keySet());
     }
 
     /**
      * The same self-description, restricted to the request types a server actually
-     * serves.
-     * <p>
-     * A server that answers a rowset it never announced is a nuisance; one that
-     * announces a rowset it does not answer is worse, because a client believes it.
-     * With the rowsets registered as services, the served set is known exactly -
-     * and everything the row needs beyond the name is in the model: the GUID, the
-     * restrictions with their names and XSD types, and the mask over their
-     * ordinals.
+     * serves, so that it announces no rowset it cannot answer.
      */
     public static List<EObject> schemaRowsets(java.util.Set<String> requestTypes) {
         List<EObject> rows = new ArrayList<>();
-        for (Map.Entry<String, EClass> entry : BY_REQUEST_TYPE.entrySet()) {
+        for (Map.Entry<String, EClass> entry : rowsets().entrySet()) {
             if (!requestTypes.contains(entry.getKey())) {
                 continue;
             }
-            EClass row = RowsetPackage.eINSTANCE.getDiscoverSchemaRowsetsRow();
+            // The rowset that describes rowsets is itself one of them, so it is
+            // looked up the same way as any other rather than named in code.
+            EClass row = rowsets().get("DISCOVER_SCHEMA_ROWSETS");
+            if (row == null) {
+                throw new IllegalStateException("the catalogue has no DISCOVER_SCHEMA_ROWSETS, so it "
+                        + "cannot state what it holds; the packages given to use() are incomplete");
+            }
             EObject described = EcoreUtil.create(row);
             described.eSet(row.getEStructuralFeature("schemaName"), entry.getKey());
             guidOf(entry.getValue()).filter(guid -> !guid.isEmpty())
                     .ifPresent(guid -> described.eSet(row.getEStructuralFeature("schemaGuid"), guid));
             described.eSet(row.getEStructuralFeature("restrictionsMask"), restrictionsMaskOf(entry.getValue()));
 
-            EClass restriction = RowsetPackage.eINSTANCE.getSchemaRowsetRestriction();
+            // And the type of one restriction is what the feature holding them says
+            // it is, which is the model stating it once instead of twice.
+            EStructuralFeature restrictions = row.getEStructuralFeature("restrictions");
+            EClass restriction = (EClass) restrictions.getEType();
             @SuppressWarnings("unchecked")
-            List<EObject> into = (List<EObject>) described.eGet(row.getEStructuralFeature("restrictions"));
+            List<EObject> into = (List<EObject>) described.eGet(restrictions);
             for (Restriction each : restrictionsOf(entry.getValue())) {
                 EObject one = EcoreUtil.create(restriction);
                 one.eSet(restriction.getEStructuralFeature("name"), each.name());
@@ -252,8 +323,8 @@ public final class RowsetCatalog {
     public record Restriction(int ordinal, String name, String type) {
     }
 
-    private static String detail(EClass eClass, String key) {
-        EAnnotation annotation = eClass.getEAnnotation(ANNOTATION);
+    private static String detail(org.eclipse.emf.ecore.EModelElement element, String key) {
+        EAnnotation annotation = element.getEAnnotation(ANNOTATION);
         return annotation == null ? null : annotation.getDetails().get(key);
     }
 }

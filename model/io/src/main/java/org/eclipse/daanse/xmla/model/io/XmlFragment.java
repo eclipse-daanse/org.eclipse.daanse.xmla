@@ -26,18 +26,15 @@ import javax.xml.stream.XMLStreamWriter;
 /**
  * Reads and writes the content of an {@code xmlDocument} column.
  * <p>
- * The spec types a handful of columns as {@code xmlDocument} — an
- * {@code xsd:any} — and real servers use it for exactly that:
- * {@code DISCOVER_XML_METADATA} answers with an entire {@code <Server>}
- * definition inside a single column. There is no useful Java type for
- * "arbitrary XML", so the model stores the fragment as its serialised form and
- * this class is the boundary that keeps that honest.
+ * The spec types a handful of columns as {@code xmlDocument}, an
+ * {@code xsd:any}, and servers use it as such: {@code DISCOVER_XML_METADATA}
+ * answers with an entire {@code <Server>} definition inside one column. The
+ * model stores such a fragment as its serialised form.
  * <p>
  * Both directions go through a parser rather than through string handling.
- * Writing the stored text with {@code writeCharacters} would escape it into
- * {@code &lt;Server&gt;} and turn a document into a paragraph; concatenating it
- * into the output unescaped would let a value decide the structure of the
- * message, which is an injection, not a serialisation.
+ * {@code writeCharacters} would escape the stored text into
+ * {@code &lt;Server&gt;}; concatenating it unescaped would let a value decide
+ * the structure of the message.
  */
 final class XmlFragment {
 
@@ -55,12 +52,11 @@ final class XmlFragment {
      * <p>
      * The captured text has to stand alone: a fragment is cut out of a larger
      * document, and a prefix it uses may be declared on an ancestor that is not
-     * coming with it — SSAS writes {@code <xars:METADATA>} with {@code xars} and a
-     * dozen {@code ddl*} prefixes declared on the response root. So a prefix that
-     * is used but not declared within the fragment is declared where it is first
-     * used, from the reader's own context. Without this the value reads fine and
-     * round-trips fine as a string, but cannot be parsed the next time it is
-     * written out.
+     * coming with it - SSAS writes {@code <xars:METADATA>} with {@code xars} and a
+     * dozen {@code ddl*} prefixes declared on the response root. A prefix used but
+     * not declared within the fragment is therefore declared where it is first
+     * used, from the reader's own context; without that the text cannot be parsed
+     * again.
      *
      * @param in positioned on the START_ELEMENT; left on the matching END_ELEMENT
      * @return the children as XML, or the element's text if it has none
@@ -99,8 +95,7 @@ final class XmlFragment {
      * <p>
      * Kept by hand rather than asked of the writer: {@code writeNamespace} on the
      * JDK's plain writer records nothing, so its {@code NamespaceContext} answers
-     * as if nothing had been declared and every check against it would re-declare
-     * on every element.
+     * as if nothing had been declared.
      */
     private static final class Bindings {
 
@@ -130,11 +125,9 @@ final class XmlFragment {
     }
 
     /**
-     * Writes a captured fragment back as element content.
-     * <p>
-     * Text that is not XML is written as text, because that is what it is: several
-     * columns are typed {@code xmlDocument} by the spec and used for a plain string
-     * by every server.
+     * Writes a captured fragment back as element content. Text that is not XML is
+     * written as text: several columns typed {@code xmlDocument} carry a plain
+     * string.
      */
     static void write(XMLStreamWriter out, String fragment) throws XMLStreamException {
         if (fragment == null || fragment.isEmpty()) {

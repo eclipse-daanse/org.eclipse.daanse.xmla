@@ -47,9 +47,9 @@ public final class XmlaNamespaces {
     public static final String XSI_PREFIX = "xsi";
 
     /**
-     * The namespace of the {@code sql:field} attribute that accompanies every
-     * column declaration in an inline schema. It never carries an element, only
-     * that one attribute, which is why no Ecore models it.
+     * The namespace of the {@code sql:field} attribute an inline schema puts on
+     * every column. That attribute is the only thing either specification ever
+     * writes in this namespace.
      */
     public static final String SQL = "urn:schemas-microsoft-com:xml-sql";
     public static final String SQL_PREFIX = "sql";
