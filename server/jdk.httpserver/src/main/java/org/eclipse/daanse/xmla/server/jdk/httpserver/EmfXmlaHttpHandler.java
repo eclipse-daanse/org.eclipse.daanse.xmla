@@ -16,14 +16,16 @@ package org.eclipse.daanse.xmla.server.jdk.httpserver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.eclipse.daanse.xmla.server.adapter.emf.EmfXmlaAdapter;
 import org.eclipse.daanse.xmla.api.AuthenticationRequiredException;
 import org.eclipse.daanse.xmla.api.XmlaRequest;
-import org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator;
+import org.eclipse.daanse.xmla.api.auth.AuthenticationChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,11 +42,11 @@ import com.sun.net.httpserver.HttpHandler;
  * challenge or a connector demanding a login, still chooses its own status
  * line.
  * <p>
- * Authentication is a chain of {@link XmlaAuthenticator}s and permissive at
- * this layer: a request nobody claims runs anonymously, because XMLA clients
- * probe {@code DISCOVER_PROPERTIES} before they log in. The refusal, if any,
- * comes from the backend as {@link AuthenticationRequiredException} and is
- * answered {@code 401} with the challenge of every mechanism that has one, or
+ * Authentication is an {@link AuthenticationChain} and permissive at this
+ * layer: a request nobody claims runs anonymously, because XMLA clients probe
+ * {@code DISCOVER_PROPERTIES} before they log in. The refusal, if any, comes
+ * from the backend as {@link AuthenticationRequiredException} and is answered
+ * {@code 401} with the challenge of every mechanism that has one, or
  * {@code 403} when none does.
  */
 public class EmfXmlaHttpHandler implements HttpHandler {
@@ -53,10 +55,11 @@ public class EmfXmlaHttpHandler implements HttpHandler {
 
     private final EmfXmlaAdapter adapter;
     private final String publicBaseUrl;
-    private final List<XmlaAuthenticator> authenticators;
+    private final Supplier<AuthenticationChain> authenticators;
     private final String corsAllowedOrigins;
 
-    public EmfXmlaHttpHandler(EmfXmlaAdapter adapter, String publicBaseUrl, List<XmlaAuthenticator> authenticators) {
+    public EmfXmlaHttpHandler(EmfXmlaAdapter adapter, String publicBaseUrl,
+            Supplier<AuthenticationChain> authenticators) {
         this(adapter, publicBaseUrl, authenticators, "");
     }
 
@@ -66,11 +69,13 @@ public class EmfXmlaHttpHandler implements HttpHandler {
      * off, {@code *} allows any. Without these headers a browser blocks the call
      * before a single XMLA byte is exchanged.
      */
-    public EmfXmlaHttpHandler(EmfXmlaAdapter adapter, String publicBaseUrl, List<XmlaAuthenticator> authenticators,
-            String corsAllowedOrigins) {
+    public EmfXmlaHttpHandler(EmfXmlaAdapter adapter, String publicBaseUrl,
+            Supplier<AuthenticationChain> authenticators, String corsAllowedOrigins) {
         this.adapter = adapter;
         this.publicBaseUrl = publicBaseUrl == null ? "" : publicBaseUrl;
-        this.authenticators = List.copyOf(authenticators);
+        // A supplier, not a copy: a mechanism registered after this endpoint came up
+        // has to join the chain without reactivating it.
+        this.authenticators = authenticators;
         this.corsAllowedOrigins = corsAllowedOrigins == null ? "" : corsAllowedOrigins.trim();
     }
 
@@ -144,7 +149,8 @@ public class EmfXmlaHttpHandler implements HttpHandler {
             } catch (AuthenticationRequiredException refused) {
                 // Thrown before the first byte by construction, so the status line is still
                 // free to choose.
-                challenge(exchange, refused.getMessage());
+                LOGGER.debug("authentication required: {}", refused.getMessage());
+                refuse(exchange, authenticators.get().challenges());
             }
         } catch (IOException | RuntimeException e) {
             LOGGER.error("failed while serving {}", exchange.getRequestURI(), e);
@@ -161,44 +167,30 @@ public class EmfXmlaHttpHandler implements HttpHandler {
      *         challenge or refusal has been sent and the request is over
      */
     private XmlaRequest authenticate(HttpExchange exchange, XmlaRequest request) throws IOException {
-        for (XmlaAuthenticator authenticator : authenticators) {
-            XmlaAuthenticator.Result result = authenticator.authenticate(request);
-            if (result instanceof XmlaAuthenticator.Result.NotMine) {
-                continue;
+        AuthenticationChain.Outcome outcome = authenticators.get().run(request);
+        if (outcome instanceof AuthenticationChain.Outcome.Proceed proceed) {
+            // SPNEGO ends with a token the client verifies; it has to travel on the
+            // successful response, not on a challenge.
+            for (String header : proceed.responseHeaders()) {
+                exchange.getResponseHeaders().add("WWW-Authenticate", header);
             }
-            if (result instanceof XmlaAuthenticator.Result.Authenticated who) {
-                return request.withPrincipal(who.principal(), who.roles());
-            }
-            if (result instanceof XmlaAuthenticator.Result.Challenge next) {
-                // A handshake in progress - SPNEGO's server token rides back in the challenge.
-                exchange.getResponseHeaders().add("WWW-Authenticate", next.headerValue());
-                exchange.sendResponseHeaders(401, -1);
-                return null;
-            }
-            XmlaAuthenticator.Result.Refused refused = (XmlaAuthenticator.Result.Refused) result;
-            LOGGER.debug("refused by {}: {}", authenticator.scheme(), refused.reason());
-            challenge(exchange, refused.reason());
-            return null;
+            return proceed.request();
         }
-        // Nobody claimed it: anonymous, and whether that is enough is the connector's
-        // decision.
-        return request;
+        AuthenticationChain.Outcome.Reject reject = (AuthenticationChain.Outcome.Reject) outcome;
+        LOGGER.debug("not served: {}", reject.reason());
+        return refuse(exchange, reject.challenges());
     }
 
     /**
-     * 401 with every challenge the chain can offer, or 403 when it has none to
-     * offer.
+     * 401 with the challenges offered, or 403 when there are none - there is
+     * nothing for the client to try again with.
      */
-    private void challenge(HttpExchange exchange, String reason) throws IOException {
-        boolean offered = false;
-        for (XmlaAuthenticator authenticator : authenticators) {
-            if (!authenticator.challenge().isEmpty()) {
-                exchange.getResponseHeaders().add("WWW-Authenticate", authenticator.challenge());
-                offered = true;
-            }
+    private XmlaRequest refuse(HttpExchange exchange, List<String> challenges) throws IOException {
+        for (String challenge : challenges) {
+            exchange.getResponseHeaders().add("WWW-Authenticate", challenge);
         }
-        LOGGER.debug("authentication required: {}", reason);
-        exchange.sendResponseHeaders(offered ? 401 : 403, -1);
+        exchange.sendResponseHeaders(challenges.isEmpty() ? 403 : 401, -1);
+        return null;
     }
 
     private XmlaRequest requestOf(HttpExchange exchange) {
@@ -206,7 +198,16 @@ public class EmfXmlaHttpHandler implements HttpHandler {
         for (Map.Entry<String, List<String>> entry : exchange.getRequestHeaders().entrySet()) {
             headers.put(entry.getKey(), List.copyOf(entry.getValue()));
         }
-        return new XmlaRequest(null, null, headers, url(exchange));
+        return new XmlaRequest(null, null, headers, url(exchange), peerOf(exchange));
+    }
+
+    private static String peerOf(HttpExchange exchange) {
+        InetSocketAddress remote = exchange.getRemoteAddress();
+        if (remote == null || remote.getAddress() == null) {
+            // Unresolved, which is what an address the JDK could not resolve looks like.
+            return null;
+        }
+        return remote.getAddress().getHostAddress();
     }
 
     /**

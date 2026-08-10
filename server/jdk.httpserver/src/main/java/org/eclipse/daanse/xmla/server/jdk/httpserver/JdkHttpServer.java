@@ -15,7 +15,8 @@ package org.eclipse.daanse.xmla.server.jdk.httpserver;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -28,7 +29,7 @@ import org.eclipse.daanse.xmla.server.adapter.emf.EmfXmlaAdapter;
 import org.eclipse.daanse.xmla.api.XmlaConnector;
 import org.eclipse.daanse.xmla.api.XmlaSessionHandler;
 import org.eclipse.daanse.xmla.api.auth.InbandAuthenticator;
-import org.eclipse.daanse.xmla.api.auth.XmlaCredentialValidator;
+import org.eclipse.daanse.xmla.api.auth.AuthenticationChain;
 import org.eclipse.daanse.xmla.api.auth.XmlaAuthenticator;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,14 +47,13 @@ import com.sun.net.httpserver.HttpServer;
 
 /**
  * The HTTP front of the EMF stack: one endpoint, served by whatever
- * {@link XmlaConnector} is registered, with authentication assembled from
- * configuration and from any {@link XmlaAuthenticator} services present.
+ * {@link XmlaConnector} is registered.
  * <p>
- * Three modes of authentication, and all of them are compositions rather than
- * code paths: fully anonymous (register nothing, configure NONE), fronted by a
- * proxy (TRUSTED_HEADER - Authelia and its kind set the headers and this server
- * takes their word), or the server's own mechanisms (BASIC from configuration,
- * SPNEGO/Bearer as additional registered services).
+ * Authentication is composed, not configured: every mechanism - Basic,
+ * Negotiate, Bearer, a trusted proxy header - is an {@link XmlaAuthenticator}
+ * service, and the chain is whatever is registered. Registering nothing is the
+ * fully anonymous endpoint. The chain is read per request, so a mechanism that
+ * appears later joins without restarting this endpoint.
  */
 @Component(scope = ServiceScope.PROTOTYPE, immediate = true)
 public class JdkHttpServer {
@@ -80,33 +80,21 @@ public class JdkHttpServer {
      * Every additionally registered mechanism joins the chain - SPNEGO/Kerberos and
      * OIDC live here, as services, with no change to this class.
      */
+    /**
+     * Bound through methods rather than into a collection, because the chain has to
+     * see each mechanism's service properties: the ranking is what decides the
+     * order they are asked in, and a collection reference carries no ranking at
+     * all.
+     */
+    private final AuthenticationChain authenticators = new AuthenticationChain();
+
     @Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
-    private final List<XmlaAuthenticator> registeredAuthenticators = new CopyOnWriteArrayList<>();
+    void bindAuthenticator(XmlaAuthenticator mechanism, Map<String, Object> properties) {
+        authenticators.add(mechanism, properties);
+    }
 
-    /**
-     * Optional: without it BASIC authentication cannot be configured. Deliberately
-     * not defaulted - see {@link BasicXmlaAuthenticator}.
-     */
-    @Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY)
-    private volatile XmlaCredentialValidator credentialValidator;
-
-    /**
-     * How this endpoint identifies its callers, beyond any registered authenticator
-     * services.
-     */
-    public enum Authentication {
-        /**
-         * Nothing configured. Anonymous unless a registered authenticator says
-         * otherwise.
-         */
-        NONE,
-        /** HTTP BASIC against an {@link XmlaCredentialValidator}. */
-        BASIC,
-        /**
-         * A trusted front (reverse proxy) sets the user in headers, which are taken as
-         * given.
-         */
-        TRUSTED_HEADER
+    void unbindAuthenticator(XmlaAuthenticator mechanism) {
+        authenticators.remove(mechanism);
     }
 
     @ObjectClassDefinition
@@ -115,23 +103,12 @@ public class JdkHttpServer {
 
         String contextPath() default "/xmla";
 
-        Authentication authentication() default Authentication.NONE;
-
-        /** The realm name a BASIC challenge shows the user. */
-        String realm() default "Daanse XMLA";
-
         /**
          * Origins a browser client may call this endpoint from: empty switches CORS
          * off, {@code *} allows any (echoed per request, credentials stay allowed),
          * otherwise a comma-separated list.
          */
         String corsAllowedOrigins() default "";
-
-        /** The header a trusted front puts the user name in. */
-        String trustedUserHeader() default "Remote-User";
-
-        /** The header a trusted front puts the comma-separated groups in. */
-        String trustedGroupsHeader() default "Remote-Groups";
 
         /**
          * Scheme, host and port this server is reachable under from the outside, e.g.
@@ -165,25 +142,29 @@ public class JdkHttpServer {
         LOGGER.debug("Starting JDK HTTP server");
         server = HttpServer.create(new InetSocketAddress(config.port()), config.backlog());
 
-        List<XmlaAuthenticator> chain = new ArrayList<>();
-        switch (config.authentication()) {
-        case BASIC -> chain.add(new BasicXmlaAuthenticator(config.realm(), credentialValidator));
-        case TRUSTED_HEADER ->
-            chain.add(new TrustedHeaderAuthenticator(config.trustedUserHeader(), config.trustedGroupsHeader()));
-        case NONE -> {
-            /* anonymous unless a registered authenticator says otherwise */ }
-        }
-        chain.addAll(registeredAuthenticators);
-
         EmfXmlaAdapter adapter = new EmfXmlaAdapter(connector, sessionHandler, inbandAuthenticator,
-                new AccessPolicy(config.requirePrincipal(), Set.of(config.anonymousRowsets())));
-        server.createContext(config.contextPath(),
-                new EmfXmlaHttpHandler(adapter, config.publicBaseUrl(), chain, config.corsAllowedOrigins()));
+                new AccessPolicy(config.requirePrincipal(), anonymousRowsets(config)));
+        server.createContext(config.contextPath(), new EmfXmlaHttpHandler(adapter, config.publicBaseUrl(),
+                () -> authenticators, config.corsAllowedOrigins()));
 
         server.setExecutor(
                 new ThreadPoolExecutor(0, config.maxThreads(), 60L, TimeUnit.SECONDS, new SynchronousQueue<>()));
         server.start();
         LOGGER.debug("JDK HTTP server started on port {}", config.port());
+    }
+
+    /**
+     * A duplicate would make {@code Set.of} throw and the endpoint never come up,
+     * so the repetition is reported and ignored instead.
+     */
+    private static Set<String> anonymousRowsets(Config config) {
+        Set<String> named = new LinkedHashSet<>();
+        for (String rowset : config.anonymousRowsets()) {
+            if (!named.add(rowset)) {
+                LOGGER.warn("the rowset {} is listed more than once as anonymously readable", rowset);
+            }
+        }
+        return Set.copyOf(named);
     }
 
     @Deactivate
