@@ -25,8 +25,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>adapter.emf</module>
-    <!--
-      
     <module>auth.basic</module>
     <module>auth.dummy</module>
     <module>auth.gss</module>
@@ -35,8 +33,6 @@
     <module>auth.roles</module>
     <module>auth.store.internal</module>
     <module>auth.store.ldap</module>
-    -->
-    
     <module>jdk.httpserver</module>
     <module>whiteboard.servlet</module>
   </modules>
