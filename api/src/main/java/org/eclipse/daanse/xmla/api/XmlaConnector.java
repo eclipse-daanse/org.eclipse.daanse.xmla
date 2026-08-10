@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * One method per XMLA verb rather than one per rowset, because the request type
  * is <em>in</em> the request: {@link Discover#getRequestType()} is a
- * {@code RequestTypeEnum} covering all 103 rowsets, so a rowset added to the
- * model needs nothing added here.
+ * {@code RequestTypeEnum} covering every rowset, multidimensional and tabular
+ * alike, so a rowset added to the model needs nothing added here.
  * <p>
  * Authentication is not this interface's concern - the transport establishes
  * who is asking and says so in the {@link XmlaRequest}. What <em>is</em> this

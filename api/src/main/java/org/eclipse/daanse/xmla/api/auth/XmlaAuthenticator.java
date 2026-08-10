@@ -13,17 +13,15 @@
  */
 package org.eclipse.daanse.xmla.api.auth;
 
-import java.security.Principal;
-import java.util.Set;
-
 import org.eclipse.daanse.xmla.api.XmlaRequest;
 
 /**
  * One pluggable authentication mechanism at the HTTP boundary.
  * <p>
- * The transport holds a chain of these — Basic today; SPNEGO/Kerberos and OIDC
- * Bearer are further implementations, registered as OSGi services, with no
- * transport change. Three modes of operation fall out of the same chain:
+ * The transport holds a chain of these - Basic, SPNEGO/Negotiate, OIDC Bearer
+ * and a trusted proxy header are separate bundles, registered as OSGi services,
+ * with no transport change. Three modes of operation fall out of the same
+ * chain:
  * <ol>
  * <li><strong>fully anonymous</strong> — nothing registered, every request
  * passes through anonymous, and whether that is enough is the connector's
@@ -65,10 +63,11 @@ public interface XmlaAuthenticator {
     /**
      * Judges the request.
      * <p>
-     * Called for every request, in chain order, until a mechanism answers something
-     * other than {@link Result.NotMine}. The request is complete — headers, URL —
-     * so a mechanism that needs more than a credential string (SPNEGO's handshake,
-     * a Bearer token's audience) has what there is to have.
+     * Called for every request, in the order {@link AuthenticationChain} defines,
+     * until a mechanism answers something other than {@link Result.NotMine}. The
+     * request is complete — headers, URL — so a mechanism that needs more than a
+     * credential string (SPNEGO's handshake, a Bearer token's audience) has what
+     * there is to have.
      */
     Result authenticate(XmlaRequest request);
 
@@ -81,8 +80,33 @@ public interface XmlaAuthenticator {
         record NotMine() implements Result {
         }
 
-        /** The credentials identify this principal, holding these roles. */
-        record Authenticated(Principal principal, Set<String> roles) implements Result {
+        /**
+         * The credentials identify this caller.
+         *
+         * @param responseHeaderValue a {@code WWW-Authenticate} value to write on the
+         *                            successful response, or {@code null} for none -
+         *                            SPNEGO's mutual authentication ends with a token
+         *                            the client verifies, and dropping it leaves a
+         *                            client that asked for mutual authentication
+         *                            waiting for something that never comes
+         */
+        record Authenticated(AuthenticatedIdentity identity, String responseHeaderValue) implements Result {
+
+            public static Authenticated of(AuthenticatedIdentity identity) {
+                return new Authenticated(identity, null);
+            }
+        }
+
+        /**
+         * Nobody was identified, and this is who to serve the request as.
+         * <p>
+         * Distinct from {@link Authenticated} because it proves nothing: the chain
+         * applies it only after every mechanism has answered {@link NotMine}, an access
+         * rule that demands authentication does not accept it, and a session or
+         * container identity displaces it. A mechanism that answered
+         * {@code Authenticated} instead would silently switch all of that off.
+         */
+        record Fallback(AuthenticatedIdentity identity) implements Result {
         }
 
         /**
