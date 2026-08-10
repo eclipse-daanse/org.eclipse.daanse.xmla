@@ -21,8 +21,8 @@ import java.util.Set;
  * <p>
  * The rowsets a client needs before it can authenticate meaningfully -
  * properties, data sources, the self-description - are conventionally open;
- * everything else is refused with the challenge when {@code requirePrincipal} is
- * on. Commands are never run anonymously under the policy.
+ * everything else is refused with the challenge when {@code requirePrincipal}
+ * is on. Commands are never run anonymously under the policy.
  * <p>
  * It asks whether the caller is authenticated, not merely whether one is named:
  * a configured stand-in identity proves nothing and must not satisfy a policy

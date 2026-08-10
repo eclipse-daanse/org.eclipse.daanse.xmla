@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
  */
 class SessionHeaderTest {
 
-
     private static final Pattern SESSION_ID = Pattern.compile("SessionId=\"([^\"]*)\"");
 
     private static final String ENVELOPE = """
@@ -138,7 +137,8 @@ class SessionHeaderTest {
 
         String answer = send(BEGIN + session(opened), DISCOVER);
 
-        // A second id would need a second response header, and nobody could ever end it.
+        // A second id would need a second response header, and nobody could ever end
+        // it.
         assertThat(sessions.opened).isEqualTo(before);
         assertThat(sessionIdOf(answer)).isEqualTo(opened);
     }

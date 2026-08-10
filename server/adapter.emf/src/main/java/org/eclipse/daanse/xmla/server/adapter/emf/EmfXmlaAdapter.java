@@ -121,7 +121,6 @@ public class EmfXmlaAdapter {
     private final InbandAuthenticator inband;
     private final AccessPolicy policy;
 
-
     /**
      * @param sessions {@code null} for a stateless endpoint: no session is ever
      *                 opened and no session header echoed, which the specification
@@ -201,7 +200,8 @@ public class EmfXmlaAdapter {
         SoapEnvelopeReader.Envelope envelope = SoapEnvelopeReader.read(source);
 
         // SOAP 1.1: a header block carrying mustUnderstand="1" that the receiver does
-        // not understand must be refused and the message not processed further - so this
+        // not understand must be refused and the message not processed further - so
+        // this
         // decides before any session is opened, honoured or ended.
         String notUnderstood = firstNotUnderstood(envelope.headers());
         if (notUnderstood != null) {
@@ -434,15 +434,15 @@ public class EmfXmlaAdapter {
     /**
      * Ties this request and its session together in whichever direction is missing.
      * <p>
-     * A caller who proved who they are owns the session they are using: the identity
-     * is bound to it, so a later caller who merely knows the id cannot step into it.
-     * That matters because a session is not just a name - a backend keeps per-session
-     * state under it, opened with the roles of whoever opened it.
+     * A caller who proved who they are owns the session they are using: the
+     * identity is bound to it, so a later caller who merely knows the id cannot
+     * step into it. That matters because a session is not just a name - a backend
+     * keeps per-session state under it, opened with the roles of whoever opened it.
      * <p>
-     * The other direction is what the in-band handshake needs. Over HTTP there is no
-     * connection to hold what it established, so the session holds it and it is put
-     * back here. A stand-in identity does not count as having proved anything, so a
-     * session carrying a real one still wins over it.
+     * The other direction is what the in-band handshake needs. Over HTTP there is
+     * no connection to hold what it established, so the session holds it and it is
+     * put back here. A stand-in identity does not count as having proved anything,
+     * so a session carrying a real one still wins over it.
      */
     private XmlaRequest restoreIdentity(XmlaRequest request) {
         if (sessions == null || request.sessionId() == null) {

@@ -38,22 +38,24 @@ import org.eclipse.emf.ecore.EObject;
 import org.junit.jupiter.api.Test;
 
 /**
- * What happens when {@code BeginSession} rides on a request that actually asks for
- * something.
+ * What happens when {@code BeginSession} rides on a request that actually asks
+ * for something.
  * <p>
- * Every recorded client opens its session with an {@code Execute} whose command is an
- * empty {@code <Statement/>}, and it is easy to read that as the rule. It is not.
- * XMLA 1.1 p. 29 says the statement <em>may</em> be empty and that this <em>can</em> be
- * used to carry the header; [MS-SSAS] 3.1.3.1 shows {@code BeginSession} above a body
- * commented "Discover or Execute element goes here", and 4.20.1 pairs it with a real
- * {@code BeginTransaction}. So a client may open a session and ask its question in one
- * round trip, and these tests hold what such a message gets back.
+ * Every recorded client opens its session with an {@code Execute} whose command
+ * is an empty {@code <Statement/>}, and it is easy to read that as the rule. It
+ * is not. XMLA 1.1 p. 29 says the statement <em>may</em> be empty and that this
+ * <em>can</em> be used to carry the header; [MS-SSAS] 3.1.3.1 shows
+ * {@code BeginSession} above a body commented "Discover or Execute element goes
+ * here", and 4.20.1 pairs it with a real {@code BeginTransaction}. So a client
+ * may open a session and ask its question in one round trip, and these tests
+ * hold what such a message gets back.
  * <p>
- * The order the adapter works in decides the answer, and it is: session headers first
- * ({@code applySessionHeaders}), identity second, the access policy only when the body
- * has been read and dispatched. Which means the session is minted <em>before</em> the
- * policy is consulted - and the {@code finally} in {@code handle} is what keeps that
- * from leaking a session to a caller who is then refused.
+ * The order the adapter works in decides the answer, and it is: session headers
+ * first ({@code applySessionHeaders}), identity second, the access policy only
+ * when the body has been read and dispatched. Which means the session is minted
+ * <em>before</em> the policy is consulted - and the {@code finally} in
+ * {@code handle} is what keeps that from leaking a session to a caller who is
+ * then refused.
  */
 class SessionOpenedByARealRequestTest {
 
@@ -66,7 +68,9 @@ class SessionOpenedByARealRequestTest {
 
     private static final String BEGIN = "<BeginSession xmlns=\"urn:schemas-microsoft-com:xml-analysis\"/>";
 
-    /** Not the empty statement every recorded client uses: a real rowset request. */
+    /**
+     * Not the empty statement every recorded client uses: a real rowset request.
+     */
     private static final String CUBES = """
             <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">\
             <RequestType>MDSCHEMA_CUBES</RequestType>\
@@ -102,7 +106,10 @@ class SessionOpenedByARealRequestTest {
         }
     }
 
-    /** Answers with something recognizable, and records the session it was called under. */
+    /**
+     * Answers with something recognizable, and records the session it was called
+     * under.
+     */
     private static final class Connector implements XmlaConnector {
 
         private final List<String> sawSession = new ArrayList<>();
@@ -172,12 +179,13 @@ class SessionOpenedByARealRequestTest {
     void aRowsetTheClientMayNotHaveAnonymouslyLeavesNoSessionBehind() {
         AccessPolicy guarded = new AccessPolicy(true, Set.of("DISCOVER_PROPERTIES"));
 
-        // Not a SOAP fault: the transport owns the challenge, so this leaves the adapter.
-        assertThatThrownBy(() -> send(BEGIN, CUBES, guarded))
-                .isInstanceOf(AuthenticationRequiredException.class)
+        // Not a SOAP fault: the transport owns the challenge, so this leaves the
+        // adapter.
+        assertThatThrownBy(() -> send(BEGIN, CUBES, guarded)).isInstanceOf(AuthenticationRequiredException.class)
                 .hasMessageContaining("MDSCHEMA_CUBES");
 
-        // The policy is consulted after the session is minted, so one was opened and had
+        // The policy is consulted after the session is minted, so one was opened and
+        // had
         // to be given back. A refused caller must not be able to consume session slots.
         assertThat(sessions.opened).isEqualTo(1);
         assertThat(sessions.live()).as("nothing is left open for a caller who was refused").isZero();
@@ -187,8 +195,7 @@ class SessionOpenedByARealRequestTest {
     void aCommandIsNeverRunAnonymouslyUnderAGuardedPolicy() {
         AccessPolicy guarded = new AccessPolicy(true, Set.of("DISCOVER_PROPERTIES"));
 
-        assertThatThrownBy(() -> send(BEGIN, MDX, guarded))
-                .isInstanceOf(AuthenticationRequiredException.class)
+        assertThatThrownBy(() -> send(BEGIN, MDX, guarded)).isInstanceOf(AuthenticationRequiredException.class)
                 .hasMessageContaining("anonymously");
 
         assertThat(sessions.live()).isZero();
