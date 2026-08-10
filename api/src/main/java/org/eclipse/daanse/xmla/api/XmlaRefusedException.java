@@ -53,6 +53,23 @@ public class XmlaRefusedException extends RuntimeException {
                 "XML for Analysis parser: The '" + requestType + "' request type was not recognized by the server.");
     }
 
+    /**
+     * The refusal [MS-SSAS] 3.1.3.1 demands for a {@code Session} or
+     * {@code EndSession} header the server does not honour.
+     * <p>
+     * The specification collapses "not valid" and "has timed out" into one answer
+     * and names no error code for it, so neither does this.
+     */
+    public static XmlaRefusedException invalidSession(String sessionId) {
+        return new XmlaRefusedException(Side.CLIENT,
+                "XML for Analysis parser: The session ID '" + sessionId + "' is not valid or has timed out.");
+    }
+
+    /** A {@code BeginSession} this server will not answer with a session. */
+    public static XmlaRefusedException sessionNotOpened() {
+        return new XmlaRefusedException(Side.SERVER, "XML for Analysis parser: The server declined to open a session.");
+    }
+
     public Side side() {
         return side;
     }

@@ -27,8 +27,8 @@ import org.eclipse.daanse.xmla.model.xmla.RestrictionEntry;
  * The bridge had one generated request record per rowset, each restriction a
  * typed accessor. The model carries the same information as a list of
  * name/value entries — {@code <RestrictionList>}'s children are named after the
- * restriction column — so this is the lookup that replaces all 103 record
- * types: ask by the column name the specification uses.
+ * restriction column — so this is the lookup that replaces every one of those
+ * record types: ask by the column name the specification uses.
  */
 public final class RestrictionValues {
 

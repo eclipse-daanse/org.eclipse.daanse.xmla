@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.daanse.xmla.api.auth.AuthenticatedIdentity;
+import org.eclipse.daanse.xmla.api.auth.Claims;
+import org.eclipse.daanse.xmla.api.auth.IdentitySource;
+
 /**
  * What the transport knows about a request and the message does not.
  * <p>
@@ -28,50 +32,82 @@ import java.util.Set;
  * starts the request without one and the SOAP layer adds it via
  * {@link #withSession}.
  *
- * @param principal who was authenticated, or {@code null} for an anonymous
- *                  request — whether by a transport mechanism (Basic, SPNEGO,
- *                  Bearer), by a trusted proxy header, or by the in-band
- *                  {@code Authenticate} handshake
- * @param roles     the roles that principal holds
- * @param headers   the HTTP request headers
- * @param url       the URL this endpoint was reached at
- * @param sessionId the session this request belongs to, or {@code null} for
- *                  none
+ * @param principal     who was authenticated, or {@code null} for an anonymous
+ *                      request — whether by a transport mechanism (Basic,
+ *                      SPNEGO, Bearer), by a trusted proxy header, or by the
+ *                      in-band {@code Authenticate} handshake
+ * @param roles         the roles that principal holds
+ * @param claims        what the mechanism learned about the principal beyond
+ *                      the name
+ * @param headers       the HTTP request headers
+ * @param url           the URL this endpoint was reached at
+ * @param remoteAddress the address the request came from, or {@code null} when
+ *                      the transport does not know it - what a mechanism that
+ *                      trusts a front needs in order to check that the front is
+ *                      the one speaking
+ * @param sessionId     the session this request belongs to, or {@code null} for
+ *                      none
  */
-public record XmlaRequest(Principal principal, Set<String> roles, Map<String, List<String>> headers, String url,
-        String sessionId) {
+public record XmlaRequest(Principal principal, Set<String> roles, Claims claims, Map<String, List<String>> headers,
+        String url, String remoteAddress, String sessionId, IdentitySource source) {
 
     public XmlaRequest {
         roles = roles == null ? Set.of() : Set.copyOf(roles);
+        claims = claims == null ? Claims.none() : claims;
         headers = headers == null ? Map.of() : Map.copyOf(headers);
+        source = source == null ? (principal == null ? IdentitySource.NONE : IdentitySource.MECHANISM) : source;
+    }
+
+    public XmlaRequest(Principal principal, Set<String> roles, Claims claims, Map<String, List<String>> headers,
+            String url, String remoteAddress, String sessionId) {
+        this(principal, roles, claims, headers, url, remoteAddress, sessionId, null);
     }
 
     /** What a transport can know: everything but the session. */
-    public XmlaRequest(Principal principal, Set<String> roles, Map<String, List<String>> headers, String url) {
-        this(principal, roles, headers, url, null);
+    public XmlaRequest(Principal principal, Set<String> roles, Map<String, List<String>> headers, String url,
+            String remoteAddress) {
+        this(principal, roles, Claims.none(), headers, url, remoteAddress, null, null);
     }
 
     /** An anonymous request with nothing known about it. */
     public static XmlaRequest anonymous() {
-        return new XmlaRequest(null, Set.of(), Map.of(), null, null);
+        return new XmlaRequest(null, Set.of(), Claims.none(), Map.of(), null, null, null, IdentitySource.NONE);
     }
 
     /** The same request, once the session header has been read and accepted. */
     public XmlaRequest withSession(String sessionId) {
-        return new XmlaRequest(principal, roles, headers, url, sessionId);
+        return new XmlaRequest(principal, roles, claims, headers, url, remoteAddress, sessionId, source);
     }
 
     /**
-     * The same request, once a principal has been established after the fact — the
-     * in-band {@code Authenticate} handshake ends with one.
+     * The same request, carrying the identity a mechanism established - at the HTTP
+     * boundary, or by the in-band {@code Authenticate} handshake, or restored from
+     * the session that handshake was bound to.
      */
-    public XmlaRequest withPrincipal(Principal principal, Set<String> roles) {
-        return new XmlaRequest(principal, roles, headers, url, sessionId);
+    public XmlaRequest withIdentity(AuthenticatedIdentity identity) {
+        return withIdentity(identity, IdentitySource.MECHANISM);
     }
 
-    /** Whether anyone was authenticated at all. */
+    /** The same request, carrying an identity and where it came from. */
+    public XmlaRequest withIdentity(AuthenticatedIdentity identity, IdentitySource from) {
+        return new XmlaRequest(identity.principal(), identity.roles(), identity.claims(), headers, url, remoteAddress,
+                sessionId, from);
+    }
+
+    /** Whether anyone at all is named, proved or not. */
     public boolean isAnonymous() {
         return principal == null;
+    }
+
+    /**
+     * Whether somebody proved who they are.
+     * <p>
+     * A configured stand-in names a caller without proving anything, so an access
+     * rule that demands authentication must ask this rather than
+     * {@link #isAnonymous}.
+     */
+    public boolean isAuthenticated() {
+        return principal != null && source != IdentitySource.FALLBACK;
     }
 
     /**
@@ -90,14 +126,15 @@ public record XmlaRequest(Principal principal, Set<String> roles, Map<String, Li
         return null;
     }
 
-    /** Whether the authenticated principal holds a role. */
+    /**
+     * Whether the authenticated principal holds a role.
+     * <p>
+     * Exact, because a catalog's role names are exact and so is every access rule
+     * that reads them. Matching loosely here would let a caller through a check the
+     * catalog itself would then refuse.
+     */
     public boolean hasRole(String role) {
-        for (String held : roles) {
-            if (held.equalsIgnoreCase(role)) {
-                return true;
-            }
-        }
-        return false;
+        return roles.contains(role);
     }
 
     /** The principal's name, or the empty string when the request is anonymous. */
