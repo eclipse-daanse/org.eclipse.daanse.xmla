@@ -63,6 +63,16 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!-- EMF writes {@link byte} for a Base64Binary list, and byte cannot be
+               linked. Generated, unfixable in the model, and silenced neither by
+               doclint nor by excluding files. -->
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.eclipse.daanse</groupId>
         <artifactId>org.eclipse.daanse.tooling.emf.codegen.maven</artifactId>
         <version>0.0.1-SNAPSHOT</version>

@@ -127,7 +127,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverCommandsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_COMMANDS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;SESSION_SPID&quot; name=&quot;SESSION_SPID&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SESSION_COMMAND_COUNT&quot; name=&quot;SESSION_COMMAND_COUNT&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;COMMAND_START_TIME&quot; n …"/>
+      <details key="documentation" value="The DISCOVER_COMMANDS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-commands-row"/>
@@ -250,7 +250,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverCommandObjectsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_COMMAND_OBJECTS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;SESSION_SPID&quot; name=&quot;SESSION_SPID&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SESSION_ID&quot; name=&quot;SESSION_ID&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SESSION_COMMAND_COUNT&quot; name=&quot;SESS …"/>
+      <details key="documentation" value="The DISCOVER_COMMAND_OBJECTS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-command-objects-row"/>
@@ -392,7 +392,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverConnectionsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_CONNECTIONS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;CONNECTION_ID&quot; name=&quot;CONNECTION_ID&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CONNECTION_USER_NAME&quot; name=&quot;CONNECTION_USER_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CONNECTION_IMPE …"/>
+      <details key="documentation" value="The DISCOVER_CONNECTIONS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-connections-row"/>
@@ -425,7 +425,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionImpersonatedUserName"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The impersonated user name, if any.&lt;315>"/>
+        <details key="documentation" value="The impersonated user name, if any."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -500,7 +500,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionLastCommandElapsedTimeMs"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//LongObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The time, in milliseconds, that it took for the last command to execute. If a command is in progress, the column returns the elapsed time, in milliseconds, since the start of the command.&lt;318>"/>
+        <details key="documentation" value="The time, in milliseconds, that it took for the last command to execute. If a command is in progress, the column returns the elapsed time, in milliseconds, since the start of the command."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -589,7 +589,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverDbConnectionsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_DB_CONNECTIONS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;CONNECTION_ID&quot; name=&quot;CONNECTION_ID&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CONNECTION_START_TIME&quot; name=&quot;CONNECTION_START_TIME&quot; type=&quot;xsd:dateTime&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CONNECTI …"/>
+      <details key="documentation" value="The DISCOVER_DB_CONNECTIONS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-db-connections-row"/>
@@ -706,7 +706,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverDbMemStatsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_DB_MEM_STATS rowset contains the following columns. The rowset is sorted on CATALOG_NAME. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;xmlDocument&quot;> &lt;xsd:sequence> &lt;xsd:any /> &lt;/xsd …"/>
+      <details key="documentation" value="The DISCOVER_DB_MEM_STATS rowset contains the following columns. The rowset is sorted on CATALOG_NAME."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-db-mem-stats-row"/>
@@ -810,7 +810,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="proxyRequestsMemoryKb"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//LongObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="This column SHOULD&lt;378> indicate the total amount of memory, in kilobytes, that is used by proxy request trackers."/>
+        <details key="documentation" value="This column SHOULD indicate the total amount of memory, in kilobytes, that is used by proxy request trackers."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -863,7 +863,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverDimensionStatRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_DIMENSION_STAT rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;DATABASE_NAME&quot; name=&quot;DATABASE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;DIMENSION_NAME&quot; name=&quot;DIMENSION_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;ATTRIBUTE_NAME&quot; name= …"/>
+      <details key="documentation" value="The DISCOVER_DIMENSION_STAT rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-dimension-stat-row"/>
@@ -916,7 +916,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverInstancesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_INSTANCES rowset contains the following columns. This schema rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;INSTANCE_NAME&quot; name=&quot;INSTANCE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;INSTANCE_PORT_NUMBER&quot; name=&quot;INSTANCE_PORT_NUMBER&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;INSTANCE_ …"/>
+      <details key="documentation" value="The DISCOVER_INSTANCES rowset contains the following columns. This schema rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-instances-row"/>
@@ -1065,7 +1065,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="locationBackupFilePathname"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The location of the backup file.&lt;326>"/>
+        <details key="documentation" value="The location of the backup file."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1246,7 +1246,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverMasterKeyRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_MASTER_KEY rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;KEY&quot; name=&quot;KEY&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType>"/>
+      <details key="documentation" value="The DISCOVER_MASTER_KEY rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-master-key-row"/>
@@ -1269,7 +1269,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverMemorygrantRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_MEMORYGRANT rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;MemoryID&quot; name=&quot;MemoryID&quot; type=&quot;xsd:long&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SPID&quot; name=&quot;SPID&quot; type=&quot;xsd:int&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CreationTime&quot; name=&quot;CreationTime&quot; type=&quot;xsd:dateTime&quot; minOc …"/>
+      <details key="documentation" value="The DISCOVER_MEMORYGRANT rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-memorygrant-row"/>
@@ -1352,7 +1352,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverMemoryusageRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_MEMORYUSAGE rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;MemoryID&quot; name=&quot;MemoryID&quot; type=&quot;xsd:unsignedLong&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;MemoryName&quot; name=&quot;MemoryName&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SPID&quot; name=&quot;SPID&quot; type=&quot;xsd:unsigned …"/>
+      <details key="documentation" value="The DISCOVER_MEMORYUSAGE rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-memoryusage-row"/>
@@ -1505,7 +1505,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverMemStatsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_MEM_STATS rowset contains the following columns. The rowset is sorted on CATALOG_NAME. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;xmlDocument&quot;> &lt;xsd:sequence> &lt;xsd:any /> &lt;/xsd:se …"/>
+      <details key="documentation" value="The DISCOVER_MEM_STATS rowset contains the following columns. The rowset is sorted on CATALOG_NAME."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-mem-stats-row"/>
@@ -1557,7 +1557,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="childTrackerType" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The type of the child memory tracker. The available types are Database, Request, SessionScope, GlobalScope, and SEScope.&lt;375>"/>
+        <details key="documentation" value="The type of the child memory tracker. The available types are Database, Request, SessionScope, GlobalScope, and SEScope."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1597,7 +1597,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ownedStoreMemoryKb" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//LongObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="This column SHOULD&lt;376> indicate the total amount of memory, in kilobytes, that is used by stores."/>
+        <details key="documentation" value="This column SHOULD indicate the total amount of memory, in kilobytes, that is used by stores."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1663,7 +1663,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverObjectActivityRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_OBJECT_ACTIVITY rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;OBJECT_PARENT_PATH&quot; name=&quot;OBJECT_PARENT_PATH&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;OBJECT_ID&quot; name=&quot;OBJECT_ID&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;OBJECT_CPU_TIME_MS&quot; …"/>
+      <details key="documentation" value="The DISCOVER_OBJECT_ACTIVITY rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-object-activity-row"/>
@@ -1827,7 +1827,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverObjectCountersRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_OBJECT_COUNTERS rowset contains the following columns. The rowset is sorted on OBJECT_NAME. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;xmlDocument&quot;> &lt;xsd:sequence> &lt;xsd:any /> &lt;/x …"/>
+      <details key="documentation" value="The DISCOVER_OBJECT_COUNTERS rowset contains the following columns. The rowset is sorted on OBJECT_NAME."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-object-counters-row"/>
@@ -1849,7 +1849,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="moduleName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the module to which the specified instances belong.&lt;380>"/>
+        <details key="documentation" value="The name of the module to which the specified instances belong."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1880,7 +1880,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverObjectMemoryUsageRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_OBJECT_MEMORY_USAGE rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;OBJECT_PARENT_PATH&quot; name=&quot;OBJECT_PARENT_PATH&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;OBJECT_ID&quot; name=&quot;OBJECT_ID&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;OBJECT_MEMORY_SH …"/>
+      <details key="documentation" value="The DISCOVER_OBJECT_MEMORY_USAGE rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-object-memory-usage-row"/>
@@ -2007,7 +2007,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverPartitionDimensionStatRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_PARTITION_DIMENSION_STAT rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;DATABASE_NAME&quot; name=&quot;DATABASE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CUBE_NAME&quot; name=&quot;CUBE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;MEASURE_GROUP_NAME&quot; n …"/>
+      <details key="documentation" value="The DISCOVER_PARTITION_DIMENSION_STAT rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-partition-dimension-stat-row"/>
@@ -2098,7 +2098,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverPartitionStatRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_PARTITION_STAT rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;DATABASE_NAME&quot; name=&quot;DATABASE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CUBE_NAME&quot; name=&quot;CUBE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;MEASURE_GROUP_NAME&quot; name=&quot;MEASU …"/>
+      <details key="documentation" value="The DISCOVER_PARTITION_STAT rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-partition-stat-row"/>
@@ -2159,7 +2159,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverPerformanceCountersRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_PERFORMANCE_COUNTERS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;PERF_COUNTER_NAME&quot; name=&quot;PERF_COUNTER_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;PERF_COUNTER_VALUE&quot; name=&quot;PERF_COUNTER_VALUE&quot; type=&quot;xsd:double&quot; minOccurs=&quot;0&quot; /> &lt;/xsd:sequence> &lt;/xsd:c …"/>
+      <details key="documentation" value="The DISCOVER_PERFORMANCE_COUNTERS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-performance-counters-row"/>
@@ -2171,7 +2171,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="perfCounterName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the performance counter.&lt;325>"/>
+        <details key="documentation" value="The name of the performance counter."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2359,7 +2359,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverSessionsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_SESSIONS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}- [0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;SESSION_ID&quot; name …"/>
+      <details key="documentation" value="The DISCOVER_SESSIONS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-sessions-row"/>
@@ -2647,7 +2647,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverStorageTablesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_STORAGE_TABLES rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;DATABASE_NAME&quot; name=&quot;DATABASE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CUBE_NAME&quot; name=&quot;CUBE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;MEASURE_GROUP_NAME&quot; name=&quot;MEASU …"/>
+      <details key="documentation" value="The DISCOVER_STORAGE_TABLES rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-storage-tables-row"/>
@@ -2748,7 +2748,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverStorageTableColumnsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_STORAGE_TABLE_COLUMNS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;DATABASE_NAME&quot; name=&quot;DATABASE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CUBE_NAME&quot; name=&quot;CUBE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;MEASURE_GROUP_NAME&quot; name …"/>
+      <details key="documentation" value="The DISCOVER_STORAGE_TABLE_COLUMNS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-storage-table-columns-row"/>
@@ -2944,7 +2944,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverStorageTableColumnSegmentsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;DATABASE_NAME&quot; name=&quot;DATABASE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CUBE_NAME&quot; name=&quot;CUBE_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;MEASURE_GROUP_NA …"/>
+      <details key="documentation" value="The DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-storage-table-column-segments-row"/>
@@ -3097,7 +3097,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ispageable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, MAY&lt;351> indicate that the segment is pageable; otherwise, false. If the paging feature is not supported on the server, the value is NULL."/>
+        <details key="documentation" value="When true, MAY indicate that the segment is pageable; otherwise, false. If the paging feature is not supported on the server, the value is NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -3107,7 +3107,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isresident" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, MAY&lt;352> indicate that the segment is resident; otherwise, false. If the paging feature is not supported on the server, the value is NULL."/>
+        <details key="documentation" value="When true, MAY indicate that the segment is resident; otherwise, false. If the paging feature is not supported on the server, the value is NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -3117,7 +3117,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="temperature" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DoubleObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When the segment is pageable and is resident, MAY&lt;353> indicate the scaled numeric value of the frequency of segment access considering the last access time and usage; otherwise, NULL."/>
+        <details key="documentation" value="When the segment is pageable and is resident, MAY indicate the scaled numeric value of the frequency of segment access considering the last access time and usage; otherwise, NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -3127,7 +3127,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastAccessed" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//DateTime">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="For a pageable segment, MAY&lt;354> indicate the last access time of a segment if it has been paged in at least once; otherwise, NULL. For a non-pageable segment, the value is always NULL."/>
+        <details key="documentation" value="For a pageable segment, MAY indicate the last access time of a segment if it has been paged in at least once; otherwise, NULL. For a non-pageable segment, the value is always NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -3138,7 +3138,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverTracesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_TRACES rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;TraceID&quot; name=&quot;TraceID&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;TraceName&quot; name=&quot;TraceName&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;LogFileName&quot; name=&quot;LogFileName&quot; type=&quot;xsd:string&quot; m …"/>
+      <details key="documentation" value="The DISCOVER_TRACES rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-traces-row"/>
@@ -3231,7 +3231,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverTraceColumnsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_TRACE_COLUMNS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;Data&quot; name=&quot;Data&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType>"/>
+      <details key="documentation" value="The DISCOVER_TRACE_COLUMNS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-trace-columns-row"/>
@@ -3254,7 +3254,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverTraceDefinitionProviderinfoRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_TRACE_DEFINITION_PROVIDERINFO rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;Data&quot; name=&quot;Data&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType>"/>
+      <details key="documentation" value="The DISCOVER_TRACE_DEFINITION_PROVIDERINFO rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-trace-definition-providerinfo-row"/>
@@ -3277,7 +3277,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverTraceEventCategoriesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_TRACE_EVENT_CATEGORIES rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;Data&quot; name=&quot;Data&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType>"/>
+      <details key="documentation" value="The DISCOVER_TRACE_EVENT_CATEGORIES rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-trace-event-categories-row"/>
@@ -3300,7 +3300,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverTransactionsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_TRANSACTION rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;TRANSACTION_ID&quot; name=&quot;TRANSACTION_ID&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;TRANSACTION_SESSION_ID&quot; name=&quot;TRANSACTION_SESSION_ID&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;TRANSA …"/>
+      <details key="documentation" value="The DISCOVER_TRANSACTION rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-transactions-row"/>
@@ -3364,7 +3364,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverXeventObjectsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_XEVENT_OBJECTS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;NAME&quot; name= …"/>
+      <details key="documentation" value="The DISCOVER_XEVENT_OBJECTS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-xevent-objects-row"/>
@@ -3467,7 +3467,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverXeventObjectColumnsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_XEVENT_OBJECT_COLUMNS rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;NAME …"/>
+      <details key="documentation" value="The DISCOVER_XEVENT_OBJECT_COLUMNS rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-xevent-object-columns-row"/>
@@ -3590,7 +3590,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverXeventPackagesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_XEVENT_PACKAGES rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;NAME&quot; name …"/>
+      <details key="documentation" value="The DISCOVER_XEVENT_PACKAGES rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-xevent-packages-row"/>
@@ -3900,7 +3900,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverXeventTraceDefinitionRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DISCOVER_XEVENT_TRACE_DEFINITION rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;Data&quot; name=&quot;Data&quot; type=&quot;xsd:string&quot; minOccurs=&quot;1&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType>"/>
+      <details key="documentation" value="The DISCOVER_XEVENT_TRACE_DEFINITION rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="discover-xevent-trace-definition-row"/>
@@ -4122,7 +4122,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionImpersonatedUserName"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String" unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The impersonated user name, if any.&lt;315>"/>
+        <details key="documentation" value="The impersonated user name, if any."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -4157,7 +4157,7 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//LongObject"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The time, in milliseconds, that it took for the last command to execute. If a command is in progress, the column returns the elapsed time, in milliseconds, since the start of the command.&lt;318>"/>
+        <details key="documentation" value="The time, in milliseconds, that it took for the last command to execute. If a command is in progress, the column returns the elapsed time, in milliseconds, since the start of the command."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -4470,7 +4470,7 @@
         <details key="required" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The location of the backup file.&lt;326>"/>
+        <details key="documentation" value="The location of the backup file."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -4891,7 +4891,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="perfCounterName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the performance counter.&lt;325>"/>
+        <details key="documentation" value="The name of the performance counter."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>

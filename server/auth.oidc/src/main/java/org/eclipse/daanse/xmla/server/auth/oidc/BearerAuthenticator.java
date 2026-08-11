@@ -64,9 +64,10 @@ import com.nimbusds.jwt.proc.DefaultJWTProcessor;
  * server.
  * <p>
  * The token's own claims become the caller's {@link Claims}, so the groups an
- * identity provider ships are available to a {@link RoleMapping} without a
- * second lookup. A deployment that keeps its roles elsewhere registers a
- * {@link RoleProvider}, and both sources are used.
+ * identity provider ships are available to a
+ * {@link org.eclipse.daanse.xmla.api.auth.RoleMapping} without a second lookup. A
+ * deployment that keeps its roles elsewhere registers a
+ * {@link org.eclipse.daanse.xmla.api.auth.RoleProvider}, and both sources are used.
  */
 @Component(service = XmlaAuthenticator.class, configurationPolicy = ConfigurationPolicy.REQUIRE, property = "service.ranking:Integer="
         + AuthRanking.BEARER)

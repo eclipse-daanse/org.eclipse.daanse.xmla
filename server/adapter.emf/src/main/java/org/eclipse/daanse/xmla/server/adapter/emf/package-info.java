@@ -16,12 +16,12 @@
  * EMF-based XMLA server adapter.
  *
  * <p>
- * Serves a Discover request from a byte stream:
- * {@link org.eclipse.daanse.xmla.server.adapter.emf.EmfXmlaApiAdapter} reads
- * the envelope, {@code DiscoverRequests} builds the api request record from the
- * restrictions, and {@code RowConverters} turns the answer into the row objects
- * the model describes. The last two are generated from the model and the api,
- * so a column can only be lost by a change that stops the build.
+ * {@link org.eclipse.daanse.xmla.server.adapter.emf.EmfXmlaAdapter} reads one SOAP
+ * envelope off a stream and writes one back: session headers first, then identity, then
+ * the body dispatched to the connector, whose rows are already the EObjects the model
+ * describes. There is no record layer and no converter between.
+ * {@link org.eclipse.daanse.xmla.server.adapter.emf.AccessPolicy} decides what an
+ * anonymous caller may ask for.
  */
 @org.osgi.annotation.bundle.Export
 @org.osgi.annotation.versioning.Version("0.0.1")

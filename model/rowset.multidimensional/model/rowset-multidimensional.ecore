@@ -149,7 +149,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MdschemaCubesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The MDSCHEMA_CUBES rowset contains the following columns. The rowset is sorted on CATALOG_NAME, SCHEMA_NAME, and CUBE_NAME. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}- [0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xs …"/>
+      <details key="documentation" value="The MDSCHEMA_CUBES rowset contains the following columns. The rowset is sorted on CATALOG_NAME, SCHEMA_NAME, and CUBE_NAME."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="mdschema-cubes-row"/>
@@ -203,7 +203,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdOn" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//DateTime">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The date and time the cube was created.&lt;222>"/>
+        <details key="documentation" value="The date and time the cube was created."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -223,7 +223,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaUpdatedBy" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the user who last updated the cube’s schema.&lt;223>"/>
+        <details key="documentation" value="The name of the user who last updated the cube’s schema."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -243,7 +243,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataUpdateDBy" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the user who last updated the data of the cube.&lt;224>"/>
+        <details key="documentation" value="The name of the user who last updated the data of the cube."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -264,7 +264,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDrillThroughEnabled"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, indicates that the cube has drillthrough enabled; otherwise, false.&lt;225>"/>
+        <details key="documentation" value="When true, indicates that the cube has drillthrough enabled; otherwise, false."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -324,7 +324,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cubeSource" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedShortObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A bitmask with one of these valid values:0x01-Cube0x02-Dimension&lt;226>"/>
+        <details key="documentation" value="A bitmask with one of these valid values:0x01-Cube0x02-Dimension"/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -335,7 +335,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferredQueryPatterns"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedShortObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A bitmask&lt;227> that describes query pattern client applications can utilize for higher performance. Valid values are:0x00 – Use CrossJoin function to create symmetric sets on an axis. This is the default value for the 0th bit when Analysis Services is running in Traditional mode.0x01 – Use DrillDownMember to create a more restrictive, asymmetric axis. …"/>
+        <details key="documentation" value="A bitmask that describes query pattern client applications can utilize for higher performance. Valid values are:0x00 – Use CrossJoin function to create symmetric sets on an axis. This is the default value for the 0th bit when Analysis Services is running in Traditional mode.0x01 – Use DrillDownMember to create a more restrictive, asymmetric axis. …"/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -470,7 +470,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVirtual" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, indicates that the dimension is virtual; otherwise false.&lt;231>"/>
+        <details key="documentation" value="When true, indicates that the dimension is virtual; otherwise false."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -522,7 +522,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MdschemaFunctionsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The MDSCHEMA_FUNCTIONS rowset contains the following columns. The PARAMETERINFO column is a nested rowset. The following table describes the columns of that rowset. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;FUNCTION_NAME&quot; name=&quot;FUNCTION_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;DESCRIPTION&quot; name=&quot;D …"/>
+      <details key="documentation" value="The MDSCHEMA_FUNCTIONS rowset contains the following columns. The PARAMETERINFO column is a nested rowset. The following table describes the columns of that rowset. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="mdschema-functions-row"/>
@@ -729,7 +729,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hierarchyName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the hierarchy. This column MAY&lt;235> be blank if there is only a single hierarchy in the dimension."/>
+        <details key="documentation" value="The name of the hierarchy. This column MAY be blank if there is only a single hierarchy in the dimension."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -829,7 +829,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVirtual" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, indicates that the hierarchy is a virtual hierarchy; otherwise false.&lt;236>"/>
+        <details key="documentation" value="When true, indicates that the hierarchy is a virtual hierarchy; otherwise false."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -850,7 +850,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionUniqueSettings"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//IntObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A list of values that specifies which columns contain unique values:&lt;237>0x00000001 - Member key columns establish uniqueness.0x00000002 - Member name columns establish uniqueness."/>
+        <details key="documentation" value="A list of values that specifies which columns contain unique values:0x00000001 - Member key columns establish uniqueness.0x00000002 - Member name columns establish uniqueness."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -861,7 +861,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionMasterUniqueName"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The unique name of the master dimension.&lt;238>"/>
+        <details key="documentation" value="The unique name of the master dimension."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -871,7 +871,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionIsVisible" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, indicates that the dimension is visible; otherwise false.&lt;239>"/>
+        <details key="documentation" value="When true, indicates that the dimension is visible; otherwise false."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -891,7 +891,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionIsShared" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="When true, indicates that the dimension is shared; otherwise false.&lt;240>"/>
+        <details key="documentation" value="When true, indicates that the dimension is shared; otherwise false."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -963,7 +963,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MdschemaInputDatasourcesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The MDSCHEMA_INPUT_DATASOURCES rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;CATALOG_NAME&quot; name=&quot;CATALOG_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SCHEMA_NAME&quot; name=&quot;SCHEMA_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;DATASOURCE_NAME&quot; name=&quot;DAT …"/>
+      <details key="documentation" value="The MDSCHEMA_INPUT_DATASOURCES rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="mdschema-input-datasources-row"/>
@@ -1344,7 +1344,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="levelCaption" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The caption of the hierarchy.&lt;244>"/>
+        <details key="documentation" value="The caption of the hierarchy."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1521,7 +1521,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MdschemaMeasuregroupsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The MDSCHEMA_MEASUREGROUPS rowset contains the following columns. This schema rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;CATALOG_NAME&quot; name=&quot;CATALOG_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;SCHEMA_NAME&quot; name=&quot;SCHEMA_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;CUBE_NAME&quot; name=&quot;CUBE_ …"/>
+      <details key="documentation" value="The MDSCHEMA_MEASUREGROUPS rowset contains the following columns. This schema rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="mdschema-measuregroups-row"/>
@@ -1818,7 +1818,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="numericScale" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//ShortObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The number of digits to the right of the decimal point if the measure object's type indicator is Numeric, Decimal or DateTime. Otherwise, this value is NULL.&lt;247>"/>
+        <details key="documentation" value="The number of digits to the right of the decimal point if the measure object's type indicator is Numeric, Decimal or DateTime. Otherwise, this value is NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1910,7 +1910,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="measureDisplayFolder" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The display folder of the measure.&lt;248>"/>
+        <details key="documentation" value="The display folder of the measure."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2026,7 +2026,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memberType" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//IntObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The type of the member.&lt;255>1 - Is a regular member.2 - Is the All member.3 - Is a measure.4 - Is a formula.0 - Is of unknown type."/>
+        <details key="documentation" value="The type of the member.1 - Is a regular member.2 - Is the All member.3 - Is a measure.4 - Is a formula.0 - Is of unknown type."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2242,7 +2242,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="propertyCaption" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A label or caption associated with the property.&lt;251>"/>
+        <details key="documentation" value="A label or caption associated with the property."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2293,7 +2293,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="numericScale" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//ShortObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The number of digits to the right of the decimal point if the measure object's type indicator is Numeric, Decimal or DateTime. Otherwise, this value is NULL.&lt;252>"/>
+        <details key="documentation" value="The number of digits to the right of the decimal point if the measure object's type indicator is Numeric, Decimal or DateTime. Otherwise, this value is NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2724,7 +2724,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cubeSource" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedShortObject"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A bitmask with one of these valid values:0x01-Cube0x02-Dimension&lt;226>"/>
+        <details key="documentation" value="A bitmask with one of these valid values:0x01-Cube0x02-Dimension"/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2942,7 +2942,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hierarchyName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the hierarchy. This column MAY&lt;235> be blank if there is only a single hierarchy in the dimension."/>
+        <details key="documentation" value="The name of the hierarchy. This column MAY be blank if there is only a single hierarchy in the dimension."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -3517,7 +3517,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="memberType" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//IntObject"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The type of the member.&lt;255>1 - Is a regular member.2 - Is the All member.3 - Is a measure.4 - Is a formula.0 - Is of unknown type."/>
+        <details key="documentation" value="The type of the member.1 - Is a regular member.2 - Is the All member.3 - Is a measure.4 - Is a formula.0 - Is of unknown type."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>

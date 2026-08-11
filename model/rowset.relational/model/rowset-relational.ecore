@@ -78,7 +78,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DbschemaCatalogsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DBSCHEMA_CATALOGS rowset contains the following columns. The rowset is sorted on CATALOG_NAME. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;CATALOG_NAME&quot; name=&quot;CATALOG_NAME&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;DESCRIPTION&quot; name=&quot;DESCRIPTION&quot; type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /> &lt;xsd:element sql:field=&quot;ROLES&quot; name=&quot;ROLES&quot; typ …"/>
+      <details key="documentation" value="The DBSCHEMA_CATALOGS rowset contains the following columns. The rowset is sorted on CATALOG_NAME."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="dbschema-catalogs-row"/>
@@ -111,7 +111,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="roles" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A comma-delimited list of roles to which the current user belongs.&lt;202>"/>
+        <details key="documentation" value="A comma-delimited list of roles to which the current user belongs."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -212,7 +212,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clientCacheRefreshPolicy"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A hint to the client applications about when their data caches, if any, SHOULD&lt;203> be refreshed after a Refresh command changes the data on the server. The possible values are as follows:0 – Client applications are notified to refresh their caches only if a user query/interaction needs newer data.-1 (default) – Client applications are notified to allow all background cache refreshes."/>
+        <details key="documentation" value="A hint to the client applications about when their data caches, if any, SHOULD be refreshed after a Refresh command changes the data on the server. The possible values are as follows:0 – Client applications are notified to refresh their caches only if a user query/interaction needs newer data.-1 (default) – Client applications are notified to allow all background cache refreshes."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -488,7 +488,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DbschemaColumnsRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DBSCHEMA_COLUMNS rowset contains the following columns. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;TABLE_CATALOG&quot; name=&quot;TABLE_CATALOG&quot; type=&quot;xs …"/>
+      <details key="documentation" value="The DBSCHEMA_COLUMNS rowset contains the following columns."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="dbschema-columns-row"/>
@@ -553,7 +553,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="columnHasDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Indicates whether the column has a default. If true, the column has a default. If false, the column does not have a default.&lt;208>"/>
+        <details key="documentation" value="Indicates whether the column has a default. If true, the column has a default. If false, the column does not have a default."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -563,7 +563,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="columnDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The default value of the column.&lt;209>"/>
+        <details key="documentation" value="The default value of the column."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -583,7 +583,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNullable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Indicates whether the column is nullable.&lt;210> If true, indicates that the column is nullable. Otherwise, false."/>
+        <details key="documentation" value="Indicates whether the column is nullable. If true, indicates that the column is nullable. Otherwise, false."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -644,7 +644,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="numericScale" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//ShortObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The number of digits to the right of the decimal point if the column's type indicator is DBTYPE_DECIMAL, DBTYPE_NUMERIC, or DBTYPE_VARNUMERIC. Otherwise, this is NULL.&lt;211>"/>
+        <details key="documentation" value="The number of digits to the right of the decimal point if the column's type indicator is DBTYPE_DECIMAL, DBTYPE_NUMERIC, or DBTYPE_VARNUMERIC. Otherwise, this is NULL."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -674,7 +674,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="characterSetSchema" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The unqualified schema name. NULL if the provider does not support schemas.&lt;212>"/>
+        <details key="documentation" value="The unqualified schema name. NULL if the provider does not support schemas."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1862,7 +1862,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DbschemaProviderTypesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DBSCHEMA_PROVIDER_TYPES rowset contains the following columns. The rowset is not sorted. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;TYPE_NAME&quot; …"/>
+      <details key="documentation" value="The DBSCHEMA_PROVIDER_TYPES rowset contains the following columns. The rowset is not sorted."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="dbschema-provider-types-row"/>
@@ -1875,7 +1875,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The server-specific data type name.&lt;213>"/>
+        <details key="documentation" value="The server-specific data type name."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1935,7 +1935,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNullable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A Boolean that indicates whether the data type is nullable.True indicates that the data type is nullable.False indicates that the data type is not nullable.NULL indicates that it is not known whether the data type is nullable.&lt;214>"/>
+        <details key="documentation" value="A Boolean that indicates whether the data type is nullable.True indicates that the data type is nullable.False indicates that the data type is not nullable.NULL indicates that it is not known whether the data type is nullable."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1975,7 +1975,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedPrecScale" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A Boolean that indicates whether the data type has a fixed precision and scale.True indicates that the data type has a fixed precision and scale.False indicates that the data type does not have a fixed precision and scale.&lt;216>"/>
+        <details key="documentation" value="A Boolean that indicates whether the data type has a fixed precision and scale.True indicates that the data type has a fixed precision and scale.False indicates that the data type does not have a fixed precision and scale."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2055,7 +2055,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isLong" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A Boolean that indicates whether the data type is a binary large object (BLOB) and has very long data.True indicates that the data type is a BLOB that contains very long data; the definition of very long data is server-specific.&lt;218>False indicates that the data type is a BLOB that does not contain very long data or that is not a BLOB.This column value determines the setting of the DBCOLUMNFLAGS_ISLONG flag that is returned by GetColumnInfo in IColumnsInfo and the setting of the DBCOLUMNFLAGS_ISLONG flag that is returned by GetParameterInfo in ICommandWithParameters."/>
+        <details key="documentation" value="A Boolean that indicates whether the data type is a binary large object (BLOB) and has very long data.True indicates that the data type is a BLOB that contains very long data; the definition of very long data is server-specific.False indicates that the data type is a BLOB that does not contain very long data or that is not a BLOB.This column value determines the setting of the DBCOLUMNFLAGS_ISLONG flag that is returned by GetColumnInfo in IColumnsInfo and the setting of the DBCOLUMNFLAGS_ISLONG flag that is returned by GetParameterInfo in ICommandWithParameters."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2065,7 +2065,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bestMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A Boolean that indicates whether the data type is the best match.A value of true indicates that the data type is the best match between all data types in the data store and the OLE DB data type that is indicated by the value in the DATA_TYPE column. For more information, see [MSDN-OLEDB].A value of false indicates that the data type is not the best match.For each set of rows in which the value of the DATA_TYPE column is the same, the BEST_MATCH column is set to true in only one row.&lt;220>"/>
+        <details key="documentation" value="A Boolean that indicates whether the data type is the best match.A value of true indicates that the data type is the best match between all data types in the data store and the OLE DB data type that is indicated by the value in the DATA_TYPE column. For more information, see [MSDN-OLEDB].A value of false indicates that the data type is not the best match.For each set of rows in which the value of the DATA_TYPE column is the same, the BEST_MATCH column is set to true in only one row."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -2372,7 +2372,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DbschemaTablesRow">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="The DBSCHEMA_TABLES rowset contains the following columns. The response has the following definition. &lt;xsd:element name=&quot;root&quot;> &lt;xsd:complexType> &lt;xsd:sequence minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;> &lt;xsd:element name=&quot;row&quot; type=&quot;row&quot; /> &lt;/xsd:sequence> &lt;/xsd:complexType> &lt;/xsd:element> &lt;xsd:simpleType name=&quot;uuid&quot;> &lt;xsd:restriction base=&quot;xsd:string&quot;> &lt;xsd:pattern value=&quot;[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}&quot; /> &lt;/xsd:restriction> &lt;/xsd:simpleType> &lt;xsd:complexType name=&quot;row&quot;> &lt;xsd:sequence> &lt;xsd:element sql:field=&quot;TABLE_CATALOG&quot; name=&quot;TABLE_CATALOG&quot; type=&quot;xsd …"/>
+      <details key="documentation" value="The DBSCHEMA_TABLES rowset contains the following columns."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="dbschema-tables-row"/>
@@ -4126,7 +4126,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bestMatch" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A Boolean that indicates whether the data type is the best match.A value of true indicates that the data type is the best match between all data types in the data store and the OLE DB data type that is indicated by the value in the DATA_TYPE column. For more information, see [MSDN-OLEDB].A value of false indicates that the data type is not the best match.For each set of rows in which the value of the DATA_TYPE column is the same, the BEST_MATCH column is set to true in only one row.&lt;220>"/>
+        <details key="documentation" value="A Boolean that indicates whether the data type is the best match.A value of true indicates that the data type is the best match between all data types in the data store and the OLE DB data type that is indicated by the value in the DATA_TYPE column. For more information, see [MSDN-OLEDB].A value of false indicates that the data type is not the best match.For each set of rows in which the value of the DATA_TYPE column is the same, the BEST_MATCH column is set to true in only one row."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
