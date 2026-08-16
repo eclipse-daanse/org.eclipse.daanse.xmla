@@ -60,6 +60,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DISCOVER_DATASOURCES"/>
       <details key="guid" value="06C03D41-F66D-49F3-B1B8-987F7AF4CF18"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSourceName" lowerBound="1"
@@ -148,6 +150,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DISCOVER_ENUMERATORS"/>
       <details key="guid" value="55A9E78B-ACCB-45B4-95A6-94C5065617A7"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumName" lowerBound="1"
@@ -225,6 +229,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DISCOVER_KEYWORDS"/>
       <details key="guid" value="1426C443-4CDD-4A40-8F45-572FAB9BBAA1"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" lowerBound="1"
@@ -250,6 +256,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DISCOVER_LITERALS"/>
       <details key="guid" value="C3EF5ECB-0A07-4665-A140-B075722DBDC2"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="literalName" lowerBound="1"
@@ -327,6 +335,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DISCOVER_PROPERTIES"/>
       <details key="guid" value="4B40ADFB-8B09-4758-97BB-636E8AE97BCF"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="propertyName" lowerBound="1"
@@ -403,6 +413,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DISCOVER_SCHEMA_ROWSETS"/>
       <details key="guid" value="EEA0302B-7922-4992-8991-0E605D0E5593"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaName" lowerBound="1"

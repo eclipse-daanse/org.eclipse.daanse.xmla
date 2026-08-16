@@ -153,12 +153,10 @@ public final class XmlaMessageCodec {
     }
 
     /**
-     * As above, and reporting an error inside a successful response.
-     * <p>
-     * The second of XMLA's two ways to say something went wrong: HTTP 200, a
-     * well-formed {@code <root>} with the inline schema in it, then an empty
-     * {@code <Exception/>} followed by {@code <Messages>}. Unlike a fault it is not
-     * an either/or - a response may carry rows and a message together.
+     * As above, and reporting an error inside a successful response: HTTP 200, a
+     * well-formed {@code <root>} with its inline schema, then an empty
+     * {@code <Exception/>} and {@code <Messages>}. Unlike a fault this is not an
+     * either/or - rows and a message travel together.
      *
      * @param messages a {@code Messages} EObject, or {@code null} when nothing went
      *                 wrong
@@ -179,6 +177,12 @@ public final class XmlaMessageCodec {
             body.writeStartElement(XmlaNamespaces.ROWSET, "root");
             body.writeDefaultNamespace(XmlaNamespaces.ROWSET);
             body.writeNamespace(XmlaNamespaces.XSI_PREFIX, XmlaNamespaces.XSI);
+            // DISCOVER_SCHEMA_ROWSETS writes type names as element content -
+            // <Type>xsd:string</Type> - and it writes them after the inline schema, whose
+            // own xsd binding has gone out of scope by then. A client that resolves the
+            // prefix for real finds nothing and stops. Binding it here costs one
+            // attribute; SSAS binds it on this element too.
+            body.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
             body.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
 
             RowsetSchemaWriter.write(body, rowEClass);
@@ -197,12 +201,9 @@ public final class XmlaMessageCodec {
     }
 
     /**
-     * The in-band {@code <Messages>}, and the {@code <Exception/>} that may precede
-     * it.
-     * <p>
-     * The marker is not unconditional: {@code <Exception/>} says something failed,
-     * so it accompanies an {@code <Error>} but not a response carrying only a
-     * {@code <Warning>}.
+     * The in-band {@code <Messages>}, preceded by {@code <Exception/>} only where
+     * something failed: an {@code <Error>} gets the marker, a lone
+     * {@code <Warning>} does not.
      */
     private static void writeMessages(XMLStreamWriter out, EObject messages) throws XMLStreamException {
         if (messages == null) {
@@ -263,6 +264,10 @@ public final class XmlaMessageCodec {
                 body.writeStartElement(XmlaNamespaces.MDDATASET, "root");
                 body.writeDefaultNamespace(XmlaNamespaces.MDDATASET);
                 body.writeNamespace(XmlaNamespaces.XSI_PREFIX, XmlaNamespaces.XSI);
+                // OlapInfo names each column's type as xsd:string, xsd:int and so on, so the
+                // prefix has to be bound here. Without it the attribute values point at
+                // nothing and a client cannot read the axis - MSOLAP says so and stops.
+                body.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
                 new EcoreXmlWriter(XmlaNamespaces.MDDATASET).writeContent(body, result);
                 writeMessages(body, messages);
                 body.writeEndElement();
@@ -297,6 +302,11 @@ public final class XmlaMessageCodec {
         out.writeStartElement(XmlaNamespaces.ROWSET, "root");
         out.writeDefaultNamespace(XmlaNamespaces.ROWSET);
         out.writeNamespace(XmlaNamespaces.XSI_PREFIX, XmlaNamespaces.XSI);
+        // Bound for the same reason as on the Discover root, and because a variant cell
+        // names its own type as xsi:type="xsd:int" - a QName whose prefix must resolve.
+        out.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
+        // writeMessages below may emit EX:Exception and EX:Messages into this root.
+        out.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
 
         if (rowset.isSchemaIncluded()) {
             List<RowsetSchemaWriter.Column> columns = new java.util.ArrayList<>();
@@ -350,6 +360,8 @@ public final class XmlaMessageCodec {
                 out.writeStartElement(XmlaNamespaces.MDDATASET, "root");
                 out.writeDefaultNamespace(XmlaNamespaces.MDDATASET);
                 out.writeNamespace(XmlaNamespaces.XSI_PREFIX, XmlaNamespaces.XSI);
+                // As above: the axis types are written as xsd:-qualified names.
+                out.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
                 new EcoreXmlWriter(XmlaNamespaces.MDDATASET).writeContent(out, entry);
                 out.writeEndElement();
             }

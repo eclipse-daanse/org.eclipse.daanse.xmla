@@ -72,20 +72,40 @@ public final class RowsetSchemaWriter {
      *                               text
      */
     public static String xsdTypeOf(EStructuralFeature feature) {
+        if (feature instanceof EReference) {
+            return null; // a nested rowset: the schema inlines its complexType instead
+        }
+        String resolved = resolveXsdType(feature);
+        if (resolved != null) {
+            return resolved;
+        }
+        throw new IllegalStateException("no XSD type for feature " + feature.getEContainingClass().getName() + "."
+                + feature.getName() + " of type " + feature.getEType().getName()
+                + "; add an xsdType detail or map the datatype");
+    }
+
+    /**
+     * The XSD type for one column, or {@code null} when the model does not
+     * determine it.
+     * <p>
+     * The asking form of {@link #xsdTypeOf}, for the one caller that has a sensible
+     * answer for "unknown" and must not fail the whole response over it.
+     */
+    static String xsdTypeOrNull(EStructuralFeature feature) {
+        return feature instanceof EReference ? null : resolveXsdType(feature);
+    }
+
+    private static String resolveXsdType(EStructuralFeature feature) {
         String override = detail(feature.getEAnnotation(RowsetCatalog.ANNOTATION), "xsdType");
         if (override != null) {
             return override;
-        }
-        if (feature instanceof EReference) {
-            return null; // a nested rowset: the schema inlines its complexType instead
         }
         EClassifier type = feature.getEType();
         if (type instanceof EEnum) {
             String enumType = detail(type.getEAnnotation(RowsetCatalog.ANNOTATION), "xsdType");
             return enumType != null ? enumType : "xsd:string";
         }
-        String name = type.getName();
-        String mapped = XMLTYPE_TO_XSD.get(name);
+        String mapped = XMLTYPE_TO_XSD.get(type.getName());
         if (mapped != null) {
             return mapped;
         }
@@ -93,11 +113,7 @@ public final class RowsetSchemaWriter {
         // type, and it lives in the rowset namespace rather than the XSD one, so it
         // has no prefix.
         String local = ExtendedMetaData.INSTANCE.getName(type);
-        if (local != null && !local.isEmpty()) {
-            return local;
-        }
-        throw new IllegalStateException("no XSD type for feature " + feature.getEContainingClass().getName() + "."
-                + feature.getName() + " of type " + name + "; add an xsdType detail or map the datatype");
+        return local != null && !local.isEmpty() ? local : null;
     }
 
     /** The element name this feature takes on the wire. */

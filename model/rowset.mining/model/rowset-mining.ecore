@@ -33,6 +33,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_COLUMNS"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="3ADD8A78-D8B9-11D2-8D2A-00E029154FDE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -460,6 +463,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_FUNCTIONS"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="3ADD8A79-D8B9-11D2-8D2A-00E029154FDE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serviceName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -548,6 +554,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_MODELS"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="3ADD8A77-D8B9-11D2-8D2A-00E029154FDE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -757,6 +766,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_MODEL_CONTENT"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="3ADD8A76-D8B9-11D2-8D2A-00E029154FDE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -977,6 +989,10 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_MODEL_CONTENT_PMML"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="4290B2D5-0E9C-4AA7-9369-98C95CFD9D13"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
+      <details key="guidSharedWith" value="DMSCHEMA_MINING_MODEL_XML - see the note there."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -1062,6 +1078,10 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_MODEL_XML"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="4290B2D5-0E9C-4AA7-9369-98C95CFD9D13"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
+      <details key="guidSharedWith" value="DMSCHEMA_MINING_MODEL_CONTENT_PMML. This is not a mistake and not ours: a real server advertises the one GUID on both rows, and ADOMD.NET declares it twice under two field names. A client that resolves a rowset by GUID can therefore only ever reach one of the two, whichever its lookup table wrote last; by name both are reachable. Dropping the GUID from one of them would not fix that and would make that one unreachable by GUID as well."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -1147,6 +1167,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_SERVICES"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="3ADD8A95-D8B9-11D2-8D2A-00E029154FDE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serviceName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1441,6 +1464,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_SERVICE_PARAMETERS"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="3ADD8A75-D8B9-11D2-8D2A-00E029154FDE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serviceName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1559,6 +1585,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_STRUCTURES"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="883269F3-0CAD-462F-B6F5-E88A72418C4B"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="structureCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1724,6 +1753,9 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DMSCHEMA_MINING_STRUCTURE_COLUMNS"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="9952E836-BFBF-4D1F-8535-9B67DBD9DDFE"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="structureCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

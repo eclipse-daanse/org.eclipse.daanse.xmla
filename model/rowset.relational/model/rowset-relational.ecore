@@ -87,6 +87,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DBSCHEMA_CATALOGS"/>
       <details key="guid" value="C8B52211-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -497,6 +499,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DBSCHEMA_COLUMNS"/>
       <details key="guid" value="C8B52214-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tableCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1871,6 +1875,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DBSCHEMA_PROVIDER_TYPES"/>
       <details key="guid" value="C8B5222C-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -2381,6 +2387,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="DBSCHEMA_TABLES"/>
       <details key="guid" value="C8B52229-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tableCatalog" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -4791,6 +4799,94 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="VIEW_NAME"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DbschemaTrusteeRow">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The trustees defined on the data store. Beyond OLE DB Appendix B: TRUSTEE is a later addition and is not listed there, so the four columns below are the ones System.Data.OleDb documents as its restriction columns. No source reachable from here states a wider result-column list, and none is invented; a provider that knows of more adds them."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="dbschema-trustee-row"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DBSCHEMA_TRUSTEE"/>
+      <details key="guid" value="C8B522EF-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="source" value="OLEDB-BEYOND-APPENDIX-B"/>
+      <details key="specUrl" value="https://learn.microsoft.com/en-us/dotnet/api/system.data.oledb.oledbschemaguid.trustee"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteeName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_NAME"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteeGuid" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_GUID"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteePropid" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_PROPID"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteeType" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_TYPE"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DbschemaTrusteeRestrictions">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="What a DBSCHEMA_TRUSTEE request may be restricted by. The feature order is the order the RestrictionsMask bitmask is defined over; the restriction name on the wire is the ExtendedMetaData name; the type is the feature type."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DbschemaTrusteeRestrictions"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DBSCHEMA_TRUSTEE"/>
+      <details key="role" value="restrictions"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteeName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+         unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_NAME"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteeGuid" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+         unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_GUID"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteePropid" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject"
+         unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_PROPID"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trusteeType" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject"
+         unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TRUSTEE_TYPE"/>
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>

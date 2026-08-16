@@ -50,13 +50,20 @@ public final class SoapEnvelopeWriter {
         out.writeStartElement(XmlaNamespaces.SOAP_ENV, "Envelope");
         out.writeNamespace(XmlaNamespaces.SOAP_ENV_PREFIX, XmlaNamespaces.SOAP_ENV);
 
-        out.writeStartElement(XmlaNamespaces.SOAP_ENV, "Header");
-        for (EObject header : headers) {
-            // Not every header is in the XMLA namespace: ProtocolCapabilities belongs
-            // to the engine namespace, and a client looks for it there.
-            new EcoreXmlWriter(namespaceOf(header)).write(out, header, wireNameOf(header));
+        // No headers, no Header element, which is what Analysis Services writes. An
+        // empty <soap:Header/> is one self-closing node: a reader that pairs
+        // ReadStartElement with ReadEndElement consumes it on the first call and takes
+        // the next end element with the second, and is one element out of step for the
+        // rest of the document.
+        if (!headers.isEmpty()) {
+            out.writeStartElement(XmlaNamespaces.SOAP_ENV, "Header");
+            for (EObject header : headers) {
+                // Not every header is in the XMLA namespace: ProtocolCapabilities belongs
+                // to the engine namespace, and a client looks for it there.
+                new EcoreXmlWriter(namespaceOf(header)).write(out, header, wireNameOf(header));
+            }
+            out.writeEndElement();
         }
-        out.writeEndElement();
 
         out.writeStartElement(XmlaNamespaces.SOAP_ENV, "Body");
         body.write(out);

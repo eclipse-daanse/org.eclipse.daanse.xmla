@@ -36,18 +36,16 @@ import com.sun.net.httpserver.HttpHandler;
  * The XMLA endpoint: HTTP in, HTTP out, nothing in between held in memory.
  * <p>
  * The response streams: the adapter writes straight onto the socket, so a
- * result of any size costs one row at a time. A status code cannot be taken
- * back once the first byte is out, so the {@code 200} is sent lazily, on the
- * first write - everything decided before then, such as an authentication
- * challenge or a connector demanding a login, still chooses its own status
- * line.
+ * result of any size costs one row at a time. The {@code 200} is sent lazily on
+ * the first write, since a status cannot be taken back once a byte is out -
+ * anything decided before then still picks its own status line.
  * <p>
- * Authentication is an {@link AuthenticationChain} and permissive at this
- * layer: a request nobody claims runs anonymously, because XMLA clients probe
- * {@code DISCOVER_PROPERTIES} before they log in. The refusal, if any, comes
- * from the backend as {@link AuthenticationRequiredException} and is answered
- * {@code 401} with the challenge of every mechanism that has one, or
- * {@code 403} when none does.
+ * Authentication is an {@link AuthenticationChain} and permissive here: a
+ * request nobody claims runs anonymously, because clients probe
+ * {@code DISCOVER_PROPERTIES} before they log in. The refusal comes from the
+ * backend as {@link AuthenticationRequiredException} and is answered
+ * {@code 401} with the challenge of every mechanism that has one, {@code 403}
+ * when none does.
  */
 public class EmfXmlaHttpHandler implements HttpHandler {
 
@@ -154,6 +152,12 @@ public class EmfXmlaHttpHandler implements HttpHandler {
             }
         } catch (IOException | RuntimeException e) {
             LOGGER.error("failed while serving {}", exchange.getRequestURI(), e);
+            throw e;
+        } catch (Error e) {
+            // An Error is not this handler's to recover from, but dropping it here would
+            // close the connection with nothing written and nothing logged - the client
+            // sees a reset and the server looks healthy. It is logged and rethrown.
+            LOGGER.error("error while serving {}", exchange.getRequestURI(), e);
             throw e;
         } finally {
             exchange.close();

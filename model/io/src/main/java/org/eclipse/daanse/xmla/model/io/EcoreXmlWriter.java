@@ -13,10 +13,6 @@
  */
 package org.eclipse.daanse.xmla.model.io;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
@@ -45,16 +41,12 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 public final class EcoreXmlWriter {
 
     /**
-     * XMLA writes timestamps without a zone offset and with whatever sub-second
-     * precision the value carries, as in {@code 2024-05-13T12:24:33.956667}.
-     * <p>
-     * Both halves are stated explicitly: {@code LocalDateTime.toString()} omits
-     * seconds that are zero, which some clients reject, and a fixed
-     * {@code HH:mm:ss} pattern truncates the fraction.
+     * The XSD types a client reads as text, and the only ones an empty element may
+     * stand in. {@code uuid} is deliberately absent although it is a string
+     * restriction: an empty one is still not a GUID.
      */
-    private static final DateTimeFormatter XMLA_DATE_TIME = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
-            .appendFraction(java.time.temporal.ChronoField.NANO_OF_SECOND, 0, 9, true).toFormatter();
+    private static final java.util.Set<String> TEXT_XSD_TYPES = java.util.Set.of("xsd:string", "xsd:anyType",
+            "xsd:anyURI");
 
     private final String namespace;
 
@@ -195,6 +187,13 @@ public final class EcoreXmlWriter {
         }
         String text = asString(feature, value);
         if (text == null || text.isEmpty()) {
+            if (!isTextColumn(feature)) {
+                // An empty element is not an empty value to a client that has been told the
+                // column is a number, a date or a uuid: it parses "" against that type, and
+                // ADOMD stores the resulting FormatException as the cell's value instead of
+                // throwing. Leaving the element out is what says NULL.
+                return;
+            }
             // <DESCRIPTION/>, not <DESCRIPTION></DESCRIPTION>. The two are the same XML
             // to a parser, but SSAS writes the short one and responses are compared byte
             // for byte.
@@ -213,18 +212,27 @@ public final class EcoreXmlWriter {
     }
 
     /**
-     * The element name a contained object takes.
+     * Whether an empty value may travel as an empty element - only where the client
+     * reads the column as text.
      * <p>
-     * Two cases where the feature's own name is not it:
-     * <ul>
-     * <li>the feature's type is abstract, so the concrete subtype decides - an Axis
-     * holds a SetType, and what goes on the wire is {@code <Members>},
-     * {@code <Tuples>}, {@code <CrossProduct>} or {@code <Union>};</li>
-     * <li>the model says {@code elementNameFrom}, meaning the name is a value the
-     * object carries rather than anything the schema fixes - a CellInfoItem is
-     * {@code <FORMATTED_VALUE>} because that is the property the client asked
-     * for.</li>
-     * </ul>
+     * For a number, a date or a {@code uuid} an empty element is not an empty value
+     * but unparseable input: a client keeps the parse failure as the cell's value
+     * rather than throwing, so the row arrives looking valid and holding an error.
+     * Absence is what both sides read as NULL. An untyped column stays, being read
+     * as text anyway.
+     */
+    private static boolean isTextColumn(EStructuralFeature feature) {
+        String type = RowsetSchemaWriter.xsdTypeOrNull(feature);
+        return type == null || TEXT_XSD_TYPES.contains(type);
+    }
+
+    /**
+     * The element name a contained object takes, which is the feature's own name
+     * except in two cases: the feature's type is abstract and the concrete subtype
+     * decides (an Axis holds a SetType, and {@code <Members>}, {@code <Tuples>},
+     * {@code <CrossProduct>} or {@code <Union>} goes on the wire), or the model
+     * says {@code elementNameFrom} and the name is a value the object carries (a
+     * CellInfoItem is {@code <FORMATTED_VALUE>}).
      */
     private static String elementNameOf(EStructuralFeature feature, EObject value, String declared) {
         EAnnotation daanse = value.eClass().getEAnnotation(DAANSE_XMLA);
@@ -294,16 +302,10 @@ public final class EcoreXmlWriter {
 
     /** Converts a value to its lexical form, preferring EMF's own conversion. */
     private static String asString(EStructuralFeature feature, Object value) {
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof LocalDateTime timestamp) {
-            return timestamp.format(XMLA_DATE_TIME);
-        }
         EClassifier type = feature.getEType();
         if (feature instanceof EAttribute && type instanceof EDataType dataType) {
-            return dataType.getEPackage().getEFactoryInstance().convertToString(dataType, value);
+            return Lexical.of(dataType, value);
         }
-        return String.valueOf(value);
+        return Lexical.of(value);
     }
 }
