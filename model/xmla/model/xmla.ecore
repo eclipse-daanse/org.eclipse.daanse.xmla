@@ -414,6 +414,7 @@
     <eLiterals name="DBSCHEMA_TABLE_PRIVILEGES" value="96" literal="DBSCHEMA_TABLE_PRIVILEGES"/>
     <eLiterals name="DBSCHEMA_TABLE_STATISTICS" value="97" literal="DBSCHEMA_TABLE_STATISTICS"/>
     <eLiterals name="DBSCHEMA_TRANSLATIONS" value="98" literal="DBSCHEMA_TRANSLATIONS"/>
+    <eLiterals name="DBSCHEMA_TRUSTEE" value="105" literal="DBSCHEMA_TRUSTEE"/>
     <eLiterals name="DBSCHEMA_USAGE_PRIVILEGES" value="99" literal="DBSCHEMA_USAGE_PRIVILEGES"/>
     <eLiterals name="DBSCHEMA_VIEWS" value="100" literal="DBSCHEMA_VIEWS"/>
     <eLiterals name="DBSCHEMA_VIEW_COLUMN_USAGE" value="101" literal="DBSCHEMA_VIEW_COLUMN_USAGE"/>
@@ -1236,6 +1237,11 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbpropMsmdCurrentActivityID"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
+        <details key="access" value="ReadWrite"/>
+        <details key="accessSource" value="OBSERVED"/>
+        <details key="observedFrom" value="Analysis Services 13.0, DISCOVER_PROPERTIES answer to Excel (MSOLAP 16.0)"/>
+      </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DbpropMsmdCurrentActivityID"/>

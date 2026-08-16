@@ -75,18 +75,24 @@ public final class SoapFaultWriter {
             writeUnqualified(body, "faultcode", XmlaNamespaces.SOAP_ENV_PREFIX + ":" + kind.code);
             writeUnqualified(body, "faultstring", faultString);
 
-            body.writeStartElement("detail");
-            body.setPrefix(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
-            body.writeStartElement(XmlaNamespaces.EXCEPTION, "Error");
-            body.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
+            // Only with a code. A client reads the ErrorCode attribute unconditionally -
+            // ADOMD runs XmlConvert.ToUInt32 straight on it and throws on null, so an
+            // <Error> without one replaces our message with the client's own parse
+            // failure. A fault needs either this element or a faultstring, and the
+            // faultstring above is always written, so leaving it out is the honest
+            // option: better no Error element than one carrying an invented code.
             if (errorCode != null) {
+                body.writeStartElement("detail");
+                body.setPrefix(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
+                body.writeStartElement(XmlaNamespaces.EXCEPTION, "Error");
+                body.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
                 body.writeAttribute("ErrorCode", Long.toUnsignedString(errorCode));
+                body.writeAttribute("Description", description == null ? faultString : description);
+                body.writeAttribute("Source", source == null ? "" : source);
+                body.writeAttribute("HelpFile", "");
+                body.writeEndElement();
+                body.writeEndElement();
             }
-            body.writeAttribute("Description", description == null ? faultString : description);
-            body.writeAttribute("Source", source == null ? "" : source);
-            body.writeAttribute("HelpFile", "");
-            body.writeEndElement();
-            body.writeEndElement();
 
             body.writeEndElement();
         });

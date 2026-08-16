@@ -223,11 +223,10 @@ public final class RowsetCatalog {
      * <p>
      * The order is not presentation: {@code RestrictionsMask} in
      * {@code DISCOVER_SCHEMA_ROWSETS} is a bitmask over exactly these positions.
-     * The list is the feature order of the rowset's restrictions EClass; the wire
-     * name is each feature's {@code ExtendedMetaData} name and the XSD type follows
-     * from its datatype. It is the order the live servers state in the rowset that
-     * carries the mask, not the specification's prose table; the two differ for ten
-     * rowsets including MDSCHEMA_CUBES and MDSCHEMA_MEMBERS.
+     * The list follows the feature order of the rowset's restrictions EClass, which
+     * is the order a live server states in the rowset carrying the mask rather than
+     * the specification's prose table - the two differ for ten rowsets, among them
+     * MDSCHEMA_CUBES and MDSCHEMA_MEMBERS.
      */
     public static List<Restriction> restrictionsOf(EClass eClass) {
         rowsets();
@@ -298,6 +297,8 @@ public final class RowsetCatalog {
             guidOf(entry.getValue()).filter(guid -> !guid.isEmpty())
                     .ifPresent(guid -> described.eSet(row.getEStructuralFeature("schemaGuid"), guid));
             described.eSet(row.getEStructuralFeature("restrictionsMask"), restrictionsMaskOf(entry.getValue()));
+            provenanceOf(entry.getValue())
+                    .ifPresent(text -> described.eSet(row.getEStructuralFeature("description"), text));
 
             // And the type of one restriction is what the feature holding them says
             // it is, which is the model stating it once instead of twice.
@@ -314,6 +315,32 @@ public final class RowsetCatalog {
             rows.add(described);
         }
         return rows;
+    }
+
+    /**
+     * Where a rowset comes from, as the {@code Description} column states it.
+     * <p>
+     * Most of what this server offers is not named by [MS-SSAS]: of the 34
+     * relational rowsets only four are, the rest being OLE DB's own, carried over
+     * so a consumer speaking OLE DB finds them under the name and GUID it knows.
+     * {@code Description} is where that difference belongs - not the name, which is
+     * what a client searches by.
+     *
+     * @return the text, or empty when the model records no source
+     */
+    private static Optional<String> provenanceOf(EClass rowset) {
+        String source = detail(rowset, "source");
+        if (source == null || source.isEmpty()) {
+            return Optional.empty();
+        }
+        String url = detail(rowset, "specUrl");
+        String text = switch (source) {
+        case "OLEDB-APPENDIX-B" -> "OLE DB schema rowset (Appendix B), offered beyond what [MS-SSAS] names";
+        case "PROPRIETARY" -> "Provider-specific rowset, named by neither [MS-SSAS] nor OLE DB";
+        case "INFERRED" -> "Inferred from a related rowset; not separately documented";
+        default -> "[MS-SSAS] " + source;
+        };
+        return Optional.of(url == null || url.isEmpty() ? text : text + " — " + url);
     }
 
     /**

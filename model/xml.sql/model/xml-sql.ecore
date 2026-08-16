@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*********************************************************************
+* Copyright (c) 2026 Contributors to the Eclipse Foundation.
+*
+* This program and the accompanying materials are made
+* available under the terms of the Eclipse Public License 2.0
+* which is available at https://www.eclipse.org/legal/epl-2.0/
+*
+* SPDX-License-Identifier: EPL-2.0
+**********************************************************************/
+-->
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sql"
+    nsURI="urn:schemas-microsoft-com:xml-sql" nsPrefix="sql">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+    <details key="documentation" value="The annotation namespace an inline rowset schema puts on its column declarations.&#xA;&#xA;It is a small piece of SQLXML, the annotated-schema vocabulary that maps XML to relational columns, and XMLA borrows exactly one thing from it. Counted over the two specifications: [MS-SSAS-T] v18 writes sql:field 1361 times and [MS-SSAS] v37 writes it 886 times, and neither writes any other attribute of this namespace at all - no sql:relation, no sql:key-fields, no sql:datatype. So this package holds one attribute, and that is not an omission.&#xA;&#xA;Two facts about how it is used, both counted rather than assumed. It sits only on an XSD element declaration - xsd:element or xs:element, never on anything else. And in all 1419 declarations where both appear, sql:field is identical to name: the freedom SQLXML gives to call the column something other than the element is never taken here. A reader must therefore not treat a differing sql:field as impossible, only as unattested.&#xA;&#xA;model/io writes the attribute when it builds the schema that describes a rowset, and takes its namespace, prefix and name from this package rather than from constants of its own - which is the whole reason this package exists rather than two string literals."/>
+    <details key="oSGiCompatible" value="true"/>
+    <details key="basePackage" value="org.eclipse.daanse.xmla.model.xml"/>
+    <details key="prefix" value="XmlSql"/>
+    <details key="fileExtensions" value="xmlasql"/>
+    <details key="resource" value="XML"/>
+    <details key="literalsInterface" value="true"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="ColumnAnnotation">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="What this namespace contributes to one column declaration of an inline schema.&#xA;&#xA;Not a wire element of its own: nothing is ever serialized as a ColumnAnnotation. It exists so that the one attribute has somewhere to be declared, and so that a writer can ask the model what the attribute is called and in which namespace instead of repeating it."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ColumnAnnotation"/>
+      <details key="kind" value="empty"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The name of the column the element stands for. In SQLXML this is what lets an element be named differently from the column behind it; in every rowset schema either specification states, it repeats the element's own name."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="field"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-sql"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

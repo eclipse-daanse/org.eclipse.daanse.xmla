@@ -165,8 +165,7 @@ public final class RowsetResults {
         for (EStructuralFeature feature : row.eClass().getEAllStructuralFeatures()) {
             if (columnName.equals(RowsetSchemaWriter.wireNameOf(feature)) && row.eIsSet(feature) && !feature.isMany()
                     && feature.getEType() instanceof EDataType dataType) {
-                Object value = row.eGet(feature);
-                return value == null ? null : EcoreUtil.convertToString(dataType, value);
+                return Lexical.of(dataType, row.eGet(feature));
             }
         }
         return null;
@@ -202,9 +201,9 @@ public final class RowsetResults {
             }
         } else if (value != null) {
             if (feature.getEType() instanceof EDataType dataType) {
-                cell.setValue(EcoreUtil.convertToString(dataType, value));
+                cell.setValue(Lexical.of(dataType, value));
             } else {
-                cell.setValue(String.valueOf(value));
+                cell.setValue(Lexical.of(value));
             }
         }
         return cell;
@@ -253,7 +252,7 @@ public final class RowsetResults {
                 if (value == null) {
                     continue;
                 }
-                String text = value.toString();
+                String text = Lexical.of(value);
                 if (value instanceof Number) {
                     text = ElementNames.normalizeNumericString(text);
                 }

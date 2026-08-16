@@ -57,6 +57,7 @@ import org.eclipse.daanse.xmla.api.auth.AuthenticatedIdentity;
 import org.eclipse.daanse.xmla.api.auth.InbandAuthenticator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,25 +65,16 @@ import org.slf4j.LoggerFactory;
  * Serves an XMLA request from a byte stream, with the model doing the
  * describing.
  * <p>
- * Nothing is buffered on either side. The request is read up to the first body
- * element and then streamed; the response is written straight to the output as
- * the rows are produced. The model is the only description involved — the
- * request reaches the {@link XmlaConnector} as a {@link Discover} or an
- * {@link Execute}, the connector answers with EObjects, and those are what go
- * on the wire.
+ * Nothing is buffered on either side: the request is streamed from the first
+ * body element, the response written as the rows are produced. The request
+ * reaches the {@link XmlaConnector} as a {@link Discover} or an {@link Execute}
+ * and the EObjects it answers with go on the wire.
  * <p>
- * Three properties worth naming:
- * <ul>
- * <li>a request type it has no model for is not guessed: {@link RowsetCatalog}
- * decides, and an unknown type becomes the fault a Microsoft server returns for
- * the same request;</li>
- * <li>{@link AuthenticationRequiredException} is <em>not</em> a SOAP fault. It
- * flies before the first byte by construction and propagates to the transport,
- * which turns it into the {@code 401} challenge;</li>
- * <li>no failure is swallowed. Anything else thrown before the first byte
- * becomes a SOAP fault; after the first byte the response is partly on the
- * wire, so it is logged and the stream abandoned.</li>
- * </ul>
+ * A request type with no model is not guessed - {@link RowsetCatalog} decides.
+ * {@link AuthenticationRequiredException} is not a SOAP fault: it propagates to
+ * the transport, which turns it into the {@code 401} challenge. Anything else
+ * thrown before the first byte becomes a fault; after it, the response is partly
+ * written, so the failure is logged and the stream abandoned.
  */
 public class EmfXmlaAdapter {
 
@@ -98,21 +90,16 @@ public class EmfXmlaAdapter {
 
     /**
      * {@code XMLAnalysisError.0xC10E0002}: the authentication method is not
-     * supported.
-     * <p>
-     * The code the specification gives for an Authenticate this server cannot
-     * perform: no {@link InbandAuthenticator} is registered, or the handshake
+     * supported - no {@link InbandAuthenticator} is registered, or the handshake
      * failed.
      */
     private static final Long ERROR_AUTHENTICATION_UNSUPPORTED = 3238920194L;
     private static final String ERROR_SOURCE = "Daanse XMLA";
 
     /**
-     * Everything this server can negotiate through {@code ProtocolCapabilities}.
-     * <p>
-     * Empty: binary XML and compression are the capabilities the header exists for,
-     * and neither is implemented. Echoing one would have the client switch to an
-     * encoding this server cannot read.
+     * What {@code ProtocolCapabilities} may negotiate: nothing. Binary XML and
+     * compression are what the header exists for, and echoing one would have the
+     * client switch to an encoding this server cannot read.
      */
     private static final List<String> SUPPORTED_CAPABILITIES = List.of();
 
@@ -186,6 +173,12 @@ public class EmfXmlaAdapter {
 
         private final XmlaRequest incoming;
         private String minted;
+        /**
+         * The session an {@code EndSession} header asks to close, held until the
+         * request is allowed to be served. Ending it while reading the headers would
+         * mean a request that is about to be refused had already had its effect.
+         */
+        private String ending;
 
         private Exchange(XmlaRequest incoming) {
             this.incoming = incoming;
@@ -233,10 +226,14 @@ public class EmfXmlaAdapter {
         }
 
         if ("Discover".equals(body.getLocalPart())) {
-            return discover(envelope, target, request);
+            boolean started = discover(envelope, target, request);
+            endPending(exchange, request);
+            return started;
         }
         if ("Execute".equals(body.getLocalPart())) {
-            return execute(envelope, target, request);
+            boolean started = execute(envelope, target, request);
+            endPending(exchange, request);
+            return started;
         }
         writeFault(target, SoapFaultWriter.Kind.CLIENT,
                 "the body element " + body.getLocalPart() + " is neither Discover nor Execute", null);
@@ -313,17 +310,47 @@ public class EmfXmlaAdapter {
             rows = List.of();
         }
         if (rows.isEmpty() && "DISCOVER_SCHEMA_ROWSETS".equals(requestType)) {
-            // The one rowset a server can answer about itself: request types, restrictions
-            // in
-            // order, and the mask over their ordinals are all in the model. A connector
-            // that
-            // answers this rowset itself is left alone.
-            rows = RowsetCatalog.schemaRowsets();
+            // The one rowset a server answers about itself, and the model holds all of
+            // it: request types, restrictions in order, the mask over their ordinals. A
+            // connector that answers it itself is left alone; one that says what it
+            // serves gets that announced, and the whole model is the fallback rather
+            // than the goal - a rowset announced and then refused is a promise broken
+            // on the next request.
+            java.util.Set<String> served = connector.served();
+            rows = served.isEmpty() ? RowsetCatalog.schemaRowsets() : RowsetCatalog.schemaRowsets(served);
+        }
+        if ("DISCOVER_DATASOURCES".equals(requestType)) {
+            statePolicyInAuthenticationMode(rows);
         }
 
         XmlaMessageCodec.writeDiscoverResponse(target, responseHeaders(request, envelope.headers()), rowEClass.get(),
                 rows.iterator());
         return true;
+    }
+
+    /** The value of AuthenticationMode when the transport demands a login. */
+    private static final String AUTHENTICATED = "Authenticated";
+
+    /**
+     * Makes DISCOVER_DATASOURCES say what this endpoint demands.
+     * <p>
+     * [MS-SSAS] on the column: {@code Unauthenticated} means "no user ID or
+     * password has to be sent", {@code Authenticated} that they "MUST be included".
+     * A connector is handed a caller, not a policy, so it states the open case and
+     * this layer corrects it. Since both this rowset and DISCOVER_PROPERTIES are
+     * answered anonymously - a client has to ask before it knows whom to introduce
+     * itself as - the column is the only thing announcing that a challenge comes.
+     */
+    private void statePolicyInAuthenticationMode(List<EObject> rows) {
+        if (!policy.requirePrincipal()) {
+            return;
+        }
+        for (EObject row : rows) {
+            EStructuralFeature mode = row.eClass().getEStructuralFeature("authenticationMode");
+            if (mode != null && !mode.isMany()) {
+                row.eSet(mode, AUTHENTICATED);
+            }
+        }
     }
 
     /** @return whether the response has begun */
@@ -364,17 +391,14 @@ public class EmfXmlaAdapter {
     /**
      * One round of the specification's security-token handshake.
      * <p>
-     * The client's token goes to the {@link InbandAuthenticator}; the answer is
-     * either another token ({@code AuthenticateResponse}, handshake continues), the
-     * final token with the peer established, or the error for an authentication
-     * this server cannot perform - which is also the answer when no authenticator
-     * is registered.
+     * The client's token goes to the {@link InbandAuthenticator}, which answers
+     * with another token, the final one with the peer established, or the error for
+     * an authentication this server cannot perform.
      * <p>
-     * The established identity is bound to the session, because over HTTP there is
-     * no connection to bind it to. A client that has not opened one gets a session
-     * here, minted before the first round so that a multi-round handshake has a
-     * stable key, and carried back in the {@code <Session>} header. Without a
-     * session handler there is nothing to bind to, and the handshake is refused
+     * The identity binds to the session, there being no connection to bind it to
+     * over HTTP. A client without one gets a session minted before the first round,
+     * so a multi-round handshake has a stable key, and carried back in the
+     * {@code <Session>} header. With no session handler the handshake is refused
      * rather than silently forgotten.
      */
     private boolean authenticate(SoapEnvelopeReader.Envelope envelope, OutputStream target, XmlaRequest incoming,
@@ -434,15 +458,12 @@ public class EmfXmlaAdapter {
     /**
      * Ties this request and its session together in whichever direction is missing.
      * <p>
-     * A caller who proved who they are owns the session they are using: the
-     * identity is bound to it, so a later caller who merely knows the id cannot
-     * step into it. That matters because a session is not just a name - a backend
+     * A caller who proved who they are owns the session: the identity binds to it,
+     * so a later caller who merely knows the id cannot step in - and a backend
      * keeps per-session state under it, opened with the roles of whoever opened it.
-     * <p>
-     * The other direction is what the in-band handshake needs. Over HTTP there is
-     * no connection to hold what it established, so the session holds it and it is
-     * put back here. A stand-in identity does not count as having proved anything,
-     * so a session carrying a real one still wins over it.
+     * The other direction serves the in-band handshake, which has no connection to
+     * hold what it established. A stand-in identity proves nothing, so a session
+     * carrying a real one wins over it.
      */
     private XmlaRequest restoreIdentity(XmlaRequest request) {
         if (sessions == null || request.sessionId() == null) {
@@ -467,20 +488,17 @@ public class EmfXmlaAdapter {
     // --- sessions ---
 
     /**
-     * Applies whichever session headers the client sent, as the specification
-     * describes.
-     * <p>
-     * [MS-SSAS] 3.1.3.1 gives one rule here and it is a MUST: a {@code Session} or
-     * {@code EndSession} id the handler does not honour is a SOAP fault. Handing
-     * such a request through as if it had no session would let a client keep
-     * working under an identity its session no longer carries.
-     * <p>
-     * {@code BeginSession} is weaker - "the server <em>is to</em> respond by
-     * constructing a new session" - so it yields to a valid {@code Session} in the
-     * same message rather than minting a second id the one response header could
-     * not carry. Without a handler the endpoint is stateless and every request
-     * stands alone.
+     * Closes the session an {@code EndSession} header asked for, now that the
+     * request has been served rather than refused. A request that never got past
+     * the access policy leaves by exception and does not reach this.
      */
+    private void endPending(Exchange exchange, XmlaRequest request) {
+        if (exchange.ending != null && sessions != null) {
+            sessions.endSession(exchange.ending, request);
+            exchange.ending = null;
+        }
+    }
+
     private XmlaRequest applySessionHeaders(List<EObject> headers, Exchange exchange) {
         XmlaRequest request = exchange.incoming;
         if (sessions == null) {
@@ -499,7 +517,11 @@ public class EmfXmlaAdapter {
                 if (!sessions.checkSession(sessionId, request)) {
                     throw org.eclipse.daanse.xmla.api.XmlaRefusedException.invalidSession(sessionId);
                 }
-                sessions.endSession(sessionId, request);
+                // Noted, not done: a caller who is then refused must still find the session
+                // there on the retry. A client that waits for a 401 before it sends
+                // credentials - which is every HTTP client - would otherwise end its own
+                // session with the attempt that was rejected.
+                exchange.ending = sessionId;
                 request = request.withSession(null);
             } else if (header instanceof BeginSessionHeader) {
                 beginRequested = true;
@@ -518,11 +540,10 @@ public class EmfXmlaAdapter {
      * The headers to answer with: the session id, and the capabilities actually
      * agreed.
      * <p>
-     * The spec is explicit that a successful negotiation is the server echoing back
-     * the same {@code ProtocolCapabilities} element. Echoing an empty one says
-     * "nothing was negotiated", which is true here and is what a client needs to
-     * hear before it decides whether to keep using plain XML - answering nothing at
-     * all leaves it guessing.
+     * A successful negotiation is the server echoing the same
+     * {@code ProtocolCapabilities} element back. An empty one says "nothing was
+     * negotiated", which is true here; answering nothing at all leaves the client
+     * guessing whether to keep to plain XML.
      */
     private List<EObject> responseHeaders(XmlaRequest request, List<EObject> requested) {
         List<EObject> headers = new ArrayList<>(2);

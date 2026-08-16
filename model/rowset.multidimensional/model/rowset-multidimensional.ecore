@@ -33,6 +33,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_ACTIONS"/>
       <details key="guid" value="A07CCD08-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -158,6 +160,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_CUBES"/>
       <details key="guid" value="C8B522D8-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -355,6 +359,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_DIMENSIONS"/>
       <details key="guid" value="C8B522D9-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -531,6 +537,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_FUNCTIONS"/>
       <details key="guid" value="A07CCD07-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -697,6 +705,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_HIERARCHIES"/>
       <details key="guid" value="C8B522DA-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -971,8 +981,11 @@
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_INPUT_DATASOURCES"/>
-      <details key="guid" value="d54b1b45-b226-4988-be89-13cb95f777ff"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="A07CCD32-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid"/>
+      <details key="correctedFromSpec" value="This carried d54b1b45-b226-4988-be89-13cb95f777ff until the 2026-08 audit. That value occurs in no source: not in [MS-SSAS] (which publishes no rowset GUIDs at all), not in any recorded server answer, and not in either decompiled ADOMD version. A real server and both clients say A07CCD32, which also puts the rowset back in the a07ccd block where its neighbours are."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -1080,6 +1093,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_KPIS"/>
       <details key="guid" value="2AE44109-ED3D-4842-B16F-B694D1CB0E3F"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1275,6 +1290,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_LEVELS"/>
       <details key="guid" value="C8B522DB-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1530,6 +1547,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_MEASUREGROUPS"/>
       <details key="guid" value="E1625EBF-FA96-42FD-BEA6-DB90ADAFD96B"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1605,6 +1624,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_MEASUREGROUP_DIMENSIONS"/>
       <details key="guid" value="a07ccd33-8148-11d0-87bb-00c04fc33942"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1723,6 +1744,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_MEASURES"/>
       <details key="guid" value="C8B522DC-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -1940,6 +1963,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_MEMBERS"/>
       <details key="guid" value="C8B522DE-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -2165,8 +2190,10 @@
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_PROPERTIES"/>
-      <details key="guid" value="C8B522DD-5CF3-11CE-ADE5-00AA0044773D"/>
       <details key="source" value="MS-SSAS-251031"/>
+      <details key="guid" value="C8B522DD-5CF3-11CE-ADE5-00AA0044773D"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12, where the field is called MemberProperties rather than Properties - the field name is not the request type, and this rowset is the one place the two differ"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2404,6 +2431,8 @@
     <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
       <details key="requestType" value="MDSCHEMA_SETS"/>
       <details key="guid" value="A07CCD0B-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="OBSERVED"/>
+      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
@@ -2568,7 +2597,7 @@
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="skippable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//IntObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="skippable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SKIPPABLE"/>

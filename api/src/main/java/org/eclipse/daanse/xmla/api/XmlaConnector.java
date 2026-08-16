@@ -54,6 +54,23 @@ public interface XmlaConnector {
     List<EObject> discover(Discover request, XmlaRequest context);
 
     /**
+     * The request types this connector answers, or an empty set for a connector
+     * that does not say.
+     * <p>
+     * One caller needs it, in one case: a connector that leaves
+     * {@code DISCOVER_SCHEMA_ROWSETS} to the transport leaves the transport to
+     * decide what to announce. Naming the whole model would offer rowsets nobody
+     * can answer, and a client that takes the offer up gets a fault where it was
+     * promised an answer. An empty set means the whole model, and a connector that
+     * answers the rowset itself need not implement this at all.
+     *
+     * @return request types as they appear on the wire, e.g. {@code MDSCHEMA_CUBES}
+     */
+    default java.util.Set<String> served() {
+        return java.util.Set.of();
+    }
+
+    /**
      * The result of one Execute, or {@code null} for a command that produces none.
      * <p>
      * An MDX {@code Statement} answers with a {@code Mddataset} or a
