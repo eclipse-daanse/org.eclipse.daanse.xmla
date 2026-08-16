@@ -42,6 +42,7 @@
     <module>rowset.multidimensional</module>
     <module>rowset.mining</module>
     <module>rowset.server</module>
+    <module>rowset.tabular</module>
     <module>xmla</module>
     <module>io</module>
     <module>csdl</module>
