@@ -227,7 +227,8 @@ public final class RowsetResults {
             RowsetColumn column = FACTORY.createRowsetColumn();
             column.setField(label);
             column.setName(encoded);
-            column.setXsdType(sqlToXsdType(metaData.getColumnType(index), metaData.getScale(index)));
+            column.setXsdType(sqlToXsdType(metaData.getColumnType(index), metaData.getPrecision(index),
+                    metaData.getScale(index)));
             result.getColumns().add(column);
         }
 
@@ -266,16 +267,21 @@ public final class RowsetResults {
         return result;
     }
 
-    private static String sqlToXsdType(int sqlType, int scale) {
+    private static String sqlToXsdType(int sqlType, int precision, int scale) {
         switch (sqlType) {
         case Types.INTEGER, Types.SMALLINT, Types.TINYINT:
             return ValueInfo.XSD_INTEGER;
         case Types.NUMERIC, Types.DECIMAL:
-            // Oracle reports every number as NUMERIC; the scale decides.
-            return scale == 0 ? ValueInfo.XSD_INTEGER : ValueInfo.XSD_DECIMAL;
+            // scale 0 means integer only with a known precision: PostgreSQL reports an
+            // unconstrained numeric as precision 0 / scale 0 though its values carry decimals.
+            if (scale != 0 || precision == 0) {
+                return ValueInfo.XSD_DECIMAL;
+            }
+            // xsd:int is 32-bit; wider integers get the unbounded type, as BIGINT does
+            return precision <= 9 ? ValueInfo.XSD_INTEGER : ValueInfo.XSD_INTEGER_LONG;
         case Types.BIGINT:
             return ValueInfo.XSD_INTEGER_LONG;
-        case Types.DOUBLE, Types.FLOAT:
+        case Types.DOUBLE, Types.FLOAT, Types.REAL:
             return ValueInfo.XSD_DOUBLE;
         default:
             return ValueInfo.XSD_STRING;
