@@ -27,6 +27,9 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.eclipse.daanse.xmla.model.exception.ErrorType;
+import org.eclipse.daanse.xmla.model.exception.XmlaExceptionFactory;
+import org.eclipse.daanse.xmla.model.exception.Messages;
 import org.eclipse.daanse.xmla.model.exception.XmlaExceptionPackage;
 import org.eclipse.daanse.xmla.model.xmla.Discover;
 import org.eclipse.emf.ecore.EClass;
@@ -218,6 +221,30 @@ public final class XmlaMessageCodec {
     }
 
     /**
+     * One {@code <Messages>} holding a single {@code <Error>}, for a command that
+     * ran and failed.
+     * <p>
+     * The counterpart to what {@code writeMessages} does with it: because there is
+     * an error rather than a warning, the writer precedes it with the
+     * {@code <Exception/>} marker, and the pair inside an otherwise ordinary result
+     * root is how the specification reports a failure that did not cost the
+     * session.
+     *
+     * @param errorCode {@code null} leaves the attribute off rather than sending a
+     *                  number this server does not have
+     */
+    public static EObject errorMessages(Long errorCode, String description, String source, String helpFile) {
+        ErrorType error = XmlaExceptionFactory.eINSTANCE.createErrorType();
+        error.setErrorCode(errorCode);
+        error.setDescription(description);
+        error.setSource(source);
+        error.setHelpFile(helpFile);
+        Messages messages = XmlaExceptionFactory.eINSTANCE.createMessages();
+        messages.getError().add(error);
+        return messages;
+    }
+
+    /**
      * Writes an Execute response.
      * <p>
      * There is no inline schema: the shape of an MDDataset is fixed by the
@@ -268,6 +295,7 @@ public final class XmlaMessageCodec {
                 // prefix has to be bound here. Without it the attribute values point at
                 // nothing and a client cannot read the axis - MSOLAP says so and stops.
                 body.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
+                bindExceptionPrefix(body, messages);
                 new EcoreXmlWriter(XmlaNamespaces.MDDATASET).writeContent(body, result);
                 writeMessages(body, messages);
                 body.writeEndElement();
@@ -286,8 +314,23 @@ public final class XmlaMessageCodec {
         out.setDefaultNamespace(XmlaNamespaces.EMPTY);
         out.writeStartElement(XmlaNamespaces.EMPTY, "root");
         out.writeDefaultNamespace(XmlaNamespaces.EMPTY);
+        bindExceptionPrefix(out, messages);
         writeMessages(out, messages);
         out.writeEndElement();
+    }
+
+    /**
+     * Binds the exception prefix on a root that is about to carry
+     * {@code EX:Exception} and {@code EX:Messages}, and only then.
+     * <p>
+     * The writer resolves a prefix when it writes the element, so an unbound one
+     * fails the whole response rather than the element - and a response that says
+     * nothing went wrong has no reason to carry the declaration at all.
+     */
+    private static void bindExceptionPrefix(XMLStreamWriter out, EObject messages) throws XMLStreamException {
+        if (messages != null) {
+            out.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
+        }
     }
 
     /**
