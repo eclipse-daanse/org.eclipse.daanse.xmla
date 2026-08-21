@@ -305,6 +305,11 @@ public class EmfXmlaAdapter {
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
             writeFault(target, faultKindOf(refused), refused.getMessage(), null);
             return false;
+        } catch (org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
+            LOGGER.debug("answering with an in-band error", failed);
+            XmlaMessageCodec.writeDiscoverResponse(target, responseHeaders(request, envelope.headers()),
+                    rowEClass.get(), java.util.Collections.emptyIterator(), messagesOf(failed));
+            return true;
         }
         if (rows == null) {
             rows = List.of();
@@ -374,9 +379,22 @@ public class EmfXmlaAdapter {
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
             writeFault(target, faultKindOf(refused), refused.getMessage(), null);
             return false;
+        } catch (org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
+            // Ran and failed, and the session lives: the answer is a result root
+            // carrying the error, not a fault that would end the conversation.
+            LOGGER.debug("answering with an in-band error", failed);
+            XmlaMessageCodec.writeExecuteResponse(target, responseHeaders(request, envelope.headers()), null,
+                    messagesOf(failed));
+            return true;
         }
         XmlaMessageCodec.writeExecuteResponse(target, responseHeaders(request, envelope.headers()), result);
         return true;
+    }
+
+    /** The {@code <Messages>} a failed-but-answered command is reported with. */
+    private static EObject messagesOf(org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
+        return XmlaMessageCodec.errorMessages(failed.errorCode(), failed.description(), failed.source(),
+                failed.helpFile());
     }
 
     /** A connector's deliberate refusal becomes the SOAP fault it means. */
