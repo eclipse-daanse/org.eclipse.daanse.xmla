@@ -98,16 +98,21 @@ public class XmlaServlet extends HttpServlet {
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     private transient XmlaConnector connector;
 
-    /** Optional: without it the endpoint is stateless and opens no sessions. */
+    /**
+     * Optional: without it the endpoint is stateless and opens no sessions.
+     * Static on purpose: activate() copies the field into the adapter, so a
+     * dynamic reference bound after activation would never reach the adapter —
+     * greedy+static reactivates this component instead when the handler appears.
+     */
     @Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY)
-    private volatile transient XmlaSessionHandler sessionHandler;
+    private transient XmlaSessionHandler sessionHandler;
 
     /**
      * Optional: without it an in-band Authenticate is refused with the spec's own
-     * error.
+     * error. Static for the same reason as {@link #sessionHandler}.
      */
     @Reference(cardinality = ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY)
-    private volatile transient InbandAuthenticator inbandAuthenticator;
+    private transient InbandAuthenticator inbandAuthenticator;
 
     /**
      * Mechanisms registered as services join the chain. There is no
@@ -166,6 +171,10 @@ public class XmlaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/xml; charset=utf-8");
+        // msmdpump sends this on every response; the native MSOLAP client
+        // (pcxmlaclient) concludes its transport negotiation from it during
+        // BeginSession. All zeros: nothing negotiated, plain XML.
+        response.setHeader("X-Transport-Caps-Negotiation-Flags", "0,0,0,0,0");
 
         XmlaRequest xmlaRequest = authenticate(request, response, requestOf(request));
         if (xmlaRequest == null) {
