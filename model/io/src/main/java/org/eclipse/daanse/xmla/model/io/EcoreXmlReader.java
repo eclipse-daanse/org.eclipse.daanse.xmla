@@ -354,8 +354,10 @@ public final class EcoreXmlReader {
         if (isBoolean(type)) {
             // xsd:boolean has four lexical forms: true, false, 1, 0. Clients write
             // soap:mustUnderstand="1", and Boolean.valueOf("1") is false - EMF's own
-            // conversion would not fail here, it would invert the meaning.
-            return switch (text.trim()) {
+            // conversion would not fail here, it would invert the meaning. Microsoft
+            // clients also write .NET's Boolean.ToString() - "True", "False" - into
+            // restrictions such as ShowHiddenCubes, so the case is not held against them.
+            return switch (text.trim().toLowerCase(java.util.Locale.ROOT)) {
             case "true", "1" -> Boolean.TRUE;
             case "false", "0" -> Boolean.FALSE;
             default -> throw new XmlaCodecException(
