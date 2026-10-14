@@ -171,6 +171,20 @@ public final class EcoreXmlWriter {
         return daanse == null ? null : daanse.getDetails().get("wrapperElementName");
     }
 
+    /**
+     * The namespace a value element is written in when it is not the one of the
+     * element around it, or {@code null}.
+     * <p>
+     * SSAS puts the {@code LastDataUpdate} and {@code LastSchemaUpdate} of an
+     * mddataset Cube in the engine namespace, declared on the element itself. The
+     * model says so per feature rather than through ExtendedMetaData, whose
+     * namespace is stated on every rowset column too.
+     */
+    static String elementNamespaceOf(EStructuralFeature feature) {
+        EAnnotation daanse = feature.getEAnnotation(DAANSE_XMLA);
+        return daanse == null ? null : daanse.getDetails().get("elementNamespace");
+    }
+
     private void writeOne(XMLStreamWriter out, EStructuralFeature feature, String name, Object value)
             throws XMLStreamException {
         String elementNamespace = qualifiedNamespaceOf(feature);
@@ -197,10 +211,22 @@ public final class EcoreXmlWriter {
             // <DESCRIPTION/>, not <DESCRIPTION></DESCRIPTION>. The two are the same XML
             // to a parser, but SSAS writes the short one and responses are compared byte
             // for byte.
-            out.writeEmptyElement(namespace, name);
+            String own = elementNamespaceOf(feature);
+            if (own == null) {
+                out.writeEmptyElement(namespace, name);
+            } else {
+                out.writeEmptyElement("", name, own);
+                out.writeDefaultNamespace(own);
+            }
             return;
         }
-        out.writeStartElement(namespace, name);
+        String own = elementNamespaceOf(feature);
+        if (own == null) {
+            out.writeStartElement(namespace, name);
+        } else {
+            out.writeStartElement("", name, own);
+            out.writeDefaultNamespace(own);
+        }
         if (EcoreXmlReader.isXmlDocument(feature)) {
             // The column holds a document, not a string. Escaping it would turn a <Server>
             // definition into the literal text "&lt;Server&gt;".
