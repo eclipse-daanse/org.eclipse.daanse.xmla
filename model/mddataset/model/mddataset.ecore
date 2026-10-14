@@ -196,12 +196,18 @@
         <details key="name" value="LastDataUpdate"/>
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
+      <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+        <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
+      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastSchemaUpdate" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="LastSchemaUpdate"/>
         <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+      <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+        <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
