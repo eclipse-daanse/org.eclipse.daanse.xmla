@@ -4309,6 +4309,9 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catalogName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
         unsettable="true">
+      <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+        <details key="required" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="CATALOG_NAME"/>
