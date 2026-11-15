@@ -421,6 +421,9 @@
     <eLiterals name="DBSCHEMA_VIEW_TABLE_USAGE" value="102" literal="DBSCHEMA_VIEW_TABLE_USAGE"/>
     <eLiterals name="DISCOVER_MODEL_SECURITY" value="103" literal="DISCOVER_MODEL_SECURITY"/>
     <eLiterals name="DISCOVER_RESOURCE_POOLS" value="104" literal="DISCOVER_RESOURCE_POOLS"/>
+    <eLiterals name="DISCOVER_POWERBI_ROLES" value="106" literal="DISCOVER_POWERBI_ROLES"/>
+    <eLiterals name="DISCOVER_POWERBI_DATASOURCES" value="107" literal="DISCOVER_POWERBI_DATASOURCES"/>
+    <eLiterals name="DISCOVER_M_EXPRESSIONS" value="108" literal="DISCOVER_M_EXPRESSIONS"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="FormatEnum">
     <eLiterals name="Tabular" literal="Tabular"/>
@@ -1203,7 +1206,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnAffectedObjects"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
       <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
-        <details key="access" value="ReadWrite"/>
+        <details key="access" value="Write"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="This property controls the result of the commands documented in [MS-SSAS-T]. This property is an integer that can be set to cause the current command to return the affected objects.The possible values are as follows.-1 – This value can be set only when a transaction is active on the current session. The result of the command will contain all the objects that are affected by the command.>= 0 – This value represents the Base Version of the Tabular Metadata. …"/>
@@ -1362,7 +1365,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbpropMsmdOptimizeResponse"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject">
       <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
         <details key="access" value="ReadWrite"/>
         <details key="default" value="0"/>
@@ -1390,7 +1393,7 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbpropMsmdCacheRatio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbpropMsmdCacheRatio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject">
       <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
         <details key="access" value="ReadWrite"/>
       </eAnnotations>
@@ -2517,6 +2520,32 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useNewMetadataVersioning" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
+        <details key="access" value="ReadWrite"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A property Analysis Services 2017 lists in DISCOVER_PROPERTIES as a boolean, read and written; no specification describes it."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="UseNewMetadataVersioning"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnAffectedObjectsByTag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
+        <details key="access" value="Write"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A property Analysis Services 2017 lists in DISCOVER_PROPERTIES as a string that is only written; no specification describes it."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ReturnAffectedObjectsByTag"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Command" abstract="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2547,6 +2576,7 @@
       <details key="documentation" value="The Alter command is used to alter an object that already exists on a server."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Alter"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2613,6 +2643,7 @@
       <details key="documentation" value="The Cancel command cancels the currently running command on the specified connection."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Cancel"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2665,6 +2696,7 @@
       <details key="documentation" value="The ClearCache command clears the in-memory cache of the specified object."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="ClearCache"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2736,6 +2768,7 @@
       <details key="documentation" value="The Attach command attaches a database from a database folder."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Attach"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2788,6 +2821,7 @@
       <details key="documentation" value="The Backup command backs up the specified database."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Backup"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2880,6 +2914,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Batch" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Batch"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2974,6 +3009,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BeginTransaction" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="BeginTransaction"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -2986,6 +3022,7 @@
       <details key="documentation" value="The CommitTransaction command commits a transaction on the current session."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="CommitTransaction"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3008,6 +3045,7 @@
       <details key="documentation" value="The Create command is used to create an object on a server."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Create"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3061,6 +3099,7 @@
       <details key="documentation" value="The Delete command is used to delete an object from a server."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Delete"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3093,6 +3132,7 @@
       <details key="documentation" value="This command designs aggregations on an AggregationDesign object and returns a rowset containing the statistics of the design. The Object element MUST point to an existing aggregation design object. Otherwise, an error is raised."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="DesignAggregations"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3180,6 +3220,7 @@
       <details key="documentation" value="The Detach command detaches a database."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Detach"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3213,6 +3254,7 @@
       <details key="documentation" value="The Drop command deletes a dimension member."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Drop"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3258,6 +3300,7 @@
       <details key="documentation" value="The Object type identifies the dimension that the Insert, Update, and Drop commands operate on. It differs from an ObjectReference Type in that it uses the name of the objects rather than the ID."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Insert"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3292,6 +3335,7 @@
       <details key="documentation" value="The Lock command locks an object in the context of the current transaction."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Lock"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3335,6 +3379,7 @@
       <details key="documentation" value="This command merges the data of one or more source partitions into a target partition and deletes the source partitions. The Source and Target object references MUST point to distinct partitions in the same measure group. Otherwise, an error is raised."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="MergePartitions"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3369,6 +3414,7 @@
       <details key="documentation" value="The NotifyTableChange command notifies the server about changes in source tables so that the server can drop any cached data from these tables."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="NotifyTableChange"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3404,6 +3450,7 @@
       <details key="documentation" value="The Process command is used to process objects on the server."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Process"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3492,6 +3539,7 @@
       <details key="documentation" value="The Restore command restores a database from a backup file."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Restore"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3615,6 +3663,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RollbackTransaction" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="RollbackTransaction"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3627,6 +3676,7 @@
       <details key="documentation" value="The Subscribe command subscribes to a Trace object for events."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Subscribe"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3660,6 +3710,7 @@
       <details key="documentation" value="The Source type specifies the source for the Synchronization command."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Synchronize"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3724,6 +3775,7 @@
       <details key="documentation" value="The Unlock command unlocks an object in the context of the current transaction."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Unlock"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3746,6 +3798,7 @@
       <details key="documentation" value="The Update command updates a dimension member."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Update"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3811,6 +3864,7 @@
       <details key="documentation" value="The UpdateCells command updates the values of the specified cells."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="UpdateCells"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -3861,6 +3915,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CloneDatabase" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="CloneDatabase"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3889,6 +3944,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DBCC" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="DBCC"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3912,6 +3968,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImageLoad" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="ImageLoad"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -4020,6 +4077,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImageSave" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="ImageSave"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -4053,6 +4111,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SetAuthContext" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="SetAuthContext"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -4086,6 +4145,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unsubscribe" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Unsubscribe"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -4108,6 +4168,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoveDiscontinuedFeatures" eSuperTypes="#//Command">
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="RemoveDiscontinuedFeatures"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -5461,6 +5522,7 @@
       <details key="documentation" value="The Export command writes import data to a Delta table in OneLake ([MS-SSAS] footnote 394, revision 251031). The return result type for the Export command is xmla-e:emptyresult."/>
     </eAnnotations>
     <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
+      <details key="elementNamespace" value="http://schemas.microsoft.com/analysisservices/2003/engine"/>
       <details key="groupElementName" value="Export"/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">

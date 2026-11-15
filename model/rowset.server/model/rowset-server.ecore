@@ -679,9 +679,9 @@
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionInUse" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//BooleanObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionInUse" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//IntObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The connection status. This column indicates whether the connection is active (1) or idle (0)."/>
+        <details key="documentation" value="Analysis Services 2017 types it xsd:int. The connection status. This column indicates whether the connection is active (1) or idle (0)."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1893,16 +1893,6 @@
       <details key="guidSource" value="ADOMD-19.114.12"/>
       <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field ObjectCounters - no recorded server answer carries this rowset"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The name of the object class to which the specified instances belong."/>
-      </eAnnotations>
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="OBJECT_NAME"/>
-        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="moduleName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The name of the module to which the specified instances belong."/>
@@ -1910,6 +1900,16 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="MODULE_NAME"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The name of the object class to which the specified instances belong."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="OBJECT_NAME"/>
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -2416,6 +2416,56 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="EVENT_NAME"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventTimestamp" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//DateTime">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Analysis Services 2017 answers with this column."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="EVENT_TIMESTAMP"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachActivityIdXferGuid" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//Uuid">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Analysis Services 2017 answers with this column."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="attach_activity_id_xfer_guid"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachActivityIdXferSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Analysis Services 2017 answers with this column."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="attach_activity_id_xfer_seq"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachActivityIdGuid" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//Uuid">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Analysis Services 2017 answers with this column."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="attach_activity_id_guid"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachActivityIdSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedIntObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Analysis Services 2017 answers with this column."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="attach_activity_id_seq"/>
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -2971,9 +3021,9 @@
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dictionarySize" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//LongObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dictionarySize" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Indicates the amount of memory that is used by the dictionary data structure associated with the column, in bytes. The dictionary data structure maps column data IDs to the actual values."/>
+        <details key="documentation" value="Analysis Services 2017 types it xsd:unsignedLong. Indicates the amount of memory that is used by the dictionary data structure associated with the column, in bytes. The dictionary data structure maps column data IDs to the actual values."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -3057,6 +3107,16 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="MEASURE_GROUP_NAME"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="partitionName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The name of the partition. Analysis Services 2017 answers with this column."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="PARTITION_NAME"/>
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -3303,6 +3363,16 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="CreationTime"/>
+        <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stoptime" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//DateTime">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The date and time at which the trace stops, for a trace created with a StopTime. Not in [MS-SSAS] 260525; Analysis Services 2017 lists it between CreationTime and Type, in its answer schema and in the rows of traces that have one."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="StopTime"/>
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -4002,9 +4072,9 @@
         <details key="namespace" value="urn:schemas-microsoft-com:xml-analysis:rowset"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetData" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetData" eType="ecore:EDataType urn:schemas-microsoft-com:xml-analysis:rowset:core#//XmlDocument">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The data that the target maintains, such as event aggregation information."/>
+        <details key="documentation" value="Analysis Services 2017 types it xmlDocument. The data that the target maintains, such as event aggregation information."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -5876,5 +5946,140 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverModelSecurityRestrictions">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="What a DISCOVER_MODEL_SECURITY request may be restricted by, as Analysis Services 2017 lists it in DISCOVER_SCHEMA_ROWSETS. The feature order is the order the RestrictionsMask bitmask is defined over."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DiscoverModelSecurityRestrictions"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DISCOVER_MODEL_SECURITY"/>
+      <details key="role" value="restrictions"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="databaseID" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DatabaseID"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverPowerBiRolesRow">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The DISCOVER_POWERBI_ROLES rowset. Analysis Services 2017 lists it in DISCOVER_SCHEMA_ROWSETS with its GUID and restrictions and refuses it (only in the Power BI service); no specification and no client describes its columns, so none are given."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="discover-power-bi-roles-row"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DISCOVER_POWERBI_ROLES"/>
+      <details key="source" value="OBSERVED"/>
+      <details key="guid" value="A07CCD8B-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="SSAS-2017"/>
+      <details key="observedFrom" value="DISCOVER_SCHEMA_ROWSETS of Analysis Services 2017; the rowset itself is refused there"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverPowerBiRolesRestrictions">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="What a DISCOVER_POWERBI_ROLES request may be restricted by, as Analysis Services 2017 lists it in DISCOVER_SCHEMA_ROWSETS. The feature order is the order the RestrictionsMask bitmask is defined over."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DiscoverPowerBiRolesRestrictions"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DISCOVER_POWERBI_ROLES"/>
+      <details key="role" value="restrictions"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ID"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lineageName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="LINEAGE_NAME"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="NAME"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverPowerBiDatasourcesRow">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The DISCOVER_POWERBI_DATASOURCES rowset. Analysis Services 2017 lists it in DISCOVER_SCHEMA_ROWSETS with its GUID and restrictions and refuses it (only in the Power BI service); no specification and no client describes its columns, so none are given."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="discover-power-bi-datasources-row"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DISCOVER_POWERBI_DATASOURCES"/>
+      <details key="source" value="OBSERVED"/>
+      <details key="guid" value="A07CCD8D-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="SSAS-2017"/>
+      <details key="observedFrom" value="DISCOVER_SCHEMA_ROWSETS of Analysis Services 2017; the rowset itself is refused there"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverPowerBiDatasourcesRestrictions">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="What a DISCOVER_POWERBI_DATASOURCES request may be restricted by, as Analysis Services 2017 lists it in DISCOVER_SCHEMA_ROWSETS. The feature order is the order the RestrictionsMask bitmask is defined over."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DiscoverPowerBiDatasourcesRestrictions"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DISCOVER_POWERBI_DATASOURCES"/>
+      <details key="role" value="restrictions"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ID"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="NAME"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverMExpressionsRow">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The DISCOVER_M_EXPRESSIONS rowset. Analysis Services 2017 lists it in DISCOVER_SCHEMA_ROWSETS with its GUID and restrictions and refuses it (only in the Power BI service); no specification and no client describes its columns, so none are given."/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="discover-m-expressions-row"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eAnnotations source="https://www.daanse.org/spec/xmla/rowset/1.0">
+      <details key="requestType" value="DISCOVER_M_EXPRESSIONS"/>
+      <details key="source" value="OBSERVED"/>
+      <details key="guid" value="A07CCD93-8148-11D0-87BB-00C04FC33942"/>
+      <details key="guidSource" value="SSAS-2017"/>
+      <details key="observedFrom" value="DISCOVER_SCHEMA_ROWSETS of Analysis Services 2017; the rowset itself is refused there"/>
+    </eAnnotations>
   </eClassifiers>
 </ecore:EPackage>

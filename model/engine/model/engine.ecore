@@ -12033,9 +12033,6 @@
         <details key="name" value="Event"/>
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
-      <eAnnotations source="https://www.daanse.org/spec/xmla/1.0">
-        <details key="wrapperElementName" value="Events"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="xEvent" eType="ecore:EClass http://schemas.microsoft.com/analysisservices/2011/engine/300/300#//XEvent"
         containment="true" resolveProxies="false">
