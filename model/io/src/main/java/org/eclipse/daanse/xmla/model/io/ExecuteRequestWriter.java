@@ -18,6 +18,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.eclipse.daanse.xmla.model.xmla.Command;
 import org.eclipse.daanse.xmla.model.xmla.PropertyList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 
 /**
@@ -35,6 +36,21 @@ public final class ExecuteRequestWriter {
         // static access only
     }
 
+    /**
+     * The namespace a command is written in, as the model states it: every ASSL command carries
+     * {@code elementNamespace} = the engine namespace in its Daanse annotation, and is written there with everything
+     * under it ({@code <Create xmlns=".../2003/engine"><ObjectDefinition><Trace>}); {@code Statement} carries none and
+     * stays in XMLA. The model puts all commands in one package, so the namespace has to be said per command, and saying
+     * it in the model lets every writer of the model -- this one and the TypeScript client's -- read it from the same
+     * place. Analysis Services 2017 refuses an ASSL command in the XMLA namespace: "The Create element ... (namespace
+     * urn:schemas-microsoft-com:xml-analysis) cannot appear under Envelope/Body/Execute/Command".
+     */
+    static String namespaceOf(Command command) {
+        EAnnotation daanse = command.eClass().getEAnnotation(EcoreXmlWriter.DAANSE_XMLA);
+        String stated = daanse == null ? null : daanse.getDetails().get("elementNamespace");
+        return stated == null ? XmlaNamespaces.XMLA : stated;
+    }
+
     /** Writes the {@code <Execute>} element: the command, then the properties. */
     public static void write(XMLStreamWriter out, Command command, PropertyList properties) throws XMLStreamException {
         out.setDefaultNamespace(XmlaNamespaces.XMLA);
@@ -45,7 +61,7 @@ public final class ExecuteRequestWriter {
         if (command != null) {
             // The element is the command's own name - <Statement>, <Alter> - not the
             // feature's, which is what a server dispatches on.
-            new EcoreXmlWriter(XmlaNamespaces.XMLA).write(out, command,
+            new EcoreXmlWriter(namespaceOf(command)).write(out, command,
                     ExtendedMetaData.INSTANCE.getName(command.eClass()));
         }
         out.writeEndElement();

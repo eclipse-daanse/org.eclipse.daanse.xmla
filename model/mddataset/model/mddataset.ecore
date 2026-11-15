@@ -890,9 +890,13 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of a typed value, written xsi:type as Analysis Services writes it: a member property on an axis such as MEMBER_VALUE of a date (xsi:type=&quot;xsd:dateTime&quot;)."/>
+      </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="type"/>
+        <details key="namespace" value="http://www.w3.org/2001/XMLSchema-instance"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="error" upperBound="-1"
