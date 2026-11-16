@@ -170,9 +170,11 @@ class SessionIdentityTest {
         assertThat(session.busy()).isFalse();
         assertThat(session.idle(session.startedAt())).isZero();
 
-        session.commandStarted();
+        assertThat(session.lastCommand()).isEmpty();
+        session.commandStarted("SELECT FROM [Sales]");
         assertThat(session.busy()).isTrue();
         assertThat(session.commandCount()).isEqualTo(1);
+        assertThat(session.lastCommand()).contains("SELECT FROM [Sales]");
 
         session.commandEnded();
         assertThat(session.busy()).isFalse();
