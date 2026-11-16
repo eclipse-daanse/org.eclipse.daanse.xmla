@@ -30,7 +30,7 @@ namespace AdomdClientConsole
         //
         // <Properties>
         //   <PropertyList>
-        //     <Catalog>Adventure Works DW 2008 SE</Catalog>
+        //     <Catalog>MyCatalog</Catalog>
         //   </PropertyList>
         // </Properties>
         //
@@ -38,16 +38,16 @@ namespace AdomdClientConsole
         //
         // <Restrictions>
         //   <RestrictionList>
-        //     <CUBE_NAME>Adventure Works</CUBE_NAME>
+        //     <CUBE_NAME>MyCube</CUBE_NAME>
         //   </RestrictionList>
         // </Restrictions>
         //
         // Examples:
-        // "Data source=http://bi.syncfusion.com/olap/msmdpump.dll" schema MDSCHEMA_CUBES
-        // "Data source=http://bi.syncfusion.com/olap/msmdpump.dll" schema MDSCHEMA_CUBES "" "<Restrictions><RestrictionList><CUBE_NAME>Adventure Works</CUBE_NAME></RestrictionList></Restrictions>"
-        // "Data source=http://bi.syncfusion.com/olap/msmdpump.dll" schema MDSCHEMA_CUBES "<Properties><PropertyList><Catalog>Adventure Works DW 2008 SE</Catalog></PropertyList></Properties>" "<Restrictions><RestrictionList><CUBE_NAME>Adventure Works</CUBE_NAME></RestrictionList></Restrictions>"
-        // "Data source=http://bi.syncfusion.com/olap/msmdpump.dll"  query "select from [Adventure Works]"
-        // "Data source=http://bi.syncfusion.com/olap/msmdpump.dll"  query "select from [Adventure Works]" "<Properties><PropertyList><Catalog>Adventure Works DW 2008 SE</Catalog></PropertyList></Properties>"
+        // "Data source=https://my-server/olap/msmdpump.dll" schema MDSCHEMA_CUBES
+        // "Data source=https://my-server/olap/msmdpump.dll" schema MDSCHEMA_CUBES "" "<Restrictions><RestrictionList><CUBE_NAME>MyCube</CUBE_NAME></RestrictionList></Restrictions>"
+        // "Data source=https://my-server/olap/msmdpump.dll" schema MDSCHEMA_CUBES "<Properties><PropertyList><Catalog>MyCatalog</Catalog></PropertyList></Properties>" "<Restrictions><RestrictionList><CUBE_NAME>MyCube</CUBE_NAME></RestrictionList></Restrictions>"
+        // "Data source=https://my-server/olap/msmdpump.dll"  query "select from [MyCube]"
+        // "Data source=https://my-server/olap/msmdpump.dll"  query "select from [MyCube]" "<Properties><PropertyList><Catalog>MyCatalog</Catalog></PropertyList></Properties>"
         static void Main(string[] args)
         {
             if (args.Length > 0)

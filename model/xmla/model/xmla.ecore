@@ -1243,7 +1243,7 @@
       <eAnnotations source="https://www.daanse.org/spec/xmla/property/1.0">
         <details key="access" value="ReadWrite"/>
         <details key="accessSource" value="OBSERVED"/>
-        <details key="observedFrom" value="Analysis Services 13.0, DISCOVER_PROPERTIES answer to Excel (MSOLAP 16.0)"/>
+        <details key="evidence" value="Analysis Services lists this property in DISCOVER_PROPERTIES with this access."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>

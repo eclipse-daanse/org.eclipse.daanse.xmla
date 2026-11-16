@@ -133,7 +133,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VersionHeader" eSuperTypes="#//HeaderEntry">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A sequence number the client attaches to requests that open a conversation rather than continue one. Observed value 926 throughout one recorded connect, so it does not increment per request; what it counts is not documented anywhere this project has access to, and nothing here acts on it."/>
+      <details key="documentation" value="A sequence number the client attaches to requests that open a conversation rather than continue one. It keeps one value over the requests of a connection, so it does not count requests; no specification states what it counts, and nothing here acts on it."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Version"/>
@@ -159,7 +159,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BeginGetSessionTokenHeader" eSuperTypes="#//HeaderEntry">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Asks the server for a session token before opening a session. The captured server ignores it: it answers the empty result and returns no token anywhere, and Excel carries on with an ordinary BeginSession. It is a negotiation a server may decline in silence."/>
+      <details key="documentation" value="Asks the server for a session token before opening a session. A server may ignore it: it then answers the empty result and returns no token anywhere, and the client carries on with an ordinary BeginSession. It is a negotiation a server may decline in silence."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="BeginGetSessionToken"/>

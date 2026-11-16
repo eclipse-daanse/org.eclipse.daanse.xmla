@@ -113,9 +113,9 @@ public final class DiscoverRequestReader {
      * <p>
      * Both mean the same thing and both become one entry per value, so a caller
      * cannot tell which client it is talking to — which is the point. Reading this
-     * with {@code getElementText()} throws on the second form, so a real Excel
-     * connect was refused with a parse error before its first
-     * {@code DISCOVER_PROPERTIES} was answered.
+     * with {@code getElementText()} throws on the second form, so such a reader
+     * refuses an Excel connect with a parse error before its first
+     * {@code DISCOVER_PROPERTIES} gets an answer.
      */
     private static void readRestrictionValues(XMLStreamReader in, String name, Restrictions into)
             throws XMLStreamException {

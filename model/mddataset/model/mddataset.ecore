@@ -910,7 +910,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RowSetRowItem">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="One column of a tabular Execute result. As with CellProperty the element name is the column name, so it is carried as data. A column may also be structured rather than scalar - SELECT * FROM $SYSTEM.DISCOVER_SCHEMA_ROWSETS returns a Restrictions column holding &amp;lt;Name> and &amp;lt;Type>, repeated once per restriction - so an item may contain further items. All five captured servers do this, on every SSAS version from 11.0 to 16.0."/>
+      <details key="documentation" value="One column of a tabular Execute result. As with CellProperty the element name is the column name, so it is carried as data. A column may also be structured rather than scalar - SELECT * FROM $SYSTEM.DISCOVER_SCHEMA_ROWSETS returns a Restrictions column holding &amp;lt;Name> and &amp;lt;Type>, repeated once per restriction - so an item may contain further items. Analysis Services does this in every version from 11.0 to 16.0."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="RowSetRowItem"/>

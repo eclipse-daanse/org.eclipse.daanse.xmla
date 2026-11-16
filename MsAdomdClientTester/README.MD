@@ -42,15 +42,15 @@ dotnet run
 See parameters description in Program.cs
 
 Examples:
-dotnet run "Data source=http://bi.syncfusion.com/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES
+dotnet run "Data source=https://my-server/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES
 
-dotnet run "Data source=http://bi.syncfusion.com/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES "" "<Restrictions><RestrictionList><CUBE_NAME>Adventure Works</CUBE_NAME></RestrictionList></Restrictions>"
+dotnet run "Data source=https://my-server/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES "" "<Restrictions><RestrictionList><CUBE_NAME>MyCube</CUBE_NAME></RestrictionList></Restrictions>"
 
-dotnet run "Data source=http://bi.syncfusion.com/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES "<Properties><PropertyList><Catalog>Adventure Works DW 2008 SE</Catalog></PropertyList></Properties>" "<Restrictions><RestrictionList><CUBE_NAME>Adventure Works</CUBE_NAME></RestrictionList></Restrictions>"
+dotnet run "Data source=https://my-server/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES "<Properties><PropertyList><Catalog>MyCatalog</Catalog></PropertyList></Properties>" "<Restrictions><RestrictionList><CUBE_NAME>MyCube</CUBE_NAME></RestrictionList></Restrictions>"
 
-dotnet run "Data source=http://bi.syncfusion.com/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword"  query "select from [Adventure Works]"
+dotnet run "Data source=https://my-server/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword"  query "select from [MyCube]"
 
-dotnet run "Data source=http://bi.syncfusion.com/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword"  query "select from [Adventure Works]" "<Properties><PropertyList><Catalog>Adventure Works DW 2008 SE</Catalog></PropertyList></Properties>"
+dotnet run "Data source=https://my-server/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword"  query "select from [MyCube]" "<Properties><PropertyList><Catalog>MyCatalog</Catalog></PropertyList></Properties>"
 
 
 -----
@@ -60,7 +60,7 @@ dotnet add package Microsoft.AnalysisServices.AdomdClient.NetCore.retail.amd64 -
 
 dotnet build MsAdomdClientTester.csproj /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary
 
-dotnet bin/Debug/net6.0/MsAdomdClientTester.dll "Data source=http://bi.syncfusion.com/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES
+dotnet bin/Debug/net6.0/MsAdomdClientTester.dll "Data source=https://my-server/olap/msmdpump.dll;UID=Domain\User;PWD=UserDomainPassword" schema MDSCHEMA_CUBES
 
 dotnet add package Microsoft.AnalysisServices.AdomdClient.retail.amd64 --version 19.46.0
 

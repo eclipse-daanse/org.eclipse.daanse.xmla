@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  * What happens when {@code BeginSession} rides on a request that actually asks
  * for something.
  * <p>
- * Every recorded client opens its session with an {@code Execute} whose command
+ * The common clients open their session with an {@code Execute} whose command
  * is an empty {@code <Statement/>}, and it is easy to read that as the rule. It
  * is not. XMLA 1.1 p. 29 says the statement <em>may</em> be empty and that this
  * <em>can</em> be used to carry the header; [MS-SSAS] 3.1.3.1 shows
@@ -69,7 +69,7 @@ class SessionOpenedByARealRequestTest {
     private static final String BEGIN = "<BeginSession xmlns=\"urn:schemas-microsoft-com:xml-analysis\"/>";
 
     /**
-     * Not the empty statement every recorded client uses: a real rowset request.
+     * Not the empty statement the common clients use: a real rowset request.
      */
     private static final String CUBES = """
             <Discover xmlns="urn:schemas-microsoft-com:xml-analysis">\
@@ -80,7 +80,7 @@ class SessionOpenedByARealRequestTest {
     /** Nor an empty command: a real query. */
     private static final String MDX = """
             <Execute xmlns="urn:schemas-microsoft-com:xml-analysis">\
-            <Command><Statement>SELECT [Measures].MEMBERS ON 0 FROM [Adventure Works]</Statement></Command>\
+            <Command><Statement>SELECT [Measures].MEMBERS ON 0 FROM [Shipments]</Statement></Command>\
             <Properties><PropertyList/></Properties></Execute>""";
 
     private final Sessions sessions = new Sessions();
@@ -118,8 +118,8 @@ class SessionOpenedByARealRequestTest {
         public List<EObject> discover(Discover request, XmlaRequest context) {
             sawSession.add(context.sessionId());
             MdschemaCubesRow row = RowsetMultidimensionalFactory.eINSTANCE.createMdschemaCubesRow();
-            row.setCatalogName("Adventure Works DW");
-            row.setCubeName("Adventure Works");
+            row.setCatalogName("Logistics");
+            row.setCubeName("Shipments");
             return List.of(row);
         }
 
@@ -154,7 +154,7 @@ class SessionOpenedByARealRequestTest {
         assertThat(answer).doesNotContain("Fault");
         // Both halves come back together: there is no second round trip for the rows.
         assertThat(sessionIdOf(answer)).as("the new session id").isNotNull();
-        assertThat(answer).as("and the rows that were asked for").contains("Adventure Works");
+        assertThat(answer).as("and the rows that were asked for").contains("Shipments");
     }
 
     @Test

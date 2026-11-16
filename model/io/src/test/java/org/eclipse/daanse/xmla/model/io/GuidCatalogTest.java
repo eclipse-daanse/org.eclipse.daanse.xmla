@@ -59,6 +59,14 @@ class GuidCatalogTest {
     private static final Set<String> SHARE_ONE_GUID = Set.of("DMSCHEMA_MINING_MODEL_XML",
             "DMSCHEMA_MINING_MODEL_CONTENT_PMML");
 
+    /** The statements an {@code evidence} detail may make about a GUID. */
+    private static final Set<String> EVIDENCE = Set.of(
+            "Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value.",
+            "Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS.",
+            "Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS and refuses the rowset in "
+                    + "multidimensional mode.",
+            "ADOMD.NET declares this GUID.");
+
     private static Optional<String> detail(EClass eClass, String key) {
         EAnnotation annotation = eClass.getEAnnotation(RowsetCatalog.ANNOTATION);
         return annotation == null ? Optional.empty() : Optional.ofNullable(annotation.getDetails().get(key));
@@ -120,9 +128,9 @@ class GuidCatalogTest {
      * <p>
      * [MS-SSAS] publishes no rowset GUIDs at all — a {@code source=MS-SSAS-*} on a
      * rowset says where its <em>columns</em> come from. So any GUID we carry was
-     * either read off a real server, taken from a decompiled client, or taken from
-     * OLE DB; and which of the three it was is the only thing that lets a later
-     * reader weigh it.
+     * either listed by Analysis Services in {@code DISCOVER_SCHEMA_ROWSETS},
+     * declared by ADOMD.NET, or taken from OLE DB; and which of the three it was
+     * is the only thing that lets a later reader weigh it.
      */
     @Test
     void aGuidNoSpecificationStatesSaysWhereItCameFrom() {
@@ -140,5 +148,34 @@ class GuidCatalogTest {
 
         assertThat(unattributed).as("these carry a GUID that no specification states and no note attributes, "
                 + "so nobody can tell whether it is right").isEmpty();
+    }
+
+    /**
+     * What is known about a GUID no specification states, in one of a few fixed
+     * sentences.
+     * <p>
+     * The {@code evidence} detail beside {@code guidSource} states what confirms
+     * the value - Analysis Services listing it, ADOMD.NET declaring it, or both -
+     * and nothing about how that was found out, so a reader can weigh it from the
+     * model alone. One statement per rowset: a second one under the same key would
+     * be hidden behind the first.
+     */
+    @Test
+    void theEvidenceForAGuidIsOneOfTheFixedStatements() {
+        List<String> off = new ArrayList<>();
+        for (Map.Entry<String, EClass> rowset : rowsets().entrySet()) {
+            EAnnotation annotation = rowset.getValue().getEAnnotation(RowsetCatalog.ANNOTATION);
+            List<String> evidence = annotation == null ? List.of()
+                    : annotation.getDetails().stream().filter(entry -> "evidence".equals(entry.getKey()))
+                            .map(Map.Entry::getValue).toList();
+            boolean attributed = detail(rowset.getValue(), "guidSource").isPresent();
+            boolean fixed = evidence.size() == 1 && EVIDENCE.contains(evidence.get(0));
+            if (attributed ? !fixed : !evidence.isEmpty()) {
+                off.add(rowset.getKey() + " " + evidence);
+            }
+        }
+
+        assertThat(off).as("a GUID with a guidSource carries exactly one evidence detail, worded as one of "
+                + "the fixed statements, and a rowset without a guidSource carries none").isEmpty();
     }
 }
