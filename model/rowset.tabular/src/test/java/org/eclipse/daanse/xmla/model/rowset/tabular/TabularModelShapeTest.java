@@ -136,7 +136,7 @@ class TabularModelShapeTest {
         }
 
         assertThat(order).as("the position in the client's batch is the only thing that ties an answer "
-                + "to a request; it has to be recorded, and it has to be 0..47 without a hole")
+                + "to a request; it has to be stated, and it has to be 0..47 without a hole")
                 .containsExactlyInAnyOrderElementsOf(java.util.stream.IntStream.range(0, ROWSETS).boxed().toList());
     }
 

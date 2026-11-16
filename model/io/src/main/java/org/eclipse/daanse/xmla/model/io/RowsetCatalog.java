@@ -176,8 +176,7 @@ public final class RowsetCatalog {
      * {@code PROPRIETARY} or {@code OBSERVED}.
      * <p>
      * {@code OBSERVED} is the weakest: no specification describes the rowset, and
-     * the columns are those a real server answered with. The {@code observedFrom}
-     * detail beside it names the recorded answer.
+     * the columns are those Analysis Services answers with.
      */
     public static Optional<String> sourceOf(EClass eClass) {
         return Optional.ofNullable(detail(eClass, "source"));

@@ -175,7 +175,7 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
         volatile="true" transient="true" derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The CSDLBI version the Schema conforms to, as bi:Version. csdlbi.xsd declares no such attribute and a live server sends it on every DISCOVER_CSDL_METADATA response - 2.5 and 2.0 in the two Power BI recordings. Without it the version is read and dropped, and a client cannot tell which revision of the extensions it is looking at."/>
+        <details key="documentation" value="The CSDLBI version the Schema conforms to, as bi:Version. csdlbi.xsd declares no such attribute and a server sends it on every DISCOVER_CSDL_METADATA response, for example 2.5 or 2.0. Without it the version is read and dropped, and a client cannot tell which revision of the extensions it is looking at."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>

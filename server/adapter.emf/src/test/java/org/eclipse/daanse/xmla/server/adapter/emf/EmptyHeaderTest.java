@@ -35,9 +35,9 @@ import org.junit.jupiter.api.Test;
  * {@code ReadEndElement} consumes the entire element on the first call, then
  * takes the <em>next</em> end element with the second. From there it is one
  * element out of step for the whole document and eventually reads past the end,
- * which surfaces as a parse failure at the last byte, nowhere near the cause. A
- * recorded Analysis Services writes {@code <soap:Envelope><soap:Body>} with no
- * header at all.
+ * which surfaces as a parse failure at the last byte, nowhere near the cause.
+ * Analysis Services writes {@code <soap:Envelope><soap:Body>} with no header at
+ * all.
  */
 class EmptyHeaderTest {
 

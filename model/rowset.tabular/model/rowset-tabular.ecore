@@ -36,7 +36,7 @@
       <details key="rowsetName" value="Model"/>
       <details key="guid" value="A07CCD49-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularModel. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="0"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -278,7 +278,7 @@
       <details key="rowsetName" value="DataSource"/>
       <details key="guid" value="A07CCD4A-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularDataSources. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="1"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -422,7 +422,7 @@
       <details key="rowsetName" value="Table"/>
       <details key="guid" value="A07CCD4B-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularTables. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="2"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -594,7 +594,7 @@
       <details key="rowsetName" value="Column"/>
       <details key="guid" value="A07CCD4C-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularColumns. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="3"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -920,7 +920,7 @@
       <details key="rowsetName" value="AttributeHierarchy"/>
       <details key="guid" value="A07CCD4D-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularAttributeHierarchies. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="4"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -980,7 +980,7 @@
       <details key="rowsetName" value="Partition"/>
       <details key="guid" value="A07CCD4E-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPartitions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="5"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1173,7 +1173,7 @@
       <details key="rowsetName" value="Relationship"/>
       <details key="guid" value="A07CCD4F-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularRelationships. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="6"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1331,7 +1331,7 @@
       <details key="rowsetName" value="Measure"/>
       <details key="guid" value="A07CCD50-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularMeasures. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="7"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1489,7 +1489,7 @@
       <details key="rowsetName" value="Hierarchy"/>
       <details key="guid" value="A07CCD51-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularHierarchies. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="8"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1605,7 +1605,7 @@
       <details key="rowsetName" value="Level"/>
       <details key="guid" value="A07CCD52-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularLevels. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="9"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1686,7 +1686,7 @@
       <details key="rowsetName" value="Annotation"/>
       <details key="guid" value="A07CCD53-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularAnnotations. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="10"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1746,7 +1746,7 @@
       <details key="rowsetName" value="KPI"/>
       <details key="guid" value="A07CCD5F-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularKpis. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="11"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1855,7 +1855,7 @@
       <details key="rowsetName" value="Culture"/>
       <details key="guid" value="A07CCD63-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCultures. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="12"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1915,7 +1915,7 @@
       <details key="rowsetName" value="ObjectTranslation"/>
       <details key="guid" value="A07CCD64-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularObjectTranslations. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="13"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -1989,7 +1989,7 @@
       <details key="rowsetName" value="LinguisticMetadata"/>
       <details key="guid" value="A07CCD65-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularLinguisticMetadata. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="14"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2042,7 +2042,7 @@
       <details key="rowsetName" value="Perspective"/>
       <details key="guid" value="A07CCD66-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPerspectives. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="15"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2095,7 +2095,7 @@
       <details key="rowsetName" value="PerspectiveTable"/>
       <details key="guid" value="A07CCD67-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPerspectiveTables. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="16"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2148,7 +2148,7 @@
       <details key="rowsetName" value="PerspectiveColumn"/>
       <details key="guid" value="A07CCD68-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPerspectiveColumns. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="17"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2194,7 +2194,7 @@
       <details key="rowsetName" value="PerspectiveHierarchy"/>
       <details key="guid" value="A07CCD69-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPerspectiveHierarchies. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="18"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2240,7 +2240,7 @@
       <details key="rowsetName" value="PerspectiveMeasure"/>
       <details key="guid" value="A07CCD6A-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPerspectiveMeasures. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="19"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2286,7 +2286,7 @@
       <details key="rowsetName" value="Role"/>
       <details key="guid" value="A07CCD6B-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularRoles. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="20"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2346,7 +2346,7 @@
       <details key="rowsetName" value="RoleMembership"/>
       <details key="guid" value="A07CCD6C-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularRoleMemberships. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="21"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2413,7 +2413,7 @@
       <details key="rowsetName" value="TablePermission"/>
       <details key="guid" value="A07CCD6D-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularTablePermissions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="22"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//UnsignedLong">
@@ -2487,7 +2487,7 @@
       <details key="rowsetName" value="Variation"/>
       <details key="guid" value="A07CCD6E-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularVariations. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="23"/>
       <details key="minCompatibilityLevel" value="AnalysisServices&gt;=1400; Excel&gt;=1400"/>
     </eAnnotations>
@@ -2562,7 +2562,7 @@
       <details key="rowsetName" value="ExtendedProperty"/>
       <details key="guid" value="A07CCD71-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularExtendedProperties. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="26"/>
       <details key="minCompatibilityLevel" value="1400"/>
     </eAnnotations>
@@ -2630,7 +2630,7 @@
       <details key="rowsetName" value="Expression"/>
       <details key="guid" value="A07CCD72-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularExpressions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="27"/>
       <details key="minCompatibilityLevel" value="1400"/>
     </eAnnotations>
@@ -2747,7 +2747,7 @@
       <details key="rowsetName" value="ColumnPermission"/>
       <details key="guid" value="A07CCD73-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularColumnPermissions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="28"/>
       <details key="minCompatibilityLevel" value="1400"/>
     </eAnnotations>
@@ -2801,7 +2801,7 @@
       <details key="rowsetName" value="DetailRowsDefinition"/>
       <details key="guid" value="A07CCD54-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularDetailRowsDefinitions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="29"/>
       <details key="minCompatibilityLevel" value="1400"/>
     </eAnnotations>
@@ -2869,7 +2869,7 @@
       <details key="rowsetName" value="CalculationGroup"/>
       <details key="guid" value="A07CCD76-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCalculationGroups. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="32"/>
       <details key="minCompatibilityLevel" value="1470"/>
     </eAnnotations>
@@ -2923,7 +2923,7 @@
       <details key="rowsetName" value="CalculationItem"/>
       <details key="guid" value="A07CCD77-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCalculationItems. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="33"/>
       <details key="minCompatibilityLevel" value="1470"/>
     </eAnnotations>
@@ -3012,7 +3012,7 @@
       <details key="rowsetName" value="FormatStringDefinition"/>
       <details key="guid" value="A07CCD7A-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularFormatStringDefinitions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="36"/>
       <details key="minCompatibilityLevel" value="1470"/>
     </eAnnotations>
@@ -3080,7 +3080,7 @@
       <details key="rowsetName" value="QueryGroup"/>
       <details key="guid" value="A07CCD7B-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularQueryGroups. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="37"/>
       <details key="minCompatibilityLevel" value="1480"/>
     </eAnnotations>
@@ -3127,7 +3127,7 @@
       <details key="rowsetName" value="Set"/>
       <details key="guid" value="A07CCD6F-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularSets. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="24"/>
       <details key="minCompatibilityLevel" value="PowerBI&gt;=1400"/>
     </eAnnotations>
@@ -3230,7 +3230,7 @@
       <details key="rowsetName" value="PerspectiveSet"/>
       <details key="guid" value="A07CCD70-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularPerspectiveSets. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="25"/>
       <details key="minCompatibilityLevel" value="PowerBI&gt;=1400"/>
     </eAnnotations>
@@ -3277,7 +3277,7 @@
       <details key="rowsetName" value="RelatedColumnDetails"/>
       <details key="guid" value="A07CCD74-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularRelatedColumnDetails. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="30"/>
       <details key="minCompatibilityLevel" value="PowerBI&gt;=1400"/>
     </eAnnotations>
@@ -3317,7 +3317,7 @@
       <details key="rowsetName" value="GroupByColumn"/>
       <details key="guid" value="A07CCD75-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularGroupByColumns. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="31"/>
       <details key="minCompatibilityLevel" value="PowerBI&gt;=1400"/>
     </eAnnotations>
@@ -3364,7 +3364,7 @@
       <details key="rowsetName" value="AlternateOf"/>
       <details key="guid" value="A07CCD78-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularAlternateOfDefinitions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="34"/>
       <details key="minCompatibilityLevel" value="1460"/>
     </eAnnotations>
@@ -3418,7 +3418,7 @@
       <details key="rowsetName" value="RefreshPolicy"/>
       <details key="guid" value="A07CCD79-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularRefreshPolicies. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="35"/>
       <details key="minCompatibilityLevel" value="1450"/>
     </eAnnotations>
@@ -3514,7 +3514,7 @@
       <details key="rowsetName" value="AnalyticsAIMetadata"/>
       <details key="guid" value="A07CCD7C-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularAnalyticsAIMetadata. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="38"/>
       <details key="minCompatibilityLevel" value="1000000"/>
     </eAnnotations>
@@ -3561,7 +3561,7 @@
       <details key="rowsetName" value="ChangedProperty"/>
       <details key="guid" value="5B5F186B-E834-4E61-AF92-EB1E6BF3D21E"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularChangedProperties. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="39"/>
       <details key="minCompatibilityLevel" value="1567"/>
     </eAnnotations>
@@ -3601,7 +3601,7 @@
       <details key="rowsetName" value="ExcludedArtifact"/>
       <details key="guid" value="E0B79227-1F53-41B4-BAC8-5315E58F12F2"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularExcludedArtifacts. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="40"/>
       <details key="minCompatibilityLevel" value="1000000"/>
     </eAnnotations>
@@ -3648,7 +3648,7 @@
       <details key="rowsetName" value="DataCoverageDefinition"/>
       <details key="guid" value="A07CCD82-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularDataCoverageDefinitions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="41"/>
       <details key="minCompatibilityLevel" value="1603"/>
     </eAnnotations>
@@ -3716,7 +3716,7 @@
       <details key="rowsetName" value="CalculationExpression"/>
       <details key="guid" value="A07CCD83-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCalculationExpressions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="42"/>
       <details key="minCompatibilityLevel" value="1605"/>
     </eAnnotations>
@@ -3798,7 +3798,7 @@
       <details key="rowsetName" value="Calendar"/>
       <details key="guid" value="A07CCD84-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCalendars. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="43"/>
       <details key="minCompatibilityLevel" value="1701"/>
     </eAnnotations>
@@ -3866,7 +3866,7 @@
       <details key="rowsetName" value="CalendarColumnGroup"/>
       <details key="guid" value="A07CCD85-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCalendarColumnGroups. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="44"/>
       <details key="minCompatibilityLevel" value="1701"/>
     </eAnnotations>
@@ -3913,7 +3913,7 @@
       <details key="rowsetName" value="CalendarColumnReference"/>
       <details key="guid" value="A07CCD86-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularCalendarColumnReferences. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="45"/>
       <details key="minCompatibilityLevel" value="1701"/>
     </eAnnotations>
@@ -3967,7 +3967,7 @@
       <details key="rowsetName" value="Function"/>
       <details key="guid" value="A07CCD7D-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularFunctions. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="46"/>
       <details key="minCompatibilityLevel" value="1702"/>
     </eAnnotations>
@@ -4070,7 +4070,7 @@
       <details key="rowsetName" value="BindingInfo"/>
       <details key="guid" value="A07CCD87-8148-11D0-87BB-00C04FC33942"/>
       <details key="guidSource" value="ADOMD-19.114.12"/>
-      <details key="observedFrom" value="ADOMD.NET 19.114.12, AdomdSchemaGuid field TabularBindingInfoCollection. No recorded server answer lists a TMSCHEMA rowset, so the client is the only source."/>
+      <details key="evidence" value="ADOMD.NET declares this GUID."/>
       <details key="discoverOrder" value="47"/>
       <details key="minCompatibilityLevel" value="1608"/>
     </eAnnotations>

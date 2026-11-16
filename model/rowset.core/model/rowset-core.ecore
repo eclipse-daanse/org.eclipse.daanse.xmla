@@ -61,7 +61,7 @@
       <details key="requestType" value="DISCOVER_DATASOURCES"/>
       <details key="guid" value="06C03D41-F66D-49F3-B1B8-987F7AF4CF18"/>
       <details key="guidSource" value="OBSERVED"/>
-      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
+      <details key="evidence" value="Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSourceName" lowerBound="1"
@@ -151,7 +151,7 @@
       <details key="requestType" value="DISCOVER_ENUMERATORS"/>
       <details key="guid" value="55A9E78B-ACCB-45B4-95A6-94C5065617A7"/>
       <details key="guidSource" value="OBSERVED"/>
-      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
+      <details key="evidence" value="Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumName" lowerBound="1"
@@ -230,7 +230,7 @@
       <details key="requestType" value="DISCOVER_KEYWORDS"/>
       <details key="guid" value="1426C443-4CDD-4A40-8F45-572FAB9BBAA1"/>
       <details key="guidSource" value="OBSERVED"/>
-      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
+      <details key="evidence" value="Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" lowerBound="1"
@@ -257,7 +257,7 @@
       <details key="requestType" value="DISCOVER_LITERALS"/>
       <details key="guid" value="C3EF5ECB-0A07-4665-A140-B075722DBDC2"/>
       <details key="guidSource" value="OBSERVED"/>
-      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
+      <details key="evidence" value="Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="literalName" lowerBound="1"
@@ -336,7 +336,7 @@
       <details key="requestType" value="DISCOVER_PROPERTIES"/>
       <details key="guid" value="4B40ADFB-8B09-4758-97BB-636E8AE97BCF"/>
       <details key="guidSource" value="OBSERVED"/>
-      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
+      <details key="evidence" value="Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="propertyName" lowerBound="1"
@@ -414,7 +414,7 @@
       <details key="requestType" value="DISCOVER_SCHEMA_ROWSETS"/>
       <details key="guid" value="EEA0302B-7922-4992-8991-0E605D0E5593"/>
       <details key="guidSource" value="OBSERVED"/>
-      <details key="observedFrom" value="Analysis Services, DISCOVER_SCHEMA_ROWSETS answer (recorded-ssas.xml); the same value in ADOMD.NET 19.114.12 AdomdSchemaGuid. [MS-SSAS] states no rowset GUIDs at all, so the source detail above covers the columns, not this."/>
+      <details key="evidence" value="Analysis Services lists this GUID in DISCOVER_SCHEMA_ROWSETS, and ADOMD.NET declares the same value."/>
       <details key="source" value="MS-SSAS-251031"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaName" lowerBound="1"
@@ -722,7 +722,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ProviderTypeEnum">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="What kind of data a provider serves, as DISCOVER_DATASOURCES reports it. XMLA 1.1 defines all three and requires a different set of rowsets of each: TDP a tabular data provider, MDP a multidimensional one, DMP a data mining provider implementing OLE DB for Data Mining. A recorded Analysis Services server declares itself all three.&#xA;&#xA;The column is an array, not a single value, which is why one server can be all three at once. The names are the specification's; the numbers are this server's own - see AccessEnum."/>
+      <details key="documentation" value="What kind of data a provider serves, as DISCOVER_DATASOURCES reports it. XMLA 1.1 defines all three and requires a different set of rowsets of each: TDP a tabular data provider, MDP a multidimensional one, DMP a data mining provider implementing OLE DB for Data Mining. Analysis Services declares itself all three.&#xA;&#xA;The column is an array, not a single value, which is why one server can be all three at once. The names are the specification's; the numbers are this server's own - see AccessEnum."/>
     </eAnnotations>
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="ProviderType"/>
