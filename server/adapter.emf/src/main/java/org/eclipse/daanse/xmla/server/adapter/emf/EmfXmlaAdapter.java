@@ -207,7 +207,7 @@ public class EmfXmlaAdapter {
         try {
             request = restoreIdentity(applySessionHeaders(envelope.headers(), exchange));
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
-            writeFault(target, faultKindOf(refused), refused.getMessage(), null);
+            writeFault(target, faultKindOf(refused), refused.getMessage(), refused.errorCode());
             return false;
         }
 
@@ -303,7 +303,7 @@ public class EmfXmlaAdapter {
         try {
             rows = connector.discover(discover, request);
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
-            writeFault(target, faultKindOf(refused), refused.getMessage(), null);
+            writeFault(target, faultKindOf(refused), refused.getMessage(), refused.errorCode());
             return false;
         } catch (org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
             LOGGER.debug("answering with an in-band error", failed);
@@ -377,7 +377,7 @@ public class EmfXmlaAdapter {
         try {
             result = connector.execute(execute, request);
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
-            writeFault(target, faultKindOf(refused), refused.getMessage(), null);
+            writeFault(target, faultKindOf(refused), refused.getMessage(), refused.errorCode());
             return false;
         } catch (org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
             // Ran and failed, and the session lives: the answer is a result root

@@ -72,7 +72,7 @@ public final class SoapFaultWriter {
             body.writeStartElement(XmlaNamespaces.SOAP_ENV, "Fault");
 
             // Unqualified on purpose - see the class comment.
-            writeUnqualified(body, "faultcode", XmlaNamespaces.SOAP_ENV_PREFIX + ":" + kind.code);
+            writeUnqualified(body, "faultcode", faultCode(kind, errorCode));
             writeUnqualified(body, "faultstring", faultString);
 
             // Only with a code. A client reads the ErrorCode attribute unconditionally -
@@ -96,6 +96,23 @@ public final class SoapFaultWriter {
 
             body.writeEndElement();
         });
+    }
+
+    /**
+     * The fault code as Analysis Services writes it.
+     * <p>
+     * A fault that carries a number has {@code XMLAnalysisError.0x} and the number in lower-case hexadecimal as its
+     * code, unprefixed: Analysis Services writes every such fault in this form and no other, e.g.
+     * {@code XMLAnalysisError.0xc1140002} beside {@code ErrorCode="3239313410"}. A fault without a number keeps SOAP's
+     * own {@code Client}/{@code Server}, since an invented number would be worse, and so does a header nobody
+     * understood (SOAP's {@code MustUnderstand}). ADOMD.NET does not read the code (it parses the {@code Error}
+     * element), so the form matters to clients that compare answers, not to ADOMD.
+     */
+    static String faultCode(Kind kind, Long errorCode) {
+        if (errorCode == null || kind == Kind.MUST_UNDERSTAND) {
+            return XmlaNamespaces.SOAP_ENV_PREFIX + ":" + kind.code;
+        }
+        return "XMLAnalysisError.0x" + Long.toHexString(errorCode);
     }
 
     /**
