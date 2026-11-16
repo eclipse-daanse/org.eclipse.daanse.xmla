@@ -70,9 +70,32 @@ public final class EcoreXmlReader {
     private static final Map<EClass, Map<String, EStructuralFeature>> ATTRIBUTES = new ConcurrentHashMap<>();
 
     private final Unknown unknown;
+    /**
+     * The element names from the envelope down to where the reader stands, while it records where it read what; null
+     * when it does not.
+     */
+    private final java.util.List<String> path;
 
     public EcoreXmlReader(Unknown unknown) {
+        this(unknown, null);
+    }
+
+    /**
+     * A reader that records where it read each object ({@link ElementLocation}), its elements standing below the given
+     * path, and refuses an unknown element, under {@link Unknown#FAIL}, in the words Analysis Services uses.
+     *
+     * @param above the element names above the element read, from the envelope down; {@code null} records nothing
+     */
+    public EcoreXmlReader(Unknown unknown, java.util.List<String> above) {
         this.unknown = unknown;
+        this.path = above == null ? null : new java.util.ArrayList<>(above);
+    }
+
+    private ElementLocation.Position here(XMLStreamReader in, String child) {
+        var at = in.getLocation();
+        String joined = String.join("/", path);
+        return new ElementLocation.Position(child == null ? joined : joined + "/" + child, in.getNamespaceURI(),
+                at.getLineNumber(), at.getColumnNumber());
     }
 
     /**
@@ -83,6 +106,12 @@ public final class EcoreXmlReader {
      */
     public EObject read(XMLStreamReader in, EClass target) throws XMLStreamException {
         EObject object = target.getEPackage().getEFactoryInstance().create(target);
+        ElementLocation location = null;
+        if (path != null) {
+            path.add(in.getLocalName());
+            location = new ElementLocation(here(in, null));
+            object.eAdapters().add(location);
+        }
         readAttributes(in, target, object);
         // A type with simple content keeps the element's own text, as
         // <FmtValue>$1,234.00</FmtValue> and <Value xsi:type="xsd:int">42</Value>
@@ -103,6 +132,10 @@ public final class EcoreXmlReader {
                 if (depth == 0) {
                     if (text != null && !text.isEmpty()) {
                         set(object, simple, text.toString(), in);
+                    }
+                    if (location != null) {
+                        location.end(here(in, null));
+                        path.removeLast();
                     }
                     return object;
                 }
@@ -173,6 +206,12 @@ public final class EcoreXmlReader {
                 return;
             }
             if (unknown == Unknown.FAIL) {
+                if (path != null) {
+                    var at = in.getLocation();
+                    throw new XmlaParseException(XmlaParseException.CANNOT_APPEAR, "The " + name + " element at line "
+                            + at.getLineNumber() + ", column " + at.getColumnNumber() + " (namespace "
+                            + in.getNamespaceURI() + ") cannot appear under " + String.join("/", path) + ".");
+                }
                 throw new XmlaCodecException("element <" + name + "> is not a feature of " + target.getName(), in);
             }
             skipSubtree(in);
@@ -186,6 +225,10 @@ public final class EcoreXmlReader {
             // XML and kept as the column's value.
             set(object, feature, XmlFragment.read(in), in);
         } else {
+            if (path != null) {
+                ElementLocation.Position at = here(in, name);
+                ElementLocation.of(object).ifPresent(location -> location.child(name, at));
+            }
             set(object, feature, in.getElementText(), in);
         }
     }
@@ -207,6 +250,19 @@ public final class EcoreXmlReader {
      * Reads the children of a wrapper as though they had been written without it.
      */
     private void readWrapped(XMLStreamReader in, EClass target, EObject object) throws XMLStreamException {
+        if (path != null) {
+            path.add(in.getLocalName());
+        }
+        try {
+            readWrappedChildren(in, target, object);
+        } finally {
+            if (path != null) {
+                path.removeLast();
+            }
+        }
+    }
+
+    private void readWrappedChildren(XMLStreamReader in, EClass target, EObject object) throws XMLStreamException {
         int depth = 1;
         while (in.hasNext() && depth > 0) {
             int event = in.next();

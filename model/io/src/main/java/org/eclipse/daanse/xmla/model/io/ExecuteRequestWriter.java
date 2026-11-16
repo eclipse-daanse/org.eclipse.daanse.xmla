@@ -51,6 +51,15 @@ public final class ExecuteRequestWriter {
         return stated == null ? XmlaNamespaces.XMLA : stated;
     }
 
+    /**
+     * Writes one command alone, its element in its own namespace with everything under it: the text a server trace
+     * reports for the command (Command Begin and End), as Analysis Services writes it there,
+     * {@code <Create xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">…</Create>}.
+     */
+    public static void writeCommand(XMLStreamWriter out, Command command) throws XMLStreamException {
+        new EcoreXmlWriter(namespaceOf(command)).write(out, command, ExtendedMetaData.INSTANCE.getName(command.eClass()));
+    }
+
     /** Writes the {@code <Execute>} element: the command, then the properties. */
     public static void write(XMLStreamWriter out, Command command, PropertyList properties) throws XMLStreamException {
         out.setDefaultNamespace(XmlaNamespaces.XMLA);

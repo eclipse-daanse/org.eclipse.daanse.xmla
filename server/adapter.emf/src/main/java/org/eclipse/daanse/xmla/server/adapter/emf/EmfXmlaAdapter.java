@@ -207,7 +207,7 @@ public class EmfXmlaAdapter {
         try {
             request = restoreIdentity(applySessionHeaders(envelope.headers(), exchange));
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
-            writeFault(target, faultKindOf(refused), refused.getMessage(), refused.errorCode());
+            writeRefusal(target, refused);
             return false;
         }
 
@@ -303,7 +303,7 @@ public class EmfXmlaAdapter {
         try {
             rows = connector.discover(discover, request);
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
-            writeFault(target, faultKindOf(refused), refused.getMessage(), refused.errorCode());
+            writeRefusal(target, refused);
             return false;
         } catch (org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
             LOGGER.debug("answering with an in-band error", failed);
@@ -367,6 +367,10 @@ public class EmfXmlaAdapter {
         } catch (UnknownCommandException unknown) {
             writeFault(target, SoapFaultWriter.Kind.CLIENT, unknown.getMessage(), null);
             return false;
+        } catch (org.eclipse.daanse.xmla.model.io.XmlaParseException unparsable) {
+            // a command that will not parse, in the number and words Analysis Services refuses it with
+            writeFault(target, SoapFaultWriter.Kind.CLIENT, unparsable.getMessage(), unparsable.errorCode());
+            return false;
         }
 
         if (!policy.allowsExecute(!request.isAuthenticated())) {
@@ -377,7 +381,7 @@ public class EmfXmlaAdapter {
         try {
             result = connector.execute(execute, request);
         } catch (org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
-            writeFault(target, faultKindOf(refused), refused.getMessage(), refused.errorCode());
+            writeRefusal(target, refused);
             return false;
         } catch (org.eclipse.daanse.xmla.api.XmlaCommandFailedException failed) {
             // Ran and failed, and the session lives: the answer is a result root
@@ -387,8 +391,32 @@ public class EmfXmlaAdapter {
                     messagesOf(failed));
             return true;
         }
+        if (result instanceof org.eclipse.daanse.xmla.api.RowStream stream) {
+            writeStream(target, responseHeaders(request, envelope.headers()), stream);
+            return true;
+        }
         XmlaMessageCodec.writeExecuteResponse(target, responseHeaders(request, envelope.headers()), result);
         return true;
+    }
+
+    /**
+     * A result that comes row by row, written as it comes. Once the first byte is out a failure cannot become a fault
+     * any more -- most often the client has gone away -- so it ends the stream and is logged; the stream is closed
+     * either way, which ends what it reads from.
+     */
+    private static void writeStream(OutputStream target, List<EObject> headers,
+            org.eclipse.daanse.xmla.api.RowStream stream) {
+        List<org.eclipse.daanse.xmla.model.io.RowsetSchemaWriter.Column> columns = stream.columns().stream()
+                .map(column -> new org.eclipse.daanse.xmla.model.io.RowsetSchemaWriter.Column(column.field(),
+                        column.name(), column.xsdType()))
+                .toList();
+        try {
+            XmlaMessageCodec.writeExecuteRowStream(target, headers, columns, stream.rows());
+        } catch (XMLStreamException | RuntimeException ended) {
+            LOGGER.debug("a row stream ended before its last row: {}", ended.getMessage());
+        } finally {
+            stream.close();
+        }
     }
 
     /** The {@code <Messages>} a failed-but-answered command is reported with. */
@@ -493,6 +521,17 @@ public class EmfXmlaAdapter {
             return request;
         }
         return sessions.identityOf(request.sessionId()).map(request::withIdentity).orElse(request);
+    }
+
+    /** A refusal as a fault: every error it carries, its code the last one's. */
+    private void writeRefusal(OutputStream target, org.eclipse.daanse.xmla.api.XmlaRefusedException refused) {
+        List<SoapFaultWriter.Entry> errors = refused.errors().stream()
+                .map(error -> new SoapFaultWriter.Entry(error.code(), error.description())).toList();
+        try {
+            SoapFaultWriter.write(target, faultKindOf(refused), refused.getMessage(), errors, ERROR_SOURCE);
+        } catch (XMLStreamException e) {
+            LOGGER.error("could not write the SOAP fault for: {}", refused.getMessage(), e);
+        }
     }
 
     private void writeFault(OutputStream target, SoapFaultWriter.Kind kind, String message, Long errorCode) {

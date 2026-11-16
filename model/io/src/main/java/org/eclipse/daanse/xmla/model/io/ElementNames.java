@@ -22,20 +22,23 @@ import java.util.regex.Pattern;
  * <p>
  * A column whose name is not a valid XML element name - a JDBC label, a member
  * unique name like {@code [Measures].[Profit]} - is hex-escaped the way SSAS
- * escapes it ({@code _x005b_Measures_x005d_...}); the model documents this
- * contract on {@code RowsetColumn}, and this is its one implementation. The
- * fixed schema-rowset column names never need it - encoding those is a no-op by
- * construction.
+ * escapes it ({@code _x005B_Measures_x005D_._x005B_Profit_x005D_}): a character
+ * is escaped only where it cannot stand, so a digit, a dot or a hyphen is kept
+ * after the first character and escaped as the first; the colon is escaped
+ * everywhere, an element name being a local name; an underscore only when an
+ * escape follows it, so that decoding is unambiguous (.NET
+ * {@code XmlConvert.EncodeLocalName}, which clients decode with). The model
+ * documents this contract on {@code RowsetColumn}, and this is its one
+ * implementation. The fixed schema-rowset column names never need it - encoding
+ * those is a no-op by construction.
  * <p>
  * {@link #normalizeNumericString(String)} is the trailing-zero normalisation
  * SSAS applies before writing a numeric cell value.
  */
 public final class ElementNames {
 
-    /** XML 1.0 Name production, one character at a time. */
-    private static final String VALID_CHARACTERS_EXP = "^[:A-Z_a-zÀÖØ-öø-˿Ͱ-ͽ" + "Ϳ-῿‌‍⁰-↏Ⰰ-⿯、-퟿" + "豈-﷏ﷰ-�]"
-            + "[:A-Z_a-zÀÖØ-ö" + "ø-˿Ͱ-ͽͿ-῿‌‍⁰-↏" + "Ⰰ-⿯、-\udfff豈-﷏ﷰ-�\\-\\.0-9" + "·̀-ͯ‿-⁀]*\\Z";
-    private static final Pattern VALID_CHARACTERS = Pattern.compile(VALID_CHARACTERS_EXP);
+    /** An escape as a decoder reads it, after an underscore: {@code xHHHH_} or {@code xHHHHHHHH_}. */
+    private static final Pattern ESCAPE_AHEAD = Pattern.compile("[Xx](?:[0-9a-fA-F]{4}|[0-9a-fA-F]{8})_");
 
     /** Caches the encoding, because the same names recur in every row. */
     private static final Map<String, String> ENCODED = new ConcurrentHashMap<>();
@@ -78,24 +81,41 @@ public final class ElementNames {
     }
 
     private static String encodeElementName(String name) {
-        StringBuilder buf = new StringBuilder();
-        for (char ch : name.toCharArray()) {
-            if (VALID_CHARACTERS.matcher(String.valueOf(ch)).matches()) {
-                buf.append(ch);
+        StringBuilder buf = new StringBuilder(name.length() + 16);
+        int i = 0;
+        while (i < name.length()) {
+            int codePoint = name.codePointAt(i);
+            int width = Character.charCount(codePoint);
+            boolean first = i == 0;
+            if (codePoint == '_' && ESCAPE_AHEAD.matcher(name).region(i + 1, name.length()).lookingAt()) {
+                buf.append(escape(codePoint));
+            } else if (codePoint != ':' && (first ? isNameStartChar(codePoint) : isNameChar(codePoint))) {
+                buf.appendCodePoint(codePoint);
             } else {
-                buf.append(encodeChar(ch));
+                buf.append(escape(codePoint));
             }
+            i += width;
         }
         return buf.toString();
     }
 
-    private static String encodeChar(char c) {
-        StringBuilder buf = new StringBuilder();
-        buf.append("_x");
-        String str = Integer.toHexString(c);
-        for (int i = 4 - str.length(); i > 0; i--) {
-            buf.append("0");
-        }
-        return buf.append(str).append("_").toString();
+    /** {@code _xHHHH_} with upper-case digits, eight of them beyond the basic plane. */
+    private static String escape(int codePoint) {
+        return String.format(java.util.Locale.ROOT, codePoint > 0xFFFF ? "_x%08X_" : "_x%04X_", codePoint);
+    }
+
+    /** XML 1.0 (fifth edition) {@code NameStartChar}. */
+    static boolean isNameStartChar(int c) {
+        return c == ':' || c >= 'A' && c <= 'Z' || c == '_' || c >= 'a' && c <= 'z' || c >= 0xC0 && c <= 0xD6
+                || c >= 0xD8 && c <= 0xF6 || c >= 0xF8 && c <= 0x2FF || c >= 0x370 && c <= 0x37D
+                || c >= 0x37F && c <= 0x1FFF || c >= 0x200C && c <= 0x200D || c >= 0x2070 && c <= 0x218F
+                || c >= 0x2C00 && c <= 0x2FEF || c >= 0x3001 && c <= 0xD7FF || c >= 0xF900 && c <= 0xFDCF
+                || c >= 0xFDF0 && c <= 0xFFFD || c >= 0x10000 && c <= 0xEFFFF;
+    }
+
+    /** XML 1.0 (fifth edition) {@code NameChar}. */
+    static boolean isNameChar(int c) {
+        return isNameStartChar(c) || c == '-' || c == '.' || c >= '0' && c <= '9' || c == 0xB7
+                || c >= 0x300 && c <= 0x36F || c >= 0x203F && c <= 0x2040;
     }
 }

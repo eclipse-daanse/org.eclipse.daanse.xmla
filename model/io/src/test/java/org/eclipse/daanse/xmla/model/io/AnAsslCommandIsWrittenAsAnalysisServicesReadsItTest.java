@@ -135,6 +135,27 @@ class AnAsslCommandIsWrittenAsAnalysisServicesReadsItTest {
         assertThat(written.getNamespaceURI()).isEqualTo(XmlaNamespaces.XMLA);
     }
 
+    /**
+     * A command written alone -- what a server trace reports as the text of Command Begin and End -- is its own element in
+     * its own namespace, as Analysis Services 2017 writes it there ({@code <Create xmlns=".../2003/engine">}).
+     */
+    @Test
+    void aCommandWrittenAloneIsItsElementInItsNamespace() throws Exception {
+        java.io.StringWriter text = new java.io.StringWriter();
+        javax.xml.stream.XMLStreamWriter out = javax.xml.stream.XMLOutputFactory.newFactory().createXMLStreamWriter(text);
+        ExecuteRequestWriter.writeCommand(out, createOfATrace());
+        out.close();
+
+        assertThat(text.toString()).startsWith("<Create xmlns=\"" + XmlaNamespaces.ENGINE + "\"><ObjectDefinition><Trace>");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        Element create = factory.newDocumentBuilder()
+                .parse(new ByteArrayInputStream(text.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)))
+                .getDocumentElement();
+        assertThat(create.getNamespaceURI()).isEqualTo(XmlaNamespaces.ENGINE);
+        assertThat(only(only(create, "ObjectDefinition"), "Trace").getNamespaceURI()).isEqualTo(XmlaNamespaces.ENGINE);
+    }
+
     @Test
     void whatIsWrittenIsReadBackWithItsEvents() throws Exception {
         XMLStreamReader in = XMLInputFactory.newFactory().createXMLStreamReader(

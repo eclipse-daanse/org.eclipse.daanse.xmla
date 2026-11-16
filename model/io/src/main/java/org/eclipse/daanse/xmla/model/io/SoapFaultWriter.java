@@ -67,6 +67,26 @@ public final class SoapFaultWriter {
      */
     public static void write(OutputStream target, Kind kind, String faultString, Long errorCode, String description,
             String source) throws XMLStreamException {
+        write(target, kind, faultString, errorCode == null ? List.of()
+                : List.of(new Entry(errorCode, description == null ? faultString : description)), source);
+    }
+
+    /**
+     * One {@code Error} of a fault's detail.
+     *
+     * @param code        the unsigned 32-bit number
+     * @param description its sentence
+     */
+    public record Entry(long code, String description) {
+    }
+
+    /**
+     * A fault with several errors, as Analysis Services writes one for a request that fails twice -- an event out of
+     * range and the parse error naming where it stood: every {@code Error} in order, the fault code the last one's.
+     */
+    public static void write(OutputStream target, Kind kind, String faultString, List<Entry> errors, String source)
+            throws XMLStreamException {
+        Long errorCode = errors.isEmpty() ? null : errors.getLast().code();
         XMLStreamWriter out = OUTPUT.createXMLStreamWriter(target, StandardCharsets.UTF_8.name());
         SoapEnvelopeWriter.write(out, List.of(), body -> {
             body.writeStartElement(XmlaNamespaces.SOAP_ENV, "Fault");
@@ -81,16 +101,19 @@ public final class SoapFaultWriter {
             // failure. A fault needs either this element or a faultstring, and the
             // faultstring above is always written, so leaving it out is the honest
             // option: better no Error element than one carrying an invented code.
-            if (errorCode != null) {
+            if (!errors.isEmpty()) {
                 body.writeStartElement("detail");
                 body.setPrefix(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
-                body.writeStartElement(XmlaNamespaces.EXCEPTION, "Error");
-                body.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
-                body.writeAttribute("ErrorCode", Long.toUnsignedString(errorCode));
-                body.writeAttribute("Description", description == null ? faultString : description);
-                body.writeAttribute("Source", source == null ? "" : source);
-                body.writeAttribute("HelpFile", "");
-                body.writeEndElement();
+                for (Entry error : errors) {
+                    body.writeStartElement(XmlaNamespaces.EXCEPTION, "Error");
+                    body.writeNamespace(XmlaNamespaces.EXCEPTION_PREFIX, XmlaNamespaces.EXCEPTION);
+                    body.writeAttribute("ErrorCode", Long.toUnsignedString(error.code()));
+                    body.writeAttribute("Description",
+                            error.description() == null ? faultString : error.description());
+                    body.writeAttribute("Source", source == null ? "" : source);
+                    body.writeAttribute("HelpFile", "");
+                    body.writeEndElement();
+                }
                 body.writeEndElement();
             }
 

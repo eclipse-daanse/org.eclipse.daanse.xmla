@@ -245,6 +245,69 @@ public final class XmlaMessageCodec {
     }
 
     /**
+     * The padding written after the inline schema and after each row of a stream: Analysis Services writes 4095 spaces
+     * there in a trace's Subscribe answer, which pushes each event through every buffer between server and client.
+     */
+    static final int STREAM_PADDING = 4095;
+
+    /**
+     * Writes an Execute response that is a stream of rows: the envelope, {@code ExecuteResponse/return/root} and the
+     * inline schema at once, then each row as the iterator gives it -- after the schema and after each row the padding
+     * Analysis Services writes, and a flush through to the target -- and the closing elements when the iterator ends.
+     * The iterator may block between rows; the response stays open meanwhile.
+     *
+     * @param values each row's values in column order, {@code null} for a value the row does not have
+     */
+    public static void writeExecuteRowStream(OutputStream target, List<EObject> headers,
+            List<RowsetSchemaWriter.Column> columns, Iterator<List<Object>> values) throws XMLStreamException {
+        XMLStreamWriter out = OUTPUT.createXMLStreamWriter(target, StandardCharsets.UTF_8.name());
+        String padding = " ".repeat(STREAM_PADDING);
+        SoapEnvelopeWriter.write(out, headers, body -> {
+            body.setDefaultNamespace(XmlaNamespaces.XMLA);
+            body.writeStartElement(XmlaNamespaces.XMLA, "ExecuteResponse");
+            body.writeDefaultNamespace(XmlaNamespaces.XMLA);
+            body.writeStartElement(XmlaNamespaces.XMLA, "return");
+            body.setDefaultNamespace(XmlaNamespaces.ROWSET);
+            body.writeStartElement(XmlaNamespaces.ROWSET, "root");
+            body.writeDefaultNamespace(XmlaNamespaces.ROWSET);
+            body.writeNamespace(XmlaNamespaces.XSI_PREFIX, XmlaNamespaces.XSI);
+            body.writeNamespace(XmlaNamespaces.XSD_PREFIX, XmlaNamespaces.XSD);
+            RowsetSchemaWriter.write(body, columns);
+            body.writeCharacters(padding);
+            flushThrough(body, target);
+            while (values.hasNext()) {
+                List<Object> row = values.next();
+                body.writeStartElement(XmlaNamespaces.ROWSET, "row");
+                for (int i = 0; i < columns.size() && i < row.size(); i++) {
+                    Object value = row.get(i);
+                    if (value == null) {
+                        continue;
+                    }
+                    body.writeStartElement(XmlaNamespaces.ROWSET, columns.get(i).name());
+                    body.writeCharacters(String.valueOf(value));
+                    body.writeEndElement();
+                }
+                body.writeEndElement(); // row
+                body.writeCharacters(padding);
+                flushThrough(body, target);
+            }
+            body.writeEndElement(); // root
+            body.writeEndElement(); // return
+            body.writeEndElement(); // ExecuteResponse
+        });
+        out.flush();
+    }
+
+    private static void flushThrough(XMLStreamWriter out, OutputStream target) throws XMLStreamException {
+        out.flush();
+        try {
+            target.flush();
+        } catch (java.io.IOException gone) {
+            throw new XMLStreamException("the client is gone", gone);
+        }
+    }
+
+    /**
      * Writes an Execute response.
      * <p>
      * There is no inline schema: the shape of an MDDataset is fixed by the
