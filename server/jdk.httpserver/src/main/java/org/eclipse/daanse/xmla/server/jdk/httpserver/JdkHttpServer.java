@@ -137,9 +137,26 @@ public class JdkHttpServer {
         int stopDelaySeconds() default 5;
     }
 
+    /** The JDK server's switch for {@code TCP_NODELAY} on the sockets it accepts. */
+    static final String NO_DELAY = "sun.net.httpserver.nodelay";
+
+    /**
+     * Turns {@code TCP_NODELAY} on for the JDK's server unless the process says otherwise. The JDK server writes the
+     * head and the body of an answer apart; with Nagle's algorithm on, the body waits for the client's delayed
+     * acknowledgement -- 40 ms on Linux, on every Discover and every Execute. The JDK reads the switch once, when its
+     * server is first used in the process: a server another bundle started before this one keeps its setting, so a
+     * deployment sets {@code -Dsun.net.httpserver.nodelay=true} itself.
+     */
+    static void noDelayUnlessSet() {
+        if (System.getProperty(NO_DELAY) == null) {
+            System.setProperty(NO_DELAY, "true");
+        }
+    }
+
     @Activate
     public void activate(Config config) throws IOException {
         LOGGER.debug("Starting JDK HTTP server");
+        noDelayUnlessSet();
         server = HttpServer.create(new InetSocketAddress(config.port()), config.backlog());
 
         EmfXmlaAdapter adapter = new EmfXmlaAdapter(connector, sessionHandler, inbandAuthenticator,

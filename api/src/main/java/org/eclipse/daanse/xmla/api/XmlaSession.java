@@ -37,6 +37,7 @@ public final class XmlaSession {
     private volatile Instant lastUsedAt;
     private volatile Instant lastCommandStartedAt;
     private volatile Instant lastCommandEndedAt;
+    private volatile String lastCommand;
     private volatile AuthenticatedIdentity identity;
 
     XmlaSession(String id, Instant startedAt) {
@@ -67,6 +68,14 @@ public final class XmlaSession {
     }
 
     /**
+     * The text of the command the session ran last, or runs now: a statement as written, the request type of a
+     * Discover, the name of any other command -- what {@code SESSION_LAST_COMMAND} and {@code COMMAND_TEXT} report.
+     */
+    public Optional<String> lastCommand() {
+        return Optional.ofNullable(lastCommand);
+    }
+
+    /**
      * The identity the in-band handshake bound, or empty for a session that carries
      * none.
      */
@@ -94,8 +103,15 @@ public final class XmlaSession {
         this.identity = bound;
     }
 
+    /** A command begins in the session; its text is not known. */
     public void commandStarted() {
+        commandStarted(null);
+    }
+
+    /** A command of this text begins in the session. */
+    public void commandStarted(String text) {
         Instant now = Instant.now();
+        lastCommand = text;
         lastCommandStartedAt = now;
         lastUsedAt = now;
         commandCount.incrementAndGet();
