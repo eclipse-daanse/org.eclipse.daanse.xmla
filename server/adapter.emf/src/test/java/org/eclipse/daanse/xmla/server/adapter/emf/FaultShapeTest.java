@@ -146,6 +146,48 @@ class FaultShapeTest {
         }
     }
 
+    /**
+     * An event number Analysis Services does not know is refused with two errors, the range error and the parse error
+     * naming where the number stood; the fault lists both in that order, and its code and faultstring are the second's.
+     */
+    @Test
+    void aRefusalWithTwoErrorsListsBothAndIsCodedByTheLast() throws Exception {
+        XmlaRefusedException refusal = new XmlaRefusedException(XmlaRefusedException.Side.CLIENT, List.of(
+                new XmlaRefusedException.Error(0xC11B0002L, "Trace: An event number encountered while evaluating the"
+                        + " trace definition was not within the range of acceptable values."),
+                new XmlaRefusedException.Error(0xC10F0014L, "An error occurred while parsing the 'EventID' element.")));
+
+        Document answer = parsed(send(refusing(refusal), EXECUTE));
+
+        assertThat(faultCodeOf(answer)).isEqualTo("XMLAnalysisError.0xc10f0014");
+        assertThat(answer.getElementsByTagNameNS("*", "faultstring").item(0).getTextContent())
+                .isEqualTo("An error occurred while parsing the 'EventID' element.");
+        var errors = answer.getElementsByTagNameNS("*", "Error");
+        assertThat(errors.getLength()).isEqualTo(2);
+        assertThat(((Element) errors.item(0)).getAttribute("ErrorCode")).isEqualTo("3239772162");
+        assertThat(((Element) errors.item(1)).getAttribute("ErrorCode")).isEqualTo("3238985748");
+    }
+
+    /**
+     * An element an object definition cannot hold is refused as Analysis Services refuses it: {@code 0xC10F0007}, the
+     * element named with its line, column and namespace, and the path of the element it stands in.
+     */
+    @Test
+    void anElementThatCannotAppearInATraceIsRefusedWhereItStands() throws Exception {
+        String create = """
+                <Execute xmlns="urn:schemas-microsoft-com:xml-analysis"><Command>\
+                <Create xmlns="http://schemas.microsoft.com/analysisservices/2003/engine"><ObjectDefinition><Trace>\
+                <ID>T</ID><Name>T</Name><EventType><Events/></EventType></Trace></ObjectDefinition></Create>\
+                </Command><Properties><PropertyList/></Properties></Execute>""";
+
+        Document answer = parsed(send(create));
+
+        assertThat(faultCodeOf(answer)).isEqualTo("XMLAnalysisError.0xc10f0007");
+        assertThat(errorOf(answer).getAttribute("Description")).matches("The EventType element at line 1, column \\d+"
+                + " \\(namespace http://schemas.microsoft.com/analysisservices/2003/engine\\) cannot appear under"
+                + " Envelope/Body/Execute/Command/Create/ObjectDefinition/Trace\\.");
+    }
+
     @Test
     void aRefusalWithoutANumberKeepsSoapsOwnCode() throws Exception {
         Document answer = parsed(send(refusing(new XmlaRefusedException(XmlaRefusedException.Side.CLIENT,

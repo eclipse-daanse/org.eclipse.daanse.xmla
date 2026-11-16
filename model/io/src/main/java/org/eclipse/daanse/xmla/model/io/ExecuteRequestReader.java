@@ -99,12 +99,21 @@ public final class ExecuteRequestReader {
         return execute;
     }
 
+    /** The elements a command stands under in a request. */
+    private static final java.util.List<String> COMMAND_PATH = java.util.List.of("Envelope", "Body", "Execute",
+            "Command");
+
     private static Command readCommand(XMLStreamReader in, String name) throws XMLStreamException {
         EClassifier classifier = XmlaPackage.eINSTANCE.getEClassifier(name);
         if (!(classifier instanceof EClass eClass)) {
             throw new UnknownCommandException(name);
         }
-        EObject read = new EcoreXmlReader(EcoreXmlReader.Unknown.SKIP).read(in, eClass);
+        // what a command says is read with where it said it, so a refusal can name the place as Analysis Services
+        // does; an object definition (Create, Alter) refuses an element that cannot appear in it, as there, where
+        // the other commands pass over what they do not know
+        EcoreXmlReader.Unknown unknown = "Create".equals(name) || "Alter".equals(name) ? EcoreXmlReader.Unknown.FAIL
+                : EcoreXmlReader.Unknown.SKIP;
+        EObject read = new EcoreXmlReader(unknown, COMMAND_PATH).read(in, eClass);
         if (!(read instanceof Command command)) {
             // A type this package has that is not a command: <Statement> and <Alter>
             // are, <PropertyList> is not.

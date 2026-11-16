@@ -32,9 +32,18 @@ public class XmlaRefusedException extends RuntimeException {
         CLIENT, SERVER
     }
 
+    /**
+     * One error of a refusal, as the fault's {@code detail} lists it.
+     *
+     * @param code        the unsigned 32-bit number Analysis Services gives it
+     * @param description its sentence
+     */
+    public record Error(long code, String description) {
+    }
+
     private final Side side;
 
-    private final Long errorCode;
+    private final java.util.List<Error> errors;
 
     /** A refusal this server has no Analysis Services number for: the fault then carries no {@code Error} element. */
     public XmlaRefusedException(Side side, String message) {
@@ -53,7 +62,20 @@ public class XmlaRefusedException extends RuntimeException {
     public XmlaRefusedException(Side side, Long errorCode, String message) {
         super(message);
         this.side = side;
-        this.errorCode = errorCode;
+        this.errors = errorCode == null ? java.util.List.of() : java.util.List.of(new Error(errorCode, message));
+    }
+
+    /**
+     * A refusal Analysis Services answers with several errors -- an event number it does not know is a range error and
+     * then a parse error naming where the number stood. The fault lists them in this order; its code and its
+     * {@code faultstring} are the last one's, as there.
+     *
+     * @param errors at least one
+     */
+    public XmlaRefusedException(Side side, java.util.List<Error> errors) {
+        super(errors.getLast().description());
+        this.side = side;
+        this.errors = java.util.List.copyOf(errors);
     }
 
     /**
@@ -91,8 +113,16 @@ public class XmlaRefusedException extends RuntimeException {
         return side;
     }
 
-    /** The Analysis Services number of this refusal, or {@code null} when this server has none for it. */
+    /**
+     * The Analysis Services number of this refusal -- of its last error where it has several -- or {@code null} when
+     * this server has none for it.
+     */
     public Long errorCode() {
-        return errorCode;
+        return errors.isEmpty() ? null : errors.getLast().code();
+    }
+
+    /** The errors of this refusal in the order the fault lists them; none when this server has no number for it. */
+    public java.util.List<Error> errors() {
+        return errors;
     }
 }

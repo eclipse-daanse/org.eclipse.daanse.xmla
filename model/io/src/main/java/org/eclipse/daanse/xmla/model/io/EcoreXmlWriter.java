@@ -17,12 +17,20 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.eclipse.emf.ecore.EAnnotation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 
 /**
@@ -58,8 +66,96 @@ public final class EcoreXmlWriter {
         this.namespace = namespace;
     }
 
+    /**
+     * What the writer asks of a feature, asked once per class: its place among the object's features, its name and
+     * namespaces on the wire, how its value is written. The answers are fixed by the model; asked for every object,
+     * three passes over every feature of the class with the annotations and the ExtendedMetaData looked up each time,
+     * they were a large part of the time spent writing an Execute answer.
+     *
+     * @param id the feature's id in the object's class, as {@code eDerivedStructuralFeatureID} gives it, or -1
+     */
+    private record Slot(EStructuralFeature feature, int id, String wireName, String qualifiedNamespace, String wrapper,
+            String elementNamespace, EDataType dataType, boolean many, boolean reference, boolean textColumn,
+            boolean xmlDocument) {
+    }
+
+    /**
+     * The features of a class by the part of the element they become, each in the order of the class's features, and
+     * what names the element when it is the value of another: {@code elementNameFrom}, the group's element name and the
+     * class's own ExtendedMetaData name.
+     */
+    private record Plan(Slot[] attributes, Slot[] simple, Slot[] elements, EStructuralFeature nameFrom,
+            String groupElementName, String extendedName) {
+    }
+
+    private static final Slot[] NO_SLOTS = {};
+
+    /**
+     * The plans of the generated classes, one per class for the life of the model. A dynamic class (one without an
+     * instance class, such as the row of a trace) is planned anew for every object, so that the map does not keep it.
+     */
+    private static final ConcurrentMap<EClass, Plan> PLANS = new ConcurrentHashMap<>();
+
+    private static Plan planOf(EObject object) {
+        EClass eClass = object.eClass();
+        if (eClass.getInstanceClass() == null) {
+            return plan(eClass, object);
+        }
+        Plan plan = PLANS.get(eClass);
+        if (plan == null) {
+            plan = plan(eClass, object);
+            Plan raced = PLANS.putIfAbsent(eClass, plan);
+            plan = raced == null ? plan : raced;
+        }
+        return plan;
+    }
+
+    private static Plan plan(EClass eClass, EObject sample) {
+        // the id the object's own eIsSet and eGet would work out for the feature, on every call
+        BasicEObjectImpl basic = sample instanceof BasicEObjectImpl b ? b : null;
+        List<Slot> attributes = new ArrayList<>();
+        List<Slot> simple = new ArrayList<>();
+        List<Slot> elements = new ArrayList<>();
+        for (EStructuralFeature feature : eClass.getEAllStructuralFeatures()) {
+            EClassifier type = feature.getEType();
+            Slot slot = new Slot(feature, basic == null ? -1 : basic.eDerivedStructuralFeatureID(feature),
+                    RowsetSchemaWriter.wireNameOf(feature), qualifiedNamespaceOf(feature), wrapperNameOf(feature),
+                    elementNamespaceOf(feature),
+                    feature instanceof EAttribute && type instanceof EDataType dataType ? dataType : null,
+                    feature.isMany(), feature instanceof EReference, isTextColumn(feature),
+                    EcoreXmlReader.isXmlDocument(feature));
+            if (isAttribute(feature)) {
+                if (!isElementName(feature)) {
+                    attributes.add(slot);
+                }
+            } else if (isSimpleContent(feature)) {
+                simple.add(slot);
+            } else {
+                elements.add(slot);
+            }
+        }
+        EAnnotation daanse = eClass.getEAnnotation(DAANSE_XMLA);
+        String from = daanse == null ? null : daanse.getDetails().get("elementNameFrom");
+        return new Plan(attributes.toArray(NO_SLOTS), simple.toArray(NO_SLOTS), elements.toArray(NO_SLOTS),
+                from == null ? null : eClass.getEStructuralFeature(from),
+                daanse == null ? null : daanse.getDetails().get("groupElementName"),
+                ExtendedMetaData.INSTANCE.getName(eClass));
+    }
+
+    private static boolean isSet(EObject object, Slot slot) {
+        return slot.id() >= 0 ? ((InternalEObject) object).eIsSet(slot.id()) : object.eIsSet(slot.feature());
+    }
+
+    private static Object valueOf(EObject object, Slot slot) {
+        return slot.id() >= 0 ? ((InternalEObject) object).eGet(slot.id(), true, true) : object.eGet(slot.feature());
+    }
+
     /** Writes {@code object} as an element named {@code elementName}. */
     public void write(XMLStreamWriter out, EObject object, String elementName) throws XMLStreamException {
+        write(out, object, planOf(object), elementName);
+    }
+
+    private void write(XMLStreamWriter out, EObject object, Plan plan, String elementName) throws XMLStreamException {
         boolean declare = out.getPrefix(namespace) == null;
         if (declare) {
             // Nothing has bound this namespace yet — usually because this element is the
@@ -70,9 +166,7 @@ public final class EcoreXmlWriter {
         if (declare) {
             out.writeDefaultNamespace(namespace);
         }
-        writeAttributes(out, object);
-        writeSimpleContent(out, object);
-        writeElements(out, object);
+        writeContent(out, object, plan);
         out.writeEndElement();
     }
 
@@ -80,17 +174,21 @@ public final class EcoreXmlWriter {
      * Writes only the children, for a caller that has already opened the element.
      */
     public void writeContent(XMLStreamWriter out, EObject object) throws XMLStreamException {
-        writeAttributes(out, object);
-        writeSimpleContent(out, object);
-        writeElements(out, object);
+        writeContent(out, object, planOf(object));
     }
 
-    private void writeAttributes(XMLStreamWriter out, EObject object) throws XMLStreamException {
-        for (EStructuralFeature feature : object.eClass().getEAllStructuralFeatures()) {
-            if (!isAttribute(feature) || !object.eIsSet(feature) || isElementName(feature)) {
+    private void writeContent(XMLStreamWriter out, EObject object, Plan plan) throws XMLStreamException {
+        writeAttributes(out, object, plan);
+        writeSimpleContent(out, object, plan);
+        writeElements(out, object, plan);
+    }
+
+    private void writeAttributes(XMLStreamWriter out, EObject object, Plan plan) throws XMLStreamException {
+        for (Slot slot : plan.attributes()) {
+            if (!isSet(object, slot)) {
                 continue;
             }
-            String value = asString(feature, object.eGet(feature));
+            String value = asString(slot, valueOf(object, slot));
             if (value == null) {
                 continue;
             }
@@ -98,14 +196,14 @@ public final class EcoreXmlWriter {
             // default, and it is right for the rowset columns. The exception is
             // soap:mustUnderstand, which SOAP 1.1 requires to be qualified; writing it bare
             // means the receiver does not see it at all.
-            String attributeNamespace = qualifiedNamespaceOf(feature);
+            String attributeNamespace = slot.qualifiedNamespace();
             if (attributeNamespace == null) {
-                out.writeAttribute(RowsetSchemaWriter.wireNameOf(feature), value);
+                out.writeAttribute(slot.wireName(), value);
             } else {
                 if (out.getPrefix(attributeNamespace) == null) {
                     out.writeNamespace("mu", attributeNamespace);
                 }
-                out.writeAttribute(attributeNamespace, RowsetSchemaWriter.wireNameOf(feature), value);
+                out.writeAttribute(attributeNamespace, slot.wireName(), value);
             }
         }
     }
@@ -116,10 +214,10 @@ public final class EcoreXmlWriter {
      * Written before any child element, so the two writers put mixed content in the
      * same order.
      */
-    private void writeSimpleContent(XMLStreamWriter out, EObject object) throws XMLStreamException {
-        for (EStructuralFeature feature : object.eClass().getEAllStructuralFeatures()) {
-            if (object.eIsSet(feature) && isSimpleContent(feature)) {
-                String text = asString(feature, object.eGet(feature));
+    private void writeSimpleContent(XMLStreamWriter out, EObject object, Plan plan) throws XMLStreamException {
+        for (Slot slot : plan.simple()) {
+            if (isSet(object, slot)) {
+                String text = asString(slot, valueOf(object, slot));
                 if (text != null) {
                     out.writeCharacters(text);
                 }
@@ -127,33 +225,29 @@ public final class EcoreXmlWriter {
         }
     }
 
-    private void writeElements(XMLStreamWriter out, EObject object) throws XMLStreamException {
-        for (EStructuralFeature feature : object.eClass().getEAllStructuralFeatures()) {
-            if (isAttribute(feature) || !object.eIsSet(feature)) {
+    private void writeElements(XMLStreamWriter out, EObject object, Plan plan) throws XMLStreamException {
+        for (Slot slot : plan.elements()) {
+            if (!isSet(object, slot)) {
                 continue;
             }
-            if (isSimpleContent(feature)) {
-                continue; // written before the children, see writeSimpleContent
-            }
-            String name = RowsetSchemaWriter.wireNameOf(feature);
-            Object value = object.eGet(feature);
-            if (feature.isMany()) {
+            Object value = valueOf(object, slot);
+            if (slot.many()) {
                 // ASSL wraps its collections: <Annotations> holds the <Annotation>s. The
                 // wrapper carries nothing itself, which is why the model flattens it to a
                 // list, but it is on the wire.
-                String wrapper = wrapperNameOf(feature);
+                String wrapper = slot.wrapper();
                 Iterable<?> elements = (Iterable<?>) value;
                 if (wrapper != null && !((java.util.Collection<?>) value).isEmpty()) {
                     out.writeStartElement(namespace, wrapper);
                 }
                 for (Object element : elements) {
-                    writeOne(out, feature, name, element);
+                    writeOne(out, slot, element);
                 }
                 if (wrapper != null && !((java.util.Collection<?>) value).isEmpty()) {
                     out.writeEndElement();
                 }
             } else if (value != null) {
-                writeOne(out, feature, name, value);
+                writeOne(out, slot, value);
             }
         }
     }
@@ -185,23 +279,24 @@ public final class EcoreXmlWriter {
         return daanse == null ? null : daanse.getDetails().get("elementNamespace");
     }
 
-    private void writeOne(XMLStreamWriter out, EStructuralFeature feature, String name, Object value)
-            throws XMLStreamException {
-        String elementNamespace = qualifiedNamespaceOf(feature);
-        if (feature instanceof EReference && value instanceof EObject nested) {
-            String childName = elementNameOf(feature, nested, name);
+    private void writeOne(XMLStreamWriter out, Slot slot, Object value) throws XMLStreamException {
+        String elementNamespace = slot.qualifiedNamespace();
+        String name = slot.wireName();
+        if (slot.reference() && value instanceof EObject nested) {
+            Plan nestedPlan = planOf(nested);
+            String childName = elementNameOf(slot.feature(), nested, nestedPlan, name);
             if (elementNamespace == null) {
-                write(out, nested, childName);
+                write(out, nested, nestedPlan, childName);
             } else {
                 // Reached across a namespace boundary - a WarningColumn stays in the engine
                 // namespace wherever it appears.
-                new EcoreXmlWriter(elementNamespace).write(out, nested, childName);
+                new EcoreXmlWriter(elementNamespace).write(out, nested, nestedPlan, childName);
             }
             return;
         }
-        String text = asString(feature, value);
+        String text = asString(slot, value);
         if (text == null || text.isEmpty()) {
-            if (!isTextColumn(feature)) {
+            if (!slot.textColumn()) {
                 // An empty element is not an empty value to a client that has been told the
                 // column is a number, a date or a uuid: it parses "" against that type, and
                 // ADOMD stores the resulting FormatException as the cell's value instead of
@@ -211,7 +306,7 @@ public final class EcoreXmlWriter {
             // <DESCRIPTION/>, not <DESCRIPTION></DESCRIPTION>. The two are the same XML
             // to a parser, but SSAS writes the short one and responses are compared byte
             // for byte.
-            String own = elementNamespaceOf(feature);
+            String own = slot.elementNamespace();
             if (own == null) {
                 out.writeEmptyElement(namespace, name);
             } else {
@@ -220,14 +315,14 @@ public final class EcoreXmlWriter {
             }
             return;
         }
-        String own = elementNamespaceOf(feature);
+        String own = slot.elementNamespace();
         if (own == null) {
             out.writeStartElement(namespace, name);
         } else {
             out.writeStartElement("", name, own);
             out.writeDefaultNamespace(own);
         }
-        if (EcoreXmlReader.isXmlDocument(feature)) {
+        if (slot.xmlDocument()) {
             // The column holds a document, not a string. Escaping it would turn a <Server>
             // definition into the literal text "&lt;Server&gt;".
             XmlFragment.write(out, text);
@@ -260,12 +355,9 @@ public final class EcoreXmlWriter {
      * says {@code elementNameFrom} and the name is a value the object carries (a
      * CellInfoItem is {@code <FORMATTED_VALUE>}).
      */
-    private static String elementNameOf(EStructuralFeature feature, EObject value, String declared) {
-        EAnnotation daanse = value.eClass().getEAnnotation(DAANSE_XMLA);
-        String from = daanse == null ? null : daanse.getDetails().get("elementNameFrom");
-        if (from != null) {
-            EStructuralFeature naming = value.eClass().getEStructuralFeature(from);
-            Object name = naming == null ? null : value.eGet(naming);
+    private static String elementNameOf(EStructuralFeature feature, EObject value, Plan plan, String declared) {
+        if (plan.nameFrom() != null) {
+            Object name = value.eGet(plan.nameFrom());
             if (name != null && !name.toString().isEmpty()) {
                 return name.toString();
             }
@@ -273,11 +365,11 @@ public final class EcoreXmlWriter {
         if (feature.getEType() != value.eClass()) {
             // Inside a group the alternative's element name is not its type's name: the
             // SetType choice calls a SetListType a <CrossProduct>.
-            String group = daanse == null ? null : daanse.getDetails().get("groupElementName");
+            String group = plan.groupElementName();
             if (group != null && !group.isEmpty()) {
                 return group;
             }
-            String own = ExtendedMetaData.INSTANCE.getName(value.eClass());
+            String own = plan.extendedName();
             if (own != null && !own.isEmpty()) {
                 return own;
             }
@@ -327,11 +419,7 @@ public final class EcoreXmlWriter {
     }
 
     /** Converts a value to its lexical form, preferring EMF's own conversion. */
-    private static String asString(EStructuralFeature feature, Object value) {
-        EClassifier type = feature.getEType();
-        if (feature instanceof EAttribute && type instanceof EDataType dataType) {
-            return Lexical.of(dataType, value);
-        }
-        return Lexical.of(value);
+    private static String asString(Slot slot, Object value) {
+        return slot.dataType() != null ? Lexical.of(slot.dataType(), value) : Lexical.of(value);
     }
 }
