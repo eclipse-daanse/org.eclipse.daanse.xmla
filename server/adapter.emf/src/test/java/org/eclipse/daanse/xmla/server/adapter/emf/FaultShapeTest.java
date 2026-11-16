@@ -20,12 +20,17 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.eclipse.daanse.xmla.api.XmlaConnector;
+import org.eclipse.daanse.xmla.api.XmlaRefusedException;
 import org.eclipse.daanse.xmla.api.XmlaRequest;
 import org.eclipse.daanse.xmla.model.xmla.Discover;
 import org.eclipse.daanse.xmla.model.xmla.Execute;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * The shape of a fault, and the one rule that makes it readable at the far end.
@@ -65,22 +70,89 @@ class FaultShapeTest {
         }
     };
 
+    private static final String EXECUTE = """
+            <Execute xmlns="urn:schemas-microsoft-com:xml-analysis">\
+            <Command><Statement>SELECT FROM [C]</Statement></Command>\
+            <Properties><PropertyList/></Properties></Execute>""";
+
     private static String send(String body) {
+        return send(STUB, body);
+    }
+
+    private static String send(XmlaConnector connector, String body) {
         ByteArrayOutputStream answer = new ByteArrayOutputStream();
-        new EmfXmlaAdapter(STUB, null, null).handle(
+        new EmfXmlaAdapter(connector, null, null).handle(
                 new ByteArrayInputStream(ENVELOPE.formatted(body).getBytes(StandardCharsets.UTF_8)), answer,
                 XmlaRequest.anonymous());
         return answer.toString(StandardCharsets.UTF_8);
     }
 
-    @Test
-    void anUnknownRequestTypeFaultsWithItsCode() {
-        String answer = send(discoverOf("NO_SUCH_ROWSET"));
+    /** A connector that refuses every request with the given refusal. */
+    private static XmlaConnector refusing(XmlaRefusedException refusal) {
+        return new XmlaConnector() {
 
-        assertThat(answer).contains("Fault");
-        assertThat(answer).contains("Error");
-        // Present, and a decimal unsigned 32-bit number - the client parses it as one.
-        assertThat(answer).containsPattern("ErrorCode=\"\\d+\"");
+            @Override
+            public List<EObject> discover(Discover request, XmlaRequest context) {
+                throw refusal;
+            }
+
+            @Override
+            public EObject execute(Execute request, XmlaRequest context) {
+                throw refusal;
+            }
+        };
+    }
+
+    private static Document parsed(String answer) throws Exception {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        return factory.newDocumentBuilder().parse(new ByteArrayInputStream(answer.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    private static String faultCodeOf(Document answer) {
+        return answer.getElementsByTagNameNS("*", "faultcode").item(0).getTextContent();
+    }
+
+    private static Element errorOf(Document answer) {
+        return (Element) answer.getElementsByTagNameNS("*", "Error").item(0);
+    }
+
+    @Test
+    void anUnknownRequestTypeFaultsWithItsCode() throws Exception {
+        Document answer = parsed(send(discoverOf("NO_SUCH_ROWSET")));
+
+        // Present, and a decimal unsigned 32-bit number - the client parses it as one; the fault code names the same
+        // number in hexadecimal, as Analysis Services writes it.
+        assertThat(errorOf(answer).getAttribute("ErrorCode")).isEqualTo("3238789172");
+        assertThat(faultCodeOf(answer)).isEqualTo("XMLAnalysisError.0xc10c0034");
+    }
+
+    /**
+     * A trace that exists already, as Analysis Services 2017 answers it: {@code XMLAnalysisError.0xc1140002} with
+     * {@code ErrorCode} 3239313410 and the sentence as {@code Description}. A connector's refusal with that number is
+     * answered alike, on Discover and on Execute.
+     */
+    @Test
+    void aRefusalWithANumberFaultsAsAnalysisServicesDoes() throws Exception {
+        XmlaRefusedException refusal = new XmlaRefusedException(XmlaRefusedException.Side.CLIENT, 0xC1140002L,
+                "Errors in the metadata manager. The trace with the name of 'T' already exists in the 'S' server.");
+
+        for (String request : List.of(discoverOf("DISCOVER_TRACES"), EXECUTE)) {
+            Document answer = parsed(send(refusing(refusal), request));
+
+            assertThat(faultCodeOf(answer)).isEqualTo("XMLAnalysisError.0xc1140002");
+            assertThat(errorOf(answer).getAttribute("ErrorCode")).isEqualTo("3239313410");
+            assertThat(errorOf(answer).getAttribute("Description")).isEqualTo(refusal.getMessage());
+        }
+    }
+
+    @Test
+    void aRefusalWithoutANumberKeepsSoapsOwnCode() throws Exception {
+        Document answer = parsed(send(refusing(new XmlaRefusedException(XmlaRefusedException.Side.CLIENT,
+                "A trace with a log file (LogFileName) is not supported by this server.")), EXECUTE));
+
+        assertThat(faultCodeOf(answer)).isEqualTo("soap:Client");
+        assertThat(errorOf(answer)).as("no invented number").isNull();
     }
 
     @Test

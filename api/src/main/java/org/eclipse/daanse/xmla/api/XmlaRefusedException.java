@@ -34,9 +34,26 @@ public class XmlaRefusedException extends RuntimeException {
 
     private final Side side;
 
+    private final Long errorCode;
+
+    /** A refusal this server has no Analysis Services number for: the fault then carries no {@code Error} element. */
     public XmlaRefusedException(Side side, String message) {
+        this(side, null, message);
+    }
+
+    /**
+     * A refusal with the number Analysis Services answers the same refusal with.
+     * <p>
+     * The number is what the client sees as {@code ErrorCode}, and the transport writes the fault code in the form
+     * SSAS uses for it, {@code XMLAnalysisError.0x<hex>}. Only the number Analysis Services gives the same refusal
+     * belongs here; a refusal it has no number for keeps the other constructor rather than an invented code.
+     *
+     * @param errorCode the unsigned 32-bit number, e.g. {@code 0xC1140002L}; {@code null} for none
+     */
+    public XmlaRefusedException(Side side, Long errorCode, String message) {
         super(message);
         this.side = side;
+        this.errorCode = errorCode;
     }
 
     /**
@@ -72,5 +89,10 @@ public class XmlaRefusedException extends RuntimeException {
 
     public Side side() {
         return side;
+    }
+
+    /** The Analysis Services number of this refusal, or {@code null} when this server has none for it. */
+    public Long errorCode() {
+        return errorCode;
     }
 }
